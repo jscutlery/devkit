@@ -1,6 +1,38 @@
 {
   "version": 1,
-  "projects": {},
+  "projects": {
+    "cypress-harness": {
+      "root": "packages/cypress-harness",
+      "sourceRoot": "packages/cypress-harness/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/cypress-harness/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/cypress-harness/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/cypress-harness",
+            "tsConfig": "packages/cypress-harness/tsconfig.lib.json",
+            "packageJson": "packages/cypress-harness/package.json",
+            "main": "packages/cypress-harness/src/index.ts",
+            "assets": ["packages/cypress-harness/*.md"]
+          }
+        }
+      }
+    }
+  },
   "cli": {
     "defaultCollection": "@nrwl/workspace"
   }

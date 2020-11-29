@@ -15,7 +15,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@jscutlery/cypress-harness": ["packages/cypress-harness/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
