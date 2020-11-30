@@ -31,6 +31,11 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
+    "@angular/common": "^11.0.2",
+    "@angular/compiler": "^11.0.2",
+    "@angular/core": "^11.0.2",
+    "@angular/platform-browser": "^11.0.2",
+    "@angular/platform-browser-dynamic": "^11.0.2",
     "@nrwl/cli": "10.4.4",
     "@nrwl/cypress": "10.4.4",
     "@nrwl/eslint-plugin-nx": "10.4.4",
@@ -42,7 +47,8 @@
     "@types/node": "~8.9.4",
     "@typescript-eslint/eslint-plugin": "4.3.0",
     "@typescript-eslint/parser": "4.3.0",
-    "cypress": "^5.5.0",
+    "cypress": "^6.0.1",
+    "cypress-angular-unit-test": "^3.5.0",
     "dotenv": "6.2.0",
     "eslint": "7.10.0",
     "eslint-config-prettier": "6.0.0",
@@ -52,6 +58,7 @@
     "ts-jest": "26.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
-    "typescript": "~4.0.3"
+    "typescript": "~4.0.3",
+    "zone.js": "^0.11.3"
   }
 }

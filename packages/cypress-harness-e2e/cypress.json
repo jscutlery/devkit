@@ -1,6 +1,7 @@
 {
   "fileServerFolder": ".",
   "fixturesFolder": "./src/fixtures",
+  "componentFolder": "./src/unit",
   "integrationFolder": "./src/integration",
   "modifyObstructiveCode": false,
   "pluginsFile": "./src/plugins/index",
@@ -8,5 +9,6 @@
   "video": true,
   "videosFolder": "../../dist/cypress/packages/cypress-harness-e2e/videos",
   "screenshotsFolder": "../../dist/cypress/packages/cypress-harness-e2e/screenshots",
-  "chromeWebSecurity": false
+  "chromeWebSecurity": false,
+  "experimentalComponentTesting": true
 }
