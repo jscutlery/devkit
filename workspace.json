@@ -31,9 +31,33 @@
           }
         }
       }
+    },
+    "cypress-harness-e2e": {
+      "root": "packages/cypress-harness-e2e",
+      "sourceRoot": "packages/cypress-harness-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "packages/cypress-harness-e2e/cypress.json",
+            "tsConfig": "packages/cypress-harness-e2e/tsconfig.e2e.json",
+            "devServerTarget": ""
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/cypress-harness-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  }
+    "defaultCollection": "@nrwl/web"
+  },
+  "defaultProject": "cypress-harness"
 }
