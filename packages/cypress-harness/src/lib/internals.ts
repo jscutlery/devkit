@@ -44,7 +44,9 @@ export function addHarnessMethodsToChainer<
 }
 
 export function getTestBedRoot() {
-  return cy.get('#root0');
+  return cy.get('#root0', {
+    log: false
+  });
 }
 
 export function createRootEnvironment($documentRoot: JQuery<Element>): CypressHarnessEnvironment {
