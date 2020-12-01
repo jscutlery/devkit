@@ -14,8 +14,8 @@ This project is a monorepo that includes the following packages.
 
 | Package                                              | Name            | Description                                                       |
 | ---------------------------------------------------- | --------------- | ----------------------------------------------------------------- |
-| [@jscutlery/cypress-harness](./libs/cypress-harness) | Cypress Harness | Cypress support for Component Test Harnesses                      |
-| [@convoyr/cypress-harness](./libs/cypress-mount)         | Cypress Mount    | Cypress Component Testing support for Angular |
+| [@jscutlery/cypress-harness](./packages/cypress-harness) | Cypress Harness | Cypress support for Component Test Harnesses                      |
+| [@jscutlery/cypress-harness](./packages/cypress-mount)         | Cypress Mount    | Cypress Component Testing support for Angular |
 
 # Changelog
 
