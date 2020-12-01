@@ -1,7 +1,3 @@
-# JSCutlery Test Utils
-
-🚧 Work in progress
-
 <div align="center">
   <a href="https://www.npmjs.com/package/@jscutlery/cypress-harness" rel="nofollow">
     <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness">
@@ -12,7 +8,7 @@
   <strong>Tools that make testing cheaper.</strong>
 </p>
 
-# Tools
+# JSCutlery Test Utils
 
 This project is a monorepo that includes the following packages.
 
