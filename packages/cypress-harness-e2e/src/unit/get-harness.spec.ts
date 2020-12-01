@@ -5,12 +5,12 @@ import { initEnv, mount } from 'cypress-angular-unit-test';
 
 @Component({
   selector: 'jc-tested',
-  template: '<input>'
+  template: '<input>',
 })
-export class TestedComponent{}
+export class TestedComponent {}
 
 export class TestedHarness extends ComponentHarness {
-  static hostSelector = 'jc-tested'
+  static hostSelector = 'jc-tested';
 
   private _getInput = this.locatorFor('input');
 
@@ -19,7 +19,6 @@ export class TestedHarness extends ComponentHarness {
   }
 }
 
-
 describe('cypress-harness', () => {
   beforeEach(() => {
     initEnv(TestedComponent);
@@ -27,7 +26,7 @@ describe('cypress-harness', () => {
   });
 
   it('should setInputValue', () => {
-    getRootHarness(TestedHarness).invoke('setValue', 'test')
+    getRootHarness(TestedHarness).setValue('test');
     cy.get('input').should('have.value', 'test');
   });
 });
