@@ -2,6 +2,7 @@ import {
   ComponentHarness,
   ComponentHarnessConstructor,
 } from '@angular/cdk/testing';
+import { CypressHarnessEnvironment } from './cypress-harness-environment';
 
 /**
  * Adds harness methods to chainer.
@@ -44,4 +45,9 @@ export function addHarnessMethodsToChainer<
 
 export function getTestBedRoot() {
   return cy.get('#root0');
+}
+
+export function createRootEnvironment($documentRoot: JQuery<Element>): CypressHarnessEnvironment {
+  const documentRoot = $documentRoot.get(0);
+  return new CypressHarnessEnvironment(documentRoot, { documentRoot })
 }
