@@ -17,6 +17,11 @@ export class TestedHarness extends ComponentHarness {
   async setValue(value: string) {
     return (await this._getInput()).setInputValue(value);
   }
+
+  async getValue(): Promise<string> {
+    return (await this._getInput()).getProperty('value');
+  }
+
 }
 
 describe('cypress-harness', () => {
@@ -26,7 +31,7 @@ describe('cypress-harness', () => {
   });
 
   it('should setInputValue', () => {
-    getRootHarness(TestedHarness).setValue('test');
-    cy.get('input').should('have.value', 'test');
+    getRootHarness(TestedHarness).invoke('setValue', 'test');
+    getRootHarness(TestedHarness).invoke('getValue').should('equal', 'test')
   });
 });
