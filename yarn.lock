@@ -50,6 +50,13 @@
     ora "5.0.0"
     rxjs "6.6.2"
 
+"@angular/animations@^11.0.2":
+  version "11.0.2"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-11.0.2.tgz#c095ab0aed4491732c81a894987bcab1a854ab15"
+  integrity sha512-uF/RlBY1rznbuw+1lm8Q2HKDrBOQQ2Bi2cUPuef+ALn+lxGl501eHlE+PTtBjDEzJcJPfd4pE3Ww3+3Il+D+Tw==
+  dependencies:
+    tslib "^2.0.0"
+
 "@angular/cdk@^11.0.1":
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-11.0.1.tgz#37e1e4fe4450497a5965282dd8cc3702583fd6cf"
@@ -77,6 +84,20 @@
   version "11.0.2"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-11.0.2.tgz#490248b1d746e24513f2db996bd857e5a36d2f45"
   integrity sha512-GyDebks5ZPHDyChDW3VvzJq00Ct0iuesNpb9z/GpKtOXqug3sGr4KgkFDUTbfizKPWyeoaLH9FQYP55215nCKQ==
+  dependencies:
+    tslib "^2.0.0"
+
+"@angular/forms@^11.0.2":
+  version "11.0.2"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-11.0.2.tgz#68de53edfd504b570bfcd23f371a2f21fbec5c49"
+  integrity sha512-Rn17VPviTTwiDn8Yt/UzdkXjFX0LdvjkmTNZoakqOk8/QNnsCG5sUDJAV7BKHk+2nEfUGCopS4kpBiLKLoaBpQ==
+  dependencies:
+    tslib "^2.0.0"
+
+"@angular/material@^11.0.1":
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-11.0.1.tgz#add0e87d3e01d7d20484ea5a90d15439ec31a1d6"
+  integrity sha512-FcGIKgFouA9QHwfbWCj8140gMTEgXV3n/yiYsc4Y8VkMIpEmQQnjoOnf5FRIm0ajTQT4qs6uVyB4opJWoHn/pg==
   dependencies:
     tslib "^2.0.0"
 

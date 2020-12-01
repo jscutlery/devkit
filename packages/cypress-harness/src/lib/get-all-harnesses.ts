@@ -1,6 +1,6 @@
 import { ComponentHarness, HarnessQuery } from '@angular/cdk/testing';
 
-import { createRootEnvironment, getTestBedRoot } from './internals';
+import { createRootEnvironment, getDocumentRoot } from './internals';
 
 export function getAllHarnesses<T extends ComponentHarness>(
   query: HarnessQuery<T>
@@ -9,5 +9,5 @@ export function getAllHarnesses<T extends ComponentHarness>(
   const getAllHarnesses = ($documentRoot: JQuery<Element>) =>
     createRootEnvironment($documentRoot).getAllHarnesses(query);
 
-  return getTestBedRoot().pipe(getAllHarnesses);
+  return getDocumentRoot().pipe(getAllHarnesses);
 }

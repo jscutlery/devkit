@@ -43,8 +43,9 @@ export function addHarnessMethodsToChainer<
   return chainer as any;
 }
 
-export function getTestBedRoot() {
-  return cy.get('#root0', {
+
+export function getDocumentRoot() {
+  return cy.get('body', {
     log: false
   });
 }
