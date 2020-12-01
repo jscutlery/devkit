@@ -4,6 +4,12 @@ import { CypressElement } from './cypress-element';
 export class CypressHarnessEnvironment extends HarnessEnvironment<
   JQuery<HTMLElement>
 > {
+  /**
+   * We need this to keep a reference to the document.
+   * This is different to `rawRootElement` which is the root element
+   * of the harness's environment.
+   * (The harness's environment is more of a context)
+   */
   private _documentRoot: JQuery<HTMLElement>;
 
   constructor(

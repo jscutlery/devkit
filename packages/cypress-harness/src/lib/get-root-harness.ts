@@ -9,9 +9,9 @@ export function getRootHarness<T extends ComponentHarness>(
   harnessType: ComponentHarnessConstructor<T>
 ) {
   /* Create a local variable so `pipe` can log name. */
-  const getRootHarness = (root) =>
+  const getRootHarness = (documentRoot) =>
     new harnessType(
-      new CypressHarnessEnvironment(root, { documentRoot: root })
+      new CypressHarnessEnvironment(documentRoot, { documentRoot })
     );
 
   return addHarnessMethodsToChainer(
