@@ -10,6 +10,8 @@ One of the most interesting ideas behind Component Test Harnesses is that they a
 
 **This library provides Cypress support to Component Test Harnesses.**
 
+![Angular Material Datepicker Harness in Cypress](./cypress-harness.gif)
+
 ## Setup
 
 ### 1. Install
