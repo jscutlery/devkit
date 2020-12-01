@@ -34,13 +34,7 @@ export function addHarnessMethodsToChainer<
         return {
           ...proto,
           [methodName](...args) {
-            /* Using a container in order to dynamically set the
-             * function's name as `cypress-pipe` will use the function's
-             * name in logs. */
-            const container = {
-              [methodName]: (harness) => harness[methodName](...args),
-            };
-            return chainer.pipe(container[methodName]);
+            return chainer.invoke(methodName, ...args);
           },
         };
       }, {}),
