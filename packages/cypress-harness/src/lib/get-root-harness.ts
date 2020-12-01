@@ -3,7 +3,7 @@ import {
   ComponentHarnessConstructor,
 } from '@angular/cdk/testing';
 import { CypressHarnessEnvironment } from './cypress-harness-environment';
-import { addHarnessMethodsToChainer } from './internals';
+import { addHarnessMethodsToChainer, getTestBedRoot } from './internals';
 
 export function getRootHarness<T extends ComponentHarness>(
   harnessType: ComponentHarnessConstructor<T>
@@ -15,7 +15,7 @@ export function getRootHarness<T extends ComponentHarness>(
     );
 
   return addHarnessMethodsToChainer(
-    cy.get('#root0').pipe(getRootHarness),
+    getTestBedRoot().pipe(getRootHarness),
     harnessType
   );
 }

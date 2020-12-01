@@ -47,3 +47,7 @@ export function addHarnessMethodsToChainer<
   };
   return chainer as any;
 }
+
+export function getTestBedRoot() {
+  return cy.get('#root0');
+}
