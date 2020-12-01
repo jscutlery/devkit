@@ -1,20 +1,18 @@
 import { HarnessEnvironment, TestElement } from '@angular/cdk/testing';
-import { CypressElement } from './cypress-element';
+import { UnitTestElement } from '@angular/cdk/testing/testbed';
 
-export class CypressHarnessEnvironment extends HarnessEnvironment<
-  JQuery<HTMLElement>
-> {
+export class CypressHarnessEnvironment extends HarnessEnvironment<Element> {
   /**
    * We need this to keep a reference to the document.
    * This is different to `rawRootElement` which is the root element
    * of the harness's environment.
    * (The harness's environment is more of a context)
    */
-  private _documentRoot: JQuery<HTMLElement>;
+  private _documentRoot: Element;
 
   constructor(
-    rawRootElement: JQuery<HTMLElement>,
-    { documentRoot }: { documentRoot: JQuery<HTMLElement> }
+    rawRootElement: Element,
+    { documentRoot }: { documentRoot: Element }
   ) {
     super(rawRootElement);
     this._documentRoot = documentRoot;
@@ -28,28 +26,21 @@ export class CypressHarnessEnvironment extends HarnessEnvironment<
     throw new Error('Method not implemented.');
   }
 
-  protected getDocumentRoot(): JQuery<HTMLElement> {
+  protected getDocumentRoot(): Element {
     return this._documentRoot;
   }
 
-  protected createTestElement(element: JQuery<HTMLElement>): TestElement {
-    return new CypressElement(element);
+  protected createTestElement(element: Element): TestElement {
+    return new UnitTestElement(element, async () => {});
   }
 
-  protected createEnvironment(
-    element: JQuery<HTMLElement>
-  ): HarnessEnvironment<JQuery<HTMLElement>> {
+  protected createEnvironment(element: Element): HarnessEnvironment<Element> {
     return new CypressHarnessEnvironment(element, {
       documentRoot: this._documentRoot,
     });
   }
 
-  protected async getAllRawElements(
-    selector: string
-  ): Promise<JQuery<HTMLElement>[]> {
-    return this.rawRootElement
-      .find(selector)
-      .toArray()
-      .map((el) => Cypress.$(el));
+  protected async getAllRawElements(selector: string): Promise<Element[]> {
+    return Array.from(this.rawRootElement.querySelectorAll(selector));
   }
 }
