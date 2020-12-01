@@ -6,7 +6,7 @@ export function getAllHarnesses<T extends ComponentHarness>(
 ) {
   /* Create a local variable so `pipe` can log name. */
   const getAllHarnesses = (body) =>
-    new CypressHarnessEnvironment(body, { body }).getAllHarnesses(query);
+    new CypressHarnessEnvironment(body, { documentRoot: body }).getAllHarnesses(query);
 
   return cy.get('body').pipe(getAllHarnesses);
 }

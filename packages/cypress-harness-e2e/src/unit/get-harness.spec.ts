@@ -1,5 +1,6 @@
 import { ComponentHarness } from '@angular/cdk/testing';
 import { Component } from '@angular/core';
+import { getRootHarness } from '@jscutlery/cypress-harness';
 import { initEnv, mount } from 'cypress-angular-unit-test';
 
 @Component({
@@ -25,9 +26,8 @@ describe('cypress-harness', () => {
     mount(TestedComponent);
   });
 
-  it('should set input value', () => {
-    // @todo wip: getHarness(TestedHarness).invoke('setValue')
-    cy.get('input').type('test');
+  it('should setInputValue', () => {
+    getRootHarness(TestedHarness).invoke('setValue', 'test')
     cy.get('input').should('have.value', 'test');
   });
 });

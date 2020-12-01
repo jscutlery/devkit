@@ -1,15 +1,17 @@
 import { HarnessEnvironment, TestElement } from '@angular/cdk/testing';
 import { CypressElement } from './cypress-element';
 
-export class CypressHarnessEnvironment extends HarnessEnvironment<JQuery<HTMLElement>> {
-  private _body: JQuery<HTMLElement>;
+export class CypressHarnessEnvironment extends HarnessEnvironment<
+  JQuery<HTMLElement>
+> {
+  private _documentRoot: JQuery<HTMLElement>;
 
   constructor(
     rawRootElement: JQuery<HTMLElement>,
-    { body }: { body: JQuery<HTMLElement> }
+    { documentRoot }: { documentRoot: JQuery<HTMLElement> }
   ) {
     super(rawRootElement);
-    this._body = body;
+    this._documentRoot = documentRoot;
   }
 
   forceStabilize(): Promise<void> {
@@ -21,7 +23,7 @@ export class CypressHarnessEnvironment extends HarnessEnvironment<JQuery<HTMLEle
   }
 
   protected getDocumentRoot(): JQuery<HTMLElement> {
-    return this._body;
+    return this._documentRoot;
   }
 
   protected createTestElement(element: JQuery<HTMLElement>): TestElement {
@@ -31,7 +33,9 @@ export class CypressHarnessEnvironment extends HarnessEnvironment<JQuery<HTMLEle
   protected createEnvironment(
     element: JQuery<HTMLElement>
   ): HarnessEnvironment<JQuery<HTMLElement>> {
-    return new CypressHarnessEnvironment(element, { body: this._body });
+    return new CypressHarnessEnvironment(element, {
+      documentRoot: this._documentRoot,
+    });
   }
 
   protected async getAllRawElements(

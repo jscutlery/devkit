@@ -123,8 +123,8 @@ export class CypressElement implements TestElement {
     throw new Error('Method not implemented.');
   }
 
-  setInputValue?(value: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async setInputValue?(value: string): Promise<void> {
+    this.element.val(value)
   }
 
   selectOptions?(...optionIndexes: number[]): Promise<void> {
