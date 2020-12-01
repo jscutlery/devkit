@@ -1,7 +1,7 @@
 import { ComponentHarness } from '@angular/cdk/testing';
 import { Component } from '@angular/core';
 import { getRootHarness } from '@jscutlery/cypress-harness';
-import { initEnv, mount } from 'cypress-angular-unit-test';
+import { mountWithConfig } from '@jscutlery/cypress-mount';
 
 @Component({
   selector: 'jc-tested',
@@ -21,17 +21,17 @@ export class TestedHarness extends ComponentHarness {
   async getValue(): Promise<string> {
     return (await this._getInput()).getProperty('value');
   }
-
 }
 
 describe('cypress-harness', () => {
   beforeEach(() => {
-    initEnv(TestedComponent);
-    mount(TestedComponent);
+    mountWithConfig(TestedComponent, {
+      declarations: [TestedComponent],
+    });
   });
 
   it('should setInputValue', () => {
     getRootHarness(TestedHarness).invoke('setValue', 'test');
-    getRootHarness(TestedHarness).invoke('getValue').should('equal', 'test')
+    getRootHarness(TestedHarness).invoke('getValue').should('equal', 'test');
   });
 });
