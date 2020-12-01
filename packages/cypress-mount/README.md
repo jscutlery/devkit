@@ -12,7 +12,7 @@ It will help you enjoy both the benefits of unit-tests isolation and Cypress too
 
 ## Setup
 
-### 1. Use NX
+### 0. Use NX
 
 Cypress Component Testing *(and everything else)* is easier with [Nx](https://nx.dev/latest/angular/getting-started/why-nx).
 
@@ -24,6 +24,16 @@ yarn create nx-workspace # or npm init nx-workspace
 ... otherwise, you can migrate to Nx using:
 ```shell
 ng add @nrwl/workspace
+```
+
+### 1. Install
+
+```shell
+yarn add -D @jscutlery/cypress-mount cypress-angular-unit-test
+
+# or
+
+npm install -D @jscutlery/cypress-mount cypress-angular-unit-test
 ```
 
 ### 2. Enable Cypress Component Testing
