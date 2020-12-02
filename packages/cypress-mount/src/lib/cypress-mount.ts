@@ -1,6 +1,10 @@
 import { Component, Type } from '@angular/core';
 import { TestModuleMetadata } from '@angular/core/testing';
-import { initEnv, mount as cypressMount, setConfig } from 'cypress-angular-unit-test/dist';
+import {
+  initEnv,
+  mount as cypressMount,
+  setConfig,
+} from 'cypress-angular-unit-test/dist';
 
 /**
  * This is a stupid hack meanwhile we fix this issue
@@ -36,7 +40,7 @@ export function mount(
 
 export function mountWithConfig(
   component: Type<unknown>,
-  config?: Config & { inputs?: { [key: string]: unknown } }
+  config: Config & { inputs?: { [key: string]: unknown } } = {}
 ) {
   const { inputs, ...rest } = config;
   if (Object.keys(rest).length > 0) {
