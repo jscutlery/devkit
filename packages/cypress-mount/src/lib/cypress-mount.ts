@@ -29,7 +29,7 @@ export function setup(config: Config) {
 
 export function mount(
   component: Type<unknown>,
-  config?: { inputs?: { [key: string]: unknown } }
+  config: { inputs?: { [key: string]: unknown } } = {}
 ) {
   cypressMount(component, config.inputs);
 }
