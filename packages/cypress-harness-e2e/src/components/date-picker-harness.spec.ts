@@ -2,12 +2,15 @@ import { Component, NgModule } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatCalendarHarness, MatDatepickerInputHarness } from '@angular/material/datepicker/testing';
+import {
+  MatCalendarHarness,
+  MatDatepickerInputHarness,
+} from '@angular/material/datepicker/testing';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { getAllHarnesses, getHarness } from '@jscutlery/cypress-harness';
-import { mountWithConfig } from '@jscutlery/cypress-mount'
+import { mountWithConfig } from '@jscutlery/cypress-mount';
 
 @Component({
   template: `<mat-form-field>
@@ -38,7 +41,10 @@ describe('cypress-harness', () => {
 
   beforeEach(() =>
     mountWithConfig(TestedComponent, {
-      styles: [require('!css-loader!@angular/material/prebuilt-themes/deeppurple-amber.css').toString()],
+      styles: [
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        require('!css-loader!@angular/material/prebuilt-themes/deeppurple-amber.css').toString(),
+      ],
       imports: [TestedModule],
     })
   );

@@ -40,17 +40,19 @@ export function addHarnessMethodsToChainer<
         };
       }, {}),
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return chainer as any;
 }
 
-
 export function getDocumentRoot() {
   return cy.get('body', {
-    log: false
+    log: false,
   });
 }
 
-export function createRootEnvironment($documentRoot: JQuery<Element>): CypressHarnessEnvironment {
+export function createRootEnvironment(
+  $documentRoot: JQuery<Element>
+): CypressHarnessEnvironment {
   const documentRoot = $documentRoot.get(0);
-  return new CypressHarnessEnvironment(documentRoot, { documentRoot })
+  return new CypressHarnessEnvironment(documentRoot, { documentRoot });
 }
