@@ -29,6 +29,12 @@
             "main": "packages/cypress-harness/src/index.ts",
             "assets": ["packages/cypress-harness/*.md"]
           }
+        },
+        "version": {
+          "builder": "@jscutlery/semver:version",
+          "options": {
+            "syncVersions": false
+          }
         }
       }
     },
@@ -80,6 +86,12 @@
             "packageJson": "packages/cypress-mount/package.json",
             "main": "packages/cypress-mount/src/index.ts",
             "assets": ["packages/cypress-mount/*.md"]
+          }
+        },
+        "version": {
+          "builder": "@jscutlery/semver:version",
+          "options": {
+            "syncVersions": false
           }
         }
       }
