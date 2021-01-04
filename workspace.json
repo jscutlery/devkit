@@ -83,10 +83,146 @@
           }
         }
       }
+    },
+    "cypress-harness-sandbox": {
+      "projectType": "application",
+      "root": "packages/cypress-harness-sandbox",
+      "sourceRoot": "packages/cypress-harness-sandbox/src",
+      "prefix": "test-utils",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/packages/cypress-harness-sandbox",
+            "index": "packages/cypress-harness-sandbox/src/index.html",
+            "main": "packages/cypress-harness-sandbox/src/main.ts",
+            "polyfills": "packages/cypress-harness-sandbox/src/polyfills.ts",
+            "tsConfig": "packages/cypress-harness-sandbox/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "packages/cypress-harness-sandbox/src/favicon.ico",
+              "packages/cypress-harness-sandbox/src/assets"
+            ],
+            "styles": ["packages/cypress-harness-sandbox/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "packages/cypress-harness-sandbox/src/environments/environment.ts",
+                  "with": "packages/cypress-harness-sandbox/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "cypress-harness-sandbox:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "cypress-harness-sandbox:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "cypress-harness-sandbox:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/cypress-harness-sandbox/tsconfig.app.json",
+              "packages/cypress-harness-sandbox/tsconfig.spec.json",
+              "packages/cypress-harness-sandbox/tsconfig.editor.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/cypress-harness-sandbox/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/cypress-harness-sandbox/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "cypress-harness-sandbox-e2e": {
+      "root": "packages/cypress-harness-sandbox-e2e",
+      "sourceRoot": "packages/cypress-harness-sandbox-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "packages/cypress-harness-sandbox-e2e/cypress.json",
+            "tsConfig": "packages/cypress-harness-sandbox-e2e/tsconfig.e2e.json",
+            "devServerTarget": "cypress-harness-sandbox:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "cypress-harness-sandbox:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/cypress-harness-sandbox-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/cypress-harness-sandbox-e2e/**/*"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
     "defaultCollection": "@nrwl/web"
   },
-  "defaultProject": "cypress-harness"
+  "defaultProject": "cypress-harness",
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "css"
+    }
+  }
 }

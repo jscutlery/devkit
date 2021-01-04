@@ -31,6 +31,13 @@
     },
     "cypress-mount": {
       "tags": []
+    },
+    "cypress-harness-sandbox": {
+      "tags": []
+    },
+    "cypress-harness-sandbox-e2e": {
+      "tags": [],
+      "implicitDependencies": ["cypress-harness-sandbox"]
     }
   },
   "workspaceLayout": {
