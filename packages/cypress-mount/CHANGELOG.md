@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.1](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.3.0...cypress-mount-0.3.1) (2021-02-08)
+
+
+### Bug Fixes
+
+* 🐞 add dependency injection support ([cd2aadc](https://github.com/jscutlery/test-utils/commit/cd2aadc645b3b4134752b6f32eb5db317de4780d))
+
+
+
 # [0.3.0](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.2.0...cypress-mount-0.3.0) (2021-02-08)
 
 
