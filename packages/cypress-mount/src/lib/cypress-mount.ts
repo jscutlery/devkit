@@ -38,7 +38,7 @@ export function mount(
   cypressMount(component, config.inputs);
 }
 
-export function mountWithConfig(
+export function setupAndMount(
   component: Type<unknown>,
   config: Config & { inputs?: { [key: string]: unknown } } = {}
 ) {
@@ -47,4 +47,16 @@ export function mountWithConfig(
     setup(config);
   }
   mount(component, { inputs });
+}
+
+/**
+ * @deprecated use {@link setupAndMount} instead.
+ * This will be removed in 1.0.0
+ *
+ * @sunset 1.0.0
+ */
+export function mountWithConfig(
+  ...args: Parameters<typeof setupAndMount>
+): ReturnType<typeof setupAndMount> {
+  return setupAndMount(...args);
 }

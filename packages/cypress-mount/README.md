@@ -61,7 +61,7 @@ Add your `.spec.ts` files in the e2e folder's `*-e2e/src/components`:
 ```ts
 describe('HelloCompanent', () => {
   beforeEach(() => {
-    mountWithConfig(HelloComponent, {
+    setupAndMount(HelloComponent, {
       styles: [
         `body { background: purple}`
       ],
