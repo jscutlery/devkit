@@ -1,6 +1,15 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
+
+# [0.3.0](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.2.0...cypress-mount-0.3.0) (2021-02-08)
+
+
+### Features
+
+* ✅ rename `mountWithConfig` to `setupAndMount` ([598a955](https://github.com/jscutlery/test-utils/commit/598a95517119f8fcebf120527c4d5e50fad50f47))
+
+
 
 # 0.2.0 (2021-01-04)
 
