@@ -1,10 +1,8 @@
 name: test-utils CI
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  - push
+  - pull_request
 
 jobs:
   build:
@@ -34,7 +32,7 @@ jobs:
         path: ~/.npm
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./yarn.lock') }}
     - run: yarn
-    - run: yarn nx affected:lint --base=origin/master --head=${{ github.event.pull_request.head.ref }}
-    - run: yarn nx affected:build --base=origin/master --head=${{ github.event.pull_request.head.ref }}
-    - run: yarn nx affected:test --base=origin/master --head=${{ github.event.pull_request.head.ref }}
-    - run: yarn nx affected:e2e --headless --base=origin/master --head=${{ github.event.pull_request.head.ref }}
+    - run: yarn nx run-many --all --target=lint
+    - run: yarn nx run-many --all --target=build
+    - run: yarn nx run-many --all --target=test
+    - run: yarn nx run-many --all --target=e2e
