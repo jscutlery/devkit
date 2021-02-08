@@ -31,20 +31,20 @@
     "cypress-harness": {
       "tags": []
     },
-    "cypress-harness-e2e": {
-      "tags": []
-    },
     "cypress-mount": {
       "tags": []
     },
-    "cypress-harness-sandbox-e2e": {
+    "cypress-sandbox": {
+      "tags": []
+    },
+    "cypress-harness-integration": {
+      "tags": []
+    },
+    "cypress-harness-e2e": {
       "tags": [],
       "implicitDependencies": [
         "cypress-sandbox"
       ]
-    },
-    "cypress-sandbox": {
-      "tags": []
     }
   },
   "workspaceLayout": {

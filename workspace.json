@@ -42,29 +42,6 @@
         }
       }
     },
-    "cypress-harness-e2e": {
-      "root": "packages/cypress-harness-e2e",
-      "sourceRoot": "packages/cypress-harness-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "packages/cypress-harness-e2e/cypress.json",
-            "tsConfig": "packages/cypress-harness-e2e/tsconfig.e2e.json",
-            "devServerTarget": ""
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "packages/cypress-harness-e2e/**/*.{js,ts}"
-            ]
-          }
-        }
-      }
-    },
     "cypress-mount": {
       "root": "packages/cypress-mount",
       "sourceRoot": "packages/cypress-mount/src",
@@ -102,38 +79,6 @@
           "builder": "@jscutlery/semver:version",
           "options": {
             "syncVersions": false
-          }
-        }
-      }
-    },
-    "cypress-harness-sandbox-e2e": {
-      "root": "packages/cypress-harness-sandbox-e2e",
-      "sourceRoot": "packages/cypress-harness-sandbox-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "packages/cypress-harness-sandbox-e2e/cypress.json",
-            "tsConfig": "packages/cypress-harness-sandbox-e2e/tsconfig.e2e.json",
-            "devServerTarget": "cypress-sandbox:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "cypress-sandbox:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "packages/cypress-harness-sandbox-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/cypress-harness-sandbox-e2e/**/*"
-            ]
           }
         }
       }
@@ -228,6 +173,61 @@
           "options": {
             "jestConfig": "packages/cypress-sandbox/jest.config.js",
             "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "cypress-harness-integration": {
+      "root": "packages/cypress-harness-integration",
+      "sourceRoot": "packages/cypress-harness-integration/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "packages/cypress-harness-integration/cypress.json",
+            "tsConfig": "packages/cypress-harness-integration/tsconfig.e2e.json",
+            "devServerTarget": ""
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/cypress-harness-integration/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "cypress-harness-e2e": {
+      "root": "packages/cypress-harness-e2e",
+      "sourceRoot": "packages/cypress-harness-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "packages/cypress-harness-e2e/cypress.json",
+            "tsConfig": "packages/cypress-harness-e2e/tsconfig.e2e.json",
+            "devServerTarget": "cypress-sandbox:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "cypress-sandbox:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/cypress-harness-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/cypress-harness-e2e/**/*"
+            ]
           }
         }
       }

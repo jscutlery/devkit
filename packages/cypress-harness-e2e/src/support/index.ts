@@ -14,7 +14,3 @@
 // ***********************************************************
 
 import '@jscutlery/cypress-harness/support';
-import '@jscutlery/cypress-mount/support';
-
-// Import commands.js using ES2015 syntax:
-import './commands';
