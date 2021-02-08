@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'cypress-harness-sandbox',
+  displayName: 'cypress-sandbox',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -14,7 +14,7 @@ module.exports = {
       },
     },
   },
-  coverageDirectory: '../../coverage/packages/cypress-harness-sandbox',
+  coverageDirectory: '../../coverage/packages/cypress-sandbox',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',

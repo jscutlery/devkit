@@ -18,7 +18,12 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ]
       }
     }
   },
@@ -32,12 +37,14 @@
     "cypress-mount": {
       "tags": []
     },
-    "cypress-harness-sandbox": {
-      "tags": []
-    },
     "cypress-harness-sandbox-e2e": {
       "tags": [],
-      "implicitDependencies": ["cypress-harness-sandbox"]
+      "implicitDependencies": [
+        "cypress-sandbox"
+      ]
+    },
+    "cypress-sandbox": {
+      "tags": []
     }
   },
   "workspaceLayout": {
