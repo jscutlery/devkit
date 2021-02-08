@@ -34,23 +34,23 @@
     "cypress-mount": {
       "tags": []
     },
-    "cypress-sandbox": {
-      "tags": []
-    },
     "cypress-harness-integration": {
       "tags": []
     },
     "cypress-harness-e2e": {
       "tags": [],
       "implicitDependencies": [
-        "cypress-sandbox"
+        "sandbox"
       ]
     },
     "cypress-mount-integration": {
       "tags": [],
       "implicitDependencies": [
-        "cypress-sandbox"
+        "sandbox"
       ]
+    },
+    "sandbox": {
+      "tags": []
     }
   },
   "workspaceLayout": {
