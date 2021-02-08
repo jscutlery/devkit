@@ -10,9 +10,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/cypress-harness/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/cypress-harness/**/*.ts"]
           }
         },
         "test": {
@@ -29,9 +27,7 @@
             "tsConfig": "packages/cypress-harness/tsconfig.lib.json",
             "packageJson": "packages/cypress-harness/package.json",
             "main": "packages/cypress-harness/src/index.ts",
-            "assets": [
-              "packages/cypress-harness/*.md"
-            ]
+            "assets": ["packages/cypress-harness/*.md"]
           }
         },
         "version": {
@@ -51,9 +47,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/cypress-mount/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/cypress-mount/**/*.ts"]
           }
         },
         "test": {
@@ -70,9 +64,7 @@
             "tsConfig": "packages/cypress-mount/tsconfig.lib.json",
             "packageJson": "packages/cypress-mount/package.json",
             "main": "packages/cypress-mount/src/index.ts",
-            "assets": [
-              "packages/cypress-mount/*.md"
-            ]
+            "assets": ["packages/cypress-mount/*.md"]
           }
         },
         "version": {
@@ -127,9 +119,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "packages/cypress-harness-e2e/tsconfig.e2e.json"
-            ],
+            "tsConfig": ["packages/cypress-harness-e2e/tsconfig.e2e.json"],
             "exclude": [
               "**/node_modules/**",
               "!packages/cypress-harness-e2e/**/*"
@@ -148,12 +138,7 @@
           "options": {
             "cypressConfig": "packages/cypress-mount-integration/cypress.json",
             "tsConfig": "packages/cypress-mount-integration/tsconfig.e2e.json",
-            "devServerTarget": "sandbox:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "sandbox:serve:production"
-            }
+            "devServerTarget": ""
           }
         },
         "lint": {
@@ -185,9 +170,7 @@
               "packages/sandbox/src/favicon.ico",
               "packages/sandbox/src/assets"
             ],
-            "styles": [
-              "packages/sandbox/src/styles.css"
-            ],
+            "styles": ["packages/sandbox/src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -245,10 +228,7 @@
               "packages/sandbox/tsconfig.spec.json",
               "packages/sandbox/tsconfig.editor.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/sandbox/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/sandbox/**/*"]
           }
         },
         "test": {
