@@ -12,6 +12,10 @@ import {
   HelloStyleUrlsComponent,
   HelloStyleUrlsModule,
 } from '../fixtures/hello-style-urls.component';
+import {
+  HelloScssComponent,
+  HelloScssModule,
+} from '../fixtures/hello-scss.component';
 
 describe('@jscutlery/cypress-mount', () => {
   it('should handle dependency injection', () => {
@@ -31,6 +35,13 @@ describe('@jscutlery/cypress-mount', () => {
   it('should handle styleUrls', () => {
     setupAndMount(HelloStyleUrlsComponent, {
       imports: [HelloStyleUrlsModule],
+    });
+    cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
+  });
+
+  it('should handle scss', () => {
+    setupAndMount(HelloScssComponent, {
+      imports: [HelloScssModule],
     });
     cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
   });

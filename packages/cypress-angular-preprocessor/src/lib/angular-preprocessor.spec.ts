@@ -40,6 +40,14 @@ describe('preprocessor', () => {
               test: /\.ts$/,
               loader: '@ngtools/webpack',
             },
+            {
+              test: /\.css$/,
+              loader: 'raw-loader',
+            },
+            {
+              test: /\.scss$/,
+              use: ['raw-loader', 'sass-loader'],
+            },
           ],
         },
       },
