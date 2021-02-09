@@ -23,7 +23,9 @@ describe('preprocessor', () => {
     /* Preprocessor should return the file preprocessor returned by webpack preprocessor. */
     expect(
       angularPreprocessor({
-        projectRoot: '/packages/lib-e2e',
+        env: {
+          tsConfig: '/packages/lib-e2e/tsconfig.e2e.json',
+        },
       })
     ).toEqual(filePreprocessor);
 
@@ -56,7 +58,9 @@ describe('preprocessor', () => {
 
   it('should create angular compiler with the right options', () => {
     angularPreprocessor({
-      projectRoot: '/packages/lib-e2e',
+      env: {
+        tsConfig: '/packages/lib-e2e/tsconfig.e2e.json',
+      },
     });
 
     expect(mockAngularCompilerPlugin).toBeCalledTimes(1);
@@ -70,7 +74,9 @@ describe('preprocessor', () => {
   it('should extend angular compiler options', () => {
     angularPreprocessor(
       {
-        projectRoot: '/packages/lib-e2e',
+        env: {
+          tsConfig: '/packages/lib-e2e/tsconfig.e2e.json',
+        },
       },
       {
         angularCompilerOptions: {

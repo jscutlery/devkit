@@ -3,7 +3,6 @@ import {
   AngularCompilerPlugin,
   AngularCompilerPluginOptions,
 } from '@ngtools/webpack';
-import { resolve } from 'path';
 
 /**
  * @param cypressConfig Cypress config
@@ -44,7 +43,7 @@ export function angularPreprocessor(
       plugins: [
         new AngularCompilerPlugin({
           directTemplateLoading: true,
-          tsConfigPath: resolve(cypressConfig.projectRoot, 'tsconfig.e2e.json'),
+          tsConfigPath: cypressConfig.env.tsConfig,
           sourceMap: true,
           ...angularCompilerOptions,
         }),
