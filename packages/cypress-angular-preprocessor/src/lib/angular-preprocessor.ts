@@ -25,6 +25,11 @@ export function angularPreprocessor(
       },
       module: {
         rules: [
+          /* Use raw-loader as AngularCompilerPlugin handles the rest. */
+          {
+            test: /\.css$/,
+            loader: 'raw-loader',
+          },
           {
             test: /\.ts$/,
             loader: '@ngtools/webpack',

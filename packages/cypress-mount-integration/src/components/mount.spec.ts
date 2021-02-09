@@ -8,6 +8,10 @@ import {
   HelloDIComponent,
   HelloDIModule,
 } from '../fixtures/hello-dependency-injection.component';
+import {
+  HelloStyleUrlsComponent,
+  HelloStyleUrlsModule,
+} from '../fixtures/hello-style-urls.component';
 
 describe('@jscutlery/cypress-mount', () => {
   it('should handle dependency injection', () => {
@@ -17,10 +21,17 @@ describe('@jscutlery/cypress-mount', () => {
     cy.contains('JSCutlery');
   });
 
-  it('should handle template url', () => {
+  it('should handle templateUrl', () => {
     setupAndMount(HelloTemplateUrlComponent, {
       imports: [HelloTemplateUrlModule],
     });
     cy.contains('JSCutlery');
+  });
+
+  it('should handle styleUrls', () => {
+    setupAndMount(HelloStyleUrlsComponent, {
+      imports: [HelloStyleUrlsModule],
+    });
+    cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
   });
 });
