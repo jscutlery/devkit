@@ -2006,6 +2006,15 @@
     tunnel-agent "^0.6.0"
     uuid "^3.3.2"
 
+"@cypress/webpack-preprocessor@^5.5.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@cypress/webpack-preprocessor/-/webpack-preprocessor-5.5.0.tgz#e7010b2ee7449691cc16a9d5d1956af17ea175fd"
+  integrity sha512-iqwPygSNZ1u6bM3r5QRVv6qYngkcgI2xCzi9Jmo4mrkcofwX08UaItJq7xlB2/dHbB2aryQYOsfe4xNKtQIm3A==
+  dependencies:
+    bluebird "^3.7.1"
+    debug "^4.1.1"
+    lodash "^4.17.20"
+
 "@cypress/webpack-preprocessor@~4.1.2":
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/@cypress/webpack-preprocessor/-/webpack-preprocessor-4.1.5.tgz#b47d515d2540af977ee8b69d7c4eed64e3027668"
@@ -3026,7 +3035,7 @@
     enhanced-resolve "5.6.0"
     webpack-sources "2.2.0"
 
-"@ngtools/webpack@11.1.4":
+"@ngtools/webpack@11.1.4", "@ngtools/webpack@^11.1.4":
   version "11.1.4"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-11.1.4.tgz#8c7a9f6d9ade5610e3baf7299c50250cac02ca2a"
   integrity sha512-fM17s/mGY/DV9/a/d3lsFiZdL8PfKRY0VGPHCujBIWv9KQg1gUUNkbTepFaNPCBK/bWDH/fIXuNRIHhy1NUeIA==
@@ -4913,7 +4922,7 @@ bluebird@3.7.1:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.1.tgz#df70e302b471d7473489acf26a93d63b53f874de"
   integrity sha512-DdmyoGCleJnkbp3nkbxTLJ18rjDsE4yCggEwKNXkeV123sPNfOCYeDoeuOY+F2FrSjO1YXcTU+dsy96KMy+gcg==
 
-bluebird@^3.5.1, bluebird@^3.5.3, bluebird@^3.5.5, bluebird@^3.7.2:
+bluebird@^3.5.1, bluebird@^3.5.3, bluebird@^3.5.5, bluebird@^3.7.1, bluebird@^3.7.2:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
@@ -10563,7 +10572,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.5, lodash@^4.2.1:
+lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.5, lodash@^4.2.1:
   version "4.17.20"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
   integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==

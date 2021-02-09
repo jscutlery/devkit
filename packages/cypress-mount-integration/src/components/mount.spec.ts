@@ -17,7 +17,7 @@ describe('@jscutlery/cypress-mount', () => {
     cy.contains('JSCutlery');
   });
 
-  xit('🚧 should handle template url', () => {
+  it('should handle template url', () => {
     setupAndMount(HelloTemplateUrlComponent, {
       imports: [HelloTemplateUrlModule],
     });

@@ -18,12 +18,7 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
       }
     }
   },
@@ -39,17 +34,16 @@
     },
     "cypress-harness-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "sandbox"
-      ]
+      "implicitDependencies": ["sandbox"]
     },
     "cypress-mount-integration": {
       "tags": [],
-      "implicitDependencies": [
-        "sandbox"
-      ]
+      "implicitDependencies": ["sandbox"]
     },
     "sandbox": {
+      "tags": []
+    },
+    "cypress-angular-preprocessor": {
       "tags": []
     }
   },
