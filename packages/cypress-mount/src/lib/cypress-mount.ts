@@ -1,5 +1,5 @@
 import { Story } from '@storybook/angular';
-import { Component, Type } from '@angular/core';
+import { Component, SchemaMetadata, StaticProvider, Type } from '@angular/core';
 import { TestModuleMetadata } from '@angular/core/testing';
 import {
   initEnv,
@@ -64,6 +64,24 @@ export function mountStory(story: Story) {
     ...moduleMetadata,
     inputs: args,
   });
+}
+
+/**
+ * This will replace both `mount` and `setupAndMount`
+ * so we won't need `cypress-angular-unit-test` anymore.
+ * @deprecated 🚧 Work in progress.
+ */
+export function mountV2(
+  component: Type<unknown>,
+  config: {
+    declarations?: Type<unknown>[];
+    imports?: Type<unknown>[];
+    inputs?: { [key: string]: unknown };
+    providers?: StaticProvider[];
+    schemas?: SchemaMetadata[];
+  } = {}
+) {
+  throw new Error('🚧 Work in progress!');
 }
 
 /**

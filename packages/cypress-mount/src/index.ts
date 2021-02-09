@@ -4,5 +4,6 @@ export {
   setupAndMount,
   mount,
   mountStory,
+  mountV2,
   mountWithConfig,
 } from './lib/cypress-mount';
