@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.4.0](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.3.2...cypress-mount-0.4.0) (2021-02-09)
+
+
+### Features
+
+* **cypress-mount:** ✅ add mountStory ([7fd83f4](https://github.com/jscutlery/test-utils/commit/7fd83f4678cdc5355c357603388591a71ad14e33))
+
+
+
 ## [0.3.2](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.3.1...cypress-mount-0.3.2) (2021-02-09)
 
 
