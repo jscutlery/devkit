@@ -43,7 +43,7 @@ describe('cypress-harness', () => {
     mountWithConfig(TestedComponent, {
       styles: [
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        require('!css-loader!@angular/material/prebuilt-themes/deeppurple-amber.css').toString(),
+        require('!css-loader!@angular/material/prebuilt-themes/deeppurple-amber.css').default.toString(),
       ],
       imports: [TestedModule],
     })

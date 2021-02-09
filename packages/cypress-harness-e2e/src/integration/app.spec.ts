@@ -2,7 +2,7 @@ import { ComponentHarness } from '@angular/cdk/testing';
 import { getHarness } from '@jscutlery/cypress-harness';
 
 export class TitleHarness extends ComponentHarness {
-  static hostSelector = 'h1';
+  static hostSelector = 'jc-sandbox-title';
 
   async text() {
     return (await this.host()).text();
