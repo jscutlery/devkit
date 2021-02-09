@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.2.0](https://github.com/jscutlery/test-utils/compare/cypress-angular-preprocessor-0.1.0...cypress-angular-preprocessor-0.2.0) (2021-02-09)
+
+
+### Features
+
+* **cypress-angular-preprocessor:** ✅ handle styleUrls ([e315c04](https://github.com/jscutlery/test-utils/commit/e315c04b778379c3e275e166549edcf997c0b329))
+
+
+
 # 0.1.0 (2021-02-09)
 
 
