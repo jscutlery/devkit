@@ -27,12 +27,6 @@ describe('preprocessor', () => {
       })
     ).toEqual(filePreprocessor);
 
-    expect(mockAngularCompilerPlugin).toBeCalledTimes(1);
-    expect(mockAngularCompilerPlugin).toBeCalledWith({
-      directTemplateLoading: true,
-      sourceMap: true,
-      tsConfigPath: '/packages/lib-e2e/tsconfig.e2e.json',
-    });
     expect(webpackPreprocessor).toBeCalledTimes(1);
     expect(webpackPreprocessor).toBeCalledWith({
       webpackOptions: {
@@ -49,6 +43,19 @@ describe('preprocessor', () => {
           ],
         },
       },
+    });
+  });
+
+  it('should create angular compiler with the right options', () => {
+    angularPreprocessor({
+      projectRoot: '/packages/lib-e2e',
+    });
+
+    expect(mockAngularCompilerPlugin).toBeCalledTimes(1);
+    expect(mockAngularCompilerPlugin).toBeCalledWith({
+      directTemplateLoading: true,
+      sourceMap: true,
+      tsConfigPath: '/packages/lib-e2e/tsconfig.e2e.json',
     });
   });
 
