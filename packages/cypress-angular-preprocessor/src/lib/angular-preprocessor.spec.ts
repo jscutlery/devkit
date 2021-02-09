@@ -75,6 +75,7 @@ describe('preprocessor', () => {
       expect(mockAngularCompilerPlugin).toBeCalledTimes(1);
       expect(mockAngularCompilerPlugin).toBeCalledWith({
         directTemplateLoading: true,
+        forkTypeChecker: true,
         sourceMap: true,
         tsConfigPath: '/packages/lib-e2e/tsconfig.e2e.json',
       });
