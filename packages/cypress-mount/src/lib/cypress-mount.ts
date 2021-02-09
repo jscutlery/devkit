@@ -1,6 +1,8 @@
-import { Story } from '@storybook/angular';
-import { Component, SchemaMetadata, StaticProvider, Type } from '@angular/core';
+import { Component, NgModule, PlatformRef, Type } from '@angular/core';
 import { TestModuleMetadata } from '@angular/core/testing';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { Story } from '@storybook/angular';
 import {
   initEnv,
   mount as cypressMount,
@@ -66,6 +68,8 @@ export function mountStory(story: Story) {
   });
 }
 
+let platformRef: PlatformRef;
+
 /**
  * This will replace both `mount` and `setupAndMount`
  * so we won't need `cypress-angular-unit-test` anymore.
@@ -74,14 +78,37 @@ export function mountStory(story: Story) {
 export function mountV2(
   component: Type<unknown>,
   config: {
-    declarations?: Type<unknown>[];
     imports?: Type<unknown>[];
-    inputs?: { [key: string]: unknown };
-    providers?: StaticProvider[];
-    schemas?: SchemaMetadata[];
+    // inputs?: { [key: string]: unknown };
+    // providers?: StaticProvider[];
+    // schemas?: SchemaMetadata[];
   } = {}
 ) {
-  throw new Error('🚧 Work in progress!');
+  const { ...moduleMetadata } = config;
+
+  @Component({
+    selector: '#root',
+    template: `<ng-container *ngComponentOutlet="component"></ng-container>`,
+  })
+  class ContainerComponent {
+    component = component;
+  }
+
+  @NgModule({
+    ...moduleMetadata,
+    bootstrap: [ContainerComponent],
+    declarations: [ContainerComponent],
+    imports: [BrowserModule],
+  })
+  class ContainerModule {}
+
+  /* Destroy existing platform. */
+  if (platformRef != null) {
+    platformRef.destroy();
+  }
+
+  platformRef = platformBrowserDynamic();
+  platformRef.bootstrapModule(ContainerModule);
 }
 
 /**

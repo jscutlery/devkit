@@ -47,33 +47,6 @@ describe('setupAndMount', () => {
   });
 });
 
-describe('mountV2', () => {
-  xit('🚧 should handle dependency injection', () => {
-    mountV2(HelloDIComponent, {
-      imports: [HelloDIModule],
-    });
-    cy.contains('JSCutlery');
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  xit('🚧 should handle providers', () => {});
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  xit('🚧 should handle inputs', () => {});
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  xit('🚧 should handle global styles', () => {});
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  xit('🚧 should handle templateUrl', () => {});
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  xit('🚧 should handle styleUrls', () => {});
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  xit('🚧 should handle scss', () => {});
-});
-
 /**
  * @see {@link https://github.com/ComponentDriven/csf }
  */
