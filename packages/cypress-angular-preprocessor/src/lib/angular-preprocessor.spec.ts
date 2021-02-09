@@ -51,4 +51,25 @@ describe('preprocessor', () => {
       },
     });
   });
+
+  it('should extend angular compiler options', () => {
+    angularPreprocessor(
+      {
+        projectRoot: '/packages/lib-e2e',
+      },
+      {
+        angularCompilerOptions: {
+          directTemplateLoading: false,
+        },
+      }
+    );
+
+    expect(mockAngularCompilerPlugin).toBeCalledTimes(1);
+    expect(mockAngularCompilerPlugin).toBeCalledWith(
+      expect.objectContaining({
+        directTemplateLoading: false,
+        sourceMap: true,
+      })
+    );
+  });
 });

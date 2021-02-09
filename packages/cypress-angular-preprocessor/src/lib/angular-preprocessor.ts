@@ -1,18 +1,22 @@
 import * as webpackPreprocessor from '@cypress/webpack-preprocessor';
 import {
   AngularCompilerPlugin,
-  AngularCompilerPluginOptions
+  AngularCompilerPluginOptions,
 } from '@ngtools/webpack';
 import { resolve } from 'path';
 
 /**
- * @param config Cypress config
+ * @param cypressConfig Cypress config
  * @param angularCompilerOptions Angular compiler options.
  * Cf. {@link https://github.com/angular/angular-cli/tree/master/packages/ngtools/webpack#options}
  */
 export function angularPreprocessor(
-  config,
-  angularCompilerOptions?: AngularCompilerPluginOptions
+  cypressConfig,
+  {
+    angularCompilerOptions = {},
+  }: {
+    angularCompilerOptions?: Partial<AngularCompilerPluginOptions>;
+  } = {}
 ) {
   return webpackPreprocessor({
     webpackOptions: {
@@ -30,7 +34,7 @@ export function angularPreprocessor(
       plugins: [
         new AngularCompilerPlugin({
           directTemplateLoading: true,
-          tsConfigPath: resolve(config.projectRoot, 'tsconfig.e2e.json'),
+          tsConfigPath: resolve(cypressConfig.projectRoot, 'tsconfig.e2e.json'),
           sourceMap: true,
           ...angularCompilerOptions,
         }),
