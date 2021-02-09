@@ -14,14 +14,16 @@ It will help you enjoy both the benefits of unit-tests isolation and Cypress too
 
 ### 0. Use NX
 
-Cypress Component Testing *(and everything else)* is easier with [Nx](https://nx.dev/latest/angular/getting-started/why-nx).
+Cypress Component Testing _(and everything else)_ is easier with [Nx](https://nx.dev/latest/angular/getting-started/why-nx).
 
 If you are writing a new app, you can create a Nx workspace with the following command:
+
 ```shell
 yarn create nx-workspace # or npm init nx-workspace
 ```
 
 ... otherwise, you can migrate to Nx using:
+
 ```shell
 ng add @nrwl/workspace
 ```
@@ -54,6 +56,18 @@ npm install -D @jscutlery/cypress-mount cypress-angular-unit-test
 import '@jscutlery/cypress-mount/support';
 ```
 
+2.c. Setup Angular preprocessor in `*-e2e/src/plugins/index.js`, in order to build angular components (e.g. handle templateUrl etc...):
+
+```ts
+const {
+  angularPreprocessor,
+} = require('@jscutlery/cypress-angular-preprocessor');
+
+module.exports = (on, config) => {
+  on('file:preprocessor', angularPreprocessor(config));
+};
+```
+
 ## Usage
 
 Add your `.spec.ts` files in the e2e folder's `*-e2e/src/components`:
@@ -62,10 +76,8 @@ Add your `.spec.ts` files in the e2e folder's `*-e2e/src/components`:
 describe('HelloCompanent', () => {
   beforeEach(() => {
     setupAndMount(HelloComponent, {
-      styles: [
-        `body { background: purple}`
-      ],
-      imports: [HelloModule]
+      styles: [`body { background: purple}`],
+      imports: [HelloModule],
     });
   });
 
