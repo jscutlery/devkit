@@ -1,23 +1,21 @@
-import { Story } from '@storybook/angular';
-import {
-  HelloTemplateUrlComponent,
-  HelloTemplateUrlModule,
-} from './../fixtures/hello-template-url.component';
 import { mountStory, setupAndMount } from '@jscutlery/cypress-mount';
-
 import {
   HelloDIComponent,
   HelloDIModule,
 } from '../fixtures/hello-dependency-injection.component';
 import {
-  HelloStyleUrlsComponent,
-  HelloStyleUrlsModule,
-} from '../fixtures/hello-style-urls.component';
-import {
   HelloScssComponent,
   HelloScssModule,
 } from '../fixtures/hello-scss.component';
+import {
+  HelloStyleUrlsComponent,
+  HelloStyleUrlsModule,
+} from '../fixtures/hello-style-urls.component';
 import { Basic, WithName } from '../fixtures/hello.stories';
+import {
+  HelloTemplateUrlComponent,
+  HelloTemplateUrlModule,
+} from './../fixtures/hello-template-url.component';
 
 describe('@jscutlery/cypress-mount', () => {
   it('should handle dependency injection', () => {
