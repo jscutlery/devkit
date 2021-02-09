@@ -3,21 +3,32 @@ import {
   AngularCompilerPlugin,
   AngularCompilerPluginOptions,
 } from '@ngtools/webpack';
+import { EventEmitter } from 'events';
 
 /**
- * @param cypressConfig Cypress config
- * @param angularCompilerOptions Angular compiler options.
- * Cf. {@link https://github.com/angular/angular-cli/tree/master/packages/ngtools/webpack#options}
+ * Duplicate of {@link https://github.com/cypress-io/cypress/blob/5e05495abc4c7c5b95eebff90d9c763db7fe726d/npm/webpack-preprocessor/index.ts#L101}
+ * meanwhile issue {@link https://github.com/cypress-io/cypress/issues/9569} is resolved.
  */
-export function angularPreprocessor(
+export interface FileEvent extends EventEmitter {
+  filePath: string;
+  outputPath: string;
+  shouldWatch: boolean;
+}
+/**
+ * Duplicate of {@link https://github.com/cypress-io/cypress/blob/5e05495abc4c7c5b95eebff90d9c763db7fe726d/npm/webpack-preprocessor/index.ts#L111}
+ * meanwhile issue {@link https://github.com/cypress-io/cypress/issues/9569} is resolved.
+ */
+export type FilePreprocessor = (fileEvent: FileEvent) => Promise<string>;
+
+export const angularPreprocessor = (
   cypressConfig,
   {
     angularCompilerOptions = {},
   }: {
     angularCompilerOptions?: Partial<AngularCompilerPluginOptions>;
   } = {}
-) {
-  return webpackPreprocessor({
+): FilePreprocessor => async (fileEvent) => {
+  const filePreprocessor = webpackPreprocessor({
     webpackOptions: {
       resolve: {
         extensions: ['.js', '.ts'],
@@ -49,8 +60,6 @@ export function angularPreprocessor(
         }),
       ],
     },
-    /* @hack fixes error TS4058: Return type of exported function has or is using name
-     * 'FileEvent' from external module "/node_modules/@cypress/webpack-preprocessor/dist/index"
-     * but cannot be named. */
-  }) as unknown;
-}
+  });
+  return filePreprocessor(fileEvent);
+};
