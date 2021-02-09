@@ -1,3 +1,4 @@
+import { Story } from '@storybook/angular';
 import { Component, Type } from '@angular/core';
 import { TestModuleMetadata } from '@angular/core/testing';
 import {
@@ -47,6 +48,22 @@ export function setupAndMount(
     setup(config);
   }
   mount(component, { inputs });
+}
+
+/**
+ * Mount a component from a Storybook story.
+ *
+ * @param story a story in Storybook format.
+ */
+export function mountStory(story: Story) {
+  const args = story.args;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { component, moduleMetadata } = story({ args }, { args } as any);
+  setupAndMount(component, {
+    ...moduleMetadata,
+    inputs: args,
+  });
 }
 
 /**

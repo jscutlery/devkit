@@ -3,5 +3,6 @@ export {
   setup,
   setupAndMount,
   mount,
-  mountWithConfig
+  mountStory,
+  mountWithConfig,
 } from './lib/cypress-mount';

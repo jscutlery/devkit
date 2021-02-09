@@ -1,8 +1,9 @@
+import { Story } from '@storybook/angular';
 import {
   HelloTemplateUrlComponent,
   HelloTemplateUrlModule,
 } from './../fixtures/hello-template-url.component';
-import { setupAndMount } from '@jscutlery/cypress-mount';
+import { mountStory, setupAndMount } from '@jscutlery/cypress-mount';
 
 import {
   HelloDIComponent,
@@ -16,6 +17,7 @@ import {
   HelloScssComponent,
   HelloScssModule,
 } from '../fixtures/hello-scss.component';
+import { Basic, WithName } from '../fixtures/hello.stories';
 
 describe('@jscutlery/cypress-mount', () => {
   it('should handle dependency injection', () => {
@@ -44,5 +46,21 @@ describe('@jscutlery/cypress-mount', () => {
       imports: [HelloScssModule],
     });
     cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
+  });
+
+  /**
+   * @see {@link https://github.com/ComponentDriven/csf }
+   */
+  it('should handle Component Story Format', () => {
+    mountStory(Basic);
+    cy.contains('Hello');
+  });
+
+  /**
+   * @see {@link https://github.com/ComponentDriven/csf }
+   */
+  it('should handle Component Story Format with args', () => {
+    mountStory(WithName);
+    cy.contains('Hello JSCutlery');
   });
 });

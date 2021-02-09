@@ -86,3 +86,19 @@ describe('HelloCompanent', () => {
   });
 });
 ```
+
+## Storybook (and Component Story Format) support
+
+You can also mount Storybook stories:
+
+```ts
+import { Default } from './hello.stories.ts';
+
+describe('HelloCompanent', () => {
+  beforeEach(() => mountStory(Default));
+
+  it('should show some love', () => {
+    cy.get('h1').contains('❤️');
+  });
+});
+```

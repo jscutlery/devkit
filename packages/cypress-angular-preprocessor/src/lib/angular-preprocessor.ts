@@ -56,6 +56,7 @@ export const angularPreprocessor = (
           directTemplateLoading: true,
           tsConfigPath: cypressConfig.env.tsConfig,
           sourceMap: true,
+          forkTypeChecker: true,
           ...angularCompilerOptions,
         }),
       ],
