@@ -34,8 +34,12 @@ describe('setupAndMount', () => {
       cy.contains('🚀');
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    xit('🚧 should handle global styles', () => {});
+    it('should handle global styles', () => {
+      mountV2(HelloComponent, {
+        styles: [`body { color: red }`],
+      });
+      cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     xit('🚧 should render template', () => {});

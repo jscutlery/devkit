@@ -4,6 +4,7 @@ import {
   PlatformRef,
   StaticProvider,
   Type,
+  ViewEncapsulation,
 } from '@angular/core';
 import { TestModuleMetadata } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
@@ -81,7 +82,8 @@ export interface MountConfig {
   imports?: Type<unknown>[];
   providers?: StaticProvider[];
   inputs?: { [key: string]: unknown };
-  // schemas?: SchemaMetadata[];
+  styles?: string[];
+  // @todo schemas?: SchemaMetadata[];
 }
 
 /**
@@ -111,6 +113,7 @@ export function _createContainerModule({
   inputs = {},
   imports = [],
   providers = [],
+  styles = [],
 }: {
   component: Type<unknown>;
 } & MountConfig) {
@@ -118,7 +121,10 @@ export function _createContainerModule({
    *   NG0303: Can't bind to 'ngComponentOutlet' since it isn't a known property of 'ng-container'.
    * because `ContainerModule` is also bypassing AOT. */
   const ContainerComponent = Component({
+    /* Make sure that styles are applied globally. */
+    encapsulation: ViewEncapsulation.None,
     selector: '#root',
+    styles,
     template: `<ng-container
     *ngComponentOutlet="component; ndcDynamicInputs: inputs"
   ></ng-container>`,
