@@ -1,6 +1,9 @@
-import { AppInfo } from './../fixtures/hello-dependency-injection.component';
+import { HelloStyleUrlsComponent } from './../fixtures/hello-style-urls.component';
 import { mountV2 } from '@jscutlery/cypress-mount';
 import { HelloDIComponent } from '../fixtures/hello-dependency-injection.component';
+import { AppInfo } from './../fixtures/hello-dependency-injection.component';
+import { HelloScssComponent } from './../fixtures/hello-scss.component';
+import { HelloTemplateUrlComponent } from './../fixtures/hello-template-url.component';
 
 describe('setupAndMount', () => {
   describe('mountV2', () => {
@@ -30,13 +33,19 @@ describe('setupAndMount', () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     xit('🚧 should render template', () => {});
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    xit('🚧 should handle templateUrl', () => {});
+    it('should handle templateUrl', () => {
+      mountV2(HelloTemplateUrlComponent);
+      cy.contains('JSCutlery');
+    });
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    xit('🚧 should handle styleUrls', () => {});
+    it('should handle styleUrls', () => {
+      mountV2(HelloStyleUrlsComponent);
+      cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
+    });
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    xit('🚧 should handle scss', () => {});
+    it('should handle scss', () => {
+      mountV2(HelloScssComponent);
+      cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
+    });
   });
 });
