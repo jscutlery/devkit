@@ -1,15 +1,10 @@
 import { mountV2 } from '@jscutlery/cypress-mount';
-import {
-  HelloDIComponent,
-  HelloDIModule,
-} from '../fixtures/hello-dependency-injection.component';
+import { HelloDIComponent } from '../fixtures/hello-dependency-injection.component';
 
 describe('setupAndMount', () => {
   describe('mountV2', () => {
     it('🚧 should handle dependency injection', () => {
-      mountV2(HelloDIComponent, {
-        imports: [HelloDIModule],
-      });
+      mountV2(HelloDIComponent);
       cy.contains('JSCutlery');
     });
 

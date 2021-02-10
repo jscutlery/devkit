@@ -6,7 +6,7 @@ import { Story } from '@storybook/angular';
 import {
   initEnv,
   mount as cypressMount,
-  setConfig,
+  setConfig
 } from 'cypress-angular-unit-test/dist';
 
 /**
@@ -84,31 +84,53 @@ export function mountV2(
     // schemas?: SchemaMetadata[];
   } = {}
 ) {
-  const { ...moduleMetadata } = config;
-
-  @Component({
-    selector: '#root',
-    template: `<ng-container *ngComponentOutlet="component"></ng-container>`,
-  })
-  class ContainerComponent {
-    component = component;
-  }
-
-  @NgModule({
-    ...moduleMetadata,
-    bootstrap: [ContainerComponent],
-    declarations: [ContainerComponent],
-    imports: [BrowserModule],
-  })
-  class ContainerModule {}
+  const { imports = [] } = config;
 
   /* Destroy existing platform. */
   if (platformRef != null) {
     platformRef.destroy();
   }
 
+  const ContainerModule = _createContainerModule({ component, imports });
   platformRef = platformBrowserDynamic();
-  platformRef.bootstrapModule(ContainerModule);
+  platformRef.bootstrapModule(ContainerModule, {
+    useJit: true,
+  });
+}
+
+/**
+ * Create a root module to bootstrap on.
+ */
+export function _createContainerModule({
+  component,
+  imports,
+}: {
+  component: Type<unknown>;
+  imports: Type<unknown>[];
+}) {
+  /* Decorate component manually to avoid runtime error:
+   *   NG0303: Can't bind to 'ngComponentOutlet' since it isn't a known property of 'ng-container'.
+   * because `ContainerModule` is also bypassing AOT. */
+  const ContainerComponent = Component({
+    selector: '#root',
+    template: `<ng-container *ngComponentOutlet="component"></ng-container>`,
+  })(
+    class {
+      component = component;
+    }
+  );
+
+  /* Decorate module manually to avoid AOT errors like:
+   *   NG1010: Value at position 1 in the NgModule.imports of ContainerModule is not a reference
+   *   Value could not be determined statically..
+   * as we want to be able to add imports dynamically. */
+  const ContainerModule = NgModule({
+    bootstrap: [ContainerComponent],
+    declarations: [ContainerComponent],
+    imports: [BrowserModule, ...imports],
+  })(class {});
+
+  return ContainerModule;
 }
 
 /**
