@@ -1,6 +1,15 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
+
+## [0.2.1](https://github.com/jscutlery/test-utils/compare/cypress-harness-0.2.0...cypress-harness-0.2.1) (2021-02-10)
+
+
+### Bug Fixes
+
+* **cypress-harness:** 🐞 support cypress-mount 0.5.0 ([07877e5](https://github.com/jscutlery/test-utils/commit/07877e524adabcf2b693c898a17b0fd5d977d3b8))
+
+
 
 # 0.2.0 (2021-01-04)
 
