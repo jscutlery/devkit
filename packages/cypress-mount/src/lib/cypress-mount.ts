@@ -2,6 +2,7 @@ import {
   Component,
   NgModule,
   PlatformRef,
+  SchemaMetadata,
   StaticProvider,
   Type,
   ViewEncapsulation,
@@ -83,7 +84,7 @@ export interface MountConfig {
   providers?: StaticProvider[];
   inputs?: { [key: string]: unknown };
   styles?: string[];
-  // @todo schemas?: SchemaMetadata[];
+  schemas?: SchemaMetadata[];
 }
 
 /**
@@ -114,6 +115,7 @@ export function _createContainerModule({
   imports = [],
   providers = [],
   styles = [],
+  schemas = [],
 }: {
   component: Type<unknown>;
 } & MountConfig) {
@@ -144,6 +146,7 @@ export function _createContainerModule({
     declarations: [ContainerComponent],
     imports: [BrowserModule, DynamicModule, ...imports],
     providers,
+    schemas,
   })(class {});
 
   return ContainerModule;
