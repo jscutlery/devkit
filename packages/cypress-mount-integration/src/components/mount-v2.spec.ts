@@ -1,8 +1,9 @@
-import { HelloStyleUrlsComponent } from './../fixtures/hello-style-urls.component';
 import { mountV2 } from '@jscutlery/cypress-mount';
 import { HelloDIComponent } from '../fixtures/hello-dependency-injection.component';
+import { HelloComponent } from '../fixtures/hello.component';
 import { AppInfo } from './../fixtures/hello-dependency-injection.component';
 import { HelloScssComponent } from './../fixtures/hello-scss.component';
+import { HelloStyleUrlsComponent } from './../fixtures/hello-style-urls.component';
 import { HelloTemplateUrlComponent } from './../fixtures/hello-template-url.component';
 
 describe('setupAndMount', () => {
@@ -17,15 +18,21 @@ describe('setupAndMount', () => {
         providers: [
           {
             provide: AppInfo,
-            useValue: { title: '🏴‍☠️' },
+            useValue: { title: '💉' },
           },
         ],
       });
-      cy.contains('🏴‍☠️');
+      cy.contains('💉');
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    xit('🚧 should handle inputs', () => {});
+    it('should handle inputs', () => {
+      mountV2(HelloComponent, {
+        inputs: {
+          name: '🚀',
+        },
+      });
+      cy.contains('🚀');
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     xit('🚧 should handle global styles', () => {});

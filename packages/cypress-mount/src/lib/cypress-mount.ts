@@ -14,6 +14,7 @@ import {
   mount as cypressMount,
   setConfig,
 } from 'cypress-angular-unit-test/dist';
+import { DynamicModule } from 'ng-dynamic-component';
 
 /**
  * This is a stupid hack meanwhile we fix this issue
@@ -79,7 +80,7 @@ let platformRef: PlatformRef;
 export interface MountConfig {
   imports?: Type<unknown>[];
   providers?: StaticProvider[];
-  // inputs?: { [key: string]: unknown };
+  inputs?: { [key: string]: unknown };
   // schemas?: SchemaMetadata[];
 }
 
@@ -107,6 +108,7 @@ export function mountV2(component: Type<unknown>, config: MountConfig = {}) {
  */
 export function _createContainerModule({
   component,
+  inputs = {},
   imports = [],
   providers = [],
 }: {
@@ -117,10 +119,13 @@ export function _createContainerModule({
    * because `ContainerModule` is also bypassing AOT. */
   const ContainerComponent = Component({
     selector: '#root',
-    template: `<ng-container *ngComponentOutlet="component"></ng-container>`,
+    template: `<ng-container
+    *ngComponentOutlet="component; ndcDynamicInputs: inputs"
+  ></ng-container>`,
   })(
     class {
       component = component;
+      inputs = inputs;
     }
   );
 
@@ -131,7 +136,7 @@ export function _createContainerModule({
   const ContainerModule = NgModule({
     bootstrap: [ContainerComponent],
     declarations: [ContainerComponent],
-    imports: [BrowserModule, ...imports],
+    imports: [BrowserModule, DynamicModule, ...imports],
     providers,
   })(class {});
 
