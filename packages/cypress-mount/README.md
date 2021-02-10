@@ -1,6 +1,6 @@
 # Cypress Mount
 
-This is a thin wrapper around [cypress-angular-unit-test](https://github.com/bahmutov/cypress-angular-unit-test) aiming to provide a more convenient API.
+This module brings Angular support to [Cypress Component Testing](https://docs.cypress.io/guides/component-testing/introduction.html#What-is-Cypress-Component-Testing).
 
 It is aiming to make Cypress Component Testing with Angular easier than writing code without tests 😜.
 
@@ -31,11 +31,11 @@ ng add @nrwl/workspace
 ### 1. Install
 
 ```shell
-yarn add -D @jscutlery/cypress-mount cypress-angular-unit-test
+yarn add -D @jscutlery/cypress-mount
 
 # or
 
-npm install -D @jscutlery/cypress-mount cypress-angular-unit-test
+npm install -D @jscutlery/cypress-mount
 ```
 
 ### 2. Enable Cypress Component Testing

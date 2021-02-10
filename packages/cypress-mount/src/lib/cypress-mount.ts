@@ -11,55 +11,7 @@ import { TestModuleMetadata } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { Story } from '@storybook/angular';
-import {
-  initEnv,
-  mount as cypressMount,
-  setConfig,
-} from 'cypress-angular-unit-test/dist';
 import { DynamicModule } from 'ng-dynamic-component';
-
-/**
- * This is a stupid hack meanwhile we fix this issue
- * https://github.com/bahmutov/cypress-angular-unit-test/issues/248
- */
-@Component({
-  selector: 'noop',
-  template: `noop`,
-})
-export class NoopComponent {}
-
-export interface Config extends TestModuleMetadata {
-  detectChanges?: boolean;
-  styles?: string[];
-}
-
-export function setup(config: Config) {
-  const { detectChanges = true, styles, ...moduleDef } = config;
-
-  setConfig({
-    detectChanges,
-    styles,
-  });
-  initEnv(NoopComponent, moduleDef);
-}
-
-export function mount(
-  component: Type<unknown>,
-  config: { inputs?: { [key: string]: unknown } } = {}
-) {
-  cypressMount(component, config.inputs);
-}
-
-export function setupAndMount(
-  component: Type<unknown>,
-  config: Config & { inputs?: { [key: string]: unknown } } = {}
-) {
-  const { inputs, ...rest } = config;
-  if (Object.keys(rest).length > 0) {
-    setup(config);
-  }
-  mount(component, { inputs });
-}
 
 /**
  * Mount a component from a Storybook story.
@@ -71,7 +23,7 @@ export function mountStory(story: Story) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { component, moduleMetadata } = story({ args }, { args } as any);
-  setupAndMount(component, {
+  mountV2(component, {
     ...moduleMetadata,
     inputs: args,
   });
@@ -88,8 +40,7 @@ export interface MountConfig {
 }
 
 /**
- * This will replace both `mount` and `setupAndMount`
- * so we won't need `cypress-angular-unit-test` anymore.
+ * This will replace both `mount` and `setupAndMount`.
  * @deprecated 🚧 Work in progress.
  */
 export function mountV2(component: Type<unknown>, config: MountConfig = {}) {
@@ -162,4 +113,32 @@ export function mountWithConfig(
   ...args: Parameters<typeof setupAndMount>
 ): ReturnType<typeof setupAndMount> {
   return setupAndMount(...args);
+}
+
+export interface Config extends TestModuleMetadata {
+  detectChanges?: boolean;
+  styles?: string[];
+}
+
+/**
+ * @todo remove this: this is just a transitional hack to mountV2.
+ * @sunset 1.0.0
+ */
+let _legacyGlobalConfig: Config;
+
+export function setup(config: Config) {
+  _legacyGlobalConfig = config;
+}
+
+export function mount(component: Type<unknown>, config: MountConfig = {}) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mountV2(component, { ..._legacyGlobalConfig, ...config } as any);
+}
+
+export function setupAndMount(
+  component: Type<unknown>,
+  config: Config & { inputs?: { [key: string]: unknown } } = {}
+) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mountV2(component, config as any);
 }
