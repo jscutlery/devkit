@@ -76,31 +76,27 @@ export function mountStory(story: Story) {
 
 let platformRef: PlatformRef;
 
+export interface MountConfig {
+  imports?: Type<unknown>[];
+  providers?: StaticProvider[];
+  // inputs?: { [key: string]: unknown };
+  // schemas?: SchemaMetadata[];
+}
+
 /**
  * This will replace both `mount` and `setupAndMount`
  * so we won't need `cypress-angular-unit-test` anymore.
  * @deprecated 🚧 Work in progress.
  */
-export function mountV2(
-  component: Type<unknown>,
-  config: {
-    imports?: Type<unknown>[];
-    providers?: StaticProvider[];
-    // inputs?: { [key: string]: unknown };
-    // schemas?: SchemaMetadata[];
-  } = {}
-) {
-  const { imports = [], providers = [] } = config;
-
+export function mountV2(component: Type<unknown>, config: MountConfig = {}) {
   /* Destroy existing platform. */
   if (platformRef != null) {
     platformRef.destroy();
   }
 
   const ContainerModule = _createContainerModule({
+    ...config,
     component,
-    imports,
-    providers,
   });
   platformRef = platformBrowserDynamic();
   platformRef.bootstrapModule(ContainerModule);
@@ -111,13 +107,11 @@ export function mountV2(
  */
 export function _createContainerModule({
   component,
-  imports,
-  providers,
+  imports = [],
+  providers = [],
 }: {
   component: Type<unknown>;
-  imports: Type<unknown>[];
-  providers: StaticProvider[];
-}) {
+} & MountConfig) {
   /* Decorate component manually to avoid runtime error:
    *   NG0303: Can't bind to 'ngComponentOutlet' since it isn't a known property of 'ng-container'.
    * because `ContainerModule` is also bypassing AOT. */
