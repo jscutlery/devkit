@@ -31,11 +31,11 @@ ng add @nrwl/workspace
 ### 1. Install
 
 ```shell
-yarn add -D @jscutlery/cypress-mount
+yarn add -D @jscutlery/cypress-mount @jscutlery/cypress-angular-preprocessor
 
 # or
 
-npm install -D @jscutlery/cypress-mount
+npm install -D @jscutlery/cypress-mount @jscutlery/cypress-angular-preprocessor
 ```
 
 ### 2. Enable Cypress Component Testing
@@ -75,7 +75,7 @@ Add your `.spec.ts` files in the e2e folder's `*-e2e/src/components`:
 ```ts
 describe('HelloCompanent', () => {
   beforeEach(() => {
-    setupAndMount(HelloComponent, {
+    mount(HelloComponent, {
       styles: [`body { background: purple}`],
       imports: [HelloModule],
     });
