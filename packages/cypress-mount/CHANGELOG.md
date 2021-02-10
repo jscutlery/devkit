@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.5.0](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.4.0...cypress-mount-0.5.0) (2021-02-10)
+
+
+### Features
+
+* **cypress-mount:** ✅ bootstrap app instead of using TestBed ([bf7015f](https://github.com/jscutlery/test-utils/commit/bf7015fc9a7c7006bda1aaa51cbbadc476e8628c))
+
+
+
 # [0.4.0](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.3.2...cypress-mount-0.4.0) (2021-02-09)
 
 
