@@ -18,6 +18,9 @@ describe('setupAndMount', () => {
     xit('🚧 should handle global styles', () => {});
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
+    xit('🚧 should render template', () => {});
+
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     xit('🚧 should handle templateUrl', () => {});
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
