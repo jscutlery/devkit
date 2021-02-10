@@ -6,7 +6,7 @@ import { Story } from '@storybook/angular';
 import {
   initEnv,
   mount as cypressMount,
-  setConfig
+  setConfig,
 } from 'cypress-angular-unit-test/dist';
 
 /**
@@ -93,9 +93,7 @@ export function mountV2(
 
   const ContainerModule = _createContainerModule({ component, imports });
   platformRef = platformBrowserDynamic();
-  platformRef.bootstrapModule(ContainerModule, {
-    useJit: true,
-  });
+  platformRef.bootstrapModule(ContainerModule);
 }
 
 /**
