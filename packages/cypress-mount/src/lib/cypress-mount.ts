@@ -1,4 +1,10 @@
-import { Component, NgModule, PlatformRef, Type } from '@angular/core';
+import {
+  Component,
+  NgModule,
+  PlatformRef,
+  StaticProvider,
+  Type,
+} from '@angular/core';
 import { TestModuleMetadata } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -79,19 +85,23 @@ export function mountV2(
   component: Type<unknown>,
   config: {
     imports?: Type<unknown>[];
+    providers?: StaticProvider[];
     // inputs?: { [key: string]: unknown };
-    // providers?: StaticProvider[];
     // schemas?: SchemaMetadata[];
   } = {}
 ) {
-  const { imports = [] } = config;
+  const { imports = [], providers = [] } = config;
 
   /* Destroy existing platform. */
   if (platformRef != null) {
     platformRef.destroy();
   }
 
-  const ContainerModule = _createContainerModule({ component, imports });
+  const ContainerModule = _createContainerModule({
+    component,
+    imports,
+    providers,
+  });
   platformRef = platformBrowserDynamic();
   platformRef.bootstrapModule(ContainerModule);
 }
@@ -102,9 +112,11 @@ export function mountV2(
 export function _createContainerModule({
   component,
   imports,
+  providers,
 }: {
   component: Type<unknown>;
   imports: Type<unknown>[];
+  providers: StaticProvider[];
 }) {
   /* Decorate component manually to avoid runtime error:
    *   NG0303: Can't bind to 'ngComponentOutlet' since it isn't a known property of 'ng-container'.
@@ -126,6 +138,7 @@ export function _createContainerModule({
     bootstrap: [ContainerComponent],
     declarations: [ContainerComponent],
     imports: [BrowserModule, ...imports],
+    providers,
   })(class {});
 
   return ContainerModule;

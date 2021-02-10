@@ -1,15 +1,25 @@
+import { AppInfo } from './../fixtures/hello-dependency-injection.component';
 import { mountV2 } from '@jscutlery/cypress-mount';
 import { HelloDIComponent } from '../fixtures/hello-dependency-injection.component';
 
 describe('setupAndMount', () => {
   describe('mountV2', () => {
-    it('🚧 should handle dependency injection', () => {
+    it('should handle dependency injection', () => {
       mountV2(HelloDIComponent);
       cy.contains('JSCutlery');
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    xit('🚧 should handle providers', () => {});
+    it('should handle providers', () => {
+      mountV2(HelloDIComponent, {
+        providers: [
+          {
+            provide: AppInfo,
+            useValue: { title: '🏴‍☠️' },
+          },
+        ],
+      });
+      cy.contains('🏴‍☠️');
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     xit('🚧 should handle inputs', () => {});
