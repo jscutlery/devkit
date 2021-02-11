@@ -10,7 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { getAllHarnesses, getHarness } from '@jscutlery/cypress-harness';
-import { mountWithConfig } from '@jscutlery/cypress-mount';
+import { mount } from '@jscutlery/cypress-mount';
 
 @Component({
   template: `<mat-form-field>
@@ -40,7 +40,7 @@ describe('cypress-harness', () => {
   const datepicker = MatDatepickerInputHarness;
 
   beforeEach(() =>
-    mountWithConfig(TestedComponent, {
+    mount(TestedComponent, {
       styles: [
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         require('!css-loader!@angular/material/prebuilt-themes/deeppurple-amber.css').default.toString(),

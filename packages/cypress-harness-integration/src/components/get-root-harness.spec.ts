@@ -1,7 +1,7 @@
 import { ComponentHarness } from '@angular/cdk/testing';
 import { Component } from '@angular/core';
 import { getRootHarness } from '@jscutlery/cypress-harness';
-import { mountWithConfig } from '@jscutlery/cypress-mount';
+import { mount } from '@jscutlery/cypress-mount';
 
 @Component({
   selector: 'jc-tested',
@@ -25,9 +25,7 @@ export class TestedHarness extends ComponentHarness {
 
 describe('cypress-harness', () => {
   beforeEach(() => {
-    mountWithConfig(TestedComponent, {
-      declarations: [TestedComponent],
-    });
+    mount(TestedComponent);
   });
 
   it('should setInputValue', () => {
