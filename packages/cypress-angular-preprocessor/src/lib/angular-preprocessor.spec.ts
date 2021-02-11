@@ -45,6 +45,7 @@ describe('preprocessor', () => {
       expect(webpackPreprocessor).toBeCalledTimes(1);
       expect(webpackPreprocessor).toBeCalledWith({
         webpackOptions: {
+          devtool: false,
           plugins: [expect.any(AngularCompilerPlugin)],
           resolve: {
             extensions: ['.js', '.ts'],
@@ -76,7 +77,7 @@ describe('preprocessor', () => {
       expect(mockAngularCompilerPlugin).toBeCalledWith({
         directTemplateLoading: true,
         forkTypeChecker: true,
-        sourceMap: true,
+        sourceMap: false,
         tsConfigPath: '/packages/lib-e2e/tsconfig.e2e.json',
       });
     });
@@ -119,7 +120,6 @@ describe('preprocessor', () => {
       expect(mockAngularCompilerPlugin).toBeCalledWith(
         expect.objectContaining({
           directTemplateLoading: false,
-          sourceMap: true,
         })
       );
     });
