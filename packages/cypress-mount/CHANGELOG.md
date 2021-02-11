@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.6.0](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.5.0...cypress-mount-0.6.0) (2021-02-11)
+
+
+### Features
+
+* **cypress-mount:** ✅ drop support for setup, setupAndMount & mountWithConfig ([f7055d2](https://github.com/jscutlery/test-utils/commit/f7055d2c6e72eac0856602f56a57a79b781d60aa))
+* **cypress-mount:** ✅ mount a template ([b169ece](https://github.com/jscutlery/test-utils/commit/b169ece3995e115761ffaaa36e3be90049cd13f3))
+
+
+
 # [0.5.0](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.4.0...cypress-mount-0.5.0) (2021-02-10)
 
 
