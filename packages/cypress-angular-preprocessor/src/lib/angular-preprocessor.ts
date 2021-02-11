@@ -30,6 +30,8 @@ export const angularPreprocessor = (
 ): FilePreprocessor => async (fileEvent) => {
   const filePreprocessor = webpackPreprocessor({
     webpackOptions: {
+      /* Performance boost. */
+      devtool: false,
       resolve: {
         extensions: ['.js', '.ts'],
       },
@@ -55,7 +57,7 @@ export const angularPreprocessor = (
         new AngularCompilerPlugin({
           directTemplateLoading: true,
           tsConfigPath: cypressConfig.env.tsConfig,
-          sourceMap: true,
+          sourceMap: false,
           forkTypeChecker: true,
           ...angularCompilerOptions,
         }),
