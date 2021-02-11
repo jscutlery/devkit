@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.2](https://github.com/jscutlery/test-utils/compare/cypress-angular-preprocessor-0.4.1...cypress-angular-preprocessor-0.4.2) (2021-02-11)
+
+
+### Bug Fixes
+
+* **cypress-angular-preprocessor:** 🐞 fix slow test reload by disabling sourcemap ([8f19185](https://github.com/jscutlery/test-utils/commit/8f1918504ba29f54e2f41535949c10ab4d3c1048))
+
+
+
 ## [0.4.1](https://github.com/jscutlery/test-utils/compare/cypress-angular-preprocessor-0.4.0...cypress-angular-preprocessor-0.4.1) (2021-02-10)
 
 
