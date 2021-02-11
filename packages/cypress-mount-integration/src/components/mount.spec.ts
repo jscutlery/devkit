@@ -5,6 +5,7 @@ import { AppInfo } from './../fixtures/hello-dependency-injection.component';
 import { HelloScssComponent } from './../fixtures/hello-scss.component';
 import { HelloStyleUrlsComponent } from './../fixtures/hello-style-urls.component';
 import { HelloTemplateUrlComponent } from './../fixtures/hello-template-url.component';
+import { HelloModule } from './../fixtures/hello.component';
 
 describe('mount', () => {
   it('should handle dependency injection', () => {
@@ -40,8 +41,17 @@ describe('mount', () => {
     cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  xit('🚧 should render template', () => {});
+  it('should render template', () => {
+    mount(
+      `<jc-hello name="🚀"></jc-hello>
+       <jc-hello name="🌖"></jc-hello>`,
+      {
+        imports: [HelloModule],
+      }
+    );
+    cy.contains('🚀');
+    cy.contains('🌖');
+  });
 
   it('should handle templateUrl', () => {
     mount(HelloTemplateUrlComponent);

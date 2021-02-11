@@ -5,7 +5,9 @@ import {
   Input,
   NgModule,
 } from '@angular/core';
+
 @Component({
+  selector: 'jc-hello',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<h1>Hello {{ name }}</h1>`,
 })

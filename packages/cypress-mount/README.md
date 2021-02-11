@@ -87,6 +87,22 @@ describe('HelloCompanent', () => {
 });
 ```
 
+## Mount a template
+
+```ts
+describe('HelloCompanent', () => {
+  beforeEach(() => {
+    mount(`<js-hello></js-hello>`, {
+      imports: [HelloModule],
+    });
+  });
+
+  it('should show some love', () => {
+    cy.get('h1').contains('❤️');
+  });
+});
+```
+
 ## Storybook (and Component Story Format) support
 
 You can also mount Storybook stories:

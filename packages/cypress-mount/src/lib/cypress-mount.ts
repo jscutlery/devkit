@@ -30,69 +30,123 @@ export function mountStory(story: Story) {
 
 let platformRef: PlatformRef;
 
-export interface MountConfig {
+export interface BaseMountOptions {
   imports?: Type<unknown>[];
   providers?: StaticProvider[];
-  inputs?: { [key: string]: unknown };
   styles?: string[];
   schemas?: SchemaMetadata[];
 }
 
+export interface MountOptions extends BaseMountOptions {
+  inputs?: { [key: string]: unknown };
+}
+
+export type MountTemplateOptions = BaseMountOptions;
+
 /**
- * Mount given component.
+ * Mount given component or template.
  */
-export function mount(component: Type<unknown>, config: MountConfig = {}) {
+export async function mount(
+  component: Type<unknown>,
+  options?: MountOptions
+): Promise<void>;
+export async function mount(
+  template: string,
+  options?: MountTemplateOptions
+): Promise<void>;
+export async function mount(
+  componentOrTemplate: Type<unknown> | string,
+  options: MountOptions | MountTemplateOptions = {}
+): Promise<void> {
   /* Destroy existing platform. */
   if (platformRef != null) {
     platformRef.destroy();
   }
 
-  const ContainerModule = _createContainerModule({
-    ...config,
-    component,
+  /* Prepare container component metadata which are
+   * the same for mounting a component or template. */
+  const componentMetadata = {
+    /* Make sure that styles are applied globally. */
+    encapsulation: ViewEncapsulation.None,
+    selector: '#root',
+    styles: options.styles,
+  };
+
+  const containerComponent =
+    typeof componentOrTemplate !== 'string'
+      ? /* Component. */
+        _createContainerComponent({
+          componentMetadata: {
+            ...componentMetadata,
+            template: `<ng-container
+            *ngComponentOutlet="component; ndcDynamicInputs: inputs"
+          ></ng-container>`,
+          },
+          klass: class {
+            component = componentOrTemplate;
+            inputs = (options as MountOptions).inputs;
+          },
+        })
+      : /* Template. */
+        _createContainerComponent({
+          componentMetadata: {
+            ...componentMetadata,
+            template: componentOrTemplate,
+          },
+          klass: class {},
+        });
+
+  await _bootstrapComponent({
+    component: containerComponent,
+    ...options,
   });
+}
+
+export function _createContainerComponent({
+  componentMetadata,
+  klass,
+}: {
+  componentMetadata;
+  klass;
+}): Type<unknown> {
+  /* Decorate component manually to avoid runtime error:
+   *   NG0303: Can't bind to 'ngComponentOutlet' since it isn't a known property of 'ng-container'.
+   * because `ContainerModule` is also bypassing AOT. */
+  return Component(componentMetadata)(klass);
+}
+
+export async function _bootstrapComponent(options: {
+  component: Type<unknown>;
+  imports?: Type<unknown>[];
+  providers?: StaticProvider[];
+  schemas?: SchemaMetadata[];
+}) {
+  const module = _createRootModule(options);
   platformRef = platformBrowserDynamic();
-  platformRef.bootstrapModule(ContainerModule);
+  await platformRef.bootstrapModule(module);
 }
 
 /**
  * Create a root module to bootstrap on.
  */
-export function _createContainerModule({
+export function _createRootModule({
   component,
-  inputs = {},
   imports = [],
   providers = [],
-  styles = [],
   schemas = [],
 }: {
   component: Type<unknown>;
-} & MountConfig) {
-  /* Decorate component manually to avoid runtime error:
-   *   NG0303: Can't bind to 'ngComponentOutlet' since it isn't a known property of 'ng-container'.
-   * because `ContainerModule` is also bypassing AOT. */
-  const ContainerComponent = Component({
-    /* Make sure that styles are applied globally. */
-    encapsulation: ViewEncapsulation.None,
-    selector: '#root',
-    styles,
-    template: `<ng-container
-    *ngComponentOutlet="component; ndcDynamicInputs: inputs"
-  ></ng-container>`,
-  })(
-    class {
-      component = component;
-      inputs = inputs;
-    }
-  );
-
+  imports?: Type<unknown>[];
+  providers?: StaticProvider[];
+  schemas?: SchemaMetadata[];
+}) {
   /* Decorate module manually to avoid AOT errors like:
    *   NG1010: Value at position 1 in the NgModule.imports of ContainerModule is not a reference
    *   Value could not be determined statically..
    * as we want to be able to add imports dynamically. */
   const ContainerModule = NgModule({
-    bootstrap: [ContainerComponent],
-    declarations: [ContainerComponent],
+    bootstrap: [component],
+    declarations: [component],
     imports: [BrowserModule, DynamicModule, ...imports],
     providers,
     schemas,
