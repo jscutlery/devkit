@@ -1,63 +1,60 @@
-import { mountV2, mountStory, setupAndMount } from '@jscutlery/cypress-mount';
-import {
-  HelloDIComponent,
-  HelloDIModule,
-} from '../fixtures/hello-dependency-injection.component';
-import {
-  HelloScssComponent,
-  HelloScssModule,
-} from '../fixtures/hello-scss.component';
-import {
-  HelloStyleUrlsComponent,
-  HelloStyleUrlsModule,
-} from '../fixtures/hello-style-urls.component';
-import { Basic, WithName } from '../fixtures/hello.stories';
-import {
-  HelloTemplateUrlComponent,
-  HelloTemplateUrlModule,
-} from './../fixtures/hello-template-url.component';
+import { mount } from '@jscutlery/cypress-mount';
+import { HelloDIComponent } from '../fixtures/hello-dependency-injection.component';
+import { HelloComponent } from '../fixtures/hello.component';
+import { AppInfo } from './../fixtures/hello-dependency-injection.component';
+import { HelloScssComponent } from './../fixtures/hello-scss.component';
+import { HelloStyleUrlsComponent } from './../fixtures/hello-style-urls.component';
+import { HelloTemplateUrlComponent } from './../fixtures/hello-template-url.component';
 
-describe('setupAndMount', () => {
+describe('mount', () => {
   it('should handle dependency injection', () => {
-    setupAndMount(HelloDIComponent, {
-      imports: [HelloDIModule],
-    });
+    mount(HelloDIComponent);
     cy.contains('JSCutlery');
   });
 
-  it('should handle templateUrl', () => {
-    setupAndMount(HelloTemplateUrlComponent, {
-      imports: [HelloTemplateUrlModule],
+  it('should handle providers', () => {
+    mount(HelloDIComponent, {
+      providers: [
+        {
+          provide: AppInfo,
+          useValue: { title: '💉' },
+        },
+      ],
     });
+    cy.contains('💉');
+  });
+
+  it('should handle inputs', () => {
+    mount(HelloComponent, {
+      inputs: {
+        name: '🚀',
+      },
+    });
+    cy.contains('🚀');
+  });
+
+  it('should handle global styles', () => {
+    mount(HelloComponent, {
+      styles: [`body { color: red }`],
+    });
+    cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  xit('🚧 should render template', () => {});
+
+  it('should handle templateUrl', () => {
+    mount(HelloTemplateUrlComponent);
     cy.contains('JSCutlery');
   });
 
   it('should handle styleUrls', () => {
-    setupAndMount(HelloStyleUrlsComponent, {
-      imports: [HelloStyleUrlsModule],
-    });
+    mount(HelloStyleUrlsComponent);
     cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
   });
 
   it('should handle scss', () => {
-    setupAndMount(HelloScssComponent, {
-      imports: [HelloScssModule],
-    });
+    mount(HelloScssComponent);
     cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
-  });
-});
-
-/**
- * @see {@link https://github.com/ComponentDriven/csf }
- */
-describe('mountStory', () => {
-  it('should handle Component Story Format', () => {
-    mountStory(Basic);
-    cy.contains('Hello');
-  });
-
-  it('should handle Component Story Format with args', () => {
-    mountStory(WithName);
-    cy.contains('Hello JSCutlery');
   });
 });

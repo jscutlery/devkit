@@ -7,7 +7,6 @@ import {
   Type,
   ViewEncapsulation,
 } from '@angular/core';
-import { TestModuleMetadata } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { Story } from '@storybook/angular';
@@ -23,7 +22,7 @@ export function mountStory(story: Story) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { component, moduleMetadata } = story({ args }, { args } as any);
-  mountV2(component, {
+  mount(component, {
     ...moduleMetadata,
     inputs: args,
   });
@@ -40,10 +39,9 @@ export interface MountConfig {
 }
 
 /**
- * This will replace both `mount` and `setupAndMount`.
- * @deprecated 🚧 Work in progress.
+ * Mount given component.
  */
-export function mountV2(component: Type<unknown>, config: MountConfig = {}) {
+export function mount(component: Type<unknown>, config: MountConfig = {}) {
   /* Destroy existing platform. */
   if (platformRef != null) {
     platformRef.destroy();
@@ -101,44 +99,4 @@ export function _createContainerModule({
   })(class {});
 
   return ContainerModule;
-}
-
-/**
- * @deprecated use {@link setupAndMount} instead.
- * This will be removed in 1.0.0
- *
- * @sunset 1.0.0
- */
-export function mountWithConfig(
-  ...args: Parameters<typeof setupAndMount>
-): ReturnType<typeof setupAndMount> {
-  return setupAndMount(...args);
-}
-
-export interface Config extends TestModuleMetadata {
-  detectChanges?: boolean;
-  styles?: string[];
-}
-
-/**
- * @todo remove this: this is just a transitional hack to mountV2.
- * @sunset 1.0.0
- */
-let _legacyGlobalConfig: Config;
-
-export function setup(config: Config) {
-  _legacyGlobalConfig = config;
-}
-
-export function mount(component: Type<unknown>, config: MountConfig = {}) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  mountV2(component, { ..._legacyGlobalConfig, ...config } as any);
-}
-
-export function setupAndMount(
-  component: Type<unknown>,
-  config: Config & { inputs?: { [key: string]: unknown } } = {}
-) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  mountV2(component, config as any);
 }
