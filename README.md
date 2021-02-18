@@ -1,9 +1,3 @@
-<div align="center">
-  <a href="https://www.npmjs.com/package/@jscutlery/cypress-harness" rel="nofollow">
-    <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness">
-  </a>
-</div>
-
 <p align="center">
   <strong>Tools that make testing cheaper.</strong>
 </p>
@@ -12,10 +6,10 @@
 
 This project is a monorepo that includes the following packages.
 
-| Package                                              | Name            | Description                                                       |
-| ---------------------------------------------------- | --------------- | ----------------------------------------------------------------- |
-| [@jscutlery/cypress-harness](./packages/cypress-harness) | Cypress Harness | Cypress support for Component Test Harnesses                      |
-| [@jscutlery/cypress-mount](./packages/cypress-mount)         | Cypress Mount    | Cypress Component Testing support for Angular |
+| Package                                                  | Name            | Description                                          | Version                                                         |
+| -------------------------------------------------------- | --------------- | ---------------------------------------------------- | --------------------------------------------------------------- |
+| [@jscutlery/cypress-harness](./packages/cypress-harness) | Cypress Harness | Cypress support for Angular Component Test Harnesses | <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness"> |
+| [@jscutlery/cypress-mount](./packages/cypress-mount)     | Cypress Mount   | Cypress Component Testing support for Angular        | <img src="https://badgen.net/npm/v/@jscutlery/cypress-mount">   |
 
 # Changelog
 
