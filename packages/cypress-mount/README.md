@@ -92,7 +92,7 @@ describe('HelloCompanent', () => {
 ```ts
 describe('HelloCompanent', () => {
   beforeEach(() => {
-    mount(`<js-hello></js-hello>`, {
+    mount(`<jc-hello></jc-hello>`, {
       imports: [HelloModule],
     });
   });
