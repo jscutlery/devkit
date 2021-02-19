@@ -6,10 +6,11 @@
 
 This project is a monorepo that includes the following packages.
 
-| Package                                                  | Name            | Description                                          | Version                                                         |
-| -------------------------------------------------------- | --------------- | ---------------------------------------------------- | --------------------------------------------------------------- |
-| [@jscutlery/cypress-harness](./packages/cypress-harness) | Cypress Harness | Cypress support for Angular Component Test Harnesses | <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness"> |
-| [@jscutlery/cypress-mount](./packages/cypress-mount)     | Cypress Mount   | Cypress Component Testing support for Angular        | <img src="https://badgen.net/npm/v/@jscutlery/cypress-mount">   |
+| Package                                                                            | Name                         | Description                                                       | Version                                                                      |
+| ---------------------------------------------------------------------------------- | ---------------------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| [@jscutlery/cypress-harness](./packages/cypress-harness)                           | Cypress Harness              | Cypress support for Angular Component Test Harnesses              | <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness">              |
+| [@jscutlery/cypress-mount](./packages/cypress-mount)                               | Cypress Mount                | Cypress Component Testing support for Angular                     | <img src="https://badgen.net/npm/v/@jscutlery/cypress-mount">                |
+| [@jscutlery/cypress-angular-preprocessor](./packages/cypress-angular-preprocessor) | Cypress Angular Preprocessor | Angular Preprocessor to be used in conjunction with Cypress Mount | <img src="https://badgen.net/npm/v/@jscutlery/cypress-angular-preprocessor"> |
 
 # Changelog
 
