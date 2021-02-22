@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.3](https://github.com/jscutlery/test-utils/compare/cypress-angular-preprocessor-0.4.2...cypress-angular-preprocessor-0.4.3) (2021-02-22)
+
+
+
 ## [0.4.2](https://github.com/jscutlery/test-utils/compare/cypress-angular-preprocessor-0.4.1...cypress-angular-preprocessor-0.4.2) (2021-02-11)
 
 
