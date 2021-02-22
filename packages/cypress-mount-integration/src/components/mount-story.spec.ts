@@ -14,4 +14,11 @@ describe('mountStory', () => {
     mountStory(WithName);
     cy.contains('Hello JSCutlery');
   });
+
+  it('should add global styles', () => {
+    mountStory(Basic, {
+      styles: [`body { color: red }`],
+    });
+    cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
+  });
 });

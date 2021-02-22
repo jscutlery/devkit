@@ -12,18 +12,28 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { Story } from '@storybook/angular';
 import { DynamicModule } from 'ng-dynamic-component';
 
+export type Style = string;
+
+export interface MountStoryOptions {
+  styles?: Style[];
+}
+
 /**
  * Mount a component from a Storybook story.
  *
  * @param story a story in Storybook format.
  */
-export function mountStory(story: Story) {
+export async function mountStory(
+  story: Story,
+  options: MountStoryOptions = {}
+) {
   const args = story.args;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { component, moduleMetadata } = story({ args }, { args } as any);
-  mount(component, {
+  await mount(component, {
     ...moduleMetadata,
+    ...options,
     inputs: args,
   });
 }
@@ -33,7 +43,7 @@ let platformRef: PlatformRef;
 export interface BaseMountOptions {
   imports?: Type<unknown>[];
   providers?: StaticProvider[];
-  styles?: string[];
+  styles?: Style[];
   schemas?: SchemaMetadata[];
 }
 

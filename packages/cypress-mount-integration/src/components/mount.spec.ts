@@ -34,13 +34,6 @@ describe('mount', () => {
     cy.contains('🚀');
   });
 
-  it('should handle global styles', () => {
-    mount(HelloComponent, {
-      styles: [`body { color: red }`],
-    });
-    cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
-  });
-
   it('should render template', () => {
     mount(
       `<jc-hello name="🚀"></jc-hello>
@@ -65,6 +58,13 @@ describe('mount', () => {
 
   it('should handle scss', () => {
     mount(HelloScssComponent);
+    cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
+  });
+
+  it('should handle global styles', () => {
+    mount(HelloComponent, {
+      styles: [`body { color: red }`],
+    });
     cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
   });
 });
