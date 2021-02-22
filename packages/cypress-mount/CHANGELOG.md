@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.7.0](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.6.0...cypress-mount-0.7.0) (2021-02-22)
+
+
+### Features
+
+* **cypress-mount:** ✅ add styles option ([735222e](https://github.com/jscutlery/test-utils/commit/735222e348e7ff9715de0c454756df6e069609d3))
+
+
+
 # [0.6.0](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.5.0...cypress-mount-0.6.0) (2021-02-11)
 
 
