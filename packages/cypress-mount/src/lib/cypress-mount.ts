@@ -23,15 +23,15 @@ export interface MountStoryOptions {
  *
  * @param story a story in Storybook format.
  */
-export async function mountStory(
+export function mountStory(
   story: Story,
   options: MountStoryOptions = {}
-) {
+): Cypress.Chainable<void> {
   const args = story.args;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { component, moduleMetadata } = story({ args }, { args } as any);
-  await mount(component, {
+  return mount(component, {
     ...moduleMetadata,
     ...options,
     inputs: args,
@@ -56,59 +56,69 @@ export type MountTemplateOptions = BaseMountOptions;
 /**
  * Mount given component or template.
  */
-export async function mount(
+export function mount(
   component: Type<unknown>,
   options?: MountOptions
-): Promise<void>;
-export async function mount(
+): Cypress.Chainable<void>;
+export function mount(
   template: string,
   options?: MountTemplateOptions
-): Promise<void>;
-export async function mount(
+): Cypress.Chainable<void>;
+export function mount(
   componentOrTemplate: Type<unknown> | string,
   options: MountOptions | MountTemplateOptions = {}
-): Promise<void> {
-  /* Destroy existing platform. */
-  if (platformRef != null) {
-    platformRef.destroy();
-  }
+): Cypress.Chainable<void> {
+  return cy.then(async () => {
+    Cypress.log({
+      name: 'mount',
+      message:
+        typeof componentOrTemplate !== 'string'
+          ? componentOrTemplate['name']
+          : componentOrTemplate,
+    });
 
-  /* Prepare container component metadata which are
-   * the same for mounting a component or template. */
-  const componentMetadata = {
-    /* Make sure that styles are applied globally. */
-    encapsulation: ViewEncapsulation.None,
-    selector: '#root',
-    styles: options.styles,
-  };
+    /* Destroy existing platform. */
+    if (platformRef != null) {
+      platformRef.destroy();
+    }
 
-  const containerComponent =
-    typeof componentOrTemplate !== 'string'
-      ? /* Component. */
-        _createContainerComponent({
-          componentMetadata: {
-            ...componentMetadata,
-            template: `<ng-container
+    /* Prepare container component metadata which are
+     * the same for mounting a component or template. */
+    const componentMetadata = {
+      /* Make sure that styles are applied globally. */
+      encapsulation: ViewEncapsulation.None,
+      selector: '#root',
+      styles: options.styles,
+    };
+
+    const containerComponent =
+      typeof componentOrTemplate !== 'string'
+        ? /* Component. */
+          _createContainerComponent({
+            componentMetadata: {
+              ...componentMetadata,
+              template: `<ng-container
             *ngComponentOutlet="component; ndcDynamicInputs: inputs"
           ></ng-container>`,
-          },
-          klass: class {
-            component = componentOrTemplate;
-            inputs = (options as MountOptions).inputs;
-          },
-        })
-      : /* Template. */
-        _createContainerComponent({
-          componentMetadata: {
-            ...componentMetadata,
-            template: componentOrTemplate,
-          },
-          klass: class {},
-        });
+            },
+            klass: class {
+              component = componentOrTemplate;
+              inputs = (options as MountOptions).inputs;
+            },
+          })
+        : /* Template. */
+          _createContainerComponent({
+            componentMetadata: {
+              ...componentMetadata,
+              template: componentOrTemplate,
+            },
+            klass: class {},
+          });
 
-  await _bootstrapComponent({
-    component: containerComponent,
-    ...options,
+    await _bootstrapComponent({
+      component: containerComponent,
+      ...options,
+    });
   });
 }
 
