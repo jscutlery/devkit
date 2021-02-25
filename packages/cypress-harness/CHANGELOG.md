@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.3.0](https://github.com/jscutlery/test-utils/compare/cypress-harness-0.2.1...cypress-harness-0.3.0) (2021-02-25)
+
+
+### Bug Fixes
+
+* **cypress-harness:** 🐞 don't proxy native cypress functions ([db3a409](https://github.com/jscutlery/test-utils/commit/db3a409a4f40334f8b7eccd6f126913a395a5b3d))
+
+
+### Features
+
+* **cypress-harness:** ✅ make getHarness & getAllHarnesses & getRootHarness harnesses reusable ([35335a3](https://github.com/jscutlery/test-utils/commit/35335a38ea9949ba09066034bcb3c61d76318b1a)), closes [#3](https://github.com/jscutlery/test-utils/issues/3)
+* **cypress-harness:** ✅ support first level method chaining ([e52c26a](https://github.com/jscutlery/test-utils/commit/e52c26a5df9e21ce7c5a6feb041ba661613810c3))
+* **cypress-harness:** ✅ support recursive chaining ([363ce84](https://github.com/jscutlery/test-utils/commit/363ce8471b18bda23f6aeb62c81bf53847fb8caf))
+
+
+
 ## [0.2.1](https://github.com/jscutlery/test-utils/compare/cypress-harness-0.2.0...cypress-harness-0.2.1) (2021-02-10)
 
 
