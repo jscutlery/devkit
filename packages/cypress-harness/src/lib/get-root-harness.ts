@@ -24,8 +24,5 @@ export function getRootHarness<T extends ComponentHarness>(
     );
   };
 
-  return addHarnessMethodsToChainer(
-    getDocumentRoot().pipe(getRootHarness),
-    harnessType
-  );
+  return addHarnessMethodsToChainer(getDocumentRoot().pipe(getRootHarness));
 }

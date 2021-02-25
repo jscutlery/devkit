@@ -1,9 +1,5 @@
-import {
-  ComponentHarness,
-  ComponentHarnessConstructor,
-} from '@angular/cdk/testing';
+import { ComponentHarness } from '@angular/cdk/testing';
 import { CypressHarnessEnvironment } from './cypress-harness-environment';
-import { getClassMethods } from './helpers';
 
 /**
  * Adds harness methods to chainer.
@@ -13,8 +9,7 @@ import { getClassMethods } from './helpers';
  * instead of `getHarness().invoke('getValue')`
  */
 export function addHarnessMethodsToChainer<HARNESS extends ComponentHarness>(
-  chainer: Cypress.Chainable<HARNESS>,
-  harnessConstructor: ComponentHarnessConstructor<HARNESS>
+  chainer: Cypress.Chainable<HARNESS>
 ): Cypress.Chainable<HARNESS> &
   {
     /* For each field or method... is this a method? */
@@ -31,23 +26,18 @@ export function addHarnessMethodsToChainer<HARNESS extends ComponentHarness>(
       : /* It's something else. */
         HARNESS[K];
   } {
-  const harnessProto = harnessConstructor['prototype'];
+  const handler = {
+    get: (target, prop) => (...args) => {
+      /* Don't wrap invoke in invoke. 😅 */
+      if (prop === 'invoke') {
+        return target.invoke(...args);
+      }
 
-  chainer['__proto__'] = {
-    ...chainer['__proto__'],
-    ...harnessProto,
-    ...getClassMethods(harnessConstructor).reduce((proto, methodName) => {
-      return {
-        ...proto,
-        [methodName](...args) {
-          return chainer.invoke(methodName, ...args);
-        },
-      };
-    }, {}),
+      return target.invoke(prop, ...args);
+    },
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return chainer as any;
+  return new Proxy(chainer, handler);
 }
 
 export function getDocumentRoot() {
