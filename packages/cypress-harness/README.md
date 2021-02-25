@@ -51,5 +51,3 @@ describe('datepicker', () => {
   });
 });
 ```
-
-> ⚠️ WARNING: never re-use the value returned by `getRootHarness`, `getHarness` or `getAllHarnesses`.
