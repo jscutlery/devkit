@@ -17,10 +17,10 @@ One of the most interesting ideas behind Component Test Harnesses is that they a
 ### 1. Install
 
 ```shell
-yarn add -D @jscutlery/cypress-harness @angular/cdk cypress-pipe 
+yarn add -D @jscutlery/cypress-harness @angular/cdk cypress-pipe
 
-# or 
- 
+# or
+
 npm install -D @jscutlery/cypress-harness @angular/cdk cypress-pipe
 ```
 
@@ -35,23 +35,21 @@ import '@jscutlery/cypress-harness/support';
 ## Usage
 
 ```ts
-describe('cypress-harness', () => {
-  const datepicker = MatDatepickerInputHarness;
+describe('datepicker', () => {
+  /* getHarness & getAllHarnesses are lazy so you can
+   * initialize them wherever you want and reuse them. */
+  const datepicker = getHarness(MatDatepickerInputHarness);
+  const calendars = getAllHarnesses(MatCalendarHarness);
 
-  beforeEach(() => ...);
-
-  it('should set date using material datepicker harness', () => {
-    getHarness(datepicker).invoke('setValue', '1/1/2010');
-    getHarness(datepicker).invoke('openCalendar');
-    getHarness(datepicker).invoke('getCalendar').invoke('next');
-    getHarness(datepicker)
-      .invoke('getCalendar')
-      .invoke('selectCell', { text: '10' });
-    getHarness(datepicker).invoke('getValue').should('equal', '2/10/2010');
-    getAllHarnesses(MatCalendarHarness).should('be.empty');
+  it('should set date', () => {
+    datepicker.setValue('1/1/2010');
+    datepicker.openCalendar();
+    datepicker.getCalendar().invoke('next'); // next method is already used
+    datepicker.getCalendar().selectCell({ text: '10' });
+    datepicker.getValue().should('equal', '2/10/2010');
+    calendars.should('be.empty');
   });
 });
 ```
-
 
 > ⚠️ WARNING: never re-use the value returned by `getRootHarness`, `getHarness` or `getAllHarnesses`.
