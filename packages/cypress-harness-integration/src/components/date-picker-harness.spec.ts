@@ -37,6 +37,12 @@ export class TestedComponent {
 export class TestedModule {}
 
 describe('cypress-harness', () => {
+  /* getHarness is lazy so we can share the same reference. */
+  const datepicker = getHarness(MatDatepickerInputHarness);
+
+  /* getAllHarnesses is lazy so we can instanciate it here and use it later. */
+  const calendars = getAllHarnesses(MatCalendarHarness);
+
   beforeEach(() =>
     mount(TestedComponent, {
       styles: [
@@ -48,14 +54,9 @@ describe('cypress-harness', () => {
   );
 
   it('should set date using material datepicker harness', () => {
-    /* getHarness is lazy so we can share the same reference. */
-    const datepicker = getHarness(MatDatepickerInputHarness);
-
-    /* getAllHarnesses is lazy so we can instanciate it here and use it later. */
-    const calendars = getAllHarnesses(MatCalendarHarness);
-
     datepicker.setValue('1/1/2010');
     datepicker.openCalendar();
+    /* Can't use `next` because it is already used by cypress. */
     datepicker.getCalendar().invoke('next');
     datepicker.getCalendar().selectCell({ text: '10' });
     datepicker.getValue().should('equal', '2/10/2010');
