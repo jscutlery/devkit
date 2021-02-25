@@ -23,7 +23,7 @@ export class TestedHarness extends ComponentHarness {
   }
 }
 
-describe('cypress-harness', () => {
+describe(getRootHarness.name, () => {
   beforeEach(() => {
     mount(TestedComponent);
   });

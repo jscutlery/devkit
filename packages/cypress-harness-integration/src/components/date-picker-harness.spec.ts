@@ -36,7 +36,7 @@ export class TestedComponent {
 })
 export class TestedModule {}
 
-describe('cypress-harness', () => {
+describe(getHarness.name, () => {
   /* getHarness is lazy so we can share the same reference. */
   const datepicker = getHarness(MatDatepickerInputHarness);
 
@@ -62,5 +62,17 @@ describe('cypress-harness', () => {
     datepicker.getValue().should('equal', '2/10/2010');
 
     calendars.should('be.empty');
+  });
+
+  it('should set date using imperative approach', () => {
+    datepicker.then(async (harness) => {
+      await harness.setValue('1/1/2010');
+      await harness.openCalendar();
+      const calendar = await harness.getCalendar();
+      await calendar.next();
+      await calendar.selectCell({ text: '10' });
+
+      expect(await harness.getValue()).to.equal('2/10/2010');
+    });
   });
 });
