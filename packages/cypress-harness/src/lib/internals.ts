@@ -9,7 +9,7 @@ export type ChainableHarness<HARNESS> = Cypress.Chainable<HARNESS> &
         (
           ...args: Parameters<HARNESS[K]>
         ) => /* Convert Promise<T> to Chainable<T> and anything else U to Chainable<U>. */
-        Cypress.Chainable<
+        ChainableHarness<
           ReturnType<HARNESS[K]> extends Promise<infer RESULT>
             ? RESULT
             : HARNESS[K]

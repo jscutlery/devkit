@@ -56,10 +56,8 @@ describe('cypress-harness', () => {
 
     datepicker.setValue('1/1/2010');
     datepicker.openCalendar();
-    datepicker.getCalendar().then(async (cal) => {
-      await cal.next();
-      await cal.selectCell({ text: '10' });
-    });
+    datepicker.getCalendar().invoke('next');
+    datepicker.getCalendar().selectCell({ text: '10' });
     datepicker.getValue().should('equal', '2/10/2010');
 
     calendars.should('be.empty');
