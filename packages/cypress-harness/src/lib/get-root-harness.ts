@@ -4,10 +4,14 @@ import {
 } from '@angular/cdk/testing';
 
 import { CypressHarnessEnvironment } from './cypress-harness-environment';
-import { addHarnessMethodsToChainer, getDocumentRoot } from './internals';
+import {
+  addHarnessMethodsToChainer,
+  ChainableHarness,
+  getDocumentRoot,
+} from './internals';
 
-export function getRootHarness<T extends ComponentHarness>(
-  harnessType: ComponentHarnessConstructor<T>
+export function getRootHarness<HARNESS extends ComponentHarness>(
+  harnessType: ComponentHarnessConstructor<HARNESS>
 ) {
   /* Create a local variable so `pipe` can log name. */
   const getRootHarness = ($documentRoot: JQuery<Element>) => {
@@ -24,5 +28,9 @@ export function getRootHarness<T extends ComponentHarness>(
     );
   };
 
-  return addHarnessMethodsToChainer(getDocumentRoot().pipe(getRootHarness));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return new Proxy<ChainableHarness<HARNESS>>({} as any, {
+    get: (_target, prop) =>
+      addHarnessMethodsToChainer(getDocumentRoot().pipe(getRootHarness))[prop],
+  });
 }

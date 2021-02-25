@@ -1,16 +1,7 @@
 import { ComponentHarness } from '@angular/cdk/testing';
 import { CypressHarnessEnvironment } from './cypress-harness-environment';
 
-/**
- * Adds harness methods to chainer.
- *
- * Given a harness with a `getValue()` method,
- * users can call `getHarness().getValue()`
- * instead of `getHarness().invoke('getValue')`
- */
-export function addHarnessMethodsToChainer<HARNESS extends ComponentHarness>(
-  chainer: Cypress.Chainable<HARNESS>
-): Cypress.Chainable<HARNESS> &
+export type ChainableHarness<HARNESS> = Cypress.Chainable<HARNESS> &
   {
     /* For each field or method... is this a method? */
     [K in keyof HARNESS]: HARNESS[K] extends (...args: unknown[]) => unknown
@@ -25,7 +16,18 @@ export function addHarnessMethodsToChainer<HARNESS extends ComponentHarness>(
         >
       : /* It's something else. */
         HARNESS[K];
-  } {
+  };
+
+/**
+ * Adds harness methods to chainer.
+ *
+ * Given a harness with a `getValue()` method,
+ * users can call `getHarness().getValue()`
+ * instead of `getHarness().invoke('getValue')`
+ */
+export function addHarnessMethodsToChainer<HARNESS extends ComponentHarness>(
+  chainer: Cypress.Chainable<HARNESS>
+): ChainableHarness<HARNESS> {
   const handler = {
     get: (target, prop) => (...args) => {
       /* Don't wrap cypress methods like `invoke`, `should` etc.... */
