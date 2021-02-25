@@ -52,9 +52,12 @@ describe('cypress-harness', () => {
   it('should set date using material datepicker harness', () => {
     getHarness(datepicker).setValue('1/1/2010');
     getHarness(datepicker).openCalendar();
-    getHarness(datepicker).getCalendar().invoke('next');
-    // getHarness(datepicker).getCalendar().selectCell({ text: '10' });
-    getHarness(datepicker).getCalendar().invoke('selectCell', { text: '10' });
+    getHarness(datepicker)
+      .getCalendar()
+      .then(async (cal) => {
+        await cal.next();
+        await cal.selectCell({ text: '10' });
+      });
     getHarness(datepicker).getValue().should('equal', '2/10/2010');
     getAllHarnesses(MatCalendarHarness).should('be.empty');
   });

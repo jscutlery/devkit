@@ -28,12 +28,12 @@ export function addHarnessMethodsToChainer<HARNESS extends ComponentHarness>(
   } {
   const handler = {
     get: (target, prop) => (...args) => {
-      /* Don't wrap invoke in invoke. 😅 */
-      if (prop === 'invoke') {
-        return target.invoke(...args);
+      /* Don't wrap cypress methods like `invoke`, `should` etc.... */
+      if (prop in target) {
+        return target[prop](...args);
       }
 
-      return target.invoke(prop, ...args);
+      return addHarnessMethodsToChainer(target.invoke(prop, ...args));
     },
   };
 
