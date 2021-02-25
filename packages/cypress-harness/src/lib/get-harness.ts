@@ -1,6 +1,10 @@
 import { ComponentHarness, HarnessQuery } from '@angular/cdk/testing';
 
-import { addHarnessMethodsToChainer, createRootEnvironment, getDocumentRoot } from './internals';
+import {
+  addHarnessMethodsToChainer,
+  createRootEnvironment,
+  getDocumentRoot,
+} from './internals';
 
 export function getHarness<T extends ComponentHarness>(query: HarnessQuery<T>) {
   /* Create a local variable so `pipe` can log name. */
