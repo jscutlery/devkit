@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.8.1](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.8.0...cypress-mount-0.8.1) (2021-03-01)
+
+
+### Bug Fixes
+
+* **cypress-mount:** 🐞 use NgModule types for MountOptions ([cdeccdc](https://github.com/jscutlery/test-utils/commit/cdeccdc9b30c4b3503c7a989929d577ee8e0add3))
+
+
+
 # [0.8.0](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.7.0...cypress-mount-0.8.0) (2021-02-22)
 
 
