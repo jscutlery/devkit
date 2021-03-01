@@ -1,12 +1,4 @@
-import {
-  Component,
-  NgModule,
-  PlatformRef,
-  SchemaMetadata,
-  StaticProvider,
-  Type,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, NgModule, PlatformRef, SchemaMetadata, Type, ViewEncapsulation } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { Story } from '@storybook/angular';
@@ -41,8 +33,8 @@ export function mountStory(
 let platformRef: PlatformRef;
 
 export interface BaseMountOptions {
-  imports?: Type<unknown>[];
-  providers?: StaticProvider[];
+  imports?: NgModule['imports'];
+  providers?: NgModule['providers'];
   styles?: Style[];
   schemas?: SchemaMetadata[];
 }
@@ -137,8 +129,8 @@ export function _createContainerComponent({
 
 export async function _bootstrapComponent(options: {
   component: Type<unknown>;
-  imports?: Type<unknown>[];
-  providers?: StaticProvider[];
+  imports?: NgModule['imports'];
+  providers?: NgModule['providers'];
   schemas?: SchemaMetadata[];
 }) {
   const module = _createRootModule(options);
@@ -156,8 +148,8 @@ export function _createRootModule({
   schemas = [],
 }: {
   component: Type<unknown>;
-  imports?: Type<unknown>[];
-  providers?: StaticProvider[];
+  imports?: NgModule['imports'];
+  providers?: NgModule['providers'];
   schemas?: SchemaMetadata[];
 }) {
   /* Decorate module manually to avoid AOT errors like:
