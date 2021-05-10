@@ -1,6 +1,4 @@
-const {
-  startAngularDevServer,
-} = require('@jscutlery/cypress-angular-dev-server');
+import { startAngularDevServer } from '@jscutlery/cypress-angular-dev-server';
 
 module.exports = (on, config) => {
   on('dev-server:start', (options) =>
