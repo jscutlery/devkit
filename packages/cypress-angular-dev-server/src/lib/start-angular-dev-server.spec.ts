@@ -1,6 +1,9 @@
 import { startAngularDevServer } from './start-angular-dev-server';
 
-import { startDevServer } from '@cypress/webpack-dev-server';
+import {
+  ResolvedDevServerConfig,
+  startDevServer,
+} from '@cypress/webpack-dev-server';
 import { AngularCompilerPlugin } from '@ngtools/webpack';
 
 /* Import jest functions manually as they conflict with cypress
@@ -19,10 +22,22 @@ const mockAngularCompilerPlugin = AngularCompilerPlugin as jest.MockedClass<
 
 describe(startAngularDevServer.name, () => {
   describe('with default config', () => {
+    let resolvedConfig: ResolvedDevServerConfig;
+
     beforeEach(() => {
       mockStartDevServer.mockResolvedValue({
         port: 4200,
         close: jest.fn(),
+      });
+    });
+
+    /**
+     * 🎬 Action!
+     */
+    beforeEach(async () => {
+      resolvedConfig = await startAngularDevServer({
+        config: {} as Cypress.PluginConfigOptions,
+        options: {} as Cypress.DevServerOptions,
       });
     });
 
@@ -32,11 +47,6 @@ describe(startAngularDevServer.name, () => {
     });
 
     xit(`should call startDevServer with the right webpack options`, async () => {
-      const resolvedConfig = await startAngularDevServer({
-        config: {} as Cypress.PluginConfigOptions,
-        options: {} as Cypress.DevServerOptions,
-      });
-
       expect(resolvedConfig).toEqual(
         expect.objectContaining({
           port: 4300,
@@ -72,13 +82,14 @@ describe(startAngularDevServer.name, () => {
     });
 
     xit('should create angular compiler with the right options', async () => {
-      // expect(mockAngularCompilerPlugin).toBeCalledTimes(1);
-      // expect(mockAngularCompilerPlugin).toBeCalledWith({
-      //   directTemplateLoading: true,
-      //   forkTypeChecker: true,
-      //   sourceMap: false,
-      //   tsConfigPath: '/packages/lib-e2e/tsconfig.e2e.json',
-      // });
+      expect(mockAngularCompilerPlugin).toBeCalledTimes(1);
+      expect(mockAngularCompilerPlugin).toBeCalledWith({
+        directTemplateLoading: true,
+        forkTypeChecker: true,
+        sourceMap: true,
+        /* Use `tsconfig.json` as default tsconfig path. */
+        tsConfigPath: 'tsconfig.json',
+      });
     });
   });
 

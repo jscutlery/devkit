@@ -1,3 +1,4 @@
+import { ResolvedDevServerConfig } from '@cypress/webpack-dev-server';
 /// <reference types="cypress"/>
 
 /**
@@ -6,9 +7,9 @@
 export function startAngularDevServer({
   config,
   options,
-}): {
+}: {
   config: Cypress.PluginConfigOptions;
   options: Cypress.DevServerOptions;
-} {
+}): Promise<ResolvedDevServerConfig> {
   throw new Error('🚧 Work in progress!');
 }
