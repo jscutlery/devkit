@@ -26,7 +26,7 @@ describe(startAngularDevServer.name, () => {
 
     beforeEach(() => {
       mockStartDevServer.mockResolvedValue({
-        port: 4200,
+        port: 4300,
         close: jest.fn(),
       });
     });
@@ -37,7 +37,14 @@ describe(startAngularDevServer.name, () => {
     beforeEach(async () => {
       resolvedConfig = await startAngularDevServer({
         config: {} as Cypress.PluginConfigOptions,
-        options: {} as Cypress.DevServerOptions,
+        options: {
+          specs: [],
+          config: {
+            configFile: '/root/packages/a/cypress.json',
+            version: '7.1.0',
+            testingType: 'component',
+          } as Partial<Cypress.ResolvedConfigOptions>,
+        } as Cypress.DevServerOptions,
       });
     });
 
@@ -46,7 +53,7 @@ describe(startAngularDevServer.name, () => {
       mockAngularCompilerPlugin.mockReset();
     });
 
-    xit(`should call startDevServer with the right webpack options`, async () => {
+    it(`should call startDevServer with the right webpack options`, async () => {
       expect(resolvedConfig).toEqual(
         expect.objectContaining({
           port: 4300,
@@ -55,6 +62,14 @@ describe(startAngularDevServer.name, () => {
 
       expect(startDevServer).toBeCalledTimes(1);
       expect(startDevServer).toBeCalledWith({
+        options: expect.objectContaining({
+          specs: [],
+          config: {
+            configFile: '/root/packages/a/cypress.json',
+            version: '7.1.0',
+            testingType: 'component',
+          },
+        }),
         webpackConfig: {
           devtool: false,
           plugins: [expect.any(AngularCompilerPlugin)],
@@ -81,7 +96,7 @@ describe(startAngularDevServer.name, () => {
       });
     });
 
-    xit('should create angular compiler with the right options', async () => {
+    it('should create angular compiler with the right options', async () => {
       expect(mockAngularCompilerPlugin).toBeCalledTimes(1);
       expect(mockAngularCompilerPlugin).toBeCalledWith({
         directTemplateLoading: true,
@@ -95,5 +110,9 @@ describe(startAngularDevServer.name, () => {
 
   describe('with custom webpack config', () => {
     it.todo('should merge with resolved webpack config');
+  });
+
+  describe('with custom tsConfig path', () => {
+    it.todo('should forward tsConfig path to AngularCompilerPlugin');
   });
 });
