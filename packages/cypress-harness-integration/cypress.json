@@ -1,14 +1,15 @@
 {
   "fileServerFolder": ".",
   "fixturesFolder": "./src/fixtures",
-  "componentFolder": "./src/components",
-  "integrationFolder": "./src/integration",
   "modifyObstructiveCode": false,
-  "pluginsFile": "./src/plugins/index",
+  "pluginsFile": "./src/plugins/index.ts",
   "supportFile": "./src/support/index.ts",
   "video": true,
   "videosFolder": "../../dist/cypress/packages/cypress-harness-integration/videos",
   "screenshotsFolder": "../../dist/cypress/packages/cypress-harness-integration/screenshots",
   "chromeWebSecurity": false,
-  "experimentalComponentTesting": true
+  "component": {
+    "testFiles": "**/*.spec.{js,ts,jsx,tsx}",
+    "componentFolder": "./src/components"
+  }
 }
