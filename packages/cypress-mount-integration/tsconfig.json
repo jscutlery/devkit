@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "files": [],
-  "include": [],
+  "include": ["src/components/**/*.ts", "src/support/**/*.ts"],
   "references": [
     {
       "path": "./tsconfig.e2e.json"

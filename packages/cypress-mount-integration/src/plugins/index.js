@@ -1,7 +1,10 @@
 const {
-  angularPreprocessor,
-} = require('@jscutlery/cypress-angular-preprocessor');
+  startAngularDevServer,
+} = require('@jscutlery/cypress-angular-dev-server');
 
 module.exports = (on, config) => {
-  on('file:preprocessor', angularPreprocessor(config));
+  on('dev-server:start', (options) =>
+    startAngularDevServer({ config, options })
+  );
+  return config;
 };

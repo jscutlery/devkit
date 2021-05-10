@@ -1,8 +1,6 @@
 {
   "fileServerFolder": ".",
   "fixturesFolder": "./src/fixtures",
-  "integrationFolder": "./src/integration",
-  "componentFolder": "./src/components",
   "modifyObstructiveCode": false,
   "pluginsFile": "./src/plugins/index",
   "supportFile": "./src/support/index.ts",
@@ -10,5 +8,8 @@
   "videosFolder": "../../dist/cypress/packages/cypress-mount-integration/videos",
   "screenshotsFolder": "../../dist/cypress/packages/cypress-mount-integration/screenshots",
   "chromeWebSecurity": false,
-  "experimentalComponentTesting": true
+  "component": {
+    "testFiles": "**/*.spec.{js,ts,jsx,tsx}",
+    "componentFolder": "./src/components"
+  }
 }
