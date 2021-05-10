@@ -298,6 +298,27 @@
           "outputs": ["coverage/packages/sandbox"]
         }
       }
+    },
+    "cypress-angular-dev-server": {
+      "root": "packages/cypress-angular-dev-server",
+      "sourceRoot": "packages/cypress-angular-dev-server/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/cypress-angular-dev-server/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/cypress-angular-dev-server"],
+          "options": {
+            "jestConfig": "packages/cypress-angular-dev-server/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
