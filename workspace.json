@@ -1,5 +1,23 @@
 {
   "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/web"
+  },
+  "defaultProject": "cypress-harness",
+  "schematics": {
+    "@nrwl/angular:application": {
+      "style": "css",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "css",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "css"
+    }
+  },
   "projects": {
     "cypress-harness": {
       "root": "packages/cypress-harness",
@@ -10,9 +28,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/cypress-harness/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/cypress-harness/**/*.ts"]
           }
         },
         "test": {
@@ -21,9 +37,7 @@
             "jestConfig": "packages/cypress-harness/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/cypress-harness"
-          ]
+          "outputs": ["coverage/packages/cypress-harness"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -32,13 +46,9 @@
             "tsConfig": "packages/cypress-harness/tsconfig.lib.json",
             "packageJson": "packages/cypress-harness/package.json",
             "main": "packages/cypress-harness/src/index.ts",
-            "assets": [
-              "packages/cypress-harness/*.md"
-            ]
+            "assets": ["packages/cypress-harness/*.md"]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "version": {
           "builder": "@jscutlery/semver:version",
@@ -57,9 +67,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/cypress-mount/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/cypress-mount/**/*.ts"]
           }
         },
         "test": {
@@ -68,9 +76,7 @@
             "jestConfig": "packages/cypress-mount/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/cypress-mount"
-          ]
+          "outputs": ["coverage/packages/cypress-mount"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -79,13 +85,9 @@
             "tsConfig": "packages/cypress-mount/tsconfig.lib.json",
             "packageJson": "packages/cypress-mount/package.json",
             "main": "packages/cypress-mount/src/index.ts",
-            "assets": [
-              "packages/cypress-mount/*.md"
-            ]
+            "assets": ["packages/cypress-mount/*.md"]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "version": {
           "builder": "@jscutlery/semver:version",
@@ -115,9 +117,7 @@
             "jestConfig": "packages/cypress-angular-preprocessor/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/cypress-angular-preprocessor"
-          ]
+          "outputs": ["coverage/packages/cypress-angular-preprocessor"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -126,13 +126,9 @@
             "tsConfig": "packages/cypress-angular-preprocessor/tsconfig.lib.json",
             "packageJson": "packages/cypress-angular-preprocessor/package.json",
             "main": "packages/cypress-angular-preprocessor/src/index.ts",
-            "assets": [
-              "packages/cypress-angular-preprocessor/*.md"
-            ]
+            "assets": ["packages/cypress-angular-preprocessor/*.md"]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "version": {
           "builder": "@jscutlery/semver:version",
@@ -184,15 +180,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "packages/cypress-harness-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/cypress-harness-e2e/**/*"
-            ]
+            "lintFilePatterns": ["packages/cypress-harness-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -239,9 +229,7 @@
               "packages/sandbox/src/favicon.ico",
               "packages/sandbox/src/assets"
             ],
-            "styles": [
-              "packages/sandbox/src/styles.css"
-            ],
+            "styles": ["packages/sandbox/src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -273,9 +261,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -295,16 +281,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "packages/sandbox/tsconfig.app.json",
-              "packages/sandbox/tsconfig.spec.json",
-              "packages/sandbox/tsconfig.editor.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/sandbox/**/*"
+            "lintFilePatterns": [
+              "packages/sandbox/src/**/*.ts",
+              "packages/sandbox/src/**/*.html"
             ]
           }
         },
@@ -314,31 +295,9 @@
             "jestConfig": "packages/sandbox/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/sandbox"
-          ]
+          "outputs": ["coverage/packages/sandbox"]
         }
       }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/web"
-  },
-  "defaultProject": "cypress-harness",
-  "schematics": {
-    "@nrwl/angular:application": {
-      "style": "css",
-      "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "style": "css",
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nrwl/angular:component": {
-      "style": "css"
     }
   }
 }
