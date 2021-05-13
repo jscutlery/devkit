@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.5.0](https://github.com/jscutlery/test-utils/compare/cypress-angular-preprocessor-0.4.3...cypress-angular-preprocessor-0.5.0) (2021-05-13)
+
+
+### Features
+
+* **cypress-angular-preprocessor:** ✅ deprecate package usage ([459a859](https://github.com/jscutlery/test-utils/commit/459a859b05359260e5e8a2e8266ad0c893c43501))
+
+
+
 ## [0.4.3](https://github.com/jscutlery/test-utils/compare/cypress-angular-preprocessor-0.4.2...cypress-angular-preprocessor-0.4.3) (2021-02-22)
 
 
