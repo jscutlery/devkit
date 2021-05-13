@@ -15,3 +15,30 @@ module.exports = (on, config) => {
   return config;
 };
 ```
+
+Declare component tests in the `cypress.json` file:
+
+```json
+{
+  "component": {
+    "testFiles": "**/*.spec.{js,ts,jsx,tsx}",
+    "componentFolder": "./src/components"
+  }
+}
+```
+
+Update the `include` property in the `tsconfig.json` file:
+
+```json
+{
+  "include": ["src/components/**/*.ts", "src/support/**/*.ts"],
+}
+```
+
+Execute component tests using :
+
+```bash
+cypress run-ct --project apps/my-app
+# or
+cypress open-ct --project apps/my-app
+```
