@@ -31,7 +31,8 @@ export async function startAngularDevServer({
   options: Cypress.DevServerOptions;
 }): Promise<ResolvedDevServerConfig> {
   // cf. https://github.com/angular/angular-cli/blob/c1512e42742c17ace82e783e8e9c919ae925d269/packages/angular_devkit/build_angular/src/dev-server/index.ts#L168-L182
-  const workspaceRoot = normalize(`${config.projectRoot}/../..`);
+  const testProjectRoot = normalize(config.projectRoot);
+  const workspaceRoot = resolve(testProjectRoot, normalize('../..'));
   const projectRoot = resolve(workspaceRoot, normalize('packages/sandbox'));
   const sourceRoot = resolve(workspaceRoot, normalize('packages/sandbox/src'));
 
@@ -40,7 +41,7 @@ export async function startAngularDevServer({
     projectRoot,
     sourceRoot,
     {
-      tsConfig: 'packages/sandbox/tsconfig.json',
+      tsConfig: resolve(testProjectRoot, normalize('tsconfig.json')),
       outputPath: 'dist/packages/sandbox',
       index: 'packages/sandbox/src/index.html',
       main: 'packages/sandbox/src/main.ts',
