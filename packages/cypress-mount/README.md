@@ -30,41 +30,55 @@ ng add @nrwl/workspace
 
 ### 1. Install
 
+The following  install guide targets Cypress >= 7, follow [this guide](./docs/experimental-install.md) for Cypress < 7.
+
 ```shell
-yarn add -D @jscutlery/cypress-mount @jscutlery/cypress-angular-preprocessor
+yarn add -D @jscutlery/cypress-mount @jscutlery/cypress-angular-dev-server
 
 # or
 
-npm install -D @jscutlery/cypress-mount @jscutlery/cypress-angular-preprocessor
+npm install -D @jscutlery/cypress-mount @jscutlery/cypress-angular-dev-server
 ```
 
 ### 2. Enable Cypress Component Testing
 
-2.a. You can enable Cypress Component Testing by updating `cypress.json`:
+2.a. Enable Cypress Component Testing by updating `cypress.json`:
 
 ```json
 {
   ...
-  "componentFolder": "./src/components",
-  "experimentalComponentTesting": true
+  "component": {
+    "testFiles": "**/*.spec.{js,ts,jsx,tsx}",
+    "componentFolder": "./src/components"
+  }
 }
 ```
 
-2.b. Import support commands by updating e2e folder's `*-e2e/src/support/index.ts` and adding:
+2.b. Update the `include` property in `tsconfig.json` file:
+
+```json
+{
+  ...
+  "include": ["src/components/**/*.ts", "src/support/**/*.ts"],
+}
+```
+
+2.c. Import support commands by updating e2e folder's `*-e2e/src/support/index.ts` and adding:
 
 ```ts
 import '@jscutlery/cypress-mount/support';
 ```
 
-2.c. Setup Angular preprocessor in `*-e2e/src/plugins/index.js`, in order to build angular components (e.g. handle templateUrl etc...):
+2.d. Setup Angular Dev Server in `*-e2e/src/plugins/index.ts`, in order to build angular components (e.g. handle templateUrl etc...):
 
 ```ts
-const {
-  angularPreprocessor,
-} = require('@jscutlery/cypress-angular-preprocessor');
+import { startAngularDevServer } from '@jscutlery/cypress-angular-dev-server';
 
 module.exports = (on, config) => {
-  on('file:preprocessor', angularPreprocessor(config));
+  on('dev-server:start', (options) =>
+    startAngularDevServer({ config, options })
+  );
+  return config;
 };
 ```
 
@@ -117,4 +131,16 @@ describe('HelloCompanent', () => {
     cy.get('h1').contains('❤️');
   });
 });
+```
+
+## Execute tests
+
+Execute component tests using the Cypress CLI:
+
+```bash
+cypress run-ct --project apps/my-app
+
+# or
+
+cypress open-ct --project apps/my-app
 ```
