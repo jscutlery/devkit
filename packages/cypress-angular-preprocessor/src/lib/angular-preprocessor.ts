@@ -20,6 +20,9 @@ export interface FileEvent extends EventEmitter {
  */
 export type FilePreprocessor = (fileEvent: FileEvent) => Promise<string>;
 
+/**
+ * @deprecated Cypress >= 7 requires a new adapter to work, see: [@jscutlery/cypress-angular-dev-server](https://github.com/jscutlery/test-utils/tree/main/packages/cypress-angular-dev-server).
+ */
 export const angularPreprocessor = (
   cypressConfig,
   {
