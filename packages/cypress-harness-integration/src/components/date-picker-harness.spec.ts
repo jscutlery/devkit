@@ -47,7 +47,7 @@ describe(getHarness.name, () => {
     mount(TestedComponent, {
       styles: [
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        require('!css-loader!@angular/material/prebuilt-themes/deeppurple-amber.css').default.toString(),
+        require('!css-loader!@angular/material/prebuilt-themes/deeppurple-amber.css').toString(),
       ],
       imports: [TestedModule],
     })
