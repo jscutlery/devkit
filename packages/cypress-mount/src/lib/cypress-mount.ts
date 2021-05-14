@@ -1,3 +1,5 @@
+import '@angular/compiler';
+
 import { Component, NgModule, PlatformRef, SchemaMetadata, Type, ViewEncapsulation } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -118,11 +120,11 @@ export function _createContainerComponent({
   componentMetadata,
   klass,
 }: {
-  componentMetadata;
-  klass;
+  componentMetadata: Component;
+  klass: { new(): unknown };
 }): Type<unknown> {
   /* Decorate component manually to avoid runtime error:
-   *   NG0303: Can't bind to 'ngComponentOutlet' since it isn't a known property of 'ng-container'.
+   * NG0303: Can't bind to 'ngComponentOutlet' since it isn't a known property of 'ng-container'.
    * because `ContainerModule` is also bypassing AOT. */
   return Component(componentMetadata)(klass);
 }
@@ -153,8 +155,8 @@ export function _createRootModule({
   schemas?: SchemaMetadata[];
 }) {
   /* Decorate module manually to avoid AOT errors like:
-   *   NG1010: Value at position 1 in the NgModule.imports of ContainerModule is not a reference
-   *   Value could not be determined statically..
+   * NG1010: Value at position 1 in the NgModule.imports of ContainerModule is not a reference
+   * Value could not be determined statically..
    * as we want to be able to add imports dynamically. */
   const ContainerModule = NgModule({
     bootstrap: [component],
