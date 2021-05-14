@@ -4,7 +4,7 @@ import {
   ResolvedDevServerConfig,
   startDevServer,
 } from '@cypress/webpack-dev-server';
-import { AngularCompilerPlugin } from '@ngtools/webpack';
+import { AngularWebpackPlugin } from '@ngtools/webpack';
 
 /* Import jest functions manually as they conflict with cypress
  * because @cypress/webpack-dev-server references cypress types */
@@ -16,8 +16,8 @@ jest.mock('@ngtools/webpack');
 const mockStartDevServer = startDevServer as jest.MockedFunction<
   typeof startDevServer
 >;
-const mockAngularCompilerPlugin = AngularCompilerPlugin as jest.MockedClass<
-  typeof AngularCompilerPlugin
+const mockAngularCompilerPlugin = AngularWebpackPlugin as jest.MockedClass<
+  typeof AngularWebpackPlugin
 >;
 
 describe(startAngularDevServer.name, () => {
@@ -72,7 +72,7 @@ describe(startAngularDevServer.name, () => {
         }),
         webpackConfig: {
           devtool: false,
-          plugins: [expect.any(AngularCompilerPlugin)],
+          plugins: [expect.any(AngularWebpackPlugin)],
           resolve: {
             extensions: ['.js', '.ts'],
           },
@@ -100,10 +100,8 @@ describe(startAngularDevServer.name, () => {
       expect(mockAngularCompilerPlugin).toBeCalledTimes(1);
       expect(mockAngularCompilerPlugin).toBeCalledWith({
         directTemplateLoading: true,
-        forkTypeChecker: true,
-        sourceMap: true,
         /* Use `tsconfig.json` as default tsconfig path. */
-        tsConfigPath: 'tsconfig.json',
+        tsconfig: 'tsconfig.json',
       });
     });
   });

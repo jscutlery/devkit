@@ -1,7 +1,7 @@
 /// <reference types="cypress"/>
 import { startDevServer } from '@cypress/webpack-dev-server';
 import { ResolvedDevServerConfig } from '@cypress/webpack-dev-server';
-import { AngularCompilerPlugin } from '@ngtools/webpack';
+import { AngularWebpackPlugin } from '@ngtools/webpack';
 
 export async function startAngularDevServer({
   config,
@@ -37,11 +37,9 @@ export async function startAngularDevServer({
         ],
       },
       plugins: [
-        new AngularCompilerPlugin({
+        new AngularWebpackPlugin({
           directTemplateLoading: true,
-          tsConfigPath: 'tsconfig.json',
-          sourceMap: true,
-          forkTypeChecker: true,
+          tsconfig: 'tsconfig.json',
         }),
       ],
     },
