@@ -30,7 +30,7 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./yarn.lock') }}
-      - run: yarn
+      - run: yarn --frozen-lockfile --no-progress --non-interactive
       - run: yarn nx run-many --all --target=lint
       - run: yarn nx run-many --all --target=build
       - run: yarn nx run-many --all --target=test
