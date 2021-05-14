@@ -1,32 +1,57 @@
 {
   "implicitDependencies": {
     "workspace.json": "*",
-    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
     "nx.json": "*"
   },
-  "affected": { "defaultBase": "main" },
+  "affected": {
+    "defaultBase": "main"
+  },
   "npmScope": "test-utils",
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
     }
   },
-  "workspaceLayout": { "appsDir": "packages", "libsDir": "packages" },
+  "workspaceLayout": {
+    "appsDir": "packages",
+    "libsDir": "packages"
+  },
   "projects": {
-    "cypress-harness": { "tags": [] },
-    "cypress-mount": { "tags": [] },
-    "cypress-harness-integration": { "tags": [] },
-    "cypress-harness-e2e": { "tags": [], "implicitDependencies": ["sandbox"] },
+    "cypress-harness": {
+      "tags": []
+    },
+    "cypress-mount": {
+      "tags": []
+    },
+    "cypress-harness-integration": {
+      "tags": []
+    },
+    "cypress-harness-e2e": {
+      "tags": [],
+      "implicitDependencies": ["sandbox"]
+    },
     "cypress-mount-integration": {
       "tags": [],
       "implicitDependencies": ["sandbox"]
     },
-    "sandbox": { "tags": [] },
-    "cypress-angular-preprocessor": { "tags": [] },
-    "cypress-angular-dev-server": { "tags": [] }
+    "sandbox": {
+      "tags": []
+    },
+    "cypress-angular-preprocessor": {
+      "tags": []
+    },
+    "cypress-angular-dev-server": {
+      "tags": []
+    }
   }
 }

@@ -1,16 +1,48 @@
 {
   "migrations": [
     {
-      "version": "12.1.0-beta.1",
-      "description": "Update jest-preset-angular to version 8.4.0",
-      "factory": "./src/migrations/update-12-1-0/update-jest-preset-angular",
-      "package": "@nrwl/jest",
-      "name": "update-jest-preset-angular-8-4-0"
+      "cli": "nx",
+      "version": "12.3.1",
+      "description": "Remove deprecated options and update others according to new defaults. It syncs with the v12 migration of Angular builders.",
+      "factory": "./src/migrations/update-12-3-0/update-webpack-browser-config",
+      "package": "@nrwl/angular",
+      "name": "update-webpack-browser-config"
     },
     {
-      "version": "12.1.0-beta.1",
+      "cli": "nx",
+      "version": "12.3.1",
+      "description": "Updates storybook configurations to support webpack 5",
+      "factory": "./src/migrations/update-12-3-0/update-storybook",
+      "package": "@nrwl/angular",
+      "name": "update-storybook"
+    },
+    {
+      "cli": "nx",
+      "version": "12.3.1",
+      "description": "Migrates some rules that have changed in Angular EsLint",
+      "factory": "./src/migrations/update-12-3-0/update-angular-eslint-rules",
+      "package": "@nrwl/angular",
+      "name": "update-angular-eslint-rules"
+    },
+    {
+      "version": "12.0.0-beta",
+      "description": "In Angular version 12, the type of ActivatedRouteSnapshot.fragment is nullable. This migration automatically adds non-null assertions to it.",
+      "factory": "./migrations/activated-route-snapshot-fragment/index",
+      "package": "@angular/core",
+      "name": "migration-v12-activated-route-snapshot-fragment"
+    },
+    {
+      "version": "12.0.0-next.6",
+      "description": "`XhrFactory` has been moved from `@angular/common/http` to `@angular/common`.",
+      "factory": "./migrations/xhr-factory/index",
+      "package": "@angular/core",
+      "name": "migration-v12-xhr-factory"
+    },
+    {
+      "version": "12.1.2-beta.1",
+      "cli": "nx",
       "description": "Replace tsConfig with tsconfig for ts-jest in jest.config.js",
-      "factory": "./src/migrations/update-12-1-0/update-ts-jest",
+      "factory": "./src/migrations/update-12-1-2/update-ts-jest",
       "package": "@nrwl/jest",
       "name": "update-ts-jest-6-5-5"
     }
