@@ -2,5 +2,11 @@
   "name": "@jscutlery/cypress-angular",
   "version": "0.0.1",
   "main": "src/index.js",
-  "generators": "./generators.json"
+  "schematics": "./collection.json",
+  "generators": "./generators.json",
+  "dependencies": {
+    "@jscutlery/cypress-angular-dev-server": "^1.0.0",
+    "@cypress/webpack-dev-server": "^1.3.0",
+    "html-webpack-plugin": "^5.3.1"
+  }
 }

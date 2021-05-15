@@ -1,7 +1,7 @@
 import { addProjectConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import generator from './generator';
 import { SetupCtGeneratorSchema } from './schema';
+import { setupCtGenerator } from './setup-ct';
 
 describe('setup-ct generator', () => {
   let tree: Tree;
@@ -12,19 +12,23 @@ describe('setup-ct generator', () => {
       root: 'libs/my-lib',
       targets: {},
     });
-    await generator(tree, {
+    await setupCtGenerator(tree, {
       project: 'my-lib',
     } as SetupCtGeneratorSchema);
   });
 
-  xit('should add libs/my-lib/cypress/plugins/index.ts', () => {
+  it('should add libs/my-lib/cypress/plugins/index.ts', () => {
+    expect(tree.exists('libs/my-lib/cypress/plugins/index.ts')).toBeTruthy();
     expect(
-      tree.read('libs/my-lib/cypress/plugins/index.ts').toString()
+      tree.read('libs/my-lib/cypress/plugins/index.ts').toString('utf-8')
     ).toContain(`startAngularDevServer({ config, options })`);
   });
 
-  xit('should add libs/my-lib/cypress.json', () => {
-    expect(tree.read('libs/my-lib/cypress.json').toJSON()).toEqual(
+  it('should add libs/my-lib/cypress.json', () => {
+    expect(tree.exists('libs/my-lib/cypress.json')).toBeTruthy();
+    expect(
+      JSON.parse(tree.read('libs/my-lib/cypress.json').toString('utf-8'))
+    ).toEqual(
       expect.objectContaining({
         pluginsFile: './cypress/plugins/index.ts',
         component: {

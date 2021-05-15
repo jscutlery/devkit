@@ -321,6 +321,11 @@
               },
               {
                 "input": "./packages/cypress-angular",
+                "glob": "collection.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/cypress-angular",
                 "glob": "generators.json",
                 "output": "."
               },

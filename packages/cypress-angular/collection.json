@@ -1,0 +1,12 @@
+{
+  "name": "jscutlery/cypress-angular",
+  "version": "0.0.1",
+  "schematics": {
+    "remove": {
+      "factory": "./src/generators/setup-ct/setup-ct#setupCtSchematic",
+      "schema": "./src/generators/setup-ct/schema.json",
+      "aliases": ["setup-ct"],
+      "description": "Setup Cypress Component Testing"
+    }
+  }
+}
