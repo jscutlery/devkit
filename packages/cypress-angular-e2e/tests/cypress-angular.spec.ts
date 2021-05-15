@@ -5,7 +5,7 @@ import {
   runNxCommandAsync,
   uniq,
 } from '@nrwl/nx-plugin/testing';
-describe('cypress-angular e2e', () => {
+xdescribe('cypress-angular e2e', () => {
   it('should create cypress-angular', async (done) => {
     const plugin = uniq('cypress-angular');
     ensureNxProject(
