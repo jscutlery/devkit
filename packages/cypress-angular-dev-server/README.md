@@ -9,9 +9,7 @@ It can be enabled by adding the configuration below to the `*-e2e/src/plugins/in
 import { startAngularDevServer } from '@jscutlery/cypress-angular-dev-server';
 
 module.exports = (on, config) => {
-  on('dev-server:start', (options) =>
-    startAngularDevServer({ config, options })
-  );
+  on('dev-server:start', (options) => startAngularDevServer({ options }));
   return config;
 };
 ```

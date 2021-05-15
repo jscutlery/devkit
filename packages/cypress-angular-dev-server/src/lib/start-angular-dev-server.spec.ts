@@ -33,17 +33,17 @@ describe(startAngularDevServer.name, () => {
      */
     beforeEach(async () => {
       resolvedConfig = await startAngularDevServer({
-        config: {
-          projectRoot: testProjectPath,
-          componentFolder: testProjectPath,
-        } as Cypress.RuntimeConfigOptions,
         options: {
           specs: [],
           config: {
+            componentFolder: resolve(testProjectPath, 'src'),
             configFile: resolve(testProjectPath, 'cypress.json'),
+            projectRoot: testProjectPath,
             version: '7.1.0',
             testingType: 'component',
-          } as Partial<Cypress.ResolvedConfigOptions>,
+          } as Partial<
+            Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions
+          >,
         } as Cypress.DevServerOptions,
       });
     });
@@ -66,13 +66,13 @@ describe(startAngularDevServer.name, () => {
       expect(options).toEqual(
         expect.objectContaining({
           specs: [],
-          config: {
+          config: expect.objectContaining({
             configFile: expect.stringMatching(
               /__tests__\/fixtures\/demo\/cypress.json$/
             ),
             version: '7.1.0',
             testingType: 'component',
-          },
+          }),
         })
       );
       /* Make sure Angular plugin is loaded. */
