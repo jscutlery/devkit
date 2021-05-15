@@ -12,6 +12,9 @@ export async function startAngularDevServer({
 }): Promise<ResolvedDevServerConfig> {
   return startDevServer({
     options,
-    webpackConfig: await createAngularWebpackConfig(config),
+    webpackConfig: await createAngularWebpackConfig({
+      projectRoot: config.projectRoot,
+      sourceRoot: config.componentFolder,
+    }),
   });
 }

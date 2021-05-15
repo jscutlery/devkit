@@ -10,13 +10,14 @@ import {
 import { getSystemPath, normalize, resolve } from '@angular-devkit/core';
 import { StartDevServer } from '@cypress/webpack-dev-server';
 
-export async function createAngularWebpackConfig(
-  config: Cypress.RuntimeConfigOptions
-): Promise<StartDevServer['webpackConfig']> {
-  const projectRoot = normalize(config.projectRoot);
+export async function createAngularWebpackConfig(config: {
+  projectRoot: string;
+  sourceRoot: string;
+}): Promise<StartDevServer['webpackConfig']> {
   /* @todo replace with dynamic root */
+  const projectRoot = normalize(config.projectRoot);
   const workspaceRoot = resolve(projectRoot, normalize('../../'));
-  const sourceRoot = normalize(config.componentFolder);
+  const sourceRoot = normalize(config.sourceRoot);
 
   const normalizedOptions = normalizeBrowserSchema(
     workspaceRoot,
