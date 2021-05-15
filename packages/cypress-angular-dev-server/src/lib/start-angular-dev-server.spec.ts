@@ -16,7 +16,7 @@ jest.mock('@ngtools/webpack');
 const mockStartDevServer = startDevServer as jest.MockedFunction<
   typeof startDevServer
 >;
-const mockAngularCompilerPlugin = AngularWebpackPlugin as jest.MockedClass<
+const mockAngularWebpackPlugin = AngularWebpackPlugin as jest.MockedClass<
   typeof AngularWebpackPlugin
 >;
 
@@ -50,7 +50,7 @@ describe(startAngularDevServer.name, () => {
 
     afterEach(() => {
       mockStartDevServer.mockReset();
-      mockAngularCompilerPlugin.mockReset();
+      mockAngularWebpackPlugin.mockReset();
     });
 
     it(`should call startDevServer with the right webpack options`, async () => {
@@ -97,11 +97,12 @@ describe(startAngularDevServer.name, () => {
     });
 
     it('should create angular compiler with the right options', async () => {
-      expect(mockAngularCompilerPlugin).toBeCalledTimes(1);
-      expect(mockAngularCompilerPlugin).toBeCalledWith({
+      expect(mockAngularWebpackPlugin).toBeCalledTimes(1);
+      expect(mockAngularWebpackPlugin).toBeCalledWith({
         directTemplateLoading: true,
         /* Use `tsconfig.json` as default tsconfig path. */
         tsconfig: 'tsconfig.json',
+        emitNgModuleScope: true,
       });
     });
   });

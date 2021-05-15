@@ -40,6 +40,8 @@ export async function startAngularDevServer({
         new AngularWebpackPlugin({
           directTemplateLoading: true,
           tsconfig: 'tsconfig.json',
+          /* Required to import modules in cypress-mount. */
+          emitNgModuleScope: true,
         }),
       ],
     },
