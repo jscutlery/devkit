@@ -30,14 +30,14 @@ ng add @nrwl/workspace
 
 ### 1. Install
 
-The following  install guide targets Cypress >= 7, follow [this guide](./docs/experimental-install.md) for Cypress < 7.
+The following install guide targets Cypress >= 7, follow [this guide](./docs/experimental-install.md) for Cypress < 7.
 
 ```shell
-yarn add -D @jscutlery/cypress-mount @jscutlery/cypress-angular-dev-server
+yarn add -D @jscutlery/cypress-mount @jscutlery/cypress-angular-dev-server @cypress/webpack-dev-server html-webpack-plugin
 
 # or
 
-npm install -D @jscutlery/cypress-mount @jscutlery/cypress-angular-dev-server
+npm install -D @jscutlery/cypress-mount @jscutlery/cypress-angular-dev-server @cypress/webpack-dev-server html-webpack-plugin
 ```
 
 ### 2. Enable Cypress Component Testing
