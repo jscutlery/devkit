@@ -97,47 +97,6 @@
         }
       }
     },
-    "cypress-angular-preprocessor": {
-      "root": "packages/cypress-angular-preprocessor",
-      "sourceRoot": "packages/cypress-angular-preprocessor/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "packages/cypress-angular-preprocessor/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "packages/cypress-angular-preprocessor/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": ["coverage/packages/cypress-angular-preprocessor"]
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/cypress-angular-preprocessor",
-            "tsConfig": "packages/cypress-angular-preprocessor/tsconfig.lib.json",
-            "packageJson": "packages/cypress-angular-preprocessor/package.json",
-            "main": "packages/cypress-angular-preprocessor/src/index.ts",
-            "assets": ["packages/cypress-angular-preprocessor/*.md"]
-          },
-          "outputs": ["{options.outputPath}"]
-        },
-        "version": {
-          "builder": "@jscutlery/semver:version",
-          "options": {
-            "syncVersions": false
-          }
-        }
-      }
-    },
     "cypress-harness-integration": {
       "root": "packages/cypress-harness-integration",
       "sourceRoot": "packages/cypress-harness-integration/src",
