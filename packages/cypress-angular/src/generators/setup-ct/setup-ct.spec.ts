@@ -8,27 +8,35 @@ describe('setup-ct generator', () => {
 
   beforeEach(async () => {
     tree = createTreeWithEmptyWorkspace();
+
     addProjectConfiguration(tree, 'my-lib', {
       root: 'libs/my-lib',
       targets: {},
     });
+
     await setupCtGenerator(tree, {
       project: 'my-lib',
     } as SetupCtGeneratorSchema);
   });
 
   it('should add libs/my-lib/cypress/plugins/index.ts', () => {
-    expect(tree.exists('libs/my-lib/cypress/plugins/index.ts')).toBeTruthy();
-    expect(
-      tree.read('libs/my-lib/cypress/plugins/index.ts').toString('utf-8')
-    ).toContain(`startAngularDevServer({ config, options })`);
+    const cypressPluginPath = 'libs/my-lib/cypress/plugins/index.ts';
+    expect(tree.exists(cypressPluginPath)).toBeTruthy();
+    expect(readFile(cypressPluginPath)).toContain(
+      `startAngularDevServer({ config, options })`
+    );
+  });
+
+  it('should pass tsconfig.cypress.json path to startAngularDevServer', () => {
+    expect(readFile('libs/my-lib/cypress/plugins/index.ts')).toContain(
+      `startAngularDevServer({ config, options })`
+    );
   });
 
   it('should add libs/my-lib/cypress.json', () => {
-    expect(tree.exists('libs/my-lib/cypress.json')).toBeTruthy();
-    expect(
-      JSON.parse(tree.read('libs/my-lib/cypress.json').toString('utf-8'))
-    ).toEqual(
+    const cypressConfigPath = 'libs/my-lib/cypress.json';
+    expect(tree.exists(cypressConfigPath)).toBeTruthy();
+    expect(readJson(cypressConfigPath)).toEqual(
       expect.objectContaining({
         pluginsFile: './cypress/plugins/index.ts',
         component: {
@@ -38,4 +46,26 @@ describe('setup-ct generator', () => {
       })
     );
   });
+
+  it('should add libs/my-lib/tsconfig.cypress.json', () => {
+    const tsconfigPath = 'libs/my-lib/tsconfig.cypress.json';
+    expect(tree.exists(tsconfigPath)).toBeTruthy();
+    expect(readJson(tsconfigPath)).toEqual(
+      expect.objectContaining({
+        extends: '../../tsconfig.base.json',
+        compilerOptions: {
+          types: ['cypress'],
+        },
+        include: ['**/*.cy-spec.ts'],
+      })
+    );
+  });
+
+  function readJson(path: string) {
+    return JSON.parse(readFile(path));
+  }
+
+  function readFile(path: string) {
+    return tree.read(path).toString('utf-8');
+  }
 });

@@ -3,9 +3,12 @@ import {
   formatFiles,
   generateFiles,
   getWorkspacePath,
+  offsetFromRoot,
   ProjectConfiguration,
   Tree,
+  updateJson,
   WorkspaceJsonConfiguration,
+  writeJson,
 } from '@nrwl/devkit';
 import { join } from 'path';
 import { SetupCtGeneratorSchema } from './schema';
@@ -14,10 +17,14 @@ export async function setupCtGenerator(
   tree: Tree,
   options: SetupCtGeneratorSchema
 ) {
-  const { projectRoot } = normalizeOptions(tree, options);
-  addCypressFiles(tree, {
+  const { projectRoot } = _normalizeOptions(tree, options);
+
+  _addCypressFiles(tree, {
     projectRoot,
   });
+
+  _updateCypressTsconfig(tree, { projectRoot });
+
   await formatFiles(tree);
 }
 
@@ -30,12 +37,12 @@ interface NormalizedSchema {
   projectRoot: string;
 }
 
-function normalizeOptions(
+function _normalizeOptions(
   tree: Tree,
   options: SetupCtGeneratorSchema
 ): NormalizedSchema {
   const projectName = options.project;
-  const project = readProjectConfiguration(tree, projectName);
+  const project = _readProjectConfiguration(tree, projectName);
 
   return {
     projectName: options.project,
@@ -49,7 +56,7 @@ function normalizeOptions(
  * as nx.json is missing.
  * Cf. https://github.com/nrwl/nx/issues/5678
  */
-function readProjectConfiguration(
+function _readProjectConfiguration(
   tree: Tree,
   projectName: string
 ): ProjectConfiguration {
@@ -65,6 +72,43 @@ function readProjectConfiguration(
   return project;
 }
 
-function addCypressFiles(tree: Tree, { projectRoot }: { projectRoot: string }) {
+function _addCypressFiles(
+  tree: Tree,
+  { projectRoot }: { projectRoot: string }
+) {
   generateFiles(tree, join(__dirname, './files'), projectRoot, { tmpl: '' });
+}
+
+function _updateCypressTsconfig(
+  tree: Tree,
+  { projectRoot }: { projectRoot: string }
+) {
+  const defaultBaseTsconfigPath = 'tsconfig.base.json';
+  const baseTsconfigPath = tree.exists(defaultBaseTsconfigPath)
+    ? defaultBaseTsconfigPath
+    : 'tsconfig.json';
+
+  /* Compute base tsconfig relative path. */
+  const relativeBaseTsconfigPath = join(
+    offsetFromRoot(projectRoot),
+    baseTsconfigPath
+  );
+
+  const tsconfigPath = join(projectRoot, 'tsconfig.cypress.json');
+
+  /* Make sure file exists first. */
+  if (!tree.exists(tsconfigPath)) {
+    writeJson(tree, tsconfigPath, {});
+  }
+
+  /* Fill or update. */
+  updateJson(tree, tsconfigPath, (json) => ({
+    ...json,
+    extends: relativeBaseTsconfigPath,
+    compilerOptions: {
+      ...json?.compilerOptions,
+      types: ['cypress'],
+    },
+    include: ['**/*.cy-spec.ts'],
+  }));
 }
