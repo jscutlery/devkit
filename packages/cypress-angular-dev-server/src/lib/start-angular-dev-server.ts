@@ -1,49 +1,20 @@
 /// <reference types="cypress"/>
 import { startDevServer } from '@cypress/webpack-dev-server';
 import { ResolvedDevServerConfig } from '@cypress/webpack-dev-server';
-import { AngularWebpackPlugin } from '@ngtools/webpack';
+import { createAngularWebpackConfig } from './create-angular-webpack-config';
 
 export async function startAngularDevServer({
   config,
   options,
 }: {
-  config: Cypress.PluginConfigOptions;
+  config: Cypress.RuntimeConfigOptions;
   options: Cypress.DevServerOptions;
 }): Promise<ResolvedDevServerConfig> {
   return startDevServer({
     options,
-    webpackConfig: {
-      /* Performance boost. */
-      devtool: false,
-      resolve: {
-        extensions: ['.js', '.ts'],
-      },
-      module: {
-        rules: [
-          {
-            test: /\.ts$/,
-            loader: '@ngtools/webpack',
-          },
-          /* Use raw-loader as AngularCompilerPlugin handles the rest. */
-          {
-            test: /\.css$/,
-            loader: 'raw-loader',
-          },
-          /* Use raw-loader as AngularCompilerPlugin handles the rest. */
-          {
-            test: /\.scss$/,
-            use: ['raw-loader', 'sass-loader'],
-          },
-        ],
-      },
-      plugins: [
-        new AngularWebpackPlugin({
-          directTemplateLoading: true,
-          tsconfig: 'tsconfig.json',
-          /* Required to import modules in cypress-mount. */
-          emitNgModuleScope: true,
-        }),
-      ],
-    },
+    webpackConfig: await createAngularWebpackConfig({
+      projectRoot: config.projectRoot,
+      sourceRoot: config.componentFolder,
+    }),
   });
 }

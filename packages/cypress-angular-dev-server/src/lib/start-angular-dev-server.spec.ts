@@ -1,26 +1,23 @@
-import { startAngularDevServer } from './start-angular-dev-server';
-
+import { AngularWebpackPlugin } from '@ngtools/webpack';
 import {
   ResolvedDevServerConfig,
   startDevServer,
 } from '@cypress/webpack-dev-server';
-import { AngularWebpackPlugin } from '@ngtools/webpack';
-
 /* Import jest functions manually as they conflict with cypress
  * because @cypress/webpack-dev-server references cypress types */
 import { describe, expect, it } from '@jest/globals';
+import { resolve } from 'path';
+import { startAngularDevServer } from './start-angular-dev-server';
 
 jest.mock('@cypress/webpack-dev-server');
-jest.mock('@ngtools/webpack');
 
 const mockStartDevServer = startDevServer as jest.MockedFunction<
   typeof startDevServer
 >;
-const mockAngularWebpackPlugin = AngularWebpackPlugin as jest.MockedClass<
-  typeof AngularWebpackPlugin
->;
 
 describe(startAngularDevServer.name, () => {
+  const testProjectPath = resolve(__dirname, '__tests__/fixtures/demo');
+
   describe('with default config', () => {
     let resolvedConfig: ResolvedDevServerConfig;
 
@@ -36,11 +33,14 @@ describe(startAngularDevServer.name, () => {
      */
     beforeEach(async () => {
       resolvedConfig = await startAngularDevServer({
-        config: {} as Cypress.PluginConfigOptions,
+        config: {
+          projectRoot: testProjectPath,
+          componentFolder: testProjectPath,
+        } as Cypress.RuntimeConfigOptions,
         options: {
           specs: [],
           config: {
-            configFile: '/root/packages/a/cypress.json',
+            configFile: resolve(testProjectPath, 'cypress.json'),
             version: '7.1.0',
             testingType: 'component',
           } as Partial<Cypress.ResolvedConfigOptions>,
@@ -50,60 +50,37 @@ describe(startAngularDevServer.name, () => {
 
     afterEach(() => {
       mockStartDevServer.mockReset();
-      mockAngularWebpackPlugin.mockReset();
     });
 
-    it(`should call startDevServer with the right webpack options`, async () => {
+    it(`should return the startDevServer resolved config`, () => {
       expect(resolvedConfig).toEqual(
         expect.objectContaining({
           port: 4300,
         })
       );
+    });
 
+    it(`should call startDevServer with the right options and webpack config`, async () => {
       expect(startDevServer).toBeCalledTimes(1);
-      expect(startDevServer).toBeCalledWith({
-        options: expect.objectContaining({
+      const { options, webpackConfig } = mockStartDevServer.mock.calls[0][0];
+      expect(options).toEqual(
+        expect.objectContaining({
           specs: [],
           config: {
-            configFile: '/root/packages/a/cypress.json',
+            configFile: expect.stringMatching(
+              /__tests__\/fixtures\/demo\/cypress.json$/
+            ),
             version: '7.1.0',
             testingType: 'component',
           },
-        }),
-        webpackConfig: {
-          devtool: false,
-          plugins: [expect.any(AngularWebpackPlugin)],
-          resolve: {
-            extensions: ['.js', '.ts'],
-          },
-          module: {
-            rules: [
-              {
-                test: /\.ts$/,
-                loader: '@ngtools/webpack',
-              },
-              {
-                test: /\.css$/,
-                loader: 'raw-loader',
-              },
-              {
-                test: /\.scss$/,
-                use: ['raw-loader', 'sass-loader'],
-              },
-            ],
-          },
-        },
-      });
-    });
-
-    it('should create angular compiler with the right options', async () => {
-      expect(mockAngularWebpackPlugin).toBeCalledTimes(1);
-      expect(mockAngularWebpackPlugin).toBeCalledWith({
-        directTemplateLoading: true,
-        /* Use `tsconfig.json` as default tsconfig path. */
-        tsconfig: 'tsconfig.json',
-        emitNgModuleScope: true,
-      });
+        })
+      );
+      /* Make sure Angular plugin is loaded. */
+      expect(webpackConfig.plugins).toEqual(
+        expect.arrayContaining([expect.any(AngularWebpackPlugin)])
+      );
+      /* Check config has rules. */
+      expect(webpackConfig.module.rules.length).toBeGreaterThanOrEqual(1);
     });
   });
 
