@@ -49,6 +49,13 @@
     },
     "cypress-angular-dev-server": {
       "tags": []
+    },
+    "cypress-angular": {
+      "tags": []
+    },
+    "cypress-angular-e2e": {
+      "tags": [],
+      "implicitDependencies": ["cypress-angular"]
     }
   }
 }

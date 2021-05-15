@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "cypress-angular",
+  "version": "0.0.1",
+  "generators": {
+    "cypress-angular": {
+      "factory": "./src/generators/cypress-angular/generator",
+      "schema": "./src/generators/cypress-angular/schema.json",
+      "description": "cypress-angular generator"
+    }
+  }
+}

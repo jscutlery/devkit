@@ -279,6 +279,76 @@
           }
         }
       }
+    },
+    "cypress-angular": {
+      "root": "packages/cypress-angular",
+      "sourceRoot": "packages/cypress-angular/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/cypress-angular/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/cypress-angular"],
+          "options": {
+            "jestConfig": "packages/cypress-angular/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/cypress-angular",
+            "tsConfig": "packages/cypress-angular/tsconfig.lib.json",
+            "packageJson": "packages/cypress-angular/package.json",
+            "main": "packages/cypress-angular/src/index.ts",
+            "assets": [
+              "packages/cypress-angular/*.md",
+              {
+                "input": "./packages/cypress-angular/src",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/cypress-angular/src",
+                "glob": "**/*.d.ts",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/cypress-angular",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/cypress-angular",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "cypress-angular-e2e": {
+      "projectType": "application",
+      "root": "packages/cypress-angular-e2e",
+      "sourceRoot": "packages/cypress-angular-e2e/src",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "cypress-angular:build",
+            "npmPackageName": "@test-utils/cypress-angular",
+            "pluginOutputPath": "dist/packages/cypress-angular",
+            "jestConfig": "packages/cypress-angular-e2e/jest.config.js"
+          }
+        }
+      }
     }
   }
 }
