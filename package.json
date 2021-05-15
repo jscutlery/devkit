@@ -23,11 +23,11 @@
     "update": "nx migrate latest",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "_build-all": "nx affected:build --all",
-    "_publish:cypress-harness": "yarn --cwd dist/packages/cypress-harness publish --non-interactive",
-    "_publish:cypress-mount": "yarn --cwd dist/packages/cypress-mount publish --non-interactive",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
-    "workspace-generator": "nx workspace-generator"
+    "workspace-generator": "nx workspace-generator",
+    "publish:cypress-angular-dev-server": "yarn --cwd dist/packages/cypress-angular-dev-server publish",
+    "publish:cypress-harness": "yarn --cwd dist/packages/cypress-harness publish",
+    "publish:cypress-mount": "yarn --cwd dist/packages/cypress-mount publish"
   },
   "private": true,
   "dependencies": {
