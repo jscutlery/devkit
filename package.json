@@ -25,9 +25,9 @@
     "help": "nx help",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "workspace-generator": "nx workspace-generator",
-    "publish:cypress-angular-dev-server": "yarn --cwd dist/packages/cypress-angular-dev-server publish",
-    "publish:cypress-harness": "yarn --cwd dist/packages/cypress-harness publish",
-    "publish:cypress-mount": "yarn --cwd dist/packages/cypress-mount publish"
+    "publish:cypress-angular-dev-server": "npm publish dist/packages/cypress-angular-dev-server",
+    "publish:cypress-harness": "npm publish dist/packages/cypress-harness",
+    "publish:cypress-mount": "npm publish dist/packages/cypress-mount"
   },
   "private": true,
   "dependencies": {
