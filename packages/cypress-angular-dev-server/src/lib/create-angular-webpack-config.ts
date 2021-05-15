@@ -14,9 +14,9 @@ export async function createAngularWebpackConfig(config: {
   projectRoot: string;
   sourceRoot: string;
 }): Promise<StartDevServer['webpackConfig']> {
-  /* @todo replace with dynamic root */
   const projectRoot = normalize(config.projectRoot);
-  const workspaceRoot = resolve(projectRoot, normalize('../../'));
+  /* @todo discover workspace root by crawling up to `angular.json|workspace.json`. */
+  const workspaceRoot = projectRoot;
   const sourceRoot = normalize(config.sourceRoot);
 
   const normalizedOptions = normalizeBrowserSchema(
@@ -25,22 +25,17 @@ export async function createAngularWebpackConfig(config: {
     sourceRoot,
     {
       tsConfig: resolve(projectRoot, normalize('tsconfig.json')),
+      /* @hack outputPath is required, otherwise `getCommonConfig` crashes. */
       outputPath: '',
       index: null,
       main: null,
       aot: false,
-      polyfills: 'placeholder', // WTF!?? it crashes without?
+      /* @hack polyfills are required, otherwise for some weird reason the produced
+       * webpack config doesn't build anything properly. */
+      polyfills: 'POLYFILL_PLACEHOLDER',
       /* @todo dynamically import assets, styles & scripts from target's angular.json|workspace.json config. */
     }
   );
-
-  const logger = {
-    ...console,
-    createChild() {
-      return this;
-    },
-    fatal: console.error,
-  };
 
   const webpackConfig = await generateWebpackConfig(
     getSystemPath(workspaceRoot),
@@ -54,9 +49,19 @@ export async function createAngularWebpackConfig(config: {
       getStatsConfig(wco),
       getCompilerConfig(wco),
     ],
-    logger,
+    _createFakeLogger(),
     {}
   );
 
   return webpackConfig;
+}
+
+export function _createFakeLogger() {
+  return {
+    ...console,
+    createChild() {
+      return this;
+    },
+    fatal: console.error,
+  };
 }
