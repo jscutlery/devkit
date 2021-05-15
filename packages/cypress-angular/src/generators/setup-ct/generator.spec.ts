@@ -4,7 +4,7 @@ import { Tree, readProjectConfiguration } from '@nrwl/devkit';
 import generator from './generator';
 import { CypressAngularGeneratorSchema } from './schema';
 
-describe('cypress-angular generator', () => {
+describe('setup-ct generator', () => {
   let appTree: Tree;
   const options: CypressAngularGeneratorSchema = { name: 'test' };
 
