@@ -1,30 +1,29 @@
-import { startAngularDevServer } from './start-angular-dev-server';
-
-import {
-  ResolvedDevServerConfig,
-  startDevServer,
-} from '@cypress/webpack-dev-server';
-import { AngularWebpackPlugin } from '@ngtools/webpack';
-
+import { ResolvedDevServerConfig, startDevServer } from '@cypress/webpack-dev-server';
 /* Import jest functions manually as they conflict with cypress
  * because @cypress/webpack-dev-server references cypress types */
 import { describe, expect, it } from '@jest/globals';
 
+import { createAngularWebpackConfig } from './create-angular-webpack-config';
+import { startAngularDevServer } from './start-angular-dev-server';
+
 jest.mock('@cypress/webpack-dev-server');
-jest.mock('@ngtools/webpack');
+jest.mock('./create-angular-webpack-config');
 
 const mockStartDevServer = startDevServer as jest.MockedFunction<
   typeof startDevServer
 >;
-const mockAngularWebpackPlugin = AngularWebpackPlugin as jest.MockedClass<
-  typeof AngularWebpackPlugin
->;
+
+const mockCreateAngularWebpackConfig =
+  createAngularWebpackConfig as jest.MockedFunction<
+    typeof createAngularWebpackConfig
+  >;
 
 describe(startAngularDevServer.name, () => {
   describe('with default config', () => {
     let resolvedConfig: ResolvedDevServerConfig;
 
     beforeEach(() => {
+      mockCreateAngularWebpackConfig.mockResolvedValue({});
       mockStartDevServer.mockResolvedValue({
         port: 4300,
         close: jest.fn(),
@@ -36,7 +35,10 @@ describe(startAngularDevServer.name, () => {
      */
     beforeEach(async () => {
       resolvedConfig = await startAngularDevServer({
-        config: {} as Cypress.PluginConfigOptions,
+        config: {
+          projectRoot: '/root/packages/a',
+          componentFolder: '/root/packages/a/src/components',
+        } as Cypress.RuntimeConfigOptions,
         options: {
           specs: [],
           config: {
@@ -50,7 +52,7 @@ describe(startAngularDevServer.name, () => {
 
     afterEach(() => {
       mockStartDevServer.mockReset();
-      mockAngularWebpackPlugin.mockReset();
+      mockCreateAngularWebpackConfig.mockReset();
     });
 
     it(`should call startDevServer with the right webpack options`, async () => {
@@ -70,39 +72,15 @@ describe(startAngularDevServer.name, () => {
             testingType: 'component',
           },
         }),
-        webpackConfig: {
-          devtool: false,
-          plugins: [expect.any(AngularWebpackPlugin)],
-          resolve: {
-            extensions: ['.js', '.ts'],
-          },
-          module: {
-            rules: [
-              {
-                test: /\.ts$/,
-                loader: '@ngtools/webpack',
-              },
-              {
-                test: /\.css$/,
-                loader: 'raw-loader',
-              },
-              {
-                test: /\.scss$/,
-                use: ['raw-loader', 'sass-loader'],
-              },
-            ],
-          },
-        },
+        webpackConfig: expect.any(Object),
       });
     });
 
-    it('should create angular compiler with the right options', async () => {
-      expect(mockAngularWebpackPlugin).toBeCalledTimes(1);
-      expect(mockAngularWebpackPlugin).toBeCalledWith({
-        directTemplateLoading: true,
-        /* Use `tsconfig.json` as default tsconfig path. */
-        tsconfig: 'tsconfig.json',
-        emitNgModuleScope: true,
+    it('should call createAngularWebpackConfig with right options', async () => {
+      expect(mockCreateAngularWebpackConfig).toBeCalledTimes(1);
+      expect(mockCreateAngularWebpackConfig).toBeCalledWith({
+        componentFolder: '/root/packages/a/src/components',
+        projectRoot: '/root/packages/a',
       });
     });
   });
