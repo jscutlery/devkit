@@ -1,20 +1,18 @@
+import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Tree, readProjectConfiguration } from '@nrwl/devkit';
-
 import generator from './generator';
-import { CypressAngularGeneratorSchema } from './schema';
+import { SetupCtGeneratorSchema } from './schema';
 
 describe('setup-ct generator', () => {
   let appTree: Tree;
-  const options: CypressAngularGeneratorSchema = { name: 'test' };
+  const options: SetupCtGeneratorSchema = { project: 'my-lib' };
 
-  beforeEach(() => {
+  beforeEach(async () => {
     appTree = createTreeWithEmptyWorkspace();
+    await generator(appTree, options);
   });
 
-  it('should run successfully', async () => {
-    await generator(appTree, options);
-    const config = readProjectConfiguration(appTree, 'test');
-    expect(config).toBeDefined();
-  });
+  it.todo('should add libs/my-lib/cypress/plugins/index.ts');
+
+  it.todo('should add libs/my-lib/cypress.json');
 });

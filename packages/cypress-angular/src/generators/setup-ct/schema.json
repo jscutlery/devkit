@@ -1,29 +1,19 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "id": "CypressAngular",
-  "title": "",
+  "id": "setup-ct",
+  "title": "Setup Cypress Component Testing",
   "type": "object",
   "properties": {
-    "name": {
+    "project": {
       "type": "string",
-      "description": "",
+      "description": "The project for which you want to setup Cypress Component Testing",
       "$default": {
         "$source": "argv",
         "index": 0
       },
-      "x-prompt": "What name would you like to use?"
-    },
-    "tags": {
-      "type": "string",
-      "description": "Add tags to the project (used for linting)",
-      "alias": "t"
-    },
-    "directory": {
-      "type": "string",
-      "description": "A directory where the project is placed",
-      "alias": "d"
+      "x-prompt": "Which project would you like to add Cypress Component Testing to"
     }
   },
-  "required": ["name"]
+  "required": ["project"]
 }

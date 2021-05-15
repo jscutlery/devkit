@@ -1,5 +1,3 @@
-export interface CypressAngularGeneratorSchema {
-  name: string;
-  tags?: string;
-  directory?: string;
+export interface SetupCtGeneratorSchema {
+  project: string;
 }
