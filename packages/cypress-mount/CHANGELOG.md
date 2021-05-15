@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.9.0](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.8.2...cypress-mount-0.9.0) (2021-05-15)
+
+
+### Features
+
+* **cypress-mount:** ✅ support Angular 12 ([9942212](https://github.com/jscutlery/test-utils/commit/99422127c3ed715447e21da4099f7011dad08c9b))
+
+
+
 ## [0.8.2](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.8.1...cypress-mount-0.8.2) (2021-05-13)
 
 
