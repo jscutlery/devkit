@@ -1,4 +1,4 @@
-import { addProjectConfiguration, Tree } from '@nrwl/devkit';
+import { addProjectConfiguration, Tree, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { SetupCtGeneratorSchema } from './schema';
 import { setupCtGenerator } from './setup-ct';
@@ -14,6 +14,8 @@ describe('setup-ct generator', () => {
       targets: {},
     });
 
+    writeJson(tree, 'libs/my-lib/tsconfig.json', {});
+
     await setupCtGenerator(tree, {
       project: 'my-lib',
     } as SetupCtGeneratorSchema);
@@ -24,6 +26,18 @@ describe('setup-ct generator', () => {
     expect(tree.exists(cypressPluginPath)).toBeTruthy();
     expect(readFile(cypressPluginPath)).toContain(
       `startAngularDevServer({ options, tsConfig: 'tsconfig.cypress.json' })`
+    );
+  });
+
+  it('should add tsconfig.cypress.json to tsconfig.json references', () => {
+    expect(readJson('libs/my-lib/tsconfig.json')).toEqual(
+      expect.objectContaining({
+        references: [
+          {
+            path: './tsconfig.cypress.json',
+          },
+        ],
+      })
     );
   });
 

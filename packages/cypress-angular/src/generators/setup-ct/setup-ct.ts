@@ -72,6 +72,9 @@ function _readProjectConfiguration(
   return project;
 }
 
+/**
+ * Generate cypress.json + cypress/plugins/index.ts + src/sample.cy-spec.ts
+ */
 function _addCypressFiles(
   tree: Tree,
   { projectRoot }: { projectRoot: string }
@@ -79,6 +82,10 @@ function _addCypressFiles(
   generateFiles(tree, join(__dirname, './files'), projectRoot, { tmpl: '' });
 }
 
+/**
+ * Create or update `tsconfig.cypress.json` with the right options
+ * like `cypress` types and including `*.cy-spec.ts`.
+ */
 function _updateCypressTsconfig(
   tree: Tree,
   { projectRoot }: { projectRoot: string }
@@ -87,28 +94,53 @@ function _updateCypressTsconfig(
   const baseTsconfigPath = tree.exists(defaultBaseTsconfigPath)
     ? defaultBaseTsconfigPath
     : 'tsconfig.json';
+  const cypressTsConfigName = 'tsconfig.cypress.json';
 
   /* Compute base tsconfig relative path. */
-  const relativeBaseTsconfigPath = join(
+  const relativeBaseTsconfig = join(
     offsetFromRoot(projectRoot),
     baseTsconfigPath
   );
 
-  const tsconfigPath = join(projectRoot, 'tsconfig.cypress.json');
+  const cypressTsConfig = join(projectRoot, cypressTsConfigName);
 
   /* Make sure file exists first. */
-  if (!tree.exists(tsconfigPath)) {
-    writeJson(tree, tsconfigPath, {});
+  if (!tree.exists(cypressTsConfig)) {
+    writeJson(tree, cypressTsConfig, {});
   }
 
   /* Fill or update. */
-  updateJson(tree, tsconfigPath, (json) => ({
+  updateJson(tree, cypressTsConfig, (json) => ({
     ...json,
-    extends: relativeBaseTsconfigPath,
+    extends: relativeBaseTsconfig,
     compilerOptions: {
       ...json?.compilerOptions,
       types: ['cypress'],
     },
     include: ['**/*.cy-spec.ts'],
   }));
+
+  /* Create or update tsconfig.json with references if it exists. */
+  const projectTsConfig = join(projectRoot, 'tsconfig.json');
+  if (tree.exists(projectTsConfig)) {
+    updateJson(tree, projectTsConfig, (json) => {
+      const referencePath = `./${cypressTsConfigName}`;
+
+      /* Ignore reference if alread added to avoid adding it twice. */
+      const references = (json.references ?? []).filter(
+        (path) => path !== referencePath
+      );
+
+      /* Add reference to cypress tsconfig. */
+      return {
+        ...json,
+        references: [
+          ...references,
+          {
+            path: referencePath,
+          },
+        ],
+      };
+    });
+  }
 }
