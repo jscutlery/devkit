@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "setup-ct",
+  "cli": "nx",
+  "title": "Setup Cypress Component Testing",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "The project for which you want to setup Cypress Component Testing",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "Which project would you like to add Cypress Component Testing to"
+    }
+  },
+  "required": ["project"]
+}

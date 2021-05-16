@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "cypress-angular",
+  "version": "0.0.1",
+  "generators": {
+    "ng-add": {
+      "factory": "./src/generators/ng-add/ng-add",
+      "schema": "./src/generators/ng-add/schema.json",
+      "description": "Add @jscutlery/cypress-angular to the workspace"
+    },
+    "setup-ct": {
+      "factory": "./src/generators/setup-ct/setup-ct",
+      "schema": "./src/generators/setup-ct/schema.json",
+      "description": "Setup Cypress Component Testing"
+    }
+  }
+}

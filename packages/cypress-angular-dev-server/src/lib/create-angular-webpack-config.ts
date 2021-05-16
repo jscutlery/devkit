@@ -13,18 +13,20 @@ import { StartDevServer } from '@cypress/webpack-dev-server';
 export async function createAngularWebpackConfig(config: {
   projectRoot: string;
   sourceRoot: string;
+  tsConfig: string;
 }): Promise<StartDevServer['webpackConfig']> {
   const projectRoot = normalize(config.projectRoot);
   /* @todo discover workspace root by crawling up to `angular.json|workspace.json`. */
   const workspaceRoot = projectRoot;
   const sourceRoot = normalize(config.sourceRoot);
+  const tsConfig = normalize(config.tsConfig);
 
   const normalizedOptions = normalizeBrowserSchema(
     workspaceRoot,
     projectRoot,
     sourceRoot,
     {
-      tsConfig: resolve(projectRoot, normalize('tsconfig.json')),
+      tsConfig: resolve(projectRoot, tsConfig),
       /* @hack outputPath is required, otherwise `getCommonConfig` crashes. */
       outputPath: '',
       index: null,

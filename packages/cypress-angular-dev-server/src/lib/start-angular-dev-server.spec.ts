@@ -18,38 +18,38 @@ const mockStartDevServer = startDevServer as jest.MockedFunction<
 describe(startAngularDevServer.name, () => {
   const testProjectPath = resolve(__dirname, '__tests__/fixtures/demo');
 
+  beforeEach(() => {
+    mockStartDevServer.mockResolvedValue({
+      port: 4300,
+      close: jest.fn(),
+    });
+  });
+
+  afterEach(() => {
+    mockStartDevServer.mockReset();
+  });
+
   describe('with default config', () => {
     let resolvedConfig: ResolvedDevServerConfig;
-
-    beforeEach(() => {
-      mockStartDevServer.mockResolvedValue({
-        port: 4300,
-        close: jest.fn(),
-      });
-    });
 
     /**
      * 🎬 Action!
      */
     beforeEach(async () => {
       resolvedConfig = await startAngularDevServer({
-        config: {
-          projectRoot: testProjectPath,
-          componentFolder: testProjectPath,
-        } as Cypress.RuntimeConfigOptions,
         options: {
           specs: [],
           config: {
+            componentFolder: resolve(testProjectPath, 'src'),
             configFile: resolve(testProjectPath, 'cypress.json'),
+            projectRoot: testProjectPath,
             version: '7.1.0',
             testingType: 'component',
-          } as Partial<Cypress.ResolvedConfigOptions>,
+          } as Partial<
+            Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions
+          >,
         } as Cypress.DevServerOptions,
       });
-    });
-
-    afterEach(() => {
-      mockStartDevServer.mockReset();
     });
 
     it(`should return the startDevServer resolved config`, () => {
@@ -66,13 +66,13 @@ describe(startAngularDevServer.name, () => {
       expect(options).toEqual(
         expect.objectContaining({
           specs: [],
-          config: {
+          config: expect.objectContaining({
             configFile: expect.stringMatching(
               /__tests__\/fixtures\/demo\/cypress.json$/
             ),
             version: '7.1.0',
             testingType: 'component',
-          },
+          }),
         })
       );
       /* Make sure Angular plugin is loaded. */
@@ -89,6 +89,38 @@ describe(startAngularDevServer.name, () => {
   });
 
   describe('with custom tsConfig path', () => {
-    it.todo('should forward tsConfig path to AngularCompilerPlugin');
+    /**
+     * 🎬 Action!
+     */
+    beforeEach(async () => {
+      await startAngularDevServer({
+        options: {
+          specs: [],
+          config: {
+            componentFolder: resolve(testProjectPath, 'src'),
+            configFile: resolve(testProjectPath, 'cypress.json'),
+            projectRoot: testProjectPath,
+            version: '7.1.0',
+            testingType: 'component',
+          } as Partial<
+            Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions
+          >,
+        } as Cypress.DevServerOptions,
+        tsConfig: 'tsconfig.cypress.json',
+      });
+    });
+
+    it('should forward tsConfig path to AngularWebpackPlugin', () => {
+      expect(startDevServer).toBeCalledTimes(1);
+      const { webpackConfig } = mockStartDevServer.mock.calls[0][0];
+
+      const plugin = webpackConfig.plugins.find(
+        (plugin) => plugin instanceof AngularWebpackPlugin
+      );
+
+      expect(plugin.options.tsconfig).toMatch(
+        /__tests__\/fixtures\/demo\/tsconfig.cypress.json$/
+      );
+    });
   });
 });
