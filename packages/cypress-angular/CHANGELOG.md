@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.2.0](https://github.com/jscutlery/test-utils/compare/cypress-angular-0.1.0...cypress-angular-0.2.0) (2021-05-16)
+
+
+### Bug Fixes
+
+* **cypress-angular:** 🐞 fix error when import cypress-mount ([1418c80](https://github.com/jscutlery/test-utils/commit/1418c80b27e15d84aee2c0e840742f88e91eb3c5))
+
+
+### Features
+
+* **cypress-angular:** ✅ setup @jscutlery/cypress-mount and support.ts on install ([e924d99](https://github.com/jscutlery/test-utils/commit/e924d99a228e584b662d873cd7351757cbb84105))
+
+
+
 # 0.1.0 (2021-05-16)
 
 
