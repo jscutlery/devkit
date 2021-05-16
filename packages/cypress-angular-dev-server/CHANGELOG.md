@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [1.1.0](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.0.1...cypress-angular-dev-server-1.1.0) (2021-05-16)
+
+
+### Features
+
+* **cypress-angular-dev-server:** ✅ allow tsConfig path customization ([9fbc2eb](https://github.com/jscutlery/test-utils/commit/9fbc2eb971c6ca7d0bdab1c0b2476d8f4a4d1855)), closes [#50](https://github.com/jscutlery/test-utils/issues/50)
+
+
+
 ## [1.0.1](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.0.0...cypress-angular-dev-server-1.0.1) (2021-05-15)
 
 
