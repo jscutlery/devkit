@@ -4,6 +4,5 @@ module.exports = {
     '<rootDir>/packages/cypress-harness',
     '<rootDir>/packages/cypress-mount',
     '<rootDir>/packages/cypress-angular',
-    '<rootDir>/packages/cypress-angular-e2e',
   ],
 };

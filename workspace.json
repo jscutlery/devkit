@@ -338,22 +338,6 @@
           }
         }
       }
-    },
-    "cypress-angular-e2e": {
-      "projectType": "application",
-      "root": "packages/cypress-angular-e2e",
-      "sourceRoot": "packages/cypress-angular-e2e/src",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/nx-plugin:e2e",
-          "options": {
-            "target": "cypress-angular:build",
-            "npmPackageName": "@jscutlery/cypress-angular",
-            "pluginOutputPath": "dist/packages/cypress-angular",
-            "jestConfig": "packages/cypress-angular-e2e/jest.config.js"
-          }
-        }
-      }
     }
   }
 }
