@@ -6,11 +6,11 @@
 
 This project is a monorepo that includes the following packages.
 
-| Package                                                                            | Description                                                                       | Version                                                                      |
-| ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [@jscutlery/cypress-harness](./packages/cypress-harness)                           | Cypress support for Angular Component Test Harnesses                              | <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness">              |
-| [@jscutlery/cypress-mount](./packages/cypress-mount)                               | Cypress Component Testing support for Angular                                     | <img src="https://badgen.net/npm/v/@jscutlery/cypress-mount">                |
-| [@jscutlery/cypress-angular-dev-server](./packages/cypress-angular-dev-server)     | Angular Dev Server to be used in conjunction with Cypress Mount and Cypress >= 7  | <img src="https://badgen.net/npm/v/@jscutlery/cypress-angular-dev-server">   |
+| Package                                                  | Description                                                   | Version                                                         |
+| -------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------- |
+| [@jscutlery/cypress-angular](./packages/cypress-angular) | A set of tools to setup Cypress Component Testing for Angular | <img src="https://badgen.net/npm/v/@jscutlery/cypress-angular"> |
+| [@jscutlery/cypress-harness](./packages/cypress-harness) | Cypress support for Angular Component Test Harnesses          | <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness"> |
+| [@jscutlery/cypress-mount](./packages/cypress-mount)     | Cypress Component Testing support for Angular                 | <img src="https://badgen.net/npm/v/@jscutlery/cypress-mount">   |
 
 # Changelog
 
