@@ -62,9 +62,17 @@ describe('mount', () => {
   });
 
   it('should handle global styles', () => {
-    mount(HelloComponent, {
-      styles: [`body { color: red }`],
-    });
+    mount(HelloComponent, { styles: [`body { color: red }`] });
+    cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
+  });
+
+  it('should handle css file', () => {
+    mount(HelloComponent, { cssFile: 'src/fixtures/demo.css' });
+    cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
+  });
+
+  it('should handle css link', () => {
+    mount(HelloComponent, { stylesheet: 'src/fixtures/demo.css' });
     cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
   });
 });

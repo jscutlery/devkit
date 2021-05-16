@@ -1,16 +1,28 @@
 import '@angular/compiler';
 
-import { Component, NgModule, PlatformRef, SchemaMetadata, Type, ViewEncapsulation } from '@angular/core';
+import { Component, NgModule, PlatformRef, SchemaMetadata, Type } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { injectStylesBeforeElement, StyleOptions } from '@cypress/mount-utils';
 import { Story } from '@storybook/angular';
 import { DynamicModule } from 'ng-dynamic-component';
 
-export type Style = string;
-
-export interface MountStoryOptions {
-  styles?: Style[];
+export interface BaseMountOptions extends Partial<StyleOptions> {
+  imports?: NgModule['imports'];
+  providers?: NgModule['providers'];
+  schemas?: SchemaMetadata[];
 }
+
+export interface MountOptions extends BaseMountOptions {
+  inputs?: { [key: string]: unknown };
+}
+export type MountTemplateOptions = BaseMountOptions;
+export type MountStoryOptions = Partial<StyleOptions>;
+
+/**
+ * @internal
+ */
+export const NG_ROOT_ID = '#root';
 
 /**
  * Mount a component from a Storybook story.
@@ -33,19 +45,6 @@ export function mountStory(
 }
 
 let platformRef: PlatformRef;
-
-export interface BaseMountOptions {
-  imports?: NgModule['imports'];
-  providers?: NgModule['providers'];
-  styles?: Style[];
-  schemas?: SchemaMetadata[];
-}
-
-export interface MountOptions extends BaseMountOptions {
-  inputs?: { [key: string]: unknown };
-}
-
-export type MountTemplateOptions = BaseMountOptions;
 
 /**
  * Mount given component or template.
@@ -79,10 +78,7 @@ export function mount(
     /* Prepare container component metadata which are
      * the same for mounting a component or template. */
     const componentMetadata = {
-      /* Make sure that styles are applied globally. */
-      encapsulation: ViewEncapsulation.None,
       selector: '#root',
-      styles: options.styles,
     };
 
     const containerComponent =
@@ -113,15 +109,20 @@ export function mount(
       component: containerComponent,
       ...options,
     });
+
+    _injectStyles(options);
   });
 }
 
+/**
+ * @internal
+ */
 export function _createContainerComponent({
   componentMetadata,
   klass,
 }: {
   componentMetadata: Component;
-  klass: { new(): unknown };
+  klass: { new (): unknown };
 }): Type<unknown> {
   /* Decorate component manually to avoid runtime error:
    * NG0303: Can't bind to 'ngComponentOutlet' since it isn't a known property of 'ng-container'.
@@ -129,6 +130,9 @@ export function _createContainerComponent({
   return Component(componentMetadata)(klass);
 }
 
+/**
+ * @internal
+ */
 export async function _bootstrapComponent(options: {
   component: Type<unknown>;
   imports?: NgModule['imports'];
@@ -142,6 +146,7 @@ export async function _bootstrapComponent(options: {
 
 /**
  * Create a root module to bootstrap on.
+ * @internal
  */
 export function _createRootModule({
   component,
@@ -167,4 +172,12 @@ export function _createRootModule({
   })(class {});
 
   return ContainerModule;
+}
+
+/**
+ * @internal
+ */
+export function _injectStyles(options: Partial<StyleOptions>): void {
+  const el = cy.$$(NG_ROOT_ID).get(0);
+  injectStylesBeforeElement(options, document, el);
 }
