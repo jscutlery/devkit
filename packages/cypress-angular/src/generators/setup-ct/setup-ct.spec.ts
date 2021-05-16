@@ -1,4 +1,9 @@
-import { addProjectConfiguration, Tree, writeJson } from '@nrwl/devkit';
+import {
+  addProjectConfiguration,
+  Tree,
+  writeJson,
+  readJson,
+} from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { SetupCtGeneratorSchema } from './schema';
 import { setupCtGenerator } from './setup-ct';
@@ -30,7 +35,7 @@ describe('setup-ct generator', () => {
   });
 
   it('should add tsconfig.cypress.json to tsconfig.json references', () => {
-    expect(readJson('libs/my-lib/tsconfig.json')).toEqual(
+    expect(readJson(tree, 'libs/my-lib/tsconfig.json')).toEqual(
       expect.objectContaining({
         references: [
           {
@@ -44,7 +49,7 @@ describe('setup-ct generator', () => {
   it('should add libs/my-lib/cypress.json', () => {
     const cypressConfigPath = 'libs/my-lib/cypress.json';
     expect(tree.exists(cypressConfigPath)).toBeTruthy();
-    expect(readJson(cypressConfigPath)).toEqual(
+    expect(readJson(tree, cypressConfigPath)).toEqual(
       expect.objectContaining({
         pluginsFile: './cypress/plugins/index.ts',
         component: {
@@ -58,7 +63,7 @@ describe('setup-ct generator', () => {
   it('should add libs/my-lib/tsconfig.cypress.json', () => {
     const tsconfigPath = 'libs/my-lib/tsconfig.cypress.json';
     expect(tree.exists(tsconfigPath)).toBeTruthy();
-    expect(readJson(tsconfigPath)).toEqual(
+    expect(readJson(tree, tsconfigPath)).toEqual(
       expect.objectContaining({
         extends: '../../tsconfig.base.json',
         compilerOptions: {
@@ -68,10 +73,6 @@ describe('setup-ct generator', () => {
       })
     );
   });
-
-  function readJson(path: string) {
-    return JSON.parse(readFile(path));
-  }
 
   function readFile(path: string) {
     return tree.read(path).toString('utf-8');
