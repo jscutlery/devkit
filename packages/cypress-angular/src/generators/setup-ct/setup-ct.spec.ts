@@ -79,7 +79,7 @@ describe('setup-ct generator', () => {
           allowSyntheticDefaultImports: true,
           types: ['cypress'],
         },
-        include: ['**/*.cy-spec.ts'],
+        include: ['cypress/support/**/*.ts', '**/*.cy-spec.ts'],
       })
     );
   });

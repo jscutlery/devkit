@@ -121,7 +121,7 @@ function _updateCypressTsconfig(
       allowSyntheticDefaultImports: true,
       types: ['cypress'],
     },
-    include: ['**/*.cy-spec.ts'],
+    include: ['cypress/support/**/*.ts', '**/*.cy-spec.ts'],
   }));
 
   /* Create or update tsconfig.json with references if it exists. */
