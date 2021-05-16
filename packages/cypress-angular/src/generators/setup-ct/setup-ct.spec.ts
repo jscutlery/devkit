@@ -67,6 +67,7 @@ describe('setup-ct generator', () => {
       expect.objectContaining({
         extends: '../../tsconfig.base.json',
         compilerOptions: {
+          allowSyntheticDefaultImports: true,
           types: ['cypress'],
         },
         include: ['**/*.cy-spec.ts'],

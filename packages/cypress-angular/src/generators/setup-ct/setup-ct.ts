@@ -115,6 +115,10 @@ function _updateCypressTsconfig(
     extends: relativeBaseTsconfig,
     compilerOptions: {
       ...json?.compilerOptions,
+      /* @hack this is needed because @jscutlery/cypress-mount
+       * depends on Storybook which depends on React's default
+       * export using "=". */
+      allowSyntheticDefaultImports: true,
       types: ['cypress'],
     },
     include: ['**/*.cy-spec.ts'],
