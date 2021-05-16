@@ -34,6 +34,14 @@ describe('setup-ct generator', () => {
     );
   });
 
+  it('should add libs/my-lib/cypress/support/index.ts', () => {
+    const cypressSupportPath = 'libs/my-lib/cypress/support/index.ts';
+    expect(tree.exists(cypressSupportPath)).toBeTruthy();
+    expect(readFile(cypressSupportPath)).toContain(
+      `import '@jscutlery/cypress-mount/support';`
+    );
+  });
+
   it('should add tsconfig.cypress.json to tsconfig.json references', () => {
     expect(readJson(tree, 'libs/my-lib/tsconfig.json')).toEqual(
       expect.objectContaining({
@@ -52,6 +60,7 @@ describe('setup-ct generator', () => {
     expect(readJson(tree, cypressConfigPath)).toEqual(
       expect.objectContaining({
         pluginsFile: './cypress/plugins/index.ts',
+        supportFile: './cypress/support/index.ts',
         component: {
           testFiles: '**/*.cy-spec.{js,ts,jsx,tsx}',
           componentFolder: './src',
