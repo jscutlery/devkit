@@ -19,17 +19,11 @@ describe('setup-ct generator', () => {
     } as SetupCtGeneratorSchema);
   });
 
-  it('should add libs/my-lib/cypress/plugins/index.ts', () => {
+  it('should add libs/my-lib/cypress/plugins/index.ts and pass tsconfig.cypress.json path to startAngularDevServer', () => {
     const cypressPluginPath = 'libs/my-lib/cypress/plugins/index.ts';
     expect(tree.exists(cypressPluginPath)).toBeTruthy();
     expect(readFile(cypressPluginPath)).toContain(
-      `startAngularDevServer({ config, options })`
-    );
-  });
-
-  it('should pass tsconfig.cypress.json path to startAngularDevServer', () => {
-    expect(readFile('libs/my-lib/cypress/plugins/index.ts')).toContain(
-      `startAngularDevServer({ config, options })`
+      `startAngularDevServer({ options, tsConfig: 'tsconfig.cypress.json' })`
     );
   });
 
