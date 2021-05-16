@@ -1,7 +1,14 @@
-# cypress-angular
+# Cypress Angular
 
-This library was generated with [Nx](https://nx.dev).
+`@jscutlery/cypress-angular` brings Cypress Component Testing support for Angular.
 
-## Running unit tests
+It provides a schematic that will setup a local cypress configuration for your Angular project wether you are using Angular CLI or [Nx](https://nx.dev/).
 
-Run `nx test cypress-angular` to execute the unit tests via [Jest](https://jestjs.io).
+# Usage
+
+```sh
+npm install -D @jscutlery/cypress-angular
+ng g @jscutlery/cypress-angular:setup-ct --project PROJECT_NAME
+
+npx cypress open-ct --project PROJECT_PATH
+```
