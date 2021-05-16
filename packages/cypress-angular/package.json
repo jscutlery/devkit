@@ -5,8 +5,9 @@
   "schematics": "./collection.json",
   "generators": "./generators.json",
   "dependencies": {
-    "@jscutlery/cypress-angular-dev-server": "^1.0.0",
     "@cypress/webpack-dev-server": "^1.3.0",
+    "@jscutlery/cypress-angular-dev-server": "^1.0.0",
+    "@nrwl/devkit": "^12.3.3",
     "html-webpack-plugin": "^5.3.1"
   }
 }

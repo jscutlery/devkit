@@ -7,8 +7,8 @@ It provides a schematic that will setup a local cypress configuration for your A
 # Usage
 
 ```sh
-npm install -D @jscutlery/cypress-angular
-ng g @jscutlery/cypress-angular:setup-ct --project PROJECT_NAME
+ng add @jscutlery/cypress-angular
+ng g @jscutlery/cypress-angular:setup-ct --project my-lib
 
-npx cypress open-ct --project PROJECT_PATH
+npx cypress open-ct --project projects/my-lib
 ```
