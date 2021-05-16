@@ -5,6 +5,7 @@ import { createAngularWebpackConfig } from './create-angular-webpack-config';
 
 export async function startAngularDevServer({
   options,
+  tsConfig = 'tsconfig.json',
 }: {
   /**
    * @deprecated config is already passed inside options.
@@ -12,12 +13,14 @@ export async function startAngularDevServer({
    */
   config?: Cypress.RuntimeConfigOptions;
   options: Cypress.DevServerOptions;
+  tsConfig?: string;
 }): Promise<ResolvedDevServerConfig> {
   return startDevServer({
     options,
     webpackConfig: await createAngularWebpackConfig({
       projectRoot: options.config.projectRoot,
       sourceRoot: options.config.componentFolder,
+      tsConfig,
     }),
   });
 }
