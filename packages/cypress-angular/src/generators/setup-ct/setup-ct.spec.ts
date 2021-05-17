@@ -38,7 +38,7 @@ describe('setup-ct generator', () => {
     const cypressSupportPath = 'libs/my-lib/cypress/support/index.ts';
     expect(tree.exists(cypressSupportPath)).toBeTruthy();
     expect(readFile(cypressSupportPath)).toContain(
-      `import '@jscutlery/cypress-mount/support';`
+      `import '@jscutlery/cypress-angular/support';`
     );
   });
 
