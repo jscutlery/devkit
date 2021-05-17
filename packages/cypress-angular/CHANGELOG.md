@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.5.0](https://github.com/jscutlery/test-utils/compare/cypress-angular-0.4.0...cypress-angular-0.5.0) (2021-05-17)
+
+
+### Features
+
+* **cypress-angular:** ✅ move mount functions to `@jscutlery/cypress-angular/mount` ([4936ce8](https://github.com/jscutlery/test-utils/commit/4936ce863ecce2821f67f354906ea3a794226467))
+
+
+
 # [0.4.0](https://github.com/jscutlery/test-utils/compare/cypress-angular-0.3.0...cypress-angular-0.4.0) (2021-05-17)
 
 
