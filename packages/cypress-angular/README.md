@@ -33,7 +33,7 @@ yarn cypress open-ct --project projects/my-lib
 Add your `.cy-spec.ts` files in the e2e folder's `*-e2e/src/components`:
 
 ```ts
-import { mount } from '@jscutlery/cypress-angular';
+import { mount } from '@jscutlery/cypress-angular/mount';
 
 describe('HelloCompanent', () => {
   beforeEach(() => {
@@ -52,7 +52,7 @@ describe('HelloCompanent', () => {
 ## Mount a template
 
 ```ts
-import { mount } from '@jscutlery/cypress-angular';
+import { mount } from '@jscutlery/cypress-angular/mount';
 
 describe('HelloCompanent', () => {
   beforeEach(() => {
@@ -72,7 +72,7 @@ describe('HelloCompanent', () => {
 You can also mount Storybook stories:
 
 ```ts
-import { mountStory } from '@jscutlery/cypress-angular';
+import { mountStory } from '@jscutlery/cypress-angular/mount';
 import { Default } from './hello.stories.ts';
 
 describe('HelloCompanent', () => {

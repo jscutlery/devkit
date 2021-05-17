@@ -2,6 +2,12 @@
   "extends": "../../tsconfig.base.json",
   "files": [],
   "include": [],
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "../../dist/out-tsc",
+    "declaration": true,
+    "types": ["node"]
+  },
   "references": [
     {
       "path": "./tsconfig.lib.json"
