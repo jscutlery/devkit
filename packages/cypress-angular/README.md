@@ -22,6 +22,8 @@ It is aiming to make Cypress Component Testing with Angular easier than writing 
 ng add @jscutlery/cypress-angular
 ng g @jscutlery/cypress-angular:setup-ct --project my-lib
 
+yarn ngcc
+
 yarn cypress open-ct --project projects/my-lib
 # or npx cypress open-ct --project projects/my-lib
 ```
