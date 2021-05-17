@@ -26,7 +26,7 @@ export async function createAngularWebpackConfig(config: {
     projectRoot,
     sourceRoot,
     {
-      tsConfig: resolve(projectRoot, tsConfig),
+      tsConfig: getSystemPath(resolve(projectRoot, tsConfig)),
       /* @hack outputPath is required, otherwise `getCommonConfig` crashes. */
       outputPath: '',
       index: null,
