@@ -1,5 +1,5 @@
-import { setupHooks } from '@cypress/mount-utils';
 /// <reference types="cypress"/>
+import { setupHooks } from '@cypress/mount-utils';
 
 /**
  * @hack fixes dependency injection in JIT
