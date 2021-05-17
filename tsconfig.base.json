@@ -16,22 +16,22 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@jscutlery/cypress-harness": ["packages/cypress-harness/src/index.ts"],
-      "@jscutlery/cypress-harness/support": [
-        "packages/cypress-harness/support.ts"
+      "@jscutlery/cypress-angular": ["packages/cypress-angular/src/index.ts"],
+      "@jscutlery/cypress-angular/support": [
+        "packages/cypress-angular/support.ts"
       ],
-      "@jscutlery/cypress-mount": ["packages/cypress-mount/src/index.ts"],
-      "@jscutlery/cypress-mount/support": ["packages/cypress-mount/support.ts"],
       "@jscutlery/cypress-angular-preprocessor": [
         "packages/cypress-angular-preprocessor/src/index.ts"
       ],
       "@jscutlery/cypress-angular-dev-server": [
         "packages/cypress-angular-dev-server/src/index.ts"
       ],
-      "@test-utils/cypress-angular": ["packages/cypress-angular/src/index.ts"],
-      "@test-utils/cypress-angular/support": [
-        "packages/cypress-angular/support.ts"
-      ]
+      "@jscutlery/cypress-harness": ["packages/cypress-harness/src/index.ts"],
+      "@jscutlery/cypress-harness/support": [
+        "packages/cypress-harness/support.ts"
+      ],
+      "@jscutlery/cypress-mount": ["packages/cypress-mount/src/index.ts"],
+      "@jscutlery/cypress-mount/support": ["packages/cypress-mount/support.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
