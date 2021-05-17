@@ -35,7 +35,7 @@ jobs:
       - run: yarn nx run-many --all --target=build
       - run: yarn nx run-many --all --target=test
       - name: component testing cypress-harness-integration
-        run: yarn cypress run-ct --project packages/cypress-harness-integration
+        run: yarn ct:cypress-harness-integration
       - name: component testing cypress-mount-integration
-        run: yarn cypress run-ct --project packages/cypress-mount-integration
+        run: yarn ct:cypress-mount-integration
       - run: yarn nx run-many --all --target=e2e

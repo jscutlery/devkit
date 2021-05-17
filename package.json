@@ -28,7 +28,10 @@
     "publish:cypress-angular": "npm publish dist/packages/cypress-angular",
     "publish:cypress-angular-dev-server": "npm publish dist/packages/cypress-angular-dev-server",
     "publish:cypress-harness": "npm publish dist/packages/cypress-harness",
-    "publish:cypress-mount": "npm publish dist/packages/cypress-mount"
+    "publish:cypress-mount": "npm publish dist/packages/cypress-mount",
+    "ct:cypress-harness-integration": "yarn _ct packages/cypress-harness-integration",
+    "ct:cypress-mount-integration": "yarn _ct packages/cypress-mount-integration",
+    "_ct": "cypress run-ct --project"
   },
   "private": true,
   "dependencies": {
