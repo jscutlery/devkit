@@ -28,7 +28,10 @@
       "@jscutlery/cypress-angular-dev-server": [
         "packages/cypress-angular-dev-server/src/index.ts"
       ],
-      "@test-utils/cypress-angular": ["packages/cypress-angular/src/index.ts"]
+      "@test-utils/cypress-angular": ["packages/cypress-angular/src/index.ts"],
+      "@test-utils/cypress-angular/support": [
+        "packages/cypress-angular/support.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

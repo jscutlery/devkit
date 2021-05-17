@@ -10,7 +10,6 @@ export async function ngAddGenerator(tree: Tree) {
     tree,
     {},
     {
-      '@jscutlery/cypress-mount': '^0.9.1',
       cypress: '^7.0.0',
     }
   );

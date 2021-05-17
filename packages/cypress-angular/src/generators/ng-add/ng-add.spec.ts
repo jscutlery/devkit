@@ -14,7 +14,6 @@ describe('ng-add generator', () => {
   it('should add cypress to dev dependencies', async () => {
     expect(readJson(tree, 'package.json').devDependencies).toEqual(
       expect.objectContaining({
-        '@jscutlery/cypress-mount': expect.any(String),
         cypress: '^7.0.0',
       })
     );

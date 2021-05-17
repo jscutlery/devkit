@@ -1,5 +1,7 @@
 # Cypress Mount
 
+This package is now internal, please use [`@jscutlery/cypress-angular`](../../packages/cypress-angular) instead.
+
 This module brings Angular support to [Cypress Component Testing](https://docs.cypress.io/guides/component-testing/introduction.html#What-is-Cypress-Component-Testing).
 
 It is aiming to make Cypress Component Testing with Angular easier than writing code without tests 😜.
