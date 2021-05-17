@@ -1,6 +1,7 @@
 # Cypress Mount
 
-This package is now internal, please use [`@jscutlery/cypress-angular`](../../packages/cypress-angular) instead.
+**⚠️ This package is now internal, please use [`@jscutlery/cypress-angular`](../../packages/cypress-angular) instead.
+**
 
 This module brings Angular support to [Cypress Component Testing](https://docs.cypress.io/guides/component-testing/introduction.html#What-is-Cypress-Component-Testing).
 
@@ -86,63 +87,4 @@ module.exports = (on, config) => {
 
 ## Usage
 
-Add your `.spec.ts` files in the e2e folder's `*-e2e/src/components`:
-
-```ts
-describe('HelloCompanent', () => {
-  beforeEach(() => {
-    mount(HelloComponent, {
-      styles: [`body { background: purple}`],
-      imports: [HelloModule],
-    });
-  });
-
-  it('should show some love', () => {
-    cy.get('h1').contains('❤️');
-  });
-});
-```
-
-## Mount a template
-
-```ts
-describe('HelloCompanent', () => {
-  beforeEach(() => {
-    mount(`<jc-hello></jc-hello>`, {
-      imports: [HelloModule],
-    });
-  });
-
-  it('should show some love', () => {
-    cy.get('h1').contains('❤️');
-  });
-});
-```
-
-## Storybook (and Component Story Format) support
-
-You can also mount Storybook stories:
-
-```ts
-import { Default } from './hello.stories.ts';
-
-describe('HelloCompanent', () => {
-  beforeEach(() => mountStory(Default));
-
-  it('should show some love', () => {
-    cy.get('h1').contains('❤️');
-  });
-});
-```
-
-## Execute tests
-
-Execute component tests using the Cypress CLI:
-
-```bash
-cypress run-ct --project apps/my-app
-
-# or
-
-cypress open-ct --project apps/my-app
-```
+Cf. [`@jscutlery/cypress-angular`](../../packages/cypress-angular)
