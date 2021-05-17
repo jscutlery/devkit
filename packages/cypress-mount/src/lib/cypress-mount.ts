@@ -1,9 +1,15 @@
 import '@angular/compiler';
 
-import { Component, NgModule, PlatformRef, SchemaMetadata, Type } from '@angular/core';
+import {
+  Component,
+  NgModule,
+  PlatformRef,
+  SchemaMetadata,
+  Type,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { injectStylesBeforeElement, StyleOptions, setupHooks } from '@cypress/mount-utils';
+import { injectStylesBeforeElement, StyleOptions } from '@cypress/mount-utils';
 import { Story } from '@storybook/angular';
 import { DynamicModule } from 'ng-dynamic-component';
 
@@ -62,7 +68,6 @@ export function mount(
   options: MountOptions | MountTemplateOptions = {}
 ): Cypress.Chainable<void> {
   return cy.then(async () => {
-
     Cypress.log({
       name: 'mount',
       message:
@@ -182,9 +187,3 @@ export function _injectStyles(options: Partial<StyleOptions>): void {
   const el = cy.$$(NG_ROOT_ID).get(0);
   injectStylesBeforeElement(options, document, el);
 }
-
-/**
- * Cleanup global style and ensure hooks correctly configured.
- * @see https://github.com/cypress-io/cypress/blob/d4f81e8e7839741cc9a2df739f46b993b09b7ea2/npm/mount-utils/src/index.ts#L192
- */
-setupHooks();

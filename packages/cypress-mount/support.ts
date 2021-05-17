@@ -1,3 +1,4 @@
+import { setupHooks } from '@cypress/mount-utils';
 /// <reference types="cypress"/>
 
 /**
@@ -36,3 +37,9 @@ beforeEach(() =>
     document.close();
   })
 );
+
+/**
+ * Cleanup global style and ensure hooks correctly configured.
+ * @see https://github.com/cypress-io/cypress/blob/d4f81e8e7839741cc9a2df739f46b993b09b7ea2/npm/mount-utils/src/index.ts#L192
+ */
+setupHooks();
