@@ -16,6 +16,10 @@ It is aiming to make Cypress Component Testing with Angular easier than writing 
 
 🚧 Angular builder & Nx executor to run Cypress Component Tests. Cf. https://github.com/nrwl/nx/pull/5679
 
+# Demo
+
+[Demo](https://user-images.githubusercontent.com/2674658/118695305-554b0e80-b80d-11eb-83e2-a1066e852f89.mp4)
+
 # Setup
 
 ```sh
