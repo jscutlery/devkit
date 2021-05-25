@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [1.2.0](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.1.1...cypress-angular-dev-server-1.2.0) (2021-05-25)
+
+
+### Features
+
+* **cypress-angular-dev-server:** ✅ enable source map ([95e4092](https://github.com/jscutlery/test-utils/commit/95e40921a50c3d22016ff3996deddd5326a23b6e))
+
+
+
 ## [1.1.1](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.1.0...cypress-angular-dev-server-1.1.1) (2021-05-25)
 
 
