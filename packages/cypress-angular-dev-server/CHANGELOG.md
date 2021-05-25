@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.1.1](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.1.0...cypress-angular-dev-server-1.1.1) (2021-05-25)
+
+
+### Bug Fixes
+
+* **cypress-angular-dev-server:** 🐞 resolve tsConfig file correctly ([0d8db0b](https://github.com/jscutlery/test-utils/commit/0d8db0bcfbaeb04db507eac47b7e58934f6523bd))
+
+
+
 # [1.1.0](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.0.1...cypress-angular-dev-server-1.1.0) (2021-05-16)
 
 
