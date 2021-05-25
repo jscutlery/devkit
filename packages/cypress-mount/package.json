@@ -5,6 +5,11 @@
     "ng-dynamic-component": "^8.0.1",
     "@cypress/mount-utils": "^1.0.2"
   },
+  "peerDependencies": {
+    "@angular/core": "^12.0.0",
+    "@angular/platform-browser": "^12.0.0",
+    "@angular/platform-browser-dynamic": "^12.0.0"
+  },
   "optionalDependencies": {
     "@storybook/angular": "^6.0.0"
   }
