@@ -32,6 +32,7 @@ export async function createAngularWebpackConfig(config: {
       index: null,
       main: null,
       aot: false,
+      sourceMap: true,
       /* @hack polyfills are required, otherwise for some weird reason the produced
        * webpack config doesn't build anything properly. */
       polyfills: 'POLYFILL_PLACEHOLDER',
