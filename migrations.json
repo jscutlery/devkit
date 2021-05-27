@@ -2,49 +2,11 @@
   "migrations": [
     {
       "cli": "nx",
-      "version": "12.3.1",
-      "description": "Remove deprecated options and update others according to new defaults. It syncs with the v12 migration of Angular builders.",
-      "factory": "./src/migrations/update-12-3-0/update-webpack-browser-config",
+      "version": "12.3.5-beta.0",
+      "description": "Convert targets using @nrwl/angular:webpack-browser with the buildTarget option set to use the @nrwl/angular:delegate-build executor instead.",
+      "factory": "./src/migrations/update-12-3-0/convert-webpack-browser-build-target-to-delegate-build",
       "package": "@nrwl/angular",
-      "name": "update-webpack-browser-config"
-    },
-    {
-      "cli": "nx",
-      "version": "12.3.1",
-      "description": "Updates storybook configurations to support webpack 5",
-      "factory": "./src/migrations/update-12-3-0/update-storybook",
-      "package": "@nrwl/angular",
-      "name": "update-storybook"
-    },
-    {
-      "cli": "nx",
-      "version": "12.3.1",
-      "description": "Migrates some rules that have changed in Angular EsLint",
-      "factory": "./src/migrations/update-12-3-0/update-angular-eslint-rules",
-      "package": "@nrwl/angular",
-      "name": "update-angular-eslint-rules"
-    },
-    {
-      "version": "12.0.0-beta",
-      "description": "In Angular version 12, the type of ActivatedRouteSnapshot.fragment is nullable. This migration automatically adds non-null assertions to it.",
-      "factory": "./migrations/activated-route-snapshot-fragment/index",
-      "package": "@angular/core",
-      "name": "migration-v12-activated-route-snapshot-fragment"
-    },
-    {
-      "version": "12.0.0-next.6",
-      "description": "`XhrFactory` has been moved from `@angular/common/http` to `@angular/common`.",
-      "factory": "./migrations/xhr-factory/index",
-      "package": "@angular/core",
-      "name": "migration-v12-xhr-factory"
-    },
-    {
-      "version": "12.1.2-beta.1",
-      "cli": "nx",
-      "description": "Replace tsConfig with tsconfig for ts-jest in jest.config.js",
-      "factory": "./src/migrations/update-12-1-2/update-ts-jest",
-      "package": "@nrwl/jest",
-      "name": "update-ts-jest-6-5-5"
+      "name": "convert-webpack-browser-build-target-to-delegate-build"
     }
   ]
 }
