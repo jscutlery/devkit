@@ -28,10 +28,7 @@
     "publish:cypress-angular": "npm publish dist/packages/cypress-angular",
     "publish:cypress-angular-dev-server": "npm publish dist/packages/cypress-angular-dev-server",
     "publish:cypress-harness": "npm publish dist/packages/cypress-harness",
-    "publish:cypress-mount": "npm publish dist/packages/cypress-mount",
-    "ct:cypress-harness-integration": "yarn _ct packages/cypress-harness-integration",
-    "ct:cypress-mount-integration": "yarn _ct packages/cypress-mount-integration",
-    "_ct": "cypress run-ct --project"
+    "publish:cypress-mount": "npm publish dist/packages/cypress-mount"
   },
   "private": true,
   "dependencies": {
@@ -77,7 +74,7 @@
     "@types/node": "12.20.12",
     "@typescript-eslint/eslint-plugin": "4.22.1",
     "@typescript-eslint/parser": "4.22.1",
-    "cypress": "^7.2.0",
+    "cypress": "^7.4.0",
     "cypress-pipe": "^2.0.0",
     "dotenv": "9.0.1",
     "eslint": "7.26.0",

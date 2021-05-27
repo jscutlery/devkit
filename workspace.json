@@ -102,6 +102,14 @@
       "sourceRoot": "packages/cypress-harness-integration/src",
       "projectType": "application",
       "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "packages/cypress-harness-integration/cypress.json",
+            "tsConfig": "packages/cypress-harness-integration/tsconfig.e2e.json",
+            "testingType": "component"
+          }
+        },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
@@ -143,6 +151,14 @@
       "sourceRoot": "packages/cypress-mount-integration/src",
       "projectType": "application",
       "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "packages/cypress-mount-integration/cypress.json",
+            "tsConfig": "packages/cypress-mount-integration/tsconfig.e2e.json",
+            "testingType": "component"
+          }
+        },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
