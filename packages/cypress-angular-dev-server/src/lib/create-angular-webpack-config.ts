@@ -30,13 +30,12 @@ export async function createAngularWebpackConfig(config: {
       /* @hack outputPath is required, otherwise `getCommonConfig` crashes. */
       outputPath: '',
       index: null,
-      main: null,
+      /* main is required, otherwise AngularWebpackCompiler is not executed. */
+      main: getSystemPath(resolve(normalize(config.sourceRoot), normalize('main.ts'))),
+      polyfills: getSystemPath(resolve(normalize(config.sourceRoot), normalize('polyfills.ts'))),
       aot: false,
       sourceMap: true,
-      /* @hack polyfills are required, otherwise for some weird reason the produced
-       * webpack config doesn't build anything properly. */
-      polyfills: 'POLYFILL_PLACEHOLDER',
-      /* @todo dynamically import assets, styles & scripts from target's angular.json|workspace.json config. */
+      /* @todo dynamically import options from target's angular.json|workspace.json config. */
     }
   );
 
