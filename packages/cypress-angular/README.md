@@ -28,9 +28,6 @@ ng g @jscutlery/cypress-angular:setup-ct --project my-lib
 
 yarn ngcc
 
-# using @nrwl/cypress >= 12.3.5
-nx run my-lib:e2e --testingType component
-
 # using Cypress CLI
 yarn cypress open-ct --project projects/my-lib
 # or npx cypress open-ct --project projects/my-lib
