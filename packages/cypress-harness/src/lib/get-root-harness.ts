@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ComponentHarness,
   ComponentHarnessConstructor,
@@ -21,6 +22,11 @@ export function getRootHarness<HARNESS extends ComponentHarness>(
       documentRoot.querySelector('#root') ??
       /* This is the selector when using `@jscutlery/cypress-mount<0.5.0` (TestBed). */
       documentRoot.querySelector('#root0');
+
+    if (rootEl == null) {
+      throw new Error('Root element not found');
+    }
+
     return new harnessType(
       new CypressHarnessEnvironment(rootEl, {
         documentRoot,
@@ -28,9 +34,8 @@ export function getRootHarness<HARNESS extends ComponentHarness>(
     );
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return new Proxy<ChainableHarness<HARNESS>>({} as any, {
-    get: (_target, prop) =>
-      addHarnessMethodsToChainer(getDocumentRoot().pipe(getRootHarness))[prop],
+    get: (_, prop) =>
+      (addHarnessMethodsToChainer(getDocumentRoot().pipe(getRootHarness)) as any)[prop],
   });
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ComponentHarness, HarnessQuery } from '@angular/cdk/testing';
 
 import {
@@ -14,9 +15,8 @@ export function getHarness<HARNESS extends ComponentHarness>(
   const getHarness = ($documentRoot: JQuery<Element>) =>
     createRootEnvironment($documentRoot).getHarness(query);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return new Proxy<ChainableHarness<HARNESS>>({} as any, {
-    get: (_target, prop) =>
-      addHarnessMethodsToChainer(getDocumentRoot().pipe(getHarness))[prop],
+    get: (_, prop) =>
+      (addHarnessMethodsToChainer(getDocumentRoot().pipe(getHarness)) as any)[prop],
   });
 }

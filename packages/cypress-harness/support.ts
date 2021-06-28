@@ -8,5 +8,6 @@ import 'cypress-pipe';
  */
 import 'zone.js/dist/zone';
 /* @hack fixes "Mocha has already been patched with Zone" error. */
-(globalThis as unknown)['Mocha']['__zone_patch__'] = false;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(globalThis as any)['Mocha']['__zone_patch__'] = false;
 import 'zone.js/dist/zone-testing';

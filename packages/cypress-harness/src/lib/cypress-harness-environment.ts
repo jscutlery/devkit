@@ -31,7 +31,7 @@ export class CypressHarnessEnvironment extends HarnessEnvironment<Element> {
   }
 
   protected createTestElement(element: Element): TestElement {
-    return new UnitTestElement(element, async () => null);
+    return new UnitTestElement(element, () => Promise.resolve());
   }
 
   protected createEnvironment(element: Element): HarnessEnvironment<Element> {
