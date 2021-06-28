@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ComponentHarness } from '@angular/cdk/testing';
 import { CypressHarnessEnvironment } from './cypress-harness-environment';
 
 export type ChainableHarness<HARNESS> = Cypress.Chainable<HARNESS> &
   {
     /* For each field or method... is this a method? */
-    [K in keyof HARNESS]: HARNESS[K] extends (...args: unknown[]) => unknown
+    [K in keyof HARNESS]: HARNESS[K] extends (...args: any) => any
       ? /* It's a method so let's change the return type. */
         (
           ...args: Parameters<HARNESS[K]>
@@ -15,7 +16,7 @@ export type ChainableHarness<HARNESS> = Cypress.Chainable<HARNESS> &
             : HARNESS[K]
         >
       : /* It's something else. */
-        HARNESS[K];
+      HARNESS[K];
   };
 
 /**
@@ -29,7 +30,7 @@ export function addHarnessMethodsToChainer<HARNESS extends ComponentHarness>(
   chainer: Cypress.Chainable<HARNESS>
 ): ChainableHarness<HARNESS> {
   const handler = {
-    get: (target, prop) => (...args) => {
+    get: (target: any, prop: string) => (...args: any[]) => {
       /* Don't wrap cypress methods like `invoke`, `should` etc.... */
       if (prop in target) {
         return target[prop](...args);
