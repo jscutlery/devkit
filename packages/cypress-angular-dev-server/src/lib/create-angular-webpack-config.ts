@@ -1,4 +1,3 @@
-import { getCompilerConfig } from '@angular-devkit/build-angular/src/browser';
 import { normalizeBrowserSchema } from '@angular-devkit/build-angular/src/utils';
 import { generateWebpackConfig } from '@angular-devkit/build-angular/src/utils/webpack-browser-config';
 import {
@@ -6,9 +5,19 @@ import {
   getCommonConfig,
   getStatsConfig,
   getStylesConfig,
+  getTypeScriptConfig
 } from '@angular-devkit/build-angular/src/webpack/configs';
 import { getSystemPath, normalize, resolve } from '@angular-devkit/core';
 import { StartDevServer } from '@cypress/webpack-dev-server';
+import type { WebpackConfigOptions } from "@angular-devkit/build-angular/src/utils/build-options";
+
+function getCompilerConfig(wco: WebpackConfigOptions) {
+  if (wco.buildOptions.main || wco.buildOptions.polyfills) {
+    return getTypeScriptConfig(wco);
+  }
+
+  return {};
+}
 
 export async function createAngularWebpackConfig(config: {
   projectRoot: string;
