@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ComponentHarness, HarnessQuery } from '@angular/cdk/testing';
 
-import { createRootEnvironment, getDocumentRoot } from './internals';
+import { ChainableHarness, createRootEnvironment, getDocumentRoot } from './internals';
 
 export function getAllHarnesses<HARNESS extends ComponentHarness>(
   query: HarnessQuery<HARNESS>
-): Promise<HARNESS[]> {
+): ChainableHarness<HARNESS[]> {
   /* Create a local variable so `pipe` can log name. */
   const getAllHarnesses = ($documentRoot: JQuery<Element>) =>
     createRootEnvironment($documentRoot).getAllHarnesses(query);
