@@ -10,7 +10,7 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { injectStylesBeforeElement, StyleOptions } from '@cypress/mount-utils';
-import { Story } from '@storybook/angular';
+import type { Story } from '@storybook/angular';
 import { DynamicModule } from 'ng-dynamic-component';
 
 export interface BaseMountOptions extends Partial<StyleOptions> {
@@ -41,13 +41,14 @@ export function mountStory(
 ): Cypress.Chainable<void> {
   const args = story.args;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { component, moduleMetadata } = story({ args }, { args } as any);
+
   return mount(component, {
     ...moduleMetadata,
     ...options,
     inputs: args,
   });
+
 }
 
 let platformRef: PlatformRef;

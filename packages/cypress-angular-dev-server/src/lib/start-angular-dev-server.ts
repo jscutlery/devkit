@@ -1,6 +1,6 @@
 /// <reference types="cypress"/>
 import { startDevServer } from '@cypress/webpack-dev-server';
-import { ResolvedDevServerConfig } from '@cypress/webpack-dev-server';
+import type { ResolvedDevServerConfig } from '@cypress/webpack-dev-server';
 import { createAngularWebpackConfig } from './create-angular-webpack-config';
 
 export async function startAngularDevServer({
@@ -15,12 +15,14 @@ export async function startAngularDevServer({
   options: Cypress.DevServerOptions;
   tsConfig?: string;
 }): Promise<ResolvedDevServerConfig> {
+  const webpackConfig = await createAngularWebpackConfig({
+    projectRoot: options.config.projectRoot,
+    sourceRoot: options.config.componentFolder as string,
+    tsConfig,
+  });
+
   return startDevServer({
     options,
-    webpackConfig: await createAngularWebpackConfig({
-      projectRoot: options.config.projectRoot,
-      sourceRoot: options.config.componentFolder,
-      tsConfig,
-    }),
+    webpackConfig,
   });
 }

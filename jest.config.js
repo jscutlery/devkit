@@ -1,8 +1,3 @@
-module.exports = {
-  projects: [
-    '<rootDir>/packages/cypress-angular-dev-server',
-    '<rootDir>/packages/cypress-harness',
-    '<rootDir>/packages/cypress-mount',
-    '<rootDir>/packages/cypress-angular',
-  ],
-};
+const { getJestProjects } = require('@nrwl/jest');
+
+module.exports = { projects: getJestProjects() };
