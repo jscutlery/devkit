@@ -42,13 +42,13 @@ describe(getAllHarnesses.name, () => {
     })
   );
 
-  it('should set input value using material input harness', async () => {
-    const [controlA, controlB] = await getAllHarnesses(MatInputHarness);
+  it('should set input value using material input harness', () => {
+    getAllHarnesses(MatInputHarness).then(async ([controlA, controlB]) => {
+      await controlA.setValue('value A');
+      await controlB.setValue('value B');
 
-    await controlA.setValue('value A');
-    await controlB.setValue('value B');
-
-    expect(await controlA.getValue()).to.equal('value A');
-    expect(await controlB.getValue()).to.equal('value B');
+      expect(await controlA.getValue()).to.equal('value A');
+      expect(await controlB.getValue()).to.equal('value B');
+    });
   });
 });
