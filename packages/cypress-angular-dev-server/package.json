@@ -1,8 +1,11 @@
 {
   "name": "@jscutlery/cypress-angular-dev-server",
   "version": "1.2.0",
+  "dependencies": {
+    "webpack-merge": "^5.8.0"
+  },
   "peerDependencies": {
-    "@angular-devkit/build-angular": ">=12.1.0",
+    "@angular-devkit/build-angular": "^12.1.0",
     "@cypress/webpack-dev-server": "^1.4.0"
   }
 }

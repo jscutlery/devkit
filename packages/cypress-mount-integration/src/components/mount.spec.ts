@@ -67,12 +67,12 @@ describe('mount', () => {
   });
 
   it('should handle css file', () => {
-    mount(HelloComponent, { cssFile: 'src/fixtures/demo.css' });
+    mount(HelloComponent, { cssFile: './src/fixtures/inline-style.css' });
     cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
   });
 
   it('should handle css link', () => {
-    mount(HelloComponent, { stylesheet: 'src/fixtures/demo.css' });
-    cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
+    mount(HelloComponent, { stylesheet: 'https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css' });
+    cy.get('h1').should('have.css', 'font-family', 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"');
   });
 });
