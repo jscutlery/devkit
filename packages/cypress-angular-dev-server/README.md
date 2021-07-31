@@ -16,3 +16,21 @@ module.exports = (on, config) => {
   return config;
 };
 ```
+
+## Custom Webpack configuration
+
+It's possible to pass a custom Webpack configuration that will be merged with the Angular CLI configuration.
+
+```ts
+import { startAngularDevServer } from '@jscutlery/cypress-angular-dev-server';
+
+module.exports = (on, config) => {
+  on('dev-server:start', (options) =>
+    startAngularDevServer({
+      options,
+      webpackConfig: { node: { global: true } },
+    })
+  );
+  return config;
+};
+```
