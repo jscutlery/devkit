@@ -85,7 +85,36 @@ describe(startAngularDevServer.name, () => {
   });
 
   describe('with custom webpack config', () => {
-    it.todo('should merge with resolved webpack config');
+    /**
+     * 🎬 Action!
+     */
+    beforeEach(async () => {
+      await startAngularDevServer({
+        options: {
+          specs: [],
+          config: {
+            componentFolder: resolve(testProjectPath, 'src'),
+            configFile: resolve(testProjectPath, 'cypress.json'),
+            projectRoot: testProjectPath,
+            version: '7.1.0',
+            testingType: 'component',
+          } as Partial<
+            Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions
+          >,
+        } as Cypress.DevServerOptions,
+        webpackConfig: {
+          node: {
+            global: true,
+          }
+        }
+      });
+    });
+
+    it('should merge with resolved webpack config', () => {
+      const { webpackConfig } = mockStartDevServer.mock.calls[0][0];
+
+      expect(webpackConfig.node).toEqual({ global: true });
+    });
   });
 
   describe('with custom tsConfig path', () => {
