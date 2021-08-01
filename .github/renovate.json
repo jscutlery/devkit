@@ -14,18 +14,15 @@
   "commitMessage": "{{{commitMessagePrefix}}} 📦 {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
   "packageRules": [
     {
-      "_comment": "We'll upgrade Angular manually in order to run migrations.",
-      "packagePatterns": ["^@angular/"],
+      "matchPackagePatterns": ["^@angular/"],
       "enabled": false
     },
     {
-      "_comment": "We'll upgrade Nx manually in order to run migrations.",
-      "packagePatterns": ["^@nrwl/"],
+      "matchPackagePatterns": ["^@nrwl/"],
       "enabled": false
     },
     {
-      "_comment": "We'll let angular upgrade RxJS.",
-      "packagePatterns": ["rxjs"],
+      "matchPackagePatterns": ["rxjs"],
       "enabled": false
     }
   ]
