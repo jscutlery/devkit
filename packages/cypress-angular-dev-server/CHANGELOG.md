@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [1.3.0](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.2.0...cypress-angular-dev-server-1.3.0) (2021-08-05)
+
+
+### Features
+
+* **cypress-angular-dev-server:** ✅ add custom webpack config option ([e3b7cef](https://github.com/jscutlery/test-utils/commit/e3b7cef495a567ac603128861cef59d5f814e4b8))
+* **cypress-angular-dev-server:** support new Angular versions 12.1+ ([2c22d1e](https://github.com/jscutlery/test-utils/commit/2c22d1e3c5f0ff47262b39ab60686812c8302ecd))
+
+
+
 # [1.2.0](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.1.1...cypress-angular-dev-server-1.2.0) (2021-05-25)
 
 
