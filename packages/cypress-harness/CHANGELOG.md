@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.6](https://github.com/jscutlery/test-utils/compare/cypress-harness-0.3.5...cypress-harness-0.3.6) (2021-08-05)
+
+
+### Bug Fixes
+
+* **cypress-harness:** 🐞 fix `getAllHarnesses` type ([e66d08c](https://github.com/jscutlery/test-utils/commit/e66d08c5745a934da3bc3ecc57adcfd44ee7b30d))
+
+
+
 ## [0.3.5](https://github.com/jscutlery/test-utils/compare/cypress-harness-0.3.4...cypress-harness-0.3.5) (2021-06-29)
 
 
