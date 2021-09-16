@@ -14,7 +14,7 @@ describe('ng-add generator', () => {
   it('should add cypress to dev dependencies', async () => {
     expect(readJson(tree, 'package.json').devDependencies).toEqual(
       expect.objectContaining({
-        cypress: '^7.4.0',
+        cypress: '^8.1.0',
       })
     );
   });
