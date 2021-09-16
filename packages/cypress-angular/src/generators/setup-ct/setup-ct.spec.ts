@@ -12,18 +12,8 @@ describe('setup-ct generator', () => {
   let tree: Tree;
 
   beforeEach(async () => {
-    tree = createTreeWithEmptyWorkspace();
-
-    addProjectConfiguration(tree, 'my-lib', {
-      root: 'libs/my-lib',
-      targets: {},
-    });
-
-    writeJson(tree, 'libs/my-lib/tsconfig.json', {});
-
-    await setupCtGenerator(tree, {
-      project: 'my-lib',
-    } as SetupCtGeneratorSchema);
+    tree = createTreeWithEmptyWorkspace(2);
+    await setupLib();
   });
 
   it('should add libs/my-lib/cypress/plugins/index.ts and pass tsconfig.cypress.json path to startAngularDevServer', () => {
@@ -83,6 +73,56 @@ describe('setup-ct generator', () => {
       })
     );
   });
+
+  it('should add "ct" executor', () => {
+    expect(
+      readJson(tree, 'workspace.json').projects['my-lib'].targets.ct
+    ).toEqual(
+      expect.objectContaining({
+        executor: '@nrwl/cypress:cypress',
+        options: {
+          cypressConfig: 'libs/my-lib/cypress.json',
+          testingType: 'component',
+          tsConfig: 'libs/my-lib/tsconfig.cypress.json',
+        },
+      })
+    );
+  });
+
+  describe('Workspace definition version 1', () => {
+    beforeEach(async () => {
+      tree = createTreeWithEmptyWorkspace(1);
+      await setupLib();
+    });
+
+    it('should support old workspace definition', () => {
+      expect(
+        readJson(tree, 'workspace.json').projects['my-lib'].architect.ct
+      ).toEqual(
+        expect.objectContaining({
+          builder: '@nrwl/cypress:cypress',
+          options: {
+            cypressConfig: 'libs/my-lib/cypress.json',
+            testingType: 'component',
+            tsConfig: 'libs/my-lib/tsconfig.cypress.json',
+          },
+        })
+      );
+    });
+  });
+
+  async function setupLib() {
+    addProjectConfiguration(tree, 'my-lib', {
+      root: 'libs/my-lib',
+      targets: {},
+    });
+
+    writeJson(tree, 'libs/my-lib/tsconfig.json', {});
+
+    await setupCtGenerator(tree, {
+      project: 'my-lib',
+    } as SetupCtGeneratorSchema);
+  }
 
   function readFile(path: string) {
     return tree.read(path).toString('utf-8');

@@ -5,8 +5,10 @@ import {
   getWorkspacePath,
   offsetFromRoot,
   ProjectConfiguration,
+  readProjectConfiguration,
   Tree,
   updateJson,
+  updateProjectConfiguration,
   WorkspaceJsonConfiguration,
   writeJson,
 } from '@nrwl/devkit';
@@ -17,13 +19,25 @@ export async function setupCtGenerator(
   tree: Tree,
   options: SetupCtGeneratorSchema
 ) {
-  const { projectRoot } = _normalizeOptions(tree, options);
+  const { projectRoot, projectName } = _normalizeOptions(tree, options);
+  const cypressTsConfigName = 'tsconfig.cypress.json';
+  const cypressTsConfig = join(projectRoot, cypressTsConfigName);
 
   _addCypressFiles(tree, {
     projectRoot,
   });
 
-  _updateCypressTsconfig(tree, { projectRoot });
+  _updateCypressTsconfig(tree, {
+    projectRoot,
+    cypressTsConfig,
+    cypressTsConfigName,
+  });
+
+  _updateWorkspaceDefinition(tree, {
+    projectName,
+    projectRoot,
+    cypressTsConfig,
+  });
 
   await formatFiles(tree);
 }
@@ -88,21 +102,26 @@ function _addCypressFiles(
  */
 function _updateCypressTsconfig(
   tree: Tree,
-  { projectRoot }: { projectRoot: string }
+  {
+    projectRoot,
+    cypressTsConfig,
+    cypressTsConfigName,
+  }: {
+    projectRoot: string;
+    cypressTsConfig: string;
+    cypressTsConfigName: string;
+  }
 ) {
   const defaultBaseTsconfigPath = 'tsconfig.base.json';
   const baseTsconfigPath = tree.exists(defaultBaseTsconfigPath)
     ? defaultBaseTsconfigPath
     : 'tsconfig.json';
-  const cypressTsConfigName = 'tsconfig.cypress.json';
 
   /* Compute base tsconfig relative path. */
   const relativeBaseTsconfig = join(
     offsetFromRoot(projectRoot),
     baseTsconfigPath
   );
-
-  const cypressTsConfig = join(projectRoot, cypressTsConfigName);
 
   /* Make sure file exists first. */
   if (!tree.exists(cypressTsConfig)) {
@@ -147,4 +166,31 @@ function _updateCypressTsconfig(
       };
     });
   }
+}
+
+function _updateWorkspaceDefinition(
+  tree: Tree,
+  {
+    projectName,
+    projectRoot,
+    cypressTsConfig,
+  }: { projectName: string; projectRoot: string; cypressTsConfig: string }
+): void {
+  const projectConfiguration = readProjectConfiguration(tree, projectName);
+  const cypressConfig = join(projectRoot, 'cypress.json');
+
+  updateProjectConfiguration(tree, projectName, {
+    ...projectConfiguration,
+    targets: {
+      ...projectConfiguration.targets,
+      ct: {
+        executor: '@nrwl/cypress:cypress',
+        options: {
+          cypressConfig,
+          tsConfig: cypressTsConfig,
+          testingType: 'component',
+        },
+      },
+    },
+  });
 }
