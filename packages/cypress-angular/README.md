@@ -14,13 +14,26 @@ It is aiming to make Cypress Component Testing with Angular easier than writing 
 
 ✅ Using webpack configuration from Angular CLI to get the closest symmetry to production build. (i.e. no webpack hacks & less trouble)
 
-🚧 Angular builder & Nx executor to run Cypress Component Tests. Cf. https://github.com/nrwl/nx/pull/5679
+✅ Angular builder & Nx executor to run Cypress Component Tests.
 
 # Demo
 
 [Demo](https://user-images.githubusercontent.com/2674658/118695305-554b0e80-b80d-11eb-83e2-a1066e852f89.mp4)
 
+## Prerequisites
+
+Make sure the dependency is installed:
+
+```
+npm i -D @nrwl/cypress
+```
+
+Note that the minimum required version is `12.3.5`.
+
 # Setup
+
+
+Using Angular CLI: 
 
 ```sh
 ng add @jscutlery/cypress-angular
@@ -28,9 +41,18 @@ ng g @jscutlery/cypress-angular:setup-ct --project my-lib
 
 yarn ngcc
 
-# using Cypress CLI
-yarn cypress open-ct --project projects/my-lib
-# or npx cypress open-ct --project projects/my-lib
+ng run my-lib:ct
+```
+
+Using Nx:
+
+```sh
+npm i -D @jscutlery/cypress-angular
+nx g @jscutlery/cypress-angular:setup-ct --project my-lib
+
+yarn ngcc
+
+nx run my-lib:ct
 ```
 
 ## Usage
