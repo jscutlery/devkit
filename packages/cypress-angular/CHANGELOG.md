@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.6.0](https://github.com/jscutlery/test-utils/compare/cypress-angular-0.5.1...cypress-angular-0.6.0) (2021-09-21)
+
+
+### Features
+
+* **cypress-angular:** ✅ add ct executor to workspace def ([#49](https://github.com/jscutlery/test-utils/issues/49)) ([848a9ea](https://github.com/jscutlery/test-utils/commit/848a9ea49b6d0275be2becaf2c098cf8d11868b8))
+* **cypress-angular:** ✅ bump Cypress dependency to 7.4.0 ([120725d](https://github.com/jscutlery/test-utils/commit/120725d6898347811714e7d988de96b27f73bac3))
+* **cypress-angular:** ✅ bump to Cypress 8.1.0 ([e795215](https://github.com/jscutlery/test-utils/commit/e7952154ec1ed6fadfd22e2abb62c3c6d960e79a))
+
+
+
 ## [0.5.1](https://github.com/jscutlery/test-utils/compare/cypress-angular-0.5.0...cypress-angular-0.5.1) (2021-05-25)
 
 
