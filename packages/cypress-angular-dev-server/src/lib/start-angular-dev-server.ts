@@ -17,7 +17,7 @@ export async function startAngularDevServer({
    * @sunset 2.0.0
    */
   config?: Cypress.RuntimeConfigOptions;
-  options: Cypress.DevServerOptions;
+  options: Cypress.DevServerConfig;
   tsConfig?: string;
 }): Promise<ResolvedDevServerConfig> {
   const angularWebpackConfig = await createAngularWebpackConfig({

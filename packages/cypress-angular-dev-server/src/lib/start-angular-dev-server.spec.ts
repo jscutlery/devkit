@@ -48,7 +48,7 @@ describe(startAngularDevServer.name, () => {
           } as Partial<
             Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions
           >,
-        } as Cypress.DevServerOptions,
+        } as Cypress.DevServerConfig,
       });
     });
 
@@ -101,7 +101,7 @@ describe(startAngularDevServer.name, () => {
           } as Partial<
             Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions
           >,
-        } as Cypress.DevServerOptions,
+        } as Cypress.DevServerConfig,
         webpackConfig: {
           node: {
             global: true,
@@ -134,7 +134,7 @@ describe(startAngularDevServer.name, () => {
           } as Partial<
             Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions
           >,
-        } as Cypress.DevServerOptions,
+        } as Cypress.DevServerConfig,
         tsConfig: 'tsconfig.cypress.json',
       });
     });
