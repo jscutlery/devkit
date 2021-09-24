@@ -28,7 +28,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["packages/cypress-angular/**/*.ts"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -93,7 +94,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["packages/cypress-angular-dev-server/**/*.ts"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -132,7 +134,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["packages/cypress-harness/**/*.ts"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -183,7 +186,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["packages/cypress-harness-e2e/**/*.{js,ts}"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
       }
     },
@@ -206,7 +210,8 @@
             "lintFilePatterns": [
               "packages/cypress-harness-integration/**/*.{js,ts}"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
       }
     },
@@ -220,7 +225,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["packages/cypress-mount/**/*.ts"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -268,7 +274,8 @@
             "lintFilePatterns": [
               "packages/cypress-mount-integration/**/*.{js,ts}"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
       }
     },
@@ -349,7 +356,8 @@
               "packages/sandbox/src/**/*.ts",
               "packages/sandbox/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",

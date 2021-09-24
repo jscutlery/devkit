@@ -1,7 +1,7 @@
 /// <reference types="cypress"/>
 import { startDevServer } from '@cypress/webpack-dev-server';
-import { Configuration } from 'webpack';
 import { merge } from 'webpack-merge';
+import type { Configuration } from 'webpack';
 import type { ResolvedDevServerConfig } from '@cypress/webpack-dev-server';
 
 import { createAngularWebpackConfig } from './create-angular-webpack-config';
