@@ -1,4 +1,6 @@
 import { mount } from '@jscutlery/cypress-mount';
+
+import { ChildComponent, ParentComponent } from '../fixtures/child-component';
 import { HelloDIComponent } from '../fixtures/hello-dependency-injection.component';
 import { HelloComponent } from '../fixtures/hello.component';
 import { AppInfo } from './../fixtures/hello-dependency-injection.component';
@@ -11,6 +13,19 @@ describe('mount', () => {
   it('should handle dependency injection', () => {
     mount(HelloDIComponent);
     cy.contains('JSCutlery');
+  });
+
+  it('should handle declarations', () => {
+    mount(
+      `<jc-parent>
+        <jc-child name="💉"></jc-child>
+      </jc-parent>`,
+      {
+        declarations: [ParentComponent, ChildComponent],
+      }
+    );
+    cy.contains('Parent');
+    cy.contains('Child 💉');
   });
 
   it('should handle providers', () => {
