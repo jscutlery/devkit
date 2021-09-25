@@ -1,20 +1,17 @@
 import '@angular/compiler';
 
-import {
-  Component,
-  NgModule,
-  PlatformRef,
-  SchemaMetadata,
-  Type,
-} from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { injectStylesBeforeElement, StyleOptions } from '@cypress/mount-utils';
-import type { Story } from '@storybook/angular';
 import { DynamicModule } from 'ng-dynamic-component';
+
+import type { PlatformRef, SchemaMetadata, Type } from '@angular/core';
+import type { Story } from '@storybook/angular';
 
 export interface BaseMountOptions extends Partial<StyleOptions> {
   imports?: NgModule['imports'];
+  declarations?: NgModule['declarations'];
   providers?: NgModule['providers'];
   schemas?: SchemaMetadata[];
 }
@@ -48,7 +45,6 @@ export function mountStory(
     ...options,
     inputs: args,
   });
-
 }
 
 let platformRef: PlatformRef;
@@ -143,6 +139,7 @@ export function _createContainerComponent({
 export async function _bootstrapComponent(options: {
   component: Type<unknown>;
   imports?: NgModule['imports'];
+  declarations?: NgModule['declarations'];
   providers?: NgModule['providers'];
   schemas?: SchemaMetadata[];
 }) {
@@ -158,11 +155,13 @@ export async function _bootstrapComponent(options: {
 export function _createRootModule({
   component,
   imports = [],
+  declarations = [],
   providers = [],
   schemas = [],
 }: {
   component: Type<unknown>;
   imports?: NgModule['imports'];
+  declarations?: NgModule['declarations'];
   providers?: NgModule['providers'];
   schemas?: SchemaMetadata[];
 }) {
@@ -172,7 +171,7 @@ export function _createRootModule({
    * as we want to be able to add imports dynamically. */
   const ContainerModule = NgModule({
     bootstrap: [component],
-    declarations: [component],
+    declarations: [component, ...declarations],
     imports: [BrowserModule, DynamicModule, ...imports],
     providers,
     schemas,
