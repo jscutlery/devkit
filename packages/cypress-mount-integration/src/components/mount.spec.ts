@@ -1,8 +1,9 @@
 import { mount } from '@jscutlery/cypress-mount';
 
-import { ChildComponent, ParentComponent } from '../fixtures/child-component';
+import { ChildComponent, ParentComponent } from '../fixtures/child.component';
 import { HelloDIComponent } from '../fixtures/hello-dependency-injection.component';
 import { HelloComponent } from '../fixtures/hello.component';
+import { OutputComponent } from '../fixtures/output.component';
 import { AppInfo } from './../fixtures/hello-dependency-injection.component';
 import { HelloScssComponent } from './../fixtures/hello-scss.component';
 import { HelloStyleUrlsComponent } from './../fixtures/hello-style-urls.component';
@@ -47,6 +48,20 @@ describe('mount', () => {
       },
     });
     cy.contains('🚀');
+  });
+
+  it('should handle outputs', () => {
+    const outputs = {
+      // eslint-disable-next-line
+      output(v) {},
+    };
+    cy.spy(outputs, 'output').as('output');
+    mount(OutputComponent, {
+      outputs,
+    });
+    cy.get('button').should('be.visible').click();
+    cy.get('@output').should('have.been.calledOnce');
+    cy.get('@output').should('have.been.calledWith', 'hello');
   });
 
   it('should render template', () => {
