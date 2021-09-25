@@ -18,7 +18,9 @@ export interface BaseMountOptions extends Partial<StyleOptions> {
 
 export interface MountOptions extends BaseMountOptions {
   inputs?: { [key: string]: unknown };
+  outputs?: { [key: string]: (value?: unknown) => void };
 }
+
 export type MountTemplateOptions = BaseMountOptions;
 export type MountStoryOptions = Partial<StyleOptions>;
 
@@ -91,12 +93,15 @@ export function mount(
             componentMetadata: {
               ...componentMetadata,
               template: `<ng-container
-            *ngComponentOutlet="component; ndcDynamicInputs: inputs"
+              *ngComponentOutlet="component;
+              ndcDynamicInputs: inputs;
+              ndcDynamicOutputs: outputs"
           ></ng-container>`,
             },
             klass: class {
               component = componentOrTemplate;
               inputs = (options as MountOptions).inputs;
+              outputs = (options as MountOptions).outputs;
             },
           })
         : /* Template. */
