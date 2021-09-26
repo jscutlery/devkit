@@ -11,10 +11,11 @@ describe('ng-add generator', () => {
     await ngAddGenerator(tree);
   });
 
-  it('should add cypress to dev dependencies', async () => {
+  it('should add cypress and @nrwl/cypress to dev dependencies', async () => {
     expect(readJson(tree, 'package.json').devDependencies).toEqual(
       expect.objectContaining({
-        cypress: '^8.1.0',
+        cypress: expect.any(String),
+        '@nrwl/cypress': expect.any(String),
       })
     );
   });

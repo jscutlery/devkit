@@ -10,7 +10,7 @@ export async function ngAddGenerator(tree: Tree) {
     tree,
     {},
     {
-      cypress: '^8.1.0',
+      cypress: '^8.4.1',
       '@nrwl/cypress': '^12.3.5'
     }
   );
