@@ -11,6 +11,15 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 
 
 
+# [1.4.0](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.3.0...cypress-angular-dev-server-1.4.0) (2021-09-26)
+
+
+### Features
+
+* **cypress-angular-dev-server:** ✅ add support for Cypress 8.4.x ([a1b3ec6](https://github.com/jscutlery/test-utils/commit/a1b3ec6d2f3cc09208b88e4d65100d53cc0a6391))
+
+
+
 # [1.3.0](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.2.0...cypress-angular-dev-server-1.3.0) (2021-08-05)
 
 
