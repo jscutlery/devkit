@@ -11,6 +11,7 @@ export async function ngAddGenerator(tree: Tree) {
     {},
     {
       cypress: '^8.1.0',
+      '@nrwl/cypress': '^12.3.5'
     }
   );
   return () => installPackagesTask(tree);
