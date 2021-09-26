@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.11.0](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.10.1...cypress-mount-0.11.0) (2021-09-26)
+
+
+### Features
+
+* **cypress-mount:** ✅ add support for declarations ([#77](https://github.com/jscutlery/test-utils/issues/77)) ([bf9a7d0](https://github.com/jscutlery/test-utils/commit/bf9a7d07a7afcfec4a990b2ce17c5410abafccb7))
+* **cypress-mount:** ✅ add support for outputs ([#65](https://github.com/jscutlery/test-utils/issues/65)) ([ea10790](https://github.com/jscutlery/test-utils/commit/ea107900273843c387da1dce023d61ec797d9d6f))
+
+
+
 ## [0.10.1](https://github.com/jscutlery/test-utils/compare/cypress-mount-0.10.0...cypress-mount-0.10.1) (2021-05-25)
 
 
