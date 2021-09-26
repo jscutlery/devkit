@@ -20,16 +20,6 @@ It is aiming to make Cypress Component Testing with Angular easier than writing 
 
 [Demo](https://user-images.githubusercontent.com/2674658/118695305-554b0e80-b80d-11eb-83e2-a1066e852f89.mp4)
 
-## Prerequisites
-
-Make sure the dependency is installed:
-
-```
-npm i -D @nrwl/cypress
-```
-
-Note that the minimum required version is `12.3.5`.
-
 # Setup
 
 
@@ -37,22 +27,22 @@ Using Angular CLI:
 
 ```sh
 ng add @jscutlery/cypress-angular
-ng g @jscutlery/cypress-angular:setup-ct --project my-lib
+ng g @jscutlery/cypress-angular:setup-ct --project my-project
 
-yarn ngcc
+npx ngcc
 
-ng run my-lib:ct
+ng run my-project:ct
 ```
 
 Using Nx:
 
 ```sh
 npm i -D @jscutlery/cypress-angular
-nx g @jscutlery/cypress-angular:setup-ct --project my-lib
+nx g @jscutlery/cypress-angular:setup-ct --project my-project
 
-yarn ngcc
+npx ngcc
 
-nx run my-lib:ct
+nx run my-project:ct
 ```
 
 ## Usage
