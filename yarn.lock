@@ -2066,9 +2066,9 @@
   integrity sha512-9oLAnygRMi8Q5QkYEU4XWK04B+nuoXoxjRvRxgjuChkLZFBja0YPSgdZ7dZtwhncLBcQe/I/E+fLuk5qxcYVJA==
 
 "@jscutlery/semver@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-2.8.0.tgz#bd6b511f2a10c47004d8b24103b09e104afdc6d1"
-  integrity sha512-+d8vQPQmT7VDB7k1X2RPsWir3uP0emDy0uxPbJNi+9Kv2xD7q8AZGOPJSxZ9LFOyPR+sYkjC6SW38ytBvmWSFQ==
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-2.8.1.tgz#deff7e0b1e102783a9316281fd752574b28fbcf7"
+  integrity sha512-rc0hIOBUc1jGsYjYzcXVq0gQtncY7oksRKS2IgKmgTd+ueJvKCYqvFPpQYSxi3S14ZSvUfDSgWh8I5i7ubnNHA==
   dependencies:
     "@nrwl/devkit" "^12.6.4"
     inquirer "^8.1.1"
@@ -8914,9 +8914,9 @@ is-ci@^3.0.0:
     ci-info "^3.1.1"
 
 is-core-module@^2.2.0, is-core-module@^2.5.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.6.0.tgz#d7553b2526fe59b92ba3e40c8df757ec8a709e19"
-  integrity sha512-wShG8vs60jKfPWpF2KZRaAtvt3a20OAn7+IJ6hLPECpSABLcKtFKTTI4ZtH5QcBruBHlq+WsdHWyz0BCZW7svQ==
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.7.0.tgz#3c0ef7d31b4acfc574f80c58409d568a836848e3"
+  integrity sha512-ByY+tjCciCr+9nLryBYcSD50EOGWt95c7tIsKTG1J2ixKKXPvF7Ej3AVd+UfDydAJom3biBGDBALaO79ktwgEQ==
   dependencies:
     has "^1.0.3"
 
@@ -14199,10 +14199,15 @@ side-channel@^1.0.4:
     get-intrinsic "^1.0.2"
     object-inspect "^1.9.0"
 
-signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.3:
+signal-exit@^3.0.0, signal-exit@^3.0.3:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.4.tgz#366a4684d175b9cab2081e3681fda3747b6c51d7"
   integrity sha512-rqYhcAnZ6d/vTPGghdrw7iumdcbXpsk1b8IG/rz+VWV51DM0p7XCtMoJ3qhPLIbp3tvyt3pKRbaaEMZYpHto8Q==
+
+signal-exit@^3.0.2:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.5.tgz#9e3e8cc0c75a99472b44321033a7702e7738252f"
+  integrity sha512-KWcOiKeQj6ZyXx7zq4YxSMgHRlod4czeBQZrPb8OKcohcqAXShm7E20kEMle9WBt26hFcAf0qLOcp5zmY7kOqQ==
 
 sisteransi@^1.0.5:
   version "1.0.5"
