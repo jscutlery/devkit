@@ -1,0 +1,28 @@
+cypress-angular:
+- 'packages/cypress-angular/*'
+- 'packages/cypress-angular/**/*'
+
+cypress-angular-dev-server:
+- 'packages/cypress-angular-dev-server/*'
+- 'packages/cypress-angular-dev-server/**/*'
+
+cypress-harness:
+- 'packages/cypress-harness/*'
+- 'packages/cypress-harness/**/*'
+
+cypress-mount:
+- 'packages/cypress-mount/*'
+- 'packages/cypress-mount/**/*'
+
+test:
+- 'packages/cypress-mount-integration/*'
+- 'packages/cypress-mount-integration/**/*'
+- 'packages/cypress-harness-integration/*'
+- 'packages/cypress-harness-integration/**/*'
+- 'packages/cypress-harness-e2e/*'
+- 'packages/cypress-harness-e2e/**/*'
+- 'packages/cypress-sandbox/*'
+- 'packages/cypress-sandbox/**/*'
+
+docs:
+- 'README.md'
