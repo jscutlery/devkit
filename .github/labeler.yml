@@ -15,6 +15,7 @@ cypress-mount:
 - 'packages/cypress-mount/**/*'
 
 test:
+- 'packages/**/*.spec.ts'
 - 'packages/cypress-mount-integration/*'
 - 'packages/cypress-mount-integration/**/*'
 - 'packages/cypress-harness-integration/*'
