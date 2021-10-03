@@ -1,9 +1,6 @@
-import {
-  addDependenciesToPackageJson,
-  installPackagesTask,
-  convertNxGenerator,
-  Tree,
-} from '@nrwl/devkit';
+import { addDependenciesToPackageJson, convertNxGenerator, installPackagesTask } from '@nrwl/devkit';
+
+import type {  Tree } from '@nrwl/devkit';
 
 export async function ngAddGenerator(tree: Tree) {
   addDependenciesToPackageJson(
