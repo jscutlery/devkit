@@ -2,18 +2,16 @@ import {
   convertNxGenerator,
   formatFiles,
   generateFiles,
-  getWorkspacePath,
   offsetFromRoot,
-  ProjectConfiguration,
   readProjectConfiguration,
-  Tree,
   updateJson,
   updateProjectConfiguration,
-  WorkspaceJsonConfiguration,
   writeJson,
 } from '@nrwl/devkit';
 import { join } from 'path';
-import { SetupCtGeneratorSchema } from './schema';
+
+import type { Tree } from '@nrwl/devkit';
+import type { SetupCtGeneratorSchema } from './schema';
 
 export async function setupCtGenerator(
   tree: Tree,
@@ -56,34 +54,12 @@ function _normalizeOptions(
   options: SetupCtGeneratorSchema
 ): NormalizedSchema {
   const projectName = options.project;
-  const project = _readProjectConfiguration(tree, projectName);
+  const project = readProjectConfiguration(tree, projectName);
 
   return {
     projectName: options.project,
     projectRoot: project.root,
   };
-}
-
-/**
- * @hack using custom version of @nrwl/devkit's `readProjectConfiguration`
- * because `readProjectConfiguration` is not compatible with Angular CLI project
- * as nx.json is missing.
- * Cf. https://github.com/nrwl/nx/issues/5678
- */
-function _readProjectConfiguration(
-  tree: Tree,
-  projectName: string
-): ProjectConfiguration {
-  const workspace: WorkspaceJsonConfiguration = JSON.parse(
-    tree.read(getWorkspacePath(tree)).toString('utf-8')
-  );
-  const project = workspace.projects[projectName];
-
-  if (project == null) {
-    throw new Error(`Project "${projectName}" not found.`);
-  }
-
-  return project;
 }
 
 /**
