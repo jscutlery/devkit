@@ -1,14 +1,15 @@
-import { AngularWebpackPlugin } from '@ngtools/webpack';
 import {
   ResolvedDevServerConfig,
   startDevServer,
 } from '@cypress/webpack-dev-server';
-/* Import jest functions manually as they conflict with cypress
- * because @cypress/webpack-dev-server references cypress types */
 import { describe, expect, it } from '@jest/globals';
+import { AngularWebpackPlugin } from '@ngtools/webpack';
+import { findTargetOptions } from './find-target-options';
 import { resolve } from 'path';
+
 import { startAngularDevServer } from './start-angular-dev-server';
 
+jest.mock('./find-target-options');
 jest.mock('@cypress/webpack-dev-server');
 
 const mockStartDevServer = startDevServer as jest.MockedFunction<
@@ -105,8 +106,8 @@ describe(startAngularDevServer.name, () => {
         webpackConfig: {
           node: {
             global: true,
-          }
-        }
+          },
+        },
       });
     });
 
@@ -152,4 +153,42 @@ describe(startAngularDevServer.name, () => {
       );
     });
   });
+
+  it('should create server with build target options', async () => {
+    (findTargetOptions as jest.Mock).mockReturnValue({
+      outputPath: 'dist/__test__',
+      index: resolve(testProjectPath, 'index.html'),
+      main: resolve(testProjectPath, 'src/main.ts'),
+      polyfills: resolve(testProjectPath, 'polyfills.ts'),
+      assets: [resolve(testProjectPath, 'src/assets')],
+      styles: [resolve(testProjectPath, 'main.scss')],
+    });
+
+    await startAngularDevServer({
+      target: 'test:build',
+      options: {
+        specs: [],
+        config: {
+          componentFolder: resolve(testProjectPath, 'src'),
+          configFile: resolve(testProjectPath, 'cypress.json'),
+          projectRoot: testProjectPath,
+          version: '7.1.0',
+          testingType: 'component',
+        } as Partial<
+          Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions
+        >,
+      } as Cypress.DevServerConfig,
+    });
+
+    const { webpackConfig } = mockStartDevServer.mock.calls[0][0];
+
+    expect(webpackConfig.entry.main).toEqual([
+      resolve(testProjectPath, 'src/main.ts'),
+    ]);
+    expect(webpackConfig.entry.polyfills).toEqual(
+      expect.arrayContaining([resolve(testProjectPath, 'polyfills.ts')])
+    );
+  });
+
+  it.todo('should catch Angular CLI errors (such as empty polyfills)');
 });
