@@ -1,4 +1,9 @@
-import { addProjectConfiguration, readJson, Tree, writeJson } from '@nrwl/devkit';
+import {
+  addProjectConfiguration,
+  readJson,
+  Tree,
+  writeJson,
+} from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { SetupCtGeneratorSchema } from './schema';
@@ -98,12 +103,13 @@ describe('setup-ct generator', () => {
   });
 
   describe('Workspace definition version 1', () => {
-    beforeEach(async () => {
+    beforeEach(() => {
       tree = createTreeWithEmptyWorkspace(1);
-      await setupLib();
     });
 
-    it('should support old workspace definition', () => {
+    it('should support old workspace definition', async () => {
+      await setupLib();
+
       expect(
         readJson(tree, 'workspace.json').projects['my-lib'].architect.ct
       ).toEqual(
@@ -117,15 +123,36 @@ describe('setup-ct generator', () => {
         })
       );
     });
+
+    it('should extend Angular CLI tsconfig.app.json', async () => {
+      await setupLib({ cli: 'ng' });
+      expect(
+        readJson(tree, 'libs/my-lib/tsconfig.cypress.json')
+      ).toEqual(
+        expect.objectContaining({
+          extends: './tsconfig.app.json'
+        })
+      );
+    });
   });
 
-  async function setupLib({ target }: { target?: string } = {}) {
+  async function setupLib({
+    target,
+    cli = 'nx',
+  }: { target?: string; cli?: 'ng' | 'nx' } = {}) {
     addProjectConfiguration(tree, 'my-lib', {
       root: 'libs/my-lib',
       targets: {},
     });
 
-    writeJson(tree, 'libs/my-lib/tsconfig.json', {});
+    if (cli === 'ng') {
+      tree.delete('tsconfig.base.json');
+    }
+
+    cli === 'nx'
+      ? writeJson(tree, 'libs/my-lib/tsconfig.json', {})
+      /* Angular CLI tsconfig app configuration: */
+      : writeJson(tree, 'libs/my-lib/tsconfig.app.json', {});
 
     await setupCtGenerator(tree, {
       project: 'my-lib',
