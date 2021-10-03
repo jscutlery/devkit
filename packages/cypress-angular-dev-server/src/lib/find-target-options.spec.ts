@@ -28,10 +28,9 @@ describe('findTargetOptions', () => {
     expect(await findTargetOptions('./', 'test:build')).toBeUndefined();
   });
 
-  it('should return target options', async () => {
+  it('should find target options', async () => {
     (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fsAsync.readFile as jest.Mock).mockResolvedValue(`
-    {
+    (fsAsync.readFile as jest.Mock).mockResolvedValue(`{
       "projects": {
         "test": {
           "targets": {
@@ -49,10 +48,9 @@ describe('findTargetOptions', () => {
     expect(await findTargetOptions('./', 'test:build')).toEqual({ value: 42 });
   });
 
-  it('should return target options with configuration', async () => {
+  it('should find target options with configuration', async () => {
     (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fsAsync.readFile as jest.Mock).mockResolvedValue(`
-    {
+    (fsAsync.readFile as jest.Mock).mockResolvedValue(`{
       "projects": {
         "test": {
           "targets": {
@@ -74,7 +72,95 @@ describe('findTargetOptions', () => {
     });
   });
 
-  it.todo('should find target for Angular CLI projects');
+  it('should find target for Angular CLI projects', async () => {
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    (fsAsync.readFile as jest.Mock).mockResolvedValue(`{
+      "projects": {
+        "test": {
+          "architect": {
+            "build": {
+              "options": {
+                "value": 42
+              }
+            }
+          }
+        }
+      }
+    }`);
+
+    expect(await findTargetOptions('./', 'test:build')).toEqual({
+      value: 42,
+    });
+  });
+
+  it('should find target with configuration for Angular CLI projects', async () => {
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    (fsAsync.readFile as jest.Mock).mockResolvedValue(`{
+      "projects": {
+        "test": {
+          "architect": {
+            "build": {
+              "configurations": {
+                "production": {
+                  "value": 42
+                }
+              }
+            }
+          }
+        }
+      }
+    }`);
+
+    expect(await findTargetOptions('./', 'test:build:production')).toEqual({
+      value: 42,
+    });
+  });
+
+  it('should find target options for standalone project', async () => {
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    (fsAsync.readFile as jest.Mock).mockResolvedValueOnce(`{
+      "projects": {
+        "test": "libs/test"
+      }
+    }`);
+    (fsAsync.readFile as jest.Mock).mockResolvedValueOnce(`{
+      "targets": {
+        "build": {
+          "options": {
+            "value": 42
+          }
+        }
+      }
+    }`);
+
+    expect(await findTargetOptions('./', 'test:build')).toEqual({
+      value: 42,
+    });
+  });
+
+  it('should find target options with configuration for standalone project', async () => {
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    (fsAsync.readFile as jest.Mock).mockResolvedValueOnce(`{
+      "projects": {
+        "test": "libs/test"
+      }
+    }`);
+    (fsAsync.readFile as jest.Mock).mockResolvedValueOnce(`{
+      "targets": {
+        "build": {
+          "configurations": {
+            "production": {
+              "value": 42
+            }
+          }
+        }
+      }
+    }`);
+
+    expect(await findTargetOptions('./', 'test:build:production')).toEqual({
+      value: 42,
+    });
+  });
 
   it.todo('should recursively find workspace def');
 });
