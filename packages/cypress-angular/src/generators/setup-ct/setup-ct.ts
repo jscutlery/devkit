@@ -17,12 +17,13 @@ export async function setupCtGenerator(
   tree: Tree,
   options: SetupCtGeneratorSchema
 ) {
-  const { projectRoot, projectName } = _normalizeOptions(tree, options);
+  const { projectRoot, projectName, target } = _normalizeOptions(tree, options);
   const cypressTsConfigName = 'tsconfig.cypress.json';
   const cypressTsConfig = join(projectRoot, cypressTsConfigName);
 
   _addCypressFiles(tree, {
     projectRoot,
+    target,
   });
 
   _updateCypressTsconfig(tree, {
@@ -47,6 +48,7 @@ export const setupCtSchematic = convertNxGenerator(setupCtGenerator);
 interface NormalizedSchema {
   projectName: string;
   projectRoot: string;
+  target: string;
 }
 
 function _normalizeOptions(
@@ -59,6 +61,7 @@ function _normalizeOptions(
   return {
     projectName: options.project,
     projectRoot: project.root,
+    target: options.target ?? `${options.project}:build`,
   };
 }
 
@@ -67,9 +70,12 @@ function _normalizeOptions(
  */
 function _addCypressFiles(
   tree: Tree,
-  { projectRoot }: { projectRoot: string }
+  { projectRoot, target }: { projectRoot: string; target: string }
 ) {
-  generateFiles(tree, join(__dirname, './files'), projectRoot, { tmpl: '' });
+  generateFiles(tree, join(__dirname, './files'), projectRoot, {
+    tmpl: '',
+    target,
+  });
 }
 
 /**
