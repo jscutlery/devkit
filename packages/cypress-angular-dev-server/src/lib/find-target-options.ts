@@ -1,15 +1,14 @@
-import { parseTargetString } from '@nrwl/devkit';
-import { existsSync } from 'fs';
-import { readdir, readFile } from 'fs/promises';
-import { resolve, dirname } from 'path';
+import { targetFromTargetString } from '@angular-devkit/architect';
+import { existsSync, readdirSync, readFileSync } from 'fs';
+import { dirname, resolve } from 'path';
 
 import type { PathLike } from 'fs';
 
-export async function findTargetOptions(
+export function findTargetOptions(
   dir: string,
   target: string
-): Promise<Record<string, unknown> | undefined> {
-  const workspaceDefPath = await _findWorkspaceDefinition(dir);
+): Record<string, unknown> | undefined {
+  const workspaceDefPath = _findWorkspaceDefPath(dir);
 
   if (workspaceDefPath == null) {
     throw new Error(
@@ -18,7 +17,7 @@ export async function findTargetOptions(
   }
 
   const workspaceDef = JSON.parse(
-    await readFile(workspaceDefPath, {
+    readFileSync(workspaceDefPath, {
       encoding: 'utf-8',
     })
   ) as Record<string, unknown>;
@@ -27,7 +26,7 @@ export async function findTargetOptions(
     project,
     target: targetString,
     configuration,
-  } = parseTargetString(target);
+  } = targetFromTargetString(target);
 
   return _findOptions({
     root: dirname(workspaceDefPath),
@@ -38,7 +37,7 @@ export async function findTargetOptions(
   });
 }
 
-async function _findOptions({
+function _findOptions({
   root,
   workspaceDef,
   project,
@@ -50,11 +49,11 @@ async function _findOptions({
   project: string;
   target: string;
   configuration?: string;
-}): Promise<Record<string, unknown> | undefined> {
+}): Record<string, unknown> | undefined {
   /* Standalone project configuration case: */
   if (typeof workspaceDef?.projects?.[project] === 'string') {
     const standaloneDef = JSON.parse(
-      await readFile(resolve(root, workspaceDef.projects[project]), {
+      readFileSync(resolve(root, workspaceDef.projects[project]), {
         encoding: 'utf-8',
       })
     );
@@ -112,10 +111,10 @@ function _findOptionsFromNgOrNx({
   return undefined;
 }
 
-async function _findWorkspaceDefinition(
+function _findWorkspaceDefPath(
   dir: PathLike,
-  recurseCount = 3
-): Promise<string | undefined> {
+  maxRecursion = 5
+): string | undefined {
   const currentDir = dir.toString();
 
   if (existsSync(resolve(currentDir, 'workspace.json'))) {
@@ -126,16 +125,16 @@ async function _findWorkspaceDefinition(
     return resolve(currentDir, 'angular.json');
   }
 
-  if (recurseCount === 0) {
-    return;
+  if (maxRecursion === 0) {
+    return undefined;
   }
 
-  for (const dirent of await readdir(resolve('../', currentDir), {
+  const parentDir = resolve(currentDir, '../');
+  for (const dirent of readdirSync(parentDir, {
     withFileTypes: true,
   })) {
     if (dirent.isDirectory()) {
-      --recurseCount;
-      await _findWorkspaceDefinition(dirent.name, recurseCount);
+      return _findWorkspaceDefPath(parentDir, maxRecursion - 1);
     }
   }
 }

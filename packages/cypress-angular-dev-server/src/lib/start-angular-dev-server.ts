@@ -1,12 +1,22 @@
 /// <reference types="cypress"/>
 import { startDevServer } from '@cypress/webpack-dev-server';
 import { merge } from 'webpack-merge';
+
 import type { Configuration } from 'webpack';
 import type { ResolvedDevServerConfig } from '@cypress/webpack-dev-server';
 
 import { createAngularWebpackConfig } from './create-angular-webpack-config';
+import { findTargetOptions } from './find-target-options';
 
 export interface CypressAngularDevServerOptions {
+  /**
+   * Load build options (like assets, scripts, polyfills, etc...) from the specified target.
+   */
+  target?: string;
+
+  /**
+   * Cypress dev server config.
+   */
   options: Cypress.DevServerConfig;
 
   /**
@@ -24,31 +34,27 @@ export interface CypressAngularDevServerOptions {
    * Cypress ts config, default to 'tsconfig.json'.
    */
   tsConfig?: string;
-
-  /**
-   * Load build options (like assets, scripts, polyfills, etc...) from the specified target.
-   */
-  target?: string;
 }
 
 export async function startAngularDevServer({
   webpackConfig,
   options,
   tsConfig = 'tsconfig.json',
-  target
+  target,
 }: CypressAngularDevServerOptions): Promise<ResolvedDevServerConfig> {
-
-
+  const buildOptions = target && findTargetOptions(__dirname, target);
   const angularWebpackConfig = await createAngularWebpackConfig({
     projectRoot: options.config.projectRoot,
     sourceRoot: options.config.componentFolder as string,
     tsConfig,
+    buildOptions,
   });
 
   return startDevServer({
     options,
-    webpackConfig: webpackConfig != null
-      ? merge(angularWebpackConfig, webpackConfig)
-      : angularWebpackConfig,
+    webpackConfig:
+      webpackConfig != null
+        ? merge(angularWebpackConfig, webpackConfig)
+        : angularWebpackConfig,
   });
 }

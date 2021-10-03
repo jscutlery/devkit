@@ -5,11 +5,17 @@ import {
   getCommonConfig,
   getStatsConfig,
   getStylesConfig,
-  getTypeScriptConfig
+  getTypeScriptConfig,
 } from '@angular-devkit/build-angular/src/webpack/configs';
 import { getSystemPath, normalize, resolve } from '@angular-devkit/core';
 import { StartDevServer } from '@cypress/webpack-dev-server';
-import type { WebpackConfigOptions } from "@angular-devkit/build-angular/src/utils/build-options";
+
+import type {
+  AssetPattern,
+  ExtraEntryPoint,
+  IndexUnion,
+} from '@angular-devkit/build-angular/src/browser/schema';
+import type { WebpackConfigOptions } from '@angular-devkit/build-angular/src/utils/build-options';
 
 function getCompilerConfig(wco: WebpackConfigOptions) {
   if (wco.buildOptions.main || wco.buildOptions.polyfills) {
@@ -23,12 +29,20 @@ export async function createAngularWebpackConfig(config: {
   projectRoot: string;
   sourceRoot: string;
   tsConfig: string;
+  buildOptions?: Record<string, unknown>;
 }): Promise<StartDevServer['webpackConfig']> {
   const projectRoot = normalize(config.projectRoot);
-  /* @todo discover workspace root by crawling up to `angular.json|workspace.json`. */
   const workspaceRoot = projectRoot;
   const sourceRoot = normalize(config.sourceRoot);
   const tsConfig = normalize(config.tsConfig);
+
+  const buildOptions = config.buildOptions ?? {};
+  const polyfills = (buildOptions.polyfills as string) ?? 'placeholder';
+  const styles = (buildOptions.styles as ExtraEntryPoint[]) ?? [];
+  const scripts = (buildOptions.scripts as ExtraEntryPoint[]) ?? [];
+  const assets = (buildOptions.assets as AssetPattern[]) ?? [];
+  const main = (buildOptions.main as string) ?? null;
+  const index = (buildOptions.index as IndexUnion) ?? null;
 
   const normalizedOptions = normalizeBrowserSchema(
     workspaceRoot,
@@ -36,16 +50,15 @@ export async function createAngularWebpackConfig(config: {
     sourceRoot,
     {
       tsConfig: getSystemPath(resolve(projectRoot, tsConfig)),
-      /* @hack outputPath is required, otherwise `getCommonConfig` crashes. */
       outputPath: '',
-      index: null,
-      main: null,
+      index,
+      main,
       aot: false,
       sourceMap: true,
-      /* @hack polyfills are required, otherwise for some weird reason the produced
-       * webpack config doesn't build anything properly. */
-      polyfills: 'POLYFILL_PLACEHOLDER',
-      /* @todo dynamically import assets, styles & scripts from target's angular.json|workspace.json config. */
+      scripts,
+      styles,
+      polyfills,
+      assets,
     }
   );
 

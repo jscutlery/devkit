@@ -5,32 +5,30 @@ import { describe, expect, it } from '@jest/globals';
 import { findTargetOptions } from './find-target-options';
 
 import * as fs from 'fs';
-import * as fsAsync from 'fs/promises';
 
 jest.mock('fs');
-jest.mock('fs/promises');
 
-describe('findTargetOptions', () => {
-  it('should throw if no workspace def found', async () => {
+describe(findTargetOptions.name, () => {
+  it('should throw if no workspace def found', () => {
     (fs.existsSync as jest.Mock).mockReturnValue(false);
-    await expect(() => findTargetOptions('./', 'test:build')).rejects.toThrow();
+    expect(() => findTargetOptions('./', 'test:build')).toThrow();
   });
 
-  it('should throw if workspace def is not JSON compliant', async () => {
+  it('should throw if workspace def is not JSON compliant', () => {
     (fs.existsSync as jest.Mock).mockReturnValue(false);
-    (fsAsync.readFile as jest.Mock).mockResolvedValue(undefined);
-    await expect(() => findTargetOptions('./', 'test:build')).rejects.toThrow();
+    (fs.readFileSync as jest.Mock).mockResolvedValue(undefined);
+    expect(() => findTargetOptions('./', 'test:build')).toThrow();
   });
 
-  it('should return undefined if no options found in workspace def', async () => {
+  it('should return undefined if no options found in workspace def', () => {
     (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fsAsync.readFile as jest.Mock).mockResolvedValue('{ "version": 0 }');
-    expect(await findTargetOptions('./', 'test:build')).toBeUndefined();
+    (fs.readFileSync as jest.Mock).mockResolvedValue('{ "version": 0 }');
+    expect(findTargetOptions('./', 'test:build')).toBeUndefined();
   });
 
-  it('should find target options', async () => {
+  it('should find target options', () => {
     (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fsAsync.readFile as jest.Mock).mockResolvedValue(`{
+    (fs.readFileSync as jest.Mock).mockResolvedValue(`{
       "projects": {
         "test": {
           "targets": {
@@ -45,12 +43,12 @@ describe('findTargetOptions', () => {
     }
   `);
 
-    expect(await findTargetOptions('./', 'test:build')).toEqual({ value: 42 });
+    expect(findTargetOptions('./', 'test:build')).toEqual({ value: 42 });
   });
 
-  it('should find target options with configuration', async () => {
+  it('should find target options with configuration', () => {
     (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fsAsync.readFile as jest.Mock).mockResolvedValue(`{
+    (fs.readFileSync as jest.Mock).mockResolvedValue(`{
       "projects": {
         "test": {
           "targets": {
@@ -67,14 +65,14 @@ describe('findTargetOptions', () => {
     }
   `);
 
-    expect(await findTargetOptions('./', 'test:build:production')).toEqual({
+    expect(findTargetOptions('./', 'test:build:production')).toEqual({
       value: 42,
     });
   });
 
-  it('should find target for Angular CLI projects', async () => {
+  it('should find target for Angular CLI projects', () => {
     (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fsAsync.readFile as jest.Mock).mockResolvedValue(`{
+    (fs.readFileSync as jest.Mock).mockResolvedValue(`{
       "projects": {
         "test": {
           "architect": {
@@ -88,14 +86,14 @@ describe('findTargetOptions', () => {
       }
     }`);
 
-    expect(await findTargetOptions('./', 'test:build')).toEqual({
+    expect(findTargetOptions('./', 'test:build')).toEqual({
       value: 42,
     });
   });
 
-  it('should find target with configuration for Angular CLI projects', async () => {
+  it('should find target with configuration for Angular CLI projects', () => {
     (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fsAsync.readFile as jest.Mock).mockResolvedValue(`{
+    (fs.readFileSync as jest.Mock).mockResolvedValue(`{
       "projects": {
         "test": {
           "architect": {
@@ -111,19 +109,19 @@ describe('findTargetOptions', () => {
       }
     }`);
 
-    expect(await findTargetOptions('./', 'test:build:production')).toEqual({
+    expect(findTargetOptions('./', 'test:build:production')).toEqual({
       value: 42,
     });
   });
 
-  it('should find target options for standalone project', async () => {
+  it('should find target options for standalone project', () => {
     (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fsAsync.readFile as jest.Mock).mockResolvedValueOnce(`{
+    (fs.readFileSync as jest.Mock).mockResolvedValueOnce(`{
       "projects": {
         "test": "libs/test"
       }
     }`);
-    (fsAsync.readFile as jest.Mock).mockResolvedValueOnce(`{
+    (fs.readFileSync as jest.Mock).mockResolvedValueOnce(`{
       "targets": {
         "build": {
           "options": {
@@ -133,19 +131,19 @@ describe('findTargetOptions', () => {
       }
     }`);
 
-    expect(await findTargetOptions('./', 'test:build')).toEqual({
+    expect(findTargetOptions('./', 'test:build')).toEqual({
       value: 42,
     });
   });
 
-  it('should find target options with configuration for standalone project', async () => {
+  it('should find target options with configuration for standalone project', () => {
     (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fsAsync.readFile as jest.Mock).mockResolvedValueOnce(`{
+    (fs.readFileSync as jest.Mock).mockResolvedValueOnce(`{
       "projects": {
         "test": "libs/test"
       }
     }`);
-    (fsAsync.readFile as jest.Mock).mockResolvedValueOnce(`{
+    (fs.readFileSync as jest.Mock).mockResolvedValueOnce(`{
       "targets": {
         "build": {
           "configurations": {
@@ -157,7 +155,7 @@ describe('findTargetOptions', () => {
       }
     }`);
 
-    expect(await findTargetOptions('./', 'test:build:production')).toEqual({
+    expect(findTargetOptions('./', 'test:build:production')).toEqual({
       value: 42,
     });
   });
