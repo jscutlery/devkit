@@ -95,15 +95,22 @@ function _updateCypressTsconfig(
   }
 ) {
   const defaultBaseTsconfigPath = 'tsconfig.base.json';
-  const baseTsconfigPath = tree.exists(defaultBaseTsconfigPath)
-    ? defaultBaseTsconfigPath
-    : 'tsconfig.json';
+  let baseTsconfigPath: string;
+
+  let hasRootTsconfig = true;
+  if (tree.exists(defaultBaseTsconfigPath)) {
+    baseTsconfigPath = defaultBaseTsconfigPath;
+  } else if (tree.exists(projectRoot + '/tsconfig.app.json')) {
+    baseTsconfigPath = './tsconfig.app.json';
+    hasRootTsconfig = false;
+  } else {
+    baseTsconfigPath = 'tsconfig.json';
+  }
 
   /* Compute base tsconfig relative path. */
-  const relativeBaseTsconfig = join(
-    offsetFromRoot(projectRoot),
-    baseTsconfigPath
-  );
+  const relativeBaseTsconfig = hasRootTsconfig
+    ? join(offsetFromRoot(projectRoot), baseTsconfigPath)
+    : baseTsconfigPath;
 
   /* Make sure file exists first. */
   if (!tree.exists(cypressTsConfig)) {
