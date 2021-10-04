@@ -1,0 +1,41 @@
+{
+  "root": "packages/cypress-mount",
+  "sourceRoot": "packages/cypress-mount/src",
+  "projectType": "library",
+  "generators": {},
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/cypress-mount/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "packages/cypress-mount/jest.config.js",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/packages/cypress-mount"]
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "options": {
+        "outputPath": "dist/packages/cypress-mount",
+        "tsConfig": "packages/cypress-mount/tsconfig.lib.json",
+        "packageJson": "packages/cypress-mount/package.json",
+        "main": "packages/cypress-mount/src/index.ts",
+        "assets": ["packages/cypress-mount/*.md"]
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "syncVersions": false
+      }
+    }
+  },
+  "tags": []
+}

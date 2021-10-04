@@ -26,34 +26,7 @@
     "appsDir": "packages",
     "libsDir": "packages"
   },
-  "projects": {
-    "cypress-angular": {
-      "tags": []
-    },
-    "cypress-angular-dev-server": {
-      "tags": []
-    },
-    "cypress-harness": {
-      "tags": []
-    },
-    "cypress-harness-e2e": {
-      "tags": [],
-      "implicitDependencies": ["sandbox"]
-    },
-    "cypress-harness-integration": {
-      "tags": []
-    },
-    "cypress-mount": {
-      "tags": []
-    },
-    "cypress-mount-integration": {
-      "tags": [],
-      "implicitDependencies": ["sandbox"]
-    },
-    "sandbox": {
-      "tags": []
-    }
-  },
+  "projects": {},
   "targetDependencies": {
     "build": [
       {

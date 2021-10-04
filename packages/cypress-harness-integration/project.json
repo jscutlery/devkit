@@ -1,0 +1,25 @@
+{
+  "root": "packages/cypress-harness-integration",
+  "sourceRoot": "packages/cypress-harness-integration/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "packages/cypress-harness-integration/cypress.json",
+        "tsConfig": "packages/cypress-harness-integration/tsconfig.e2e.json",
+        "testingType": "component"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "packages/cypress-harness-integration/**/*.{js,ts}"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}
