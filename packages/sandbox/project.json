@@ -1,0 +1,91 @@
+{
+  "projectType": "application",
+  "root": "packages/sandbox",
+  "sourceRoot": "packages/sandbox/src",
+  "prefix": "jc",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/packages/sandbox",
+        "index": "packages/sandbox/src/index.html",
+        "main": "packages/sandbox/src/main.ts",
+        "polyfills": "packages/sandbox/src/polyfills.ts",
+        "tsConfig": "packages/sandbox/tsconfig.app.json",
+        "aot": true,
+        "assets": [
+          "packages/sandbox/src/favicon.ico",
+          "packages/sandbox/src/assets"
+        ],
+        "styles": ["packages/sandbox/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "packages/sandbox/src/environments/environment.ts",
+              "with": "packages/sandbox/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "10kb"
+            }
+          ]
+        }
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "browserTarget": "sandbox:build"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "sandbox:build:production"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "sandbox:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "packages/sandbox/src/**/*.ts",
+          "packages/sandbox/src/**/*.html"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "packages/sandbox/jest.config.js",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/packages/sandbox"]
+    }
+  },
+  "tags": []
+}

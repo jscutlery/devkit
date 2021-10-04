@@ -1,0 +1,40 @@
+{
+  "root": "packages/cypress-angular-dev-server",
+  "sourceRoot": "packages/cypress-angular-dev-server/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/cypress-angular-dev-server/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/cypress-angular-dev-server"],
+      "options": {
+        "jestConfig": "packages/cypress-angular-dev-server/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "options": {
+        "outputPath": "dist/packages/cypress-angular-dev-server",
+        "tsConfig": "packages/cypress-angular-dev-server/tsconfig.lib.json",
+        "packageJson": "packages/cypress-angular-dev-server/package.json",
+        "main": "packages/cypress-angular-dev-server/src/index.ts",
+        "assets": ["packages/cypress-angular-dev-server/*.md"]
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "syncVersions": false
+      }
+    }
+  },
+  "tags": []
+}

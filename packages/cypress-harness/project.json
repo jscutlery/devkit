@@ -1,0 +1,41 @@
+{
+  "root": "packages/cypress-harness",
+  "sourceRoot": "packages/cypress-harness/src",
+  "projectType": "library",
+  "generators": {},
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/cypress-harness/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "packages/cypress-harness/jest.config.js",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/packages/cypress-harness"]
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "options": {
+        "outputPath": "dist/packages/cypress-harness",
+        "tsConfig": "packages/cypress-harness/tsconfig.lib.json",
+        "packageJson": "packages/cypress-harness/package.json",
+        "main": "packages/cypress-harness/src/index.ts",
+        "assets": ["packages/cypress-harness/*.md"]
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "syncVersions": false
+      }
+    }
+  },
+  "tags": []
+}
