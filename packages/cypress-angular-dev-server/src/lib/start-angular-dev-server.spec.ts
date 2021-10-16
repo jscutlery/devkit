@@ -77,11 +77,11 @@ describe(startAngularDevServer.name, () => {
         })
       );
       /* Make sure Angular plugin is loaded. */
-      expect(webpackConfig.plugins).toEqual(
+      expect((webpackConfig as any).plugins).toEqual(
         expect.arrayContaining([expect.any(AngularWebpackPlugin)])
       );
       /* Check config has rules. */
-      expect(webpackConfig.module.rules.length).toBeGreaterThanOrEqual(1);
+      expect((webpackConfig as any).module.rules.length).toBeGreaterThanOrEqual(1);
     });
   });
 
@@ -114,7 +114,7 @@ describe(startAngularDevServer.name, () => {
     it('should merge with resolved webpack config', () => {
       const { webpackConfig } = mockStartDevServer.mock.calls[0][0];
 
-      expect(webpackConfig.node).toEqual({ global: true });
+      expect((webpackConfig as any).node).toEqual({ global: true });
     });
   });
 
@@ -144,7 +144,7 @@ describe(startAngularDevServer.name, () => {
       expect(startDevServer).toBeCalledTimes(1);
       const { webpackConfig } = mockStartDevServer.mock.calls[0][0];
 
-      const plugin = webpackConfig.plugins.find(
+      const plugin = (webpackConfig as any).plugins.find(
         (plugin) => plugin instanceof AngularWebpackPlugin
       );
 
@@ -182,10 +182,10 @@ describe(startAngularDevServer.name, () => {
 
     const { webpackConfig } = mockStartDevServer.mock.calls[0][0];
 
-    expect(webpackConfig.entry.main).toEqual([
+    expect((webpackConfig as any).entry.main).toEqual([
       resolve(testProjectPath, 'src/main.ts'),
     ]);
-    expect(webpackConfig.entry.polyfills).toEqual(
+    expect((webpackConfig as any).entry.polyfills).toEqual(
       expect.arrayContaining([resolve(testProjectPath, 'polyfills.ts')])
     );
   });

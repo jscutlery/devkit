@@ -8,13 +8,13 @@ import {
   getTypeScriptConfig,
 } from '@angular-devkit/build-angular/src/webpack/configs';
 import { getSystemPath, normalize, resolve } from '@angular-devkit/core';
-import { StartDevServer } from '@cypress/webpack-dev-server';
 
 import type {
   AssetPattern,
   ExtraEntryPoint,
   IndexUnion,
 } from '@angular-devkit/build-angular/src/browser/schema';
+import type { Configuration } from 'webpack';
 import type { WebpackConfigOptions } from '@angular-devkit/build-angular/src/utils/build-options';
 
 function getCompilerConfig(wco: WebpackConfigOptions) {
@@ -30,7 +30,7 @@ export async function createAngularWebpackConfig(config: {
   sourceRoot: string;
   tsConfig: string;
   buildOptions?: Record<string, unknown>;
-}): Promise<StartDevServer['webpackConfig']> {
+}): Promise<Configuration> {
   const projectRoot = normalize(config.projectRoot);
   const workspaceRoot = projectRoot;
   const sourceRoot = normalize(config.sourceRoot);

@@ -4,6 +4,7 @@ import { merge } from 'webpack-merge';
 
 import type { Configuration } from 'webpack';
 import type { ResolvedDevServerConfig } from '@cypress/webpack-dev-server';
+import type { WebpackConfigurationWithDevServer } from '@cypress/webpack-dev-server/dist/startServer';
 
 import { createAngularWebpackConfig } from './create-angular-webpack-config';
 import { findTargetOptions } from './find-target-options';
@@ -49,12 +50,15 @@ export async function startAngularDevServer({
     tsConfig,
     buildOptions,
   });
+  const builtWebpackConfig: WebpackConfigurationWithDevServer = {
+    ...(webpackConfig != null
+      ? merge(angularWebpackConfig, webpackConfig)
+      : angularWebpackConfig),
+    devServer: undefined,
+  };
 
   return startDevServer({
     options,
-    webpackConfig:
-      webpackConfig != null
-        ? merge(angularWebpackConfig, webpackConfig)
-        : angularWebpackConfig,
+    webpackConfig: builtWebpackConfig,
   });
 }
