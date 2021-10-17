@@ -14,6 +14,10 @@ cypress-mount:
 - 'packages/cypress-mount/*'
 - 'packages/cypress-mount/**/*'
 
+operators:
+- 'packages/operators/*'
+- 'packages/operators/**/*'
+
 test:
 - 'packages/**/*.spec.ts'
 - 'packages/cypress-mount-integration/*'
