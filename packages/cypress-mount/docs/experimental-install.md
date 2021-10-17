@@ -1,6 +1,6 @@
 # Experimental Setup for Cypress < 7
 
-**Deprecated**: Cypress >= 7 requires the new adapter [@jscutlery/cypress-angular-dev-server](https://github.com/jscutlery/test-utils/tree/main/packages/cypress-angular-dev-server) to build Angular components.
+**Deprecated**: Cypress >= 7 requires the new adapter [@jscutlery/cypress-angular-dev-server](https://github.com/jscutlery/utils/tree/main/packages/cypress-angular-dev-server) to build Angular components.
 
 ### 1. Install
 
