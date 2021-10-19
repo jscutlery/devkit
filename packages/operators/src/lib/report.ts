@@ -1,5 +1,18 @@
-import { Observable, OperatorFunction } from 'rxjs';
-import { map, materialize, scan, startWith } from 'rxjs/operators';
+import {
+  Observable,
+  OperatorFunction,
+  ReplaySubject,
+  Subject,
+  Subscription,
+} from 'rxjs';
+import {
+  debounce,
+  map,
+  materialize,
+  scan,
+  startWith,
+  tap,
+} from 'rxjs/operators';
 
 export interface ReportState<T> {
   value: undefined | T;
@@ -16,7 +29,35 @@ export function report<T, R>(
 export function report<T, R = ReportState<T>>(
   projector?: (data: ReportState<T>) => R
 ): OperatorFunction<T, R | ReportState<T>> {
-  return (o$: Observable<T>): Observable<R | ReportState<T>> => {
+  return (source$: Observable<T>): Observable<R | ReportState<T>> => {
+    return new Observable((observer) => {
+      const isReadySubject = new ReplaySubject<unknown>(1);
+
+      const subscription = source$
+        .pipe(
+          _report(projector),
+          /* Wait for all synchronous processing to be done. */
+          debounce(() => isReadySubject)
+        )
+        .subscribe(observer);
+
+      /* Sync emitted values have been processed now.
+       * Mark source as ready and emit last computed state. */
+      isReadySubject.next(undefined);
+
+      return () => subscription.unsubscribe();
+    });
+  };
+}
+
+function _report<T, R = ReportState<T>>(): OperatorFunction<T, R>;
+function _report<T, R>(
+  projector: (data: ReportState<T>) => R
+): OperatorFunction<T, R>;
+function _report<T, R = ReportState<T>>(
+  projector?: (data: ReportState<T>) => R
+): OperatorFunction<T, R | ReportState<T>> {
+  return (source$: Observable<T>): Observable<R | ReportState<T>> => {
     const initialState = {
       value: undefined,
       error: undefined,
@@ -24,7 +65,7 @@ export function report<T, R = ReportState<T>>(
       pending: true,
     };
 
-    const result$ = o$.pipe(
+    const result$ = source$.pipe(
       materialize(),
       scan((state = initialState, notification) => {
         /* On complete, merge `finalized: true & pending: false`
