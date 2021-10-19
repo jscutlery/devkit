@@ -89,7 +89,7 @@ describe(report.name, () => {
     });
   });
 
-  describe('failed source after emitting value', () => {
+  describe('with failed source after emitting value', () => {
     let source$: Subject<'🍔'>;
 
     beforeEach(() => {
@@ -114,12 +114,37 @@ describe(report.name, () => {
     });
   });
 
+  describe('with projector', () => {
+    beforeEach(() =>
+      _reportAndSubscribe(of('🍔'), {
+        projector: ({ error, finalized, pending, value }) => ({
+          e: error,
+          f: finalized,
+          p: pending,
+          v: value,
+        }),
+      })
+    );
+
+    it('should project using custom projector', () => {
+      expect(observer).toHaveBeenLastCalledWith({
+        e: undefined,
+        f: true,
+        p: false,
+        v: '🍔',
+      });
+    });
+  });
+
   /**
    * Apply `report` operator, subscribe and notify `observer`.
    * Emitted values can be read using {@link _getEmittedValues}.
    */
-  function _reportAndSubscribe(source$: Observable<'🍔'>) {
-    const result$ = source$.pipe(report());
+  function _reportAndSubscribe<R>(
+    source$: Observable<'🍔'>,
+    { projector }: { projector?: (data: ReportState<'🍔'>) => R } = {}
+  ) {
+    const result$ = source$.pipe(report(projector));
     observer = jest.fn();
     result$.subscribe(observer);
   }
