@@ -5,30 +5,50 @@ describe(report.name, () => {
   let observer: jest.Mock<ReportState<'🍔'>>;
 
   describe('with successful source', () => {
-    beforeEach(() => reportAndSubscribe(of('🍔')));
+    beforeEach(() => _reportAndSubscribe(of('🍔')));
 
-    xit('🚧 should emit result with value', () => {
-      expect(observer).toBeCalledTimes(1);
-      expect(observer).toBeCalledWith({
-        error: undefined,
-        finalized: true,
-        pending: false,
-        value: '🍔',
-      });
+    it('should emit result with value', () => {
+      expect(_getEmittedValues()).toEqual([
+        {
+          error: undefined,
+          finalized: false,
+          pending: true,
+          value: undefined,
+        },
+        {
+          error: undefined,
+          finalized: false,
+          pending: false,
+          value: '🍔',
+        },
+        {
+          error: undefined,
+          finalized: true,
+          pending: false,
+          value: '🍔',
+        },
+      ]);
     });
   });
 
   describe('with failed source', () => {
-    beforeEach(() => reportAndSubscribe(throwError(() => new Error('🐞'))));
+    beforeEach(() => _reportAndSubscribe(throwError(() => new Error('🐞'))));
 
-    xit('🚧 should emit result with error', () => {
-      expect(observer).toBeCalledTimes(1);
-      expect(observer).toBeCalledWith({
-        error: new Error('🐞'),
-        finalized: true,
-        pending: false,
-        value: undefined,
-      });
+    it('should emit result with error', () => {
+      expect(_getEmittedValues()).toEqual([
+        {
+          error: undefined,
+          finalized: false,
+          pending: true,
+          value: undefined,
+        },
+        {
+          error: new Error('🐞'),
+          finalized: true,
+          pending: false,
+          value: undefined,
+        },
+      ]);
     });
   });
 
@@ -37,33 +57,35 @@ describe(report.name, () => {
 
     beforeEach(() => {
       source$ = new Subject<'🍔'>();
-      reportAndSubscribe(source$);
+      _reportAndSubscribe(source$);
     });
 
     afterEach(() => source$.complete());
 
-    xit('🚧 should emit result with pending=true and without value nor error', () => {
-      expect(observer).toBeCalledTimes(1);
-      expect(observer).toBeCalledWith({
-        error: undefined,
-        finalized: false,
-        pending: true,
-        value: undefined,
-      });
+    it('should emit result with pending=true and without value nor error', () => {
+      expect(_getEmittedValues()).toEqual([
+        {
+          error: undefined,
+          finalized: false,
+          pending: true,
+          value: undefined,
+        },
+      ]);
     });
 
-    xit('🚧 should reset pending to false when value is emitted', () => {
+    it('should reset pending to false when value is emitted', () => {
       observer.mockClear();
 
       source$.next('🍔');
 
-      expect(observer).toBeCalledTimes(1);
-      expect(observer).toBeCalledWith(
-        expect.objectContaining({
+      expect(_getEmittedValues()).toEqual([
+        {
+          error: undefined,
+          finalized: false,
           pending: false,
           value: '🍔',
-        })
-      );
+        },
+      ]);
     });
   });
 
@@ -72,7 +94,7 @@ describe(report.name, () => {
 
     beforeEach(() => {
       source$ = new Subject<'🍔'>();
-      reportAndSubscribe(source$);
+      _reportAndSubscribe(source$);
     });
 
     afterEach(() => source$.complete());
@@ -92,9 +114,20 @@ describe(report.name, () => {
     });
   });
 
-  function reportAndSubscribe(source$: Observable<'🍔'>) {
+  /**
+   * Apply `report` operator, subscribe and notify `observer`.
+   * Emitted values can be read using {@link _getEmittedValues}.
+   */
+  function _reportAndSubscribe(source$: Observable<'🍔'>) {
     const result$ = source$.pipe(report());
     observer = jest.fn();
     result$.subscribe(observer);
+  }
+
+  /**
+   * Return values emitted using {@link _reportAndSubscribe}
+   */
+  function _getEmittedValues() {
+    return observer.mock.calls.map((args) => args[0]);
   }
 });
