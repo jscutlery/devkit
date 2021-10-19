@@ -1,4 +1,5 @@
 import {
+  MonoTypeOperatorFunction,
   Observable,
   OperatorFunction,
   ReplaySubject,
@@ -30,12 +31,17 @@ export function report<T, R = ReportState<T>>(
   projector?: (data: ReportState<T>) => R
 ): OperatorFunction<T, R | ReportState<T>> {
   return (source$: Observable<T>): Observable<R | ReportState<T>> => {
-    return new Observable((observer) => {
+    return source$.pipe(_report(projector), _coalesceFirstEmittedValue());
+  };
+}
+
+function _coalesceFirstEmittedValue<T>(): MonoTypeOperatorFunction<T> {
+  return (source$: Observable<T>): Observable<T> => {
+    return new Observable<T>((observer) => {
       const isReadySubject = new ReplaySubject<unknown>(1);
 
       const subscription = source$
         .pipe(
-          _report(projector),
           /* Wait for all synchronous processing to be done. */
           debounce(() => isReadySubject)
         )
