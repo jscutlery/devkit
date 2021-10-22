@@ -1,21 +1,7 @@
-import {
-  MonoTypeOperatorFunction,
-  Observable,
-  OperatorFunction,
-  ReplaySubject,
-  Subject,
-  Subscription,
-} from 'rxjs';
-import {
-  debounce,
-  map,
-  materialize,
-  scan,
-  startWith,
-  tap,
-} from 'rxjs/operators';
+import { MonoTypeOperatorFunction, Observable, OperatorFunction, ReplaySubject } from 'rxjs';
+import { debounce, map, materialize, scan, startWith } from 'rxjs/operators';
 
-export interface ReportState<T> {
+export interface Suspense<T> {
   value: undefined | T;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: undefined | any;
@@ -23,15 +9,15 @@ export interface ReportState<T> {
   pending: boolean;
 }
 
-export function report<T, R = ReportState<T>>(): OperatorFunction<T, R>;
-export function report<T, R>(
-  projector: (data: ReportState<T>) => R
+export function suspensify<T, R = Suspense<T>>(): OperatorFunction<T, R>;
+export function suspensify<T, R>(
+  projector: (data: Suspense<T>) => R
 ): OperatorFunction<T, R>;
-export function report<T, R = ReportState<T>>(
-  projector?: (data: ReportState<T>) => R
-): OperatorFunction<T, R | ReportState<T>> {
-  return (source$: Observable<T>): Observable<R | ReportState<T>> => {
-    return source$.pipe(_report(projector), _coalesceFirstEmittedValue());
+export function suspensify<T, R = Suspense<T>>(
+  projector?: (data: Suspense<T>) => R
+): OperatorFunction<T, R | Suspense<T>> {
+  return (source$: Observable<T>): Observable<R | Suspense<T>> => {
+    return source$.pipe(_suspensify(projector), _coalesceFirstEmittedValue());
   };
 }
 
@@ -56,14 +42,14 @@ function _coalesceFirstEmittedValue<T>(): MonoTypeOperatorFunction<T> {
   };
 }
 
-function _report<T, R = ReportState<T>>(): OperatorFunction<T, R>;
-function _report<T, R>(
-  projector: (data: ReportState<T>) => R
+function _suspensify<T, R = Suspense<T>>(): OperatorFunction<T, R>;
+function _suspensify<T, R>(
+  projector: (data: Suspense<T>) => R
 ): OperatorFunction<T, R>;
-function _report<T, R = ReportState<T>>(
-  projector?: (data: ReportState<T>) => R
-): OperatorFunction<T, R | ReportState<T>> {
-  return (source$: Observable<T>): Observable<R | ReportState<T>> => {
+function _suspensify<T, R = Suspense<T>>(
+  projector?: (data: Suspense<T>) => R
+): OperatorFunction<T, R | Suspense<T>> {
+  return (source$: Observable<T>): Observable<R | Suspense<T>> => {
     const initialState = {
       value: undefined,
       error: undefined,

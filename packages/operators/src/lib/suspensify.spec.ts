@@ -1,11 +1,11 @@
 import { of, Observable, throwError, Subject } from 'rxjs';
-import { report, ReportState } from './report';
+import { suspensify, Suspense } from './suspensify';
 
-describe(report.name, () => {
-  let observer: jest.Mock<ReportState<'🍔'>>;
+describe(suspensify.name, () => {
+  let observer: jest.Mock<Suspense<'🍔'>>;
 
   describe('with successful source', () => {
-    beforeEach(() => _reportAndSubscribe(of('🍔')));
+    beforeEach(() => _suspensifyAndSubscribe(of('🍔')));
 
     it('should emit result with value', () => {
       expect(observer).toBeCalledTimes(1);
@@ -19,7 +19,7 @@ describe(report.name, () => {
   });
 
   describe('with failed source', () => {
-    beforeEach(() => _reportAndSubscribe(throwError(() => new Error('🐞'))));
+    beforeEach(() => _suspensifyAndSubscribe(throwError(() => new Error('🐞'))));
 
     it('should emit result with error', () => {
       expect(observer).toBeCalledTimes(1);
@@ -37,7 +37,7 @@ describe(report.name, () => {
 
     beforeEach(() => {
       source$ = new Subject<'🍔'>();
-      _reportAndSubscribe(source$);
+      _suspensifyAndSubscribe(source$);
     });
 
     afterEach(() => source$.complete());
@@ -72,7 +72,7 @@ describe(report.name, () => {
 
     beforeEach(() => {
       source$ = new Subject<'🍔'>();
-      _reportAndSubscribe(source$);
+      _suspensifyAndSubscribe(source$);
     });
 
     afterEach(() => source$.complete());
@@ -94,7 +94,7 @@ describe(report.name, () => {
 
   describe('with projector', () => {
     beforeEach(() =>
-      _reportAndSubscribe(of('🍔'), {
+      _suspensifyAndSubscribe(of('🍔'), {
         projector: ({ error, finalized, pending, value }) => ({
           e: error,
           f: finalized,
@@ -115,13 +115,13 @@ describe(report.name, () => {
   });
 
   /**
-   * Apply `report` operator, subscribe and notify `observer`.
+   * Apply `suspensify` operator, subscribe and notify `observer`.
    */
-  function _reportAndSubscribe<R>(
+  function _suspensifyAndSubscribe<R>(
     source$: Observable<'🍔'>,
-    { projector }: { projector?: (data: ReportState<'🍔'>) => R } = {}
+    { projector }: { projector?: (data: Suspense<'🍔'>) => R } = {}
   ) {
-    const result$ = source$.pipe(report(projector));
+    const result$ = source$.pipe(suspensify(projector));
     observer = jest.fn();
     result$.subscribe(observer);
   }
