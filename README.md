@@ -1,17 +1,14 @@
-<p align="center">
-  <strong>Tools that make testing cheaper.</strong>
-</p>
-
-# JSCutlery Test Utils
+# JSCutlery Utils
 
 This project is a monorepo that includes the following packages.
 
-| Package                                                                        | Description                                                                    | Version                                                                    |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| [@jscutlery/cypress-angular](./packages/cypress-angular)                       | Cypress Component Testing support for Angular                                  | <img src="https://badgen.net/npm/v/@jscutlery/cypress-angular">            |
-| [@jscutlery/cypress-harness](./packages/cypress-harness)                       | Cypress support for Angular Component Test Harnesses                           | <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness">            |
+| Package                                                                        | Description                                                                | Version                                                                    |
+| ------------------------------------------------------------------------------ | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [@jscutlery/cypress-angular](./packages/cypress-angular)                       | Cypress Component Testing support for Angular.                             | <img src="https://badgen.net/npm/v/@jscutlery/cypress-angular">            |
+| [@jscutlery/cypress-harness](./packages/cypress-harness)                       | Cypress support for Angular Component Test Harnesses.                      | <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness">            |
 | [@jscutlery/cypress-angular-dev-server](./packages/cypress-angular-dev-server) | Internal package used by @jscutlery/cypress-angular to start a dev server. | <img src="https://badgen.net/npm/v/@jscutlery/cypress-angular-dev-server"> |
-| [@jscutlery/cypress-mount](./packages/cypress-mount)                           | Internal package exposed through @jscutlery/cypress-angular.                   | <img src="https://badgen.net/npm/v/@jscutlery/cypress-mount">              |
+| [@jscutlery/cypress-mount](./packages/cypress-mount)                           | Internal package exposed through @jscutlery/cypress-angular.               | <img src="https://badgen.net/npm/v/@jscutlery/cypress-mount">              |
+| [@jscutlery/operators](./packages/operators)                                   | RxJS operators.                                                            | <img src="https://badgen.net/npm/v/@jscutlery/operators">                  |
 
 # Contributors
 
