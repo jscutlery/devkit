@@ -10,7 +10,7 @@ import 'reflect-metadata';
  * @hack we have to import `zone.js/dist/zone-testing`.
  * This is due to implicit call to `resetFakeAsyncZone()`
  * in `@angular/core/testing`.
- * Cf. https://github.com/jscutlery/utils/issues/2
+ * Cf. https://github.com/jscutlery/devkit/issues/2
  */
 import 'zone.js/dist/zone';
 
