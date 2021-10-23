@@ -1,0 +1,42 @@
+{
+  "projectType": "library",
+  "root": "packages/feature-flag",
+  "sourceRoot": "packages/feature-flag/src",
+  "prefix": "jscutlery",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/packages/feature-flag"],
+      "options": {
+        "project": "packages/feature-flag/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/feature-flag/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/feature-flag/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/feature-flag"],
+      "options": {
+        "jestConfig": "packages/feature-flag/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "packages/feature-flag/src/**/*.ts",
+          "packages/feature-flag/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

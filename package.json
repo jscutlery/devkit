@@ -36,6 +36,7 @@
     "@angular/animations": "12.2.10",
     "@angular/cdk": "12.2.10",
     "@angular/common": "12.2.10",
+    "@angular/compiler": "^12.2.0",
     "@angular/core": "12.2.10",
     "@angular/forms": "12.2.10",
     "@angular/material": "12.2.10",
@@ -43,7 +44,8 @@
     "@angular/platform-browser-dynamic": "12.2.10",
     "@angular/router": "12.2.10",
     "rxjs": "~7.0.0",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "12.2.11",
@@ -83,6 +85,7 @@
     "jest": "27.3.1",
     "jest-preset-angular": "10.0.1",
     "ng-dynamic-component": "^8.0.1",
+    "ng-packagr": "^12.1.1",
     "prettier": "2.4.1",
     "ts-jest": "27.0.7",
     "ts-node": "10.3.1",

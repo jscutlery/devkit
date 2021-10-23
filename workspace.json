@@ -7,11 +7,13 @@
   "generators": {
     "@nrwl/angular:application": {
       "style": "css",
+      "linter": "eslint",
       "unitTestRunner": "jest",
       "e2eTestRunner": "cypress"
     },
     "@nrwl/angular:library": {
       "style": "css",
+      "linter": "eslint",
       "unitTestRunner": "jest"
     },
     "@nrwl/angular:component": {
@@ -26,6 +28,7 @@
     "cypress-harness-integration": "packages/cypress-harness-integration",
     "cypress-mount": "packages/cypress-mount",
     "cypress-mount-integration": "packages/cypress-mount-integration",
+    "feature-flag": "packages/feature-flag",
     "operators": "packages/operators",
     "sandbox": "packages/sandbox"
   }
