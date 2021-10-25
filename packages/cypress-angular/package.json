@@ -4,6 +4,9 @@
   "main": "src/index.js",
   "schematics": "./collection.json",
   "generators": "./generators.json",
+  "repository": {
+    "url": "https://github.com/jscutlery/devkit"
+  },
   "dependencies": {
     "@cypress/webpack-dev-server": "^1.7.0",
     "@jscutlery/cypress-angular-dev-server": "^1.4.0",
