@@ -2,6 +2,23 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.8.0](https://github.com/jscutlery/devkit/compare/cypress-angular-0.7.0...cypress-angular-0.8.0) (2021-10-25)
+
+
+### Bug Fixes
+
+* **cypress-angular-dev-server:** 📦 bump @cypress/webpack-dev-server to 1.7.0 ([fe24fa5](https://github.com/jscutlery/devkit/commit/fe24fa5794e7f6c794f91b798306d6c631f1c3f7))
+* **cypress-angular:** 🐞 load `tsconfig.app.json` for regular Angular CLI ([a606f59](https://github.com/jscutlery/devkit/commit/a606f590fd9e9d1de0437ff82d1e86bc10d35274))
+* **cypress-angular:** 📦 bump dependencies ([52a3401](https://github.com/jscutlery/devkit/commit/52a340198e0b310a86e35fac7b4eb19a5058631c))
+* use standalone projects ([8e4b7b7](https://github.com/jscutlery/devkit/commit/8e4b7b7fc5405fa01b6114654211ac45ec9bfd5e))
+
+
+### Features
+
+* **cypress-angular:** ✅ add `--target` option for the setup-ct generator ([#51](https://github.com/jscutlery/devkit/issues/51)) ([8a52fbb](https://github.com/jscutlery/devkit/commit/8a52fbbcc1fac27ce07e63268b43b1332d167f6b))
+
+
+
 # [0.7.0](https://github.com/jscutlery/devkit/compare/cypress-angular-0.6.0...cypress-angular-0.7.0) (2021-09-26)
 
 
