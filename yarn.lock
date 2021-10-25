@@ -1979,14 +1979,15 @@
   resolved "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-1.0.0.tgz#3fdf5798f0b49e90155896f6291df186eac06c83"
   integrity sha512-9oLAnygRMi8Q5QkYEU4XWK04B+nuoXoxjRvRxgjuChkLZFBja0YPSgdZ7dZtwhncLBcQe/I/E+fLuk5qxcYVJA==
 
-"@jscutlery/semver@^2.8.0":
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-2.10.0.tgz#2f70bf6ba3b539be104fa72c73935e4cfea8b88d"
-  integrity sha512-fRxBcZhPgRZItZ0v/H4jThfa7WFN5+KoD+fNgWl6q+GSwfF5+TQqz3qXnTlJwbBKIVV4pMRmUGtWnfTwXbnqSg==
+"@jscutlery/semver@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-2.11.0.tgz#ffeb36b207b79b8f9afca871fdbf5a14f1eccbf5"
+  integrity sha512-7fX+7rcylqxxCk93E1cO5tc0xudARRkkF6Et89m6IxYoyHyawx81blhT/fRYrShtAtaBBOzupdYvtR7gHtwl9A==
   dependencies:
-    "@nrwl/devkit" "^12.6.4"
-    inquirer "^8.1.1"
-    standard-version "^9.3.0"
+    "@nrwl/devkit" "^13.0.2"
+    inquirer "^8.2.0"
+    rxjs "^7.4.0"
+    standard-version "^9.3.2"
 
 "@jsdevtools/coverage-istanbul-loader@3.0.5":
   version "3.0.5"
@@ -2200,7 +2201,19 @@
     semver "7.3.4"
     tslib "^2.0.0"
 
-"@nrwl/devkit@^12.10.0", "@nrwl/devkit@^12.6.4":
+"@nrwl/devkit@13.0.2", "@nrwl/devkit@^13.0.2":
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.0.2.tgz#7a22bb777894c8688545a36a113fa50e185fc80d"
+  integrity sha512-DLcdxcINC+efSxcMaIqKHo1wp1Fp6tb5QrFJ2bs8jihFazRU+r8N8kgthgp11pCnXXZdXsHOvpfdADM1OQMhlQ==
+  dependencies:
+    "@nrwl/tao" "13.0.2"
+    ejs "^3.1.5"
+    ignore "^5.0.4"
+    rxjs "^6.5.4"
+    semver "7.3.4"
+    tslib "^2.0.0"
+
+"@nrwl/devkit@^12.10.0":
   version "12.10.0"
   resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-12.10.0.tgz#cf4a1dfb1036212185548d68296ac26e498a41c4"
   integrity sha512-we0K5Hn48BXh77SV5GVSPfRJeIHNCVFSn+feLbnKz3G60Tk3wFEEFhDABA8cCfTKDxMESSjZoWBy4ZcVg0EX0g==
@@ -8859,7 +8872,7 @@ inquirer@^7.0.4:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
-inquirer@^8.1.1:
+inquirer@^8.2.0:
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.2.0.tgz#f44f008dd344bbfc4b30031f45d984e034a3ac3a"
   integrity sha512-0crLweprevJ02tTuA6ThpoAERAGyVILC4sS74uib58Xf/zSr1/ZWtmm7D5CI+bSQEaA04f0K7idaHpQbSWgiVQ==
@@ -11093,6 +11106,13 @@ ng-dynamic-component@^8.0.1:
   integrity sha512-Ak25QTYmjNVxyZ6ywqRDDjoqAJheFeK0XoHsomwVjdHSiLoQcGfNNj5z51pqoRGpjdDZMSV+J2gaCbRNBeiy3g==
   dependencies:
     tslib "^2.0.0"
+
+ngx-deploy-npm@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/ngx-deploy-npm/-/ngx-deploy-npm-3.0.2.tgz#0e7be292f1e0a2b6c7970ec05f3e0bffd8769465"
+  integrity sha512-/09vMgVk/PA4AuHuqyYjORRpTTVSrXf3XU1HbdHtrve4+3ijoxWb9Uh/1swt3uprOlXFt+XaA1wLfvy2Lnqvxw==
+  dependencies:
+    "@nrwl/devkit" "13.0.2"
 
 nice-napi@^1.0.2:
   version "1.0.2"
@@ -13723,7 +13743,7 @@ rxjs@6.6.7, rxjs@^6.5.4, rxjs@^6.6.0, rxjs@^6.6.7:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^7.2.0:
+rxjs@^7.2.0, rxjs@^7.4.0:
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.4.0.tgz#a12a44d7eebf016f5ff2441b87f28c9a51cebc68"
   integrity sha512-7SQDi7xeTMCJpqViXh8gL/lebcwlp3d831F05+9B44A4B0WfsEwUQHR64gsH1kvJ+Ep/J9K2+n1hVl1CsGN23w==
@@ -14400,7 +14420,7 @@ stack-utils@^2.0.3:
   dependencies:
     escape-string-regexp "^2.0.0"
 
-standard-version@^9.3.0:
+standard-version@^9.3.2:
   version "9.3.2"
   resolved "https://registry.yarnpkg.com/standard-version/-/standard-version-9.3.2.tgz#28db8c1be66fd2d736f28f7c5de7619e64cd6dab"
   integrity sha512-u1rfKP4o4ew7Yjbfycv80aNMN2feTiqseAhUhrrx2XtdQGmu7gucpziXe68Z4YfHVqlxVEzo4aUA0Iu3VQOTgQ==

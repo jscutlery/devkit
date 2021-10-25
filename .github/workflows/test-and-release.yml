@@ -1,0 +1,51 @@
+name: '@jscutlery/devkit CI'
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12, 14, 16]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn nx run-many --all --target=lint
+      - run: yarn nx run-many --all --target=build
+      - run: yarn nx run-many --all --target=test
+      - run: yarn nx run-many --all --target=e2e --headless
+
+  release:
+    runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/main'
+
+    needs: [test]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup
+      - name: Setup git user to "🤖 JSCutlery Bot"
+        run: git config user.email "-" && git config user.name "🤖 JSCutlery Bot"
+      - name: Setup npm to use NPM_TOKEN env var
+        run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/.npmrc
+      - name: Version
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: yarn nx run-many --all --target=version
+      - name: Tag last-release
+        run: git tag -f last-release
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          force: true
+          tags: true
