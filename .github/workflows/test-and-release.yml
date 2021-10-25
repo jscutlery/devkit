@@ -65,7 +65,11 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./yarn.lock') }}
       - run: yarn --frozen-lockfile --no-progress --non-interactive
-      - run: yarn nx run-many --all --target=version
+      - run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/.npmrc
+      - name: Version
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: yarn nx run-many --all --target=version
       - name: Tag last-release
         run: git tag -f last-release
       - name: Push changes
