@@ -28,6 +28,9 @@
         "jestConfig": "packages/operators/jest.config.js",
         "passWithNoTests": true
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version"
     }
   },
   "tags": []
