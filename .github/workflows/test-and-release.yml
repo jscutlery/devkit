@@ -34,11 +34,9 @@ jobs:
       - uses: ./.github/actions/setup
       - name: Setup git user to "🤖 JSCutlery Bot"
         run: git config user.email "-" && git config user.name "🤖 JSCutlery Bot"
-      - name: Setup npm to use NPM_TOKEN env var
-        run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/.npmrc
       - name: Version
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: yarn nx run-many --all --target=version
       - name: Tag last-release
         run: git tag -f last-release
