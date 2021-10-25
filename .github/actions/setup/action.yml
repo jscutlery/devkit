@@ -25,4 +25,4 @@ runs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./yarn.lock') }}
     - name: yarn install
       shell: bash
-      run: yarn --frozen-lockfile --no-progress --non-interactive
+      run: yarn --frozen-lockfile --no-progress --non-interactive --prefer-offline
