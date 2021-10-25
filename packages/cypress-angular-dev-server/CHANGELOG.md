@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [1.5.0](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.4.0...cypress-angular-dev-server-1.5.0) (2021-10-25)
+
+
+### Bug Fixes
+
+* **cypress-angular-dev-server:** 📦 bump @cypress/webpack-dev-server to 1.7.0 ([fe24fa5](https://github.com/jscutlery/devkit/commit/fe24fa5794e7f6c794f91b798306d6c631f1c3f7))
+* use standalone projects ([8e4b7b7](https://github.com/jscutlery/devkit/commit/8e4b7b7fc5405fa01b6114654211ac45ec9bfd5e))
+
+
+### Features
+
+* **cypress-angular-dev-server:** ✅ grab target options ([88185cd](https://github.com/jscutlery/devkit/commit/88185cd11779609b103c298b8984958f4d2ef7c8)), closes [#51](https://github.com/jscutlery/devkit/issues/51)
+
+
+
 # [1.4.0](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.3.0...cypress-angular-dev-server-1.4.0) (2021-09-26)
 
 
