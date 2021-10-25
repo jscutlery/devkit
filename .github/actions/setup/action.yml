@@ -26,9 +26,3 @@ runs:
     - name: yarn install
       shell: bash
       run: yarn --frozen-lockfile --no-progress --non-interactive
-    - name: Setup git user to "🤖 JSCutlery Bot"
-      shell: bash
-      run: git config user.email "-" && git config user.name "🤖 JSCutlery Bot"
-    - name: Setup NPM to use NPM_TOKEN env var
-      shell: bash
-      run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/.npmrc
