@@ -43,20 +43,16 @@ jobs:
 
     needs: [test]
 
-    strategy:
-      matrix:
-        node-version: [16]
-
     steps:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           fetch-depth: 0
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16
       - name: Cache node modules
         uses: actions/cache@v2
         env:
@@ -65,7 +61,10 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./yarn.lock') }}
       - run: yarn --frozen-lockfile --no-progress --non-interactive
-      - run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/.npmrc
+      - name: Setup git user and email to "🤖 JSCutlery Bot"
+        run: git config user.email "-" && git config user.name "🤖 JSCutlery Bot"
+      - name: Setup NPM to use NPM_TOKEN env var
+        run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/.npmrc
       - name: Version
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
