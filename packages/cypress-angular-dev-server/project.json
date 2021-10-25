@@ -25,14 +25,17 @@
         "tsConfig": "packages/cypress-angular-dev-server/tsconfig.lib.json",
         "packageJson": "packages/cypress-angular-dev-server/package.json",
         "main": "packages/cypress-angular-dev-server/src/index.ts",
-        "assets": ["packages/cypress-angular-dev-server/*.md"]
+        "assets": ["LICENSE", "packages/cypress-angular-dev-server/*.md"]
       },
       "outputs": ["{options.outputPath}"]
     },
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "postTargets": ["cypress-angular-dev-server:build", "cypress-angular-dev-server:publish"]
+        "postTargets": [
+          "cypress-angular-dev-server:build",
+          "cypress-angular-dev-server:publish"
+        ]
       }
     },
     "publish": {
