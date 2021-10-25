@@ -1,1 +1,1 @@
-export * from './lib/suspensify';
+export { suspensify } from './lib/suspensify';
