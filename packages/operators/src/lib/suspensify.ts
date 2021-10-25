@@ -1,4 +1,9 @@
-import { MonoTypeOperatorFunction, Observable, OperatorFunction, ReplaySubject } from 'rxjs';
+import {
+  MonoTypeOperatorFunction,
+  Observable,
+  OperatorFunction,
+  ReplaySubject,
+} from 'rxjs';
 import { debounce, map, materialize, scan, startWith } from 'rxjs/operators';
 
 export interface Suspense<T> {
@@ -9,6 +14,13 @@ export interface Suspense<T> {
   pending: boolean;
 }
 
+/**
+ * @description creates a derivated state from the source observable.
+ *
+ * @example source$.pipe(suspensify())
+ *
+ * @returns Observable<Suspense<T>>
+ */
 export function suspensify<T, R = Suspense<T>>(): OperatorFunction<T, R>;
 export function suspensify<T, R>(
   projector: (data: Suspense<T>) => R
