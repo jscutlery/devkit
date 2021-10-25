@@ -33,7 +33,13 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "syncVersions": false
+        "postTargets": ["cypress-harness:build", "cypress-harness:publish"]
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
       }
     }
   },

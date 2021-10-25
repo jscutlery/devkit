@@ -32,7 +32,13 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "syncVersions": false
+        "postTargets": ["cypress-angular-dev-server:build", "cypress-angular-dev-server:publish"]
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
       }
     }
   },
