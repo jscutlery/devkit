@@ -1,0 +1,36 @@
+name: Setup
+description: Setup Node.js, cache and install dependencies
+inputs:
+  node-version:
+    description: Node.js version
+    required: false
+    default: '16'
+runs:
+  using: composite
+  steps:
+    - name: Checkout all commits
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+        repository: ${{ github.event.pull_request.head.repo.full_name }}
+        fetch-depth: 0
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16
+    - name: Cache node modules
+      uses: actions/cache@v2
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./yarn.lock') }}
+    - name: yarn install
+      shell: bash
+      run: yarn --frozen-lockfile --no-progress --non-interactive
+    - name: Setup git user to "🤖 JSCutlery Bot"
+      shell: bash
+      run: git config user.email "-" && git config user.name "🤖 JSCutlery Bot"
+    - name: Setup NPM to use NPM_TOKEN env var
+      shell: bash
+      run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/.npmrc
