@@ -135,4 +135,4 @@ Also, `materialized` doesn't trigger a `pending` event so the observable doesn't
 
 # Roadmap
 
-- [ ] `mergeSuspense` function should merge multiple sources in one state that contains the global state of all sources and each one of them.
+1. `mergeSuspense` function should merge multiple sources in one state that contains the global state of all sources and each one of them.
