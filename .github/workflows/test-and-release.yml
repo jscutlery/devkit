@@ -37,8 +37,9 @@ jobs:
       - name: Version
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        # Use npx instead of yarn because yarn seems to override some NPM_* env vars
-        # that break npm publish authentication.
+        # Use npx instead of yarn because yarn automagically sets NPM_* environment variables
+        # like NPM_CONFIG_REGISTRY so npm publish ends up ignoring the .npmrc file
+        # which is set up by `setup-node` action.
         run: npx nx run-many --all --target=version
       - name: Tag last-release
         run: git tag -f last-release
