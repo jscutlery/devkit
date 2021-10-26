@@ -11,9 +11,9 @@ This package regroups a couple of RxJS operators meant to simplify some common p
     - [With Angular](#with-angular)
     - [With `@rx-angular/state`](#with-rx-angularstate)
   - [Alternatives](#alternatives)
-    - [F.A.Q.](#faq)
-      - [How does it defer from `materialize`?](#how-does-it-defer-from-materialize)
-  - [Roadmap](#roadmap)
+  - [F.A.Q.](#faq)
+    - [How does it defer from `materialize`?](#how-does-it-defer-from-materialize)
+- [Roadmap](#roadmap)
 
 # Installation
 
@@ -126,13 +126,13 @@ export class MyComponent {
 
 - [@rx-angular/state's rxLet](https://github.com/rx-angular/rx-angular/blob/master/libs/template/docs/api/let-directive.md#using-the-template-binding)
 
-### F.A.Q.
+## F.A.Q.
 
-#### How does it defer from `materialize`?
+### How does it defer from `materialize`?
 
 `materialize` doesn't produce a derived state. In fact, the `C` (complete) event doesn't contain the last emitted value.
 Also, `materialized` doesn't trigger a `pending` event so the observable doesn't emit anything before the first value is emitted or an error occurs or the source completes.
 
-## Roadmap
+# Roadmap
 
 - [ ] `mergeSuspense` function should merge multiple sources in one state that contains the global state of all sources and each one of them.
