@@ -17,10 +17,10 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn nx run-many --all --target=lint
-      - run: yarn nx run-many --all --target=build
-      - run: yarn nx run-many --all --target=test
-      - run: yarn nx run-many --all --target=e2e --headless
+      - run: yarn nx affected --base=last-release --target=lint
+      - run: yarn nx affected --base=last-release --target=build
+      - run: yarn nx affected --base=last-release --target=test
+      - run: yarn nx affected --base=last-release --target=e2e --headless
 
   release:
     runs-on: ubuntu-latest
@@ -40,7 +40,7 @@ jobs:
         # Use npx instead of yarn because yarn automagically sets NPM_* environment variables
         # like NPM_CONFIG_REGISTRY so npm publish ends up ignoring the .npmrc file
         # which is set up by `setup-node` action.
-        run: npx nx run-many --all --target=version
+        run: npx nx affected --base=last-release --target=version
       - name: Tag last-release
         run: git tag -f last-release
       - name: Push changes
