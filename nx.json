@@ -26,7 +26,6 @@
     "appsDir": "packages",
     "libsDir": "packages"
   },
-  "projects": {},
   "targetDependencies": {
     "build": [
       {
@@ -34,5 +33,23 @@
         "projects": "dependencies"
       }
     ]
-  }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/web"
+  },
+  "generators": {
+    "@nrwl/angular:application": {
+      "style": "css",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "css",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "css"
+    }
+  },
+  "defaultProject": "cypress-harness"
 }
