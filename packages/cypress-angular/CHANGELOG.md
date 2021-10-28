@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.8.2](https://github.com/jscutlery/devkit/compare/cypress-angular-0.8.1...cypress-angular-0.8.2) (2021-10-28)
+
+
+### Bug Fixes
+
+* **cypress-angular:** 🐞 bump @nrwl/cypress ([6f051f7](https://github.com/jscutlery/devkit/commit/6f051f7aed1537badf27e989256bc4e61e62e4a8))
+* **cypress-angular:** 🐞 bump cypress ([6e2d0c3](https://github.com/jscutlery/devkit/commit/6e2d0c3cb48e68ef0bd58d714ec3f38a5087c9de))
+
+
+
 ## [0.8.1](https://github.com/jscutlery/test-utils/compare/cypress-angular-0.8.0...cypress-angular-0.8.1) (2021-10-26)
 
 
