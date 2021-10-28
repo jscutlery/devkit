@@ -34,7 +34,7 @@ npx ngcc
 ng run my-project:ct
 ```
 
-Using Nx:
+Using [Nx](https://nx.dev/):
 
 ```sh
 npm i -D @jscutlery/cypress-angular
