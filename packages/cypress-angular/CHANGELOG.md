@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.8.4](https://github.com/jscutlery/test-utils/compare/cypress-angular-0.8.3...cypress-angular-0.8.4) (2021-11-02)
+
+
+### Bug Fixes
+
+* **cypress-angular-dev-server:** fixes error when using per project configuration files ([46873bb](https://github.com/jscutlery/test-utils/commit/46873bbbd2eda58d644bf333181e267b87373d13)), closes [#117](https://github.com/jscutlery/test-utils/issues/117)
+
+
+
 ## [0.8.3](https://github.com/jscutlery/devkit/compare/cypress-angular-0.8.2...cypress-angular-0.8.3) (2021-10-28)
 
 
