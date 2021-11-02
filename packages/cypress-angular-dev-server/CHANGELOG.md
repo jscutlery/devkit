@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.5.3](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.5.2...cypress-angular-dev-server-1.5.3) (2021-11-02)
+
+
+### Bug Fixes
+
+* **cypress-angular-dev-server:** fixes error when using per project configuration files ([46873bb](https://github.com/jscutlery/test-utils/commit/46873bbbd2eda58d644bf333181e267b87373d13)), closes [#117](https://github.com/jscutlery/test-utils/issues/117)
+
+
+
 ## [1.5.1](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.5.0...cypress-angular-dev-server-1.5.1) (2021-10-26)
 
 
