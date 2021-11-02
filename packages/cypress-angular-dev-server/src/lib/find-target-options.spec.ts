@@ -5,10 +5,14 @@ import { describe, expect, it } from '@jest/globals';
 import { findTargetOptions } from './find-target-options';
 
 import * as fs from 'fs';
+import { normalize } from 'path';
 
 jest.mock('fs');
 
 describe(findTargetOptions.name, () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   it('should throw if no workspace def found', () => {
     (fs.existsSync as jest.Mock).mockReturnValue(false);
     expect(() => findTargetOptions('./', 'test:build')).toThrow();
@@ -158,6 +162,32 @@ describe(findTargetOptions.name, () => {
     expect(findTargetOptions('./', 'test:build:production')).toEqual({
       value: 42,
     });
+  });
+
+  it('should read from project.json file with configuration for standalone project', () => {
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    (fs.readFileSync as jest.Mock).mockReturnValueOnce(`{
+      "projects": {
+        "test": "libs/test"
+      }
+    }`);
+    (fs.readFileSync as jest.Mock).mockReturnValueOnce(`{
+      "targets": {
+        "build": {
+          "configurations": {
+            "production": {
+              "value": 42
+            }
+          }
+        }
+      }
+    }`);
+    findTargetOptions('./', 'test:build:production');
+    expect(fs.readFileSync).toHaveBeenNthCalledWith(
+      2,
+      expect.stringContaining(normalize('libs/test/project.json')),
+      expect.anything()
+    );
   });
 
   it.todo('should recursively find workspace def');

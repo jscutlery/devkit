@@ -53,9 +53,12 @@ function _findOptions({
   /* Standalone project configuration case: */
   if (typeof workspaceDef?.projects?.[project] === 'string') {
     const standaloneDef = JSON.parse(
-      readFileSync(resolve(root, workspaceDef.projects[project]), {
-        encoding: 'utf-8',
-      })
+      readFileSync(
+        resolve(root, `${workspaceDef.projects[project]}/project.json`),
+        {
+          encoding: 'utf-8',
+        }
+      )
     );
 
     if (configuration) {
