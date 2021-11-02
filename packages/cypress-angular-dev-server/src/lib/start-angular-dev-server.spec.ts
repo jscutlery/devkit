@@ -5,7 +5,7 @@ import {
 import { describe, expect, it } from '@jest/globals';
 import { AngularWebpackPlugin } from '@ngtools/webpack';
 import { findTargetOptions } from './find-target-options';
-import { resolve } from 'path';
+import { normalize, resolve } from 'path';
 
 import { startAngularDevServer } from './start-angular-dev-server';
 
@@ -68,8 +68,8 @@ describe(startAngularDevServer.name, () => {
         expect.objectContaining({
           specs: [],
           config: expect.objectContaining({
-            configFile: expect.stringMatching(
-              /__tests__\/fixtures\/demo\/cypress.json$/
+            configFile: expect.stringContaining(
+              normalize('__tests__/fixtures/demo/cypress.json')
             ),
             version: '7.1.0',
             testingType: 'component',
@@ -81,7 +81,9 @@ describe(startAngularDevServer.name, () => {
         expect.arrayContaining([expect.any(AngularWebpackPlugin)])
       );
       /* Check config has rules. */
-      expect((webpackConfig as any).module.rules.length).toBeGreaterThanOrEqual(1);
+      expect((webpackConfig as any).module.rules.length).toBeGreaterThanOrEqual(
+        1
+      );
     });
   });
 
@@ -149,7 +151,7 @@ describe(startAngularDevServer.name, () => {
       );
 
       expect(plugin.options.tsconfig).toMatch(
-        /__tests__\/fixtures\/demo\/tsconfig.cypress.json$/
+        normalize('__tests__/fixtures/demo/tsconfig.cypress.json')
       );
     });
   });

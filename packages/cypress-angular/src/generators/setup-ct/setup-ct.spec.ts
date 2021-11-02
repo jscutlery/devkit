@@ -5,6 +5,7 @@ import {
   writeJson,
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { normalize } from 'path';
 
 import { SetupCtGeneratorSchema } from './schema';
 import { setupCtGenerator } from './setup-ct';
@@ -76,7 +77,7 @@ describe('setup-ct generator', () => {
       expect(tree.exists(tsconfigPath)).toBeTruthy();
       expect(readJson(tree, tsconfigPath)).toEqual(
         expect.objectContaining({
-          extends: '../../tsconfig.base.json',
+          extends: normalize('../../tsconfig.base.json'),
           compilerOptions: {
             allowSyntheticDefaultImports: true,
             types: ['cypress'],
@@ -93,9 +94,9 @@ describe('setup-ct generator', () => {
         expect.objectContaining({
           executor: '@nrwl/cypress:cypress',
           options: {
-            cypressConfig: 'libs/my-lib/cypress.json',
+            cypressConfig: normalize('libs/my-lib/cypress.json'),
             testingType: 'component',
-            tsConfig: 'libs/my-lib/tsconfig.cypress.json',
+            tsConfig: normalize('libs/my-lib/tsconfig.cypress.json'),
           },
         })
       );
@@ -116,9 +117,9 @@ describe('setup-ct generator', () => {
         expect.objectContaining({
           builder: '@nrwl/cypress:cypress',
           options: {
-            cypressConfig: 'libs/my-lib/cypress.json',
+            cypressConfig: normalize('libs/my-lib/cypress.json'),
             testingType: 'component',
-            tsConfig: 'libs/my-lib/tsconfig.cypress.json',
+            tsConfig: normalize('libs/my-lib/tsconfig.cypress.json'),
           },
         })
       );
@@ -126,11 +127,9 @@ describe('setup-ct generator', () => {
 
     it('should extend Angular CLI tsconfig.app.json', async () => {
       await setupLib({ cli: 'ng' });
-      expect(
-        readJson(tree, 'libs/my-lib/tsconfig.cypress.json')
-      ).toEqual(
+      expect(readJson(tree, 'libs/my-lib/tsconfig.cypress.json')).toEqual(
         expect.objectContaining({
-          extends: './tsconfig.app.json'
+          extends: './tsconfig.app.json',
         })
       );
     });
@@ -151,8 +150,8 @@ describe('setup-ct generator', () => {
 
     cli === 'nx'
       ? writeJson(tree, 'libs/my-lib/tsconfig.json', {})
-      /* Angular CLI tsconfig app configuration: */
-      : writeJson(tree, 'libs/my-lib/tsconfig.app.json', {});
+      : /* Angular CLI tsconfig app configuration: */
+        writeJson(tree, 'libs/my-lib/tsconfig.app.json', {});
 
     await setupCtGenerator(tree, {
       project: 'my-lib',
