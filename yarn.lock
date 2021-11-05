@@ -2361,18 +2361,6 @@
     webpack-node-externals "^3.0.0"
     yargs-parser "20.0.0"
 
-"@nrwl/devkit@13.0.2":
-  version "13.0.2"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.0.2.tgz#7a22bb777894c8688545a36a113fa50e185fc80d"
-  integrity sha512-DLcdxcINC+efSxcMaIqKHo1wp1Fp6tb5QrFJ2bs8jihFazRU+r8N8kgthgp11pCnXXZdXsHOvpfdADM1OQMhlQ==
-  dependencies:
-    "@nrwl/tao" "13.0.2"
-    ejs "^3.1.5"
-    ignore "^5.0.4"
-    rxjs "^6.5.4"
-    semver "7.3.4"
-    tslib "^2.0.0"
-
 "@nrwl/devkit@13.1.0":
   version "13.1.0"
   resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.1.0.tgz#e84fc3924f8b3eb0c8bb916986908d91bbd74c0a"
@@ -2385,24 +2373,24 @@
     semver "7.3.4"
     tslib "^2.0.0"
 
-"@nrwl/devkit@^12.10.0":
-  version "12.10.0"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-12.10.0.tgz#cf4a1dfb1036212185548d68296ac26e498a41c4"
-  integrity sha512-we0K5Hn48BXh77SV5GVSPfRJeIHNCVFSn+feLbnKz3G60Tk3wFEEFhDABA8cCfTKDxMESSjZoWBy4ZcVg0EX0g==
+"@nrwl/devkit@13.1.3", "@nrwl/devkit@^13.0.2":
+  version "13.1.3"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.1.3.tgz#8b119587984371a4caf0b3601a7481e04bac65a3"
+  integrity sha512-TAAsZJvVc/obeH0rZKY6miVhyM2GHGb8qIWp9MAIdLlXf4VDcNC7rxwb5OrGVSwuTTjqGYBGPUx0yEogOOJthA==
   dependencies:
-    "@nrwl/tao" "12.10.0"
+    "@nrwl/tao" "13.1.3"
     ejs "^3.1.5"
     ignore "^5.0.4"
     rxjs "^6.5.4"
     semver "7.3.4"
     tslib "^2.0.0"
 
-"@nrwl/devkit@^13.0.2":
-  version "13.1.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.1.3.tgz#8b119587984371a4caf0b3601a7481e04bac65a3"
-  integrity sha512-TAAsZJvVc/obeH0rZKY6miVhyM2GHGb8qIWp9MAIdLlXf4VDcNC7rxwb5OrGVSwuTTjqGYBGPUx0yEogOOJthA==
+"@nrwl/devkit@^12.10.0":
+  version "12.10.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-12.10.0.tgz#cf4a1dfb1036212185548d68296ac26e498a41c4"
+  integrity sha512-we0K5Hn48BXh77SV5GVSPfRJeIHNCVFSn+feLbnKz3G60Tk3wFEEFhDABA8cCfTKDxMESSjZoWBy4ZcVg0EX0g==
   dependencies:
-    "@nrwl/tao" "13.1.3"
+    "@nrwl/tao" "12.10.0"
     ejs "^3.1.5"
     ignore "^5.0.4"
     rxjs "^6.5.4"
@@ -2516,23 +2504,6 @@
     fs-extra "^9.1.0"
     jsonc-parser "3.0.0"
     nx "12.10.0"
-    rxjs "^6.5.4"
-    rxjs-for-await "0.0.2"
-    semver "7.3.4"
-    tmp "~0.2.1"
-    tslib "^2.0.0"
-    yargs-parser "20.0.0"
-
-"@nrwl/tao@13.0.2":
-  version "13.0.2"
-  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-13.0.2.tgz#43c428ae1e0938ccb73ed46aaa1b9f6fd8f98b96"
-  integrity sha512-OgcpJHYqqLzmTNxbhxzW3TCwG8EVaB1wiWZiXx+VZK7C6p/nPaJfyodxOiOQu8Uhp4eGjLBvxc6jXIytKEkyqA==
-  dependencies:
-    chalk "4.1.0"
-    enquirer "~2.3.6"
-    fs-extra "^9.1.0"
-    jsonc-parser "3.0.0"
-    nx "13.0.2"
     rxjs "^6.5.4"
     rxjs-for-await "0.0.2"
     semver "7.3.4"
@@ -11343,11 +11314,11 @@ ng-dynamic-component@^8.0.1:
     tslib "^2.0.0"
 
 ngx-deploy-npm@^3.0.2:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/ngx-deploy-npm/-/ngx-deploy-npm-3.0.4.tgz#96be9576782845e15f98f8e21540b8b48420e9a3"
-  integrity sha512-EJrGn34X8J0cSCc0ZojyCQKvIgD/4GA2RaYAsTSctsev/CNnyAwIRz0giGpbS3CeKcAcALHwW6PBLN3iYK5ZfQ==
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/ngx-deploy-npm/-/ngx-deploy-npm-3.0.5.tgz#e2423ebde43709dc7776b9c388bb45c04c3a874a"
+  integrity sha512-n6G45aLe9AYQeL5hOHMA7g9HLn+XLQ7i8G+a5+CcnFysvUMCZcDAgM7XWCk3z8TeIMntNBnzIL5F6pTZaGELmg==
   dependencies:
-    "@nrwl/devkit" "13.0.2"
+    "@nrwl/devkit" "13.1.3"
 
 nice-napi@^1.0.2:
   version "1.0.2"
@@ -11524,13 +11495,6 @@ nx@12.10.0:
   version "12.10.0"
   resolved "https://registry.yarnpkg.com/nx/-/nx-12.10.0.tgz#a4e8fba7254529de69fe54e5b4b007e8a432a3fb"
   integrity sha512-LpCfZCWsVEtmD2SI1j2KRaw1uIyn4DJ3eRzsjnDYitbq38aORpkvYO+L0zVMZRNDSYSRGTsuj0nHCS3OOxK/Cg==
-  dependencies:
-    "@nrwl/cli" "*"
-
-nx@13.0.2:
-  version "13.0.2"
-  resolved "https://registry.yarnpkg.com/nx/-/nx-13.0.2.tgz#257cdf7899dc46dec683814fcf28008db47849d6"
-  integrity sha512-8P+UWM1q6gMNZwAcCABNMl4IpHqYqWbC2HdCXAL10Y3oXmkDk0KcCp70UVuiVPouj+zSGnbqn9hc+8TizVukGw==
   dependencies:
     "@nrwl/cli" "*"
 
