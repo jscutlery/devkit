@@ -13,6 +13,7 @@ import type {
   AssetPattern,
   ExtraEntryPoint,
   IndexUnion,
+  StylePreprocessorOptions,
 } from '@angular-devkit/build-angular/src/browser/schema';
 import type { Configuration } from 'webpack';
 import type { WebpackConfigOptions } from '@angular-devkit/build-angular/src/utils/build-options';
@@ -26,14 +27,15 @@ function getCompilerConfig(wco: WebpackConfigOptions) {
 }
 
 export async function createAngularWebpackConfig(config: {
+  workspaceRoot: string;
   projectRoot: string;
   sourceRoot: string;
   tsConfig: string;
   buildOptions?: Record<string, unknown>;
 }): Promise<Configuration> {
   const projectRoot = normalize(config.projectRoot);
-  const workspaceRoot = projectRoot;
   const sourceRoot = normalize(config.sourceRoot);
+  const workspaceRoot = normalize(config.workspaceRoot ?? '');
   const tsConfig = normalize(config.tsConfig);
 
   const buildOptions = config.buildOptions ?? {};
@@ -41,13 +43,15 @@ export async function createAngularWebpackConfig(config: {
   const styles = (buildOptions.styles as ExtraEntryPoint[]) ?? [];
   const scripts = (buildOptions.scripts as ExtraEntryPoint[]) ?? [];
   const assets = (buildOptions.assets as AssetPattern[]) ?? [];
+  const stylePreprocessorOptions =
+    buildOptions?.stylePreprocessorOptions as StylePreprocessorOptions;
   const main = (buildOptions.main as string) ?? null;
   const index = (buildOptions.index as IndexUnion) ?? null;
 
   const normalizedOptions = normalizeBrowserSchema(
-    workspaceRoot,
     projectRoot,
-    sourceRoot,
+    projectRoot,
+    workspaceRoot ?? sourceRoot,
     {
       tsConfig: getSystemPath(resolve(projectRoot, tsConfig)),
       outputPath: '',
@@ -59,18 +63,26 @@ export async function createAngularWebpackConfig(config: {
       styles,
       polyfills,
       assets,
+      stylePreprocessorOptions,
     }
   );
 
   const webpackConfig = await generateWebpackConfig(
-    getSystemPath(workspaceRoot),
+    getSystemPath(projectRoot),
     getSystemPath(projectRoot),
     getSystemPath(sourceRoot),
     normalizedOptions,
     (wco) => [
       getCommonConfig(wco),
       getBrowserConfig(wco),
-      getStylesConfig(wco),
+      getStylesConfig(
+        config.workspaceRoot
+          ? {
+              ...wco,
+              root: config.workspaceRoot,
+            }
+          : wco
+      ),
       getStatsConfig(wco),
       getCompilerConfig(wco),
     ],

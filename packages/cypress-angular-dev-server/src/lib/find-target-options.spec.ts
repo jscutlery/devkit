@@ -1,194 +1,112 @@
 /* Import jest functions manually as they conflict with cypress
  * because @cypress/webpack-dev-server references cypress types */
 import { describe, expect, it } from '@jest/globals';
-
 import { findTargetOptions } from './find-target-options';
-
-import * as fs from 'fs';
-import { normalize } from 'path';
-
-jest.mock('fs');
+import { WorkspaceDefinition } from './get-workspace-definition';
+import { Target } from '@angular-devkit/architect';
 
 describe(findTargetOptions.name, () => {
+  const processedTarget: Target = {
+    project: 'test-example',
+    target: 'build',
+    configuration: 'prod',
+  };
   afterEach(() => {
     jest.clearAllMocks();
   });
-  it('should throw if no workspace def found', () => {
-    (fs.existsSync as jest.Mock).mockReturnValue(false);
-    expect(() => findTargetOptions('./', 'test:build')).toThrow();
-  });
 
-  it('should throw if workspace def is not JSON compliant', () => {
-    (fs.existsSync as jest.Mock).mockReturnValue(false);
-    (fs.readFileSync as jest.Mock).mockReturnValue(undefined);
-    expect(() => findTargetOptions('./', 'test:build')).toThrow();
-  });
-
-  it('should return undefined if no options found in workspace def', () => {
-    (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fs.readFileSync as jest.Mock).mockReturnValue('{ "version": 0 }');
-    expect(findTargetOptions('./', 'test:build')).toBeUndefined();
+  it('should return undefined when no options found in workspace def', () => {
+    const workspaceDef: WorkspaceDefinition = {
+      root: '',
+      projects: {},
+    };
+    expect(findTargetOptions(workspaceDef, processedTarget)).toBeUndefined();
   });
 
   it('should find target options', () => {
-    (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fs.readFileSync as jest.Mock).mockReturnValue(`{
-      "projects": {
-        "test": {
-          "targets": {
-            "build": {
-              "options": {
-                "value": 42
-              }
-            }
-          }
-        }
-      }
-    }
-  `);
-
-    expect(findTargetOptions('./', 'test:build')).toEqual({ value: 42 });
+    const workspaceDef: WorkspaceDefinition = {
+      root: '',
+      projects: {
+        [processedTarget.project]: {
+          root: '',
+          targets: {
+            [processedTarget.target]: {
+              builder: '',
+              options: {
+                value: 42,
+              },
+            },
+          },
+        },
+      },
+    };
+    expect(findTargetOptions(workspaceDef, processedTarget)).toEqual({
+      value: 42,
+    });
   });
-
   it('should find target options with configuration', () => {
-    (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fs.readFileSync as jest.Mock).mockReturnValue(`{
-      "projects": {
-        "test": {
-          "targets": {
-            "build": {
-              "configurations": {
-                "production": {
-                  "value": 42
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `);
-
-    expect(findTargetOptions('./', 'test:build:production')).toEqual({
+    const workspaceDef: WorkspaceDefinition = {
+      root: '',
+      projects: {
+        [processedTarget.project]: {
+          root: '',
+          targets: {
+            [processedTarget.target]: {
+              builder: '',
+              configurations: {
+                [processedTarget.configuration]: {
+                  value: 42,
+                },
+              },
+            },
+          },
+        },
+      },
+    };
+    expect(findTargetOptions(workspaceDef, processedTarget)).toEqual({
       value: 42,
     });
   });
-
   it('should find target for Angular CLI projects', () => {
-    (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fs.readFileSync as jest.Mock).mockReturnValue(`{
-      "projects": {
-        "test": {
-          "architect": {
-            "build": {
-              "options": {
-                "value": 42
-              }
-            }
-          }
-        }
-      }
-    }`);
-
-    expect(findTargetOptions('./', 'test:build')).toEqual({
+    const workspaceDef: WorkspaceDefinition = {
+      root: '',
+      projects: {
+        [processedTarget.project]: {
+          root: '',
+          architect: {
+            [processedTarget.target]: {
+              options: {
+                value: 42,
+              },
+            },
+          },
+        },
+      },
+    };
+    expect(findTargetOptions(workspaceDef, processedTarget)).toEqual({
       value: 42,
     });
   });
-
   it('should find target with configuration for Angular CLI projects', () => {
-    (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fs.readFileSync as jest.Mock).mockReturnValue(`{
-      "projects": {
-        "test": {
-          "architect": {
-            "build": {
-              "configurations": {
-                "production": {
-                  "value": 42
-                }
-              }
-            }
-          }
-        }
-      }
-    }`);
-
-    expect(findTargetOptions('./', 'test:build:production')).toEqual({
+    const workspaceDef: WorkspaceDefinition = {
+      root: '',
+      projects: {
+        [processedTarget.project]: {
+          root: '',
+          architect: {
+            [processedTarget.target]: {
+              configurations: {
+                [processedTarget.configuration]: {
+                  value: 42,
+                },
+              },
+            },
+          },
+        },
+      },
+    };
+    expect(findTargetOptions(workspaceDef, processedTarget)).toEqual({
       value: 42,
     });
   });
-
-  it('should find target options for standalone project', () => {
-    (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fs.readFileSync as jest.Mock).mockReturnValueOnce(`{
-      "projects": {
-        "test": "libs/test"
-      }
-    }`);
-    (fs.readFileSync as jest.Mock).mockReturnValueOnce(`{
-      "targets": {
-        "build": {
-          "options": {
-            "value": 42
-          }
-        }
-      }
-    }`);
-
-    expect(findTargetOptions('./', 'test:build')).toEqual({
-      value: 42,
-    });
-  });
-
-  it('should find target options with configuration for standalone project', () => {
-    (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fs.readFileSync as jest.Mock).mockReturnValueOnce(`{
-      "projects": {
-        "test": "libs/test"
-      }
-    }`);
-    (fs.readFileSync as jest.Mock).mockReturnValueOnce(`{
-      "targets": {
-        "build": {
-          "configurations": {
-            "production": {
-              "value": 42
-            }
-          }
-        }
-      }
-    }`);
-
-    expect(findTargetOptions('./', 'test:build:production')).toEqual({
-      value: 42,
-    });
-  });
-
-  it('should read from project.json file with configuration for standalone project', () => {
-    (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fs.readFileSync as jest.Mock).mockReturnValueOnce(`{
-      "projects": {
-        "test": "libs/test"
-      }
-    }`);
-    (fs.readFileSync as jest.Mock).mockReturnValueOnce(`{
-      "targets": {
-        "build": {
-          "configurations": {
-            "production": {
-              "value": 42
-            }
-          }
-        }
-      }
-    }`);
-    findTargetOptions('./', 'test:build:production');
-    expect(fs.readFileSync).toHaveBeenNthCalledWith(
-      2,
-      expect.stringContaining(normalize('libs/test/project.json')),
-      expect.anything()
-    );
-  });
-
-  it.todo('should recursively find workspace def');
 });
