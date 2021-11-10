@@ -35,7 +35,7 @@ export async function createAngularWebpackConfig(config: {
 }): Promise<Configuration> {
   const projectRoot = normalize(config.projectRoot);
   const sourceRoot = normalize(config.sourceRoot);
-  const workspaceRoot = normalize(config.workspaceRoot ?? '');
+  const workspaceRoot = normalize(config.workspaceRoot);
   const tsConfig = normalize(config.tsConfig);
 
   const buildOptions = config.buildOptions ?? {};
@@ -49,9 +49,9 @@ export async function createAngularWebpackConfig(config: {
   const index = (buildOptions.index as IndexUnion) ?? null;
 
   const normalizedOptions = normalizeBrowserSchema(
+    workspaceRoot,
     projectRoot,
-    projectRoot,
-    workspaceRoot ?? sourceRoot,
+    workspaceRoot,
     {
       tsConfig: getSystemPath(resolve(projectRoot, tsConfig)),
       outputPath: '',
@@ -68,21 +68,17 @@ export async function createAngularWebpackConfig(config: {
   );
 
   const webpackConfig = await generateWebpackConfig(
-    getSystemPath(projectRoot),
+    getSystemPath(workspaceRoot),
     getSystemPath(projectRoot),
     getSystemPath(sourceRoot),
     normalizedOptions,
     (wco) => [
       getCommonConfig(wco),
       getBrowserConfig(wco),
-      getStylesConfig(
-        config.workspaceRoot
-          ? {
-              ...wco,
-              root: config.workspaceRoot,
-            }
-          : wco
-      ),
+      getStylesConfig({
+        ...wco,
+        root: config.workspaceRoot,
+      }),
       getStatsConfig(wco),
       getCompilerConfig(wco),
     ],

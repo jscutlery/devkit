@@ -1,16 +1,14 @@
 /// <reference types="cypress"/>
 import { startDevServer } from '@cypress/webpack-dev-server';
 import { merge } from 'webpack-merge';
-import { targetFromTargetString } from '@angular-devkit/architect';
 import type { Configuration } from 'webpack';
 import type { ResolvedDevServerConfig } from '@cypress/webpack-dev-server';
 import type { WebpackConfigurationWithDevServer } from '@cypress/webpack-dev-server/dist/startServer';
 import { createAngularWebpackConfig } from './create-angular-webpack-config';
 import { findTargetOptions } from './find-target-options';
-import {
-  getWorkspaceDefinition,
-  WorkspaceDefinition,
-} from './get-workspace-definition';
+import { getWorkspaceConfiguration } from './get-workspace-configuration';
+import { parseTargetString } from '@nrwl/devkit';
+import { getWorkspaceRoot } from './get-workspace-root';
 
 export interface CypressAngularDevServerOptions {
   /**
@@ -47,14 +45,14 @@ export async function startAngularDevServer({
   target,
 }: CypressAngularDevServerOptions): Promise<ResolvedDevServerConfig> {
   let buildOptions: Record<string, unknown> | undefined;
-  let workspaceDefinition: WorkspaceDefinition;
+  const workspaceRoot = getWorkspaceRoot(process.cwd());
+  const workspaceDefinition = getWorkspaceConfiguration(workspaceRoot);
   if (target) {
-    const processedTarget = targetFromTargetString(target);
-    workspaceDefinition = getWorkspaceDefinition(process.cwd());
+    const processedTarget = parseTargetString(target);
     buildOptions = findTargetOptions(workspaceDefinition, processedTarget);
   }
   const angularWebpackConfig = await createAngularWebpackConfig({
-    workspaceRoot: workspaceDefinition?.root,
+    workspaceRoot,
     projectRoot: options.config.projectRoot,
     sourceRoot: options.config.componentFolder as string,
     tsConfig,
