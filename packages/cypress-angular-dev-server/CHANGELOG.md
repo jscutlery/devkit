@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [1.6.0](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.5.3...cypress-angular-dev-server-1.6.0) (2021-11-16)
+
+
+### Bug Fixes
+
+* **cypress-angular-dev-server:** fixes error when using per project configuration files ([1020d6d](https://github.com/jscutlery/devkit/commit/1020d6dc02a8a51ea0a2534ec9d9b86bf14cff23)), closes [#117](https://github.com/jscutlery/devkit/issues/117)
+
+
+### Features
+
+* **cypress-angular-dev-server:** allow stylePreprocessorOptions to be included ([a0e75d0](https://github.com/jscutlery/devkit/commit/a0e75d038cf60f7e13236db55aa2b59ea8c1beaf))
+* **cypress-angular-dev-server:** updated to use nx imports and to always use workspace root ([1665df6](https://github.com/jscutlery/devkit/commit/1665df62a1b27dad682db60864e1d9a604432f21))
+
+
+
 ## [1.5.3](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.5.2...cypress-angular-dev-server-1.5.3) (2021-11-02)
 
 
