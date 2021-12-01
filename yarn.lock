@@ -2338,17 +2338,17 @@
     semver "7.3.4"
     tslib "^2.0.0"
 
-"@nrwl/devkit@13.1.3":
-  version "13.1.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.1.3.tgz#8b119587984371a4caf0b3601a7481e04bac65a3"
-  integrity sha512-TAAsZJvVc/obeH0rZKY6miVhyM2GHGb8qIWp9MAIdLlXf4VDcNC7rxwb5OrGVSwuTTjqGYBGPUx0yEogOOJthA==
+"@nrwl/devkit@13.2.3", "@nrwl/devkit@^13.0.2":
+  version "13.2.3"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.2.3.tgz#34c8cda7ef5d0e618a7522dbbed6ac37a961302b"
+  integrity sha512-/cp8hFclOXSAjj9pwb6bOU8yw593HfelcCBi8o8Jhb0Luhn1RzLCOpmHNsOf2hWzSUPEr0BuI0R55ubCEB+k6A==
   dependencies:
-    "@nrwl/tao" "13.1.3"
+    "@nrwl/tao" "13.2.3"
     ejs "^3.1.5"
     ignore "^5.0.4"
     rxjs "^6.5.4"
     semver "7.3.4"
-    tslib "^2.0.0"
+    tslib "^2.3.0"
 
 "@nrwl/devkit@^12.10.0":
   version "12.10.0"
@@ -2361,18 +2361,6 @@
     rxjs "^6.5.4"
     semver "7.3.4"
     tslib "^2.0.0"
-
-"@nrwl/devkit@^13.0.2":
-  version "13.2.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.2.3.tgz#34c8cda7ef5d0e618a7522dbbed6ac37a961302b"
-  integrity sha512-/cp8hFclOXSAjj9pwb6bOU8yw593HfelcCBi8o8Jhb0Luhn1RzLCOpmHNsOf2hWzSUPEr0BuI0R55ubCEB+k6A==
-  dependencies:
-    "@nrwl/tao" "13.2.3"
-    ejs "^3.1.5"
-    ignore "^5.0.4"
-    rxjs "^6.5.4"
-    semver "7.3.4"
-    tslib "^2.3.0"
 
 "@nrwl/eslint-plugin-nx@13.1.0":
   version "13.1.0"
@@ -2498,23 +2486,6 @@
     fs-extra "^9.1.0"
     jsonc-parser "3.0.0"
     nx "13.1.0"
-    rxjs "^6.5.4"
-    rxjs-for-await "0.0.2"
-    semver "7.3.4"
-    tmp "~0.2.1"
-    tslib "^2.0.0"
-    yargs-parser "20.0.0"
-
-"@nrwl/tao@13.1.3":
-  version "13.1.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-13.1.3.tgz#5a88029b0aa9dfd4bca0a86d3dde2b608c468b36"
-  integrity sha512-/IwJgSgCBD1SaF+n8RuXX2OxDAh8ut/+P8pMswjm8063ac30UlAHjQ4XTYyskLH8uoUmNi2hNaGgHUrkwt7tQA==
-  dependencies:
-    chalk "4.1.0"
-    enquirer "~2.3.6"
-    fs-extra "^9.1.0"
-    jsonc-parser "3.0.0"
-    nx "13.1.3"
     rxjs "^6.5.4"
     rxjs-for-await "0.0.2"
     semver "7.3.4"
@@ -12022,11 +11993,11 @@ ng-dynamic-component@^8.0.1:
     tslib "^2.0.0"
 
 ngx-deploy-npm@^3.0.2:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/ngx-deploy-npm/-/ngx-deploy-npm-3.0.5.tgz#e2423ebde43709dc7776b9c388bb45c04c3a874a"
-  integrity sha512-n6G45aLe9AYQeL5hOHMA7g9HLn+XLQ7i8G+a5+CcnFysvUMCZcDAgM7XWCk3z8TeIMntNBnzIL5F6pTZaGELmg==
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/ngx-deploy-npm/-/ngx-deploy-npm-3.0.6.tgz#d5d46329f65b783e396811bd2def9201e056dc09"
+  integrity sha512-PPgNoRHCnFCEYxtPMViwxT+DSuHQLKe/bglUUbKDVQneHlrFZI3YwpuIP3IKrPDgElwihcAJuOzpzDHlNMXKsg==
   dependencies:
-    "@nrwl/devkit" "13.1.3"
+    "@nrwl/devkit" "13.2.3"
 
 nice-napi@^1.0.2:
   version "1.0.2"
@@ -12205,13 +12176,6 @@ nx@13.1.0:
   version "13.1.0"
   resolved "https://registry.yarnpkg.com/nx/-/nx-13.1.0.tgz#941733bd0128d8be8fc561a4c4f10bbaf7b41707"
   integrity sha512-9ExnMOWqukQEprsFh7QEwJxffS+Htzz4F7vuXg4nP0DcJRkUD28SH6K1h3J6OE/3mCGa+tSdJSYR1ERB8gUwdw==
-  dependencies:
-    "@nrwl/cli" "*"
-
-nx@13.1.3:
-  version "13.1.3"
-  resolved "https://registry.yarnpkg.com/nx/-/nx-13.1.3.tgz#0b2db9b5bc87a47fb3a90014d2b2abb44f568851"
-  integrity sha512-clM0NQhQKYkqcNz2E3uYRMLwhp2L/9dBhJhQi9XBX4IAyA2gWAomhRIlLm5Xxg3g4h1xwSpP3eJ5t89VikY8Pw==
   dependencies:
     "@nrwl/cli" "*"
 
