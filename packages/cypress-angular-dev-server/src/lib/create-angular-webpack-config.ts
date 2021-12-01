@@ -9,14 +9,14 @@ import {
 } from '@angular-devkit/build-angular/src/webpack/configs';
 import { getSystemPath, normalize, resolve } from '@angular-devkit/core';
 
-import type {
-  AssetPattern,
-  ExtraEntryPoint,
-  IndexUnion,
-  StylePreprocessorOptions,
-} from '@angular-devkit/build-angular/src/browser/schema';
 import type { Configuration } from 'webpack';
 import type { WebpackConfigOptions } from '@angular-devkit/build-angular/src/utils/build-options';
+import type {
+  ExtraEntryPoint,
+  AssetPattern,
+  StylePreprocessorOptions,
+  IndexUnion,
+} from '@angular-devkit/build-angular/src/builders/browser/schema';
 
 function getCompilerConfig(wco: WebpackConfigOptions) {
   if (wco.buildOptions.main || wco.buildOptions.polyfills) {
@@ -64,13 +64,15 @@ export async function createAngularWebpackConfig(config: {
       polyfills,
       assets,
       stylePreprocessorOptions,
-    }
+    },
+    {}
   );
 
   const webpackConfig = await generateWebpackConfig(
     getSystemPath(workspaceRoot),
     getSystemPath(projectRoot),
     getSystemPath(sourceRoot),
+    '@todo',
     normalizedOptions,
     (wco) => [
       getCommonConfig(wco),
@@ -83,7 +85,7 @@ export async function createAngularWebpackConfig(config: {
       getCompilerConfig(wco),
     ],
     _createFakeLogger(),
-    {}
+    {},
   );
 
   return webpackConfig;
