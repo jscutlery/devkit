@@ -6,8 +6,10 @@ module.exports = (on, config) => {
       config,
       options,
       webpackConfig: {
-        node: {
-          global: true,
+        resolve: {
+          fallback: {
+            path: require.resolve('path-browserify'),
+          },
         },
       },
     })
