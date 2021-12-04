@@ -30,7 +30,6 @@
     "publish:cypress-harness": "npm publish dist/packages/cypress-harness",
     "publish:cypress-mount": "npm publish dist/packages/cypress-mount",
     "contributors:add": "all-contributors add",
-    "cz": "cz",
     "prepare": "husky install"
   },
   "private": true,
@@ -57,7 +56,7 @@
     "@angular/compiler-cli": "12.2.10",
     "@angular/language-service": "12.2.10",
     "@commitlint/cli": "^15.0.0",
-    "@commitlint/config-conventional": "^15.0.0",
+    "@commitlint/config-angular": "^15.0.0",
     "@cypress/webpack-dev-server": "^1.7.0",
     "@jscutlery/semver": "^2.11.2",
     "@nrwl/angular": "13.1.0",
@@ -78,10 +77,8 @@
     "@typescript-eslint/eslint-plugin": "5.5.0",
     "@typescript-eslint/parser": "5.5.0",
     "all-contributors-cli": "^6.20.0",
-    "commitizen": "^4.2.4",
     "cypress": "^9.0.0",
     "cypress-pipe": "^2.0.0",
-    "cz-conventional-changelog": "^3.3.0",
     "dotenv": "10.0.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
@@ -106,15 +103,5 @@
   },
   "workspaces": [
     "packages/*"
-  ],
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  }
+  ]
 }
