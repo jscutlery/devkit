@@ -1,10 +1,19 @@
-import { startAngularDevServer } from '@jscutlery/cypress-angular-dev-server';
+// ***********************************************************
+// This example plugins/index.js can be used to load plugins
+//
+// You can change the location of this file or turn off loading
+// the plugins file with the 'pluginsFile' configuration option.
+//
+// You can read more here:
+// https://on.cypress.io/plugins-guide
+// ***********************************************************
+
+// This function is called when a project is opened or re-opened (e.g. due to
+// the project's config changing)
+
 import { preprocessTypescript } from '@nrwl/cypress/plugins/preprocessor';
 
 module.exports = (on, config) => {
-  on('dev-server:start', (options) =>
-    startAngularDevServer({ config, options })
-  );
   /* @hack using deprecated preprocessTypescript
    * as there is something wrong with the default Cypress config
    * that produces the following error when using things like @jscutlery/harness
@@ -14,5 +23,4 @@ module.exports = (on, config) => {
    *     Module not found: Error: Can't resolve '@angular/cdk/keycodes'
    *     in '/jscutlery/devkit/node_modules/@angular/cdk/fesm2015/testing' */
   on('file:preprocessor', preprocessTypescript(config));
-  return config;
 };
