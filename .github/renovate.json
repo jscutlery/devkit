@@ -4,7 +4,6 @@
   "automerge": true,
   "automergeType": "branch",
   "baseBranches": ["main"],
-  "semanticCommits": true,
   "lockFileMaintenance": {
     "enabled": true,
     "automerge": true,
@@ -14,16 +13,25 @@
   "commitMessage": "{{{commitMessagePrefix}}} 📦 {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
   "packageRules": [
     {
-      "matchPackagePatterns": ["^@angular/"],
-      "enabled": false
+      "packageNames": ["@nrwl/workspace"],
+      "packagePatterns": ["^@nrwl/"],
+      "groupName": "Nrwl workspace",
+      "postUpgradeTasks": {
+        "commands": [
+          "yarn --frozen-lockfile --no-progress --non-interactive --prefer-offline",
+          "yarn nx migrate @nrwl/workspace",
+          "[ -f migrations.json ] && yarn nx migrate --run-migrations"
+        ],
+        "fileFilters": ["**/**"]
+      }
     },
     {
-      "matchPackagePatterns": ["^@nrwl/"],
-      "enabled": false
+      "packagePatterns": ["*"],
+      "semanticCommitType": "ci"
     },
     {
-      "matchPackagePatterns": ["rxjs"],
-      "enabled": false
+      "depTypeList": ["dependencies"],
+      "semanticCommitType": "fix"
     }
   ]
 }
