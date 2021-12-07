@@ -30,7 +30,7 @@ export interface CypressAngularDevServerOptions {
    * @deprecated config is already passed inside options.
    * @sunset 2.0.0
    */
-  config?: Cypress.RuntimeConfigOptions;
+  config?: Cypress.PluginConfigOptions | Cypress.RuntimeConfigOptions;
 
   /**
    * Cypress ts config, default to 'tsconfig.json'.
