@@ -1,9 +1,6 @@
 import { startAngularDevServer } from '@jscutlery/cypress-angular-dev-server';
 
-module.exports = (
-  on: Cypress.PluginEvents,
-  config: Cypress.RuntimeConfigOptions
-) => {
+module.exports = ((on, config) => {
   on('dev-server:start', (options) =>
     startAngularDevServer({
       config,
@@ -20,6 +17,4 @@ module.exports = (
       },
     })
   );
-
-  return config;
-};
+}) as Cypress.PluginConfig;
