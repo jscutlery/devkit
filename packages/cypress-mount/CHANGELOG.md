@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.11.5](https://github.com/jscutlery/devkit/compare/cypress-mount-0.11.4...cypress-mount-0.11.5) (2021-12-08)
+
+
+### Bug Fixes
+
+* **cypress-mount:** 🐞 update @storybook/angular ([95a19c1](https://github.com/jscutlery/devkit/commit/95a19c169f24a79fcc95751439b28bbb516bb841))
+* **cypress-mount:** 🐞 update ng-dynamic-component ([26c52a0](https://github.com/jscutlery/devkit/commit/26c52a065585864732720db53a33f7cde55b5ed2))
+
+
+
 ## [0.11.4](https://github.com/jscutlery/devkit/compare/cypress-mount-0.11.3...cypress-mount-0.11.4) (2021-12-04)
 
 
