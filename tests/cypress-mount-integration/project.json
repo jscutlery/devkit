@@ -1,20 +1,20 @@
 {
-  "root": "packages/cypress-mount-integration",
-  "sourceRoot": "packages/cypress-mount-integration/src",
+  "root": "tests/cypress-mount-integration",
+  "sourceRoot": "tests/cypress-mount-integration/src",
   "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "packages/cypress-mount-integration/cypress.json",
-        "tsConfig": "packages/cypress-mount-integration/tsconfig.e2e.json",
+        "cypressConfig": "tests/cypress-mount-integration/cypress.json",
+        "tsConfig": "tests/cypress-mount-integration/tsconfig.e2e.json",
         "testingType": "component"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/cypress-mount-integration/**/*.{js,ts}"]
+        "lintFilePatterns": ["tests/cypress-mount-integration/**/*.{js,ts}"]
       },
       "outputs": ["{options.outputFile}"]
     }

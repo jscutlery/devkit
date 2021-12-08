@@ -20,12 +20,12 @@ operators:
 
 test:
   - 'packages/**/*.spec.ts'
-  - 'packages/cypress-mount-integration/*'
-  - 'packages/cypress-mount-integration/**/*'
-  - 'packages/cypress-harness-integration/*'
-  - 'packages/cypress-harness-integration/**/*'
   - 'packages/cypress-sandbox/*'
   - 'packages/cypress-sandbox/**/*'
+  - 'tests/cypress-mount-integration/*'
+  - 'tests/cypress-mount-integration/**/*'
+  - 'tests/cypress-harness-integration/*'
+  - 'tests/cypress-harness-integration/**/*'
   - 'tests/cypress-harness-e2e/*'
   - 'tests/cypress-harness-e2e/**/*'
 
