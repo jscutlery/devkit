@@ -20,7 +20,7 @@ jobs:
       - run: yarn nx affected --base=last-release --target=lint
       - run: yarn nx affected --base=last-release --target=build
       - run: yarn nx affected --base=last-release --target=test
-      - run: yarn nx affected --base=last-release --target=e2e --headless
+      - run: yarn nx affected --base=last-release --target=e2e
 
   release:
     runs-on: ubuntu-latest
