@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.7.1](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.7.0...cypress-angular-dev-server-1.7.1) (2021-12-08)
+
+
+
 # [1.7.0](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.6.0...cypress-angular-dev-server-1.7.0) (2021-12-08)
 
 
