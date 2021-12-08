@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 import { getWorkspaceRoot } from './get-workspace-root';
-import * as mock from 'mock-fs';
+import mock from 'mock-fs';
 
 describe(getWorkspaceRoot.name, () => {
   const fakeDir = 'path/to/fake/dir';

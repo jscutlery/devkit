@@ -12,7 +12,7 @@ import {
   template: `<h1>Hello {{ name }}</h1>`,
 })
 export class HelloComponent {
-  @Input() name: string;
+  @Input() name?: string;
 }
 
 @NgModule({

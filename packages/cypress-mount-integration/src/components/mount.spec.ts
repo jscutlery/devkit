@@ -77,18 +77,18 @@ describe('mount', () => {
     cy.contains('🌖');
   });
 
-it('should handle two-way data binding', () => {
-  const value = 'first value';
-  mount(
-    `<jc-two-way-data-binding value="${value}"></jc-two-way-data-binding>`,
-    { imports: [TwoWayDataBindingModule] }
-  );
-  cy.get('input').should('have.value', 'first value');
-  cy.get('.value').should('have.text', 'first value');
-  cy.get('input').clear().type('second value');
-  cy.get('input').should('have.value', 'second value');
-  cy.get('.value').should('have.text', 'second value');
-});
+  it('should handle two-way data binding', () => {
+    const value = 'first value';
+    mount(
+      `<jc-two-way-data-binding value="${value}"></jc-two-way-data-binding>`,
+      { imports: [TwoWayDataBindingModule] }
+    );
+    cy.get('input').should('have.value', 'first value');
+    cy.get('.value').should('have.text', 'first value');
+    cy.get('input').clear().type('second value');
+    cy.get('input').should('have.value', 'second value');
+    cy.get('.value').should('have.text', 'second value');
+  });
 
   it('should handle templateUrl', () => {
     mount(HelloTemplateUrlComponent);
@@ -116,7 +116,15 @@ it('should handle two-way data binding', () => {
   });
 
   it('should handle css link', () => {
-    mount(HelloComponent, { stylesheet: './src/fixtures/inline-style.css' });
-    cy.get('h1').should('have.css', 'color', 'rgb(255, 0, 0)');
+    mount(HelloComponent, {
+      stylesheet: 'https://my-css.jscutlery.dev/file.css',
+    });
+    cy.get('link').should('have.length', 1);
+    cy.get('link').should('have.attr', 'rel', 'stylesheet');
+    cy.get('link').should(
+      'have.attr',
+      'href',
+      'https://my-css.jscutlery.dev/file.css'
+    );
   });
 });

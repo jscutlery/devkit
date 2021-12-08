@@ -34,9 +34,8 @@ export class TestedModule {}
 describe(getAllHarnesses.name, () => {
   beforeEach(() =>
     mount(TestedComponent, {
-      styles: [
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        require('!css-loader!@angular/material/prebuilt-themes/deeppurple-amber.css').toString(),
+      stylesheets: [
+        '@angular/material/prebuilt-themes/deeppurple-amber.css',
       ],
       imports: [TestedModule],
     })

@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import * as mock from 'mock-fs';
+import mock from 'mock-fs';
 import { normalize } from 'path';
 import { getWorkspaceFilePath } from './get-worksspace-file-path';
 

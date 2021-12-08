@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 import { getWorkspaceConfiguration } from './get-workspace-configuration';
-import * as mock from 'mock-fs';
+import mock from 'mock-fs';
 import { ProjectConfiguration } from '@nrwl/devkit';
 
 describe(getWorkspaceConfiguration.name, () => {
