@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [1.7.0](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.6.0...cypress-angular-dev-server-1.7.0) (2021-12-08)
+
+
+### Features
+
+* **cypress-mount:** ✅ add Angular 13 support ([6fe2361](https://github.com/jscutlery/devkit/commit/6fe2361725526e2169591494ac119aa432b9a77c))
+
+
+
 # [1.6.0](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.5.3...cypress-angular-dev-server-1.6.0) (2021-11-16)
 
 
