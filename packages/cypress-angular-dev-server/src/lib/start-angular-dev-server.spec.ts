@@ -1,16 +1,29 @@
+import { loadEsmModule } from '@angular-devkit/build-angular/src/utils/load-esm';
+import { readTsconfig } from '@angular-devkit/build-angular/src/utils/read-tsconfig';
+import type { ParsedConfiguration } from '@angular/compiler-cli';
 import {
   ResolvedDevServerConfig,
   startDevServer,
 } from '@cypress/webpack-dev-server';
 import { describe, expect, it } from '@jest/globals';
 import { AngularWebpackPlugin } from '@ngtools/webpack';
-import { findTargetOptions } from './find-target-options';
 import { normalize, resolve } from 'path';
-
+import { URL } from 'url';
+import { findTargetOptions } from './find-target-options';
 import { startAngularDevServer } from './start-angular-dev-server';
 
-jest.mock('./find-target-options');
 jest.mock('@cypress/webpack-dev-server');
+jest.mock('@angular-devkit/build-angular/src/utils/read-tsconfig');
+jest.mock('@angular-devkit/build-angular/src/utils/load-esm');
+jest.mock('./find-target-options');
+
+const mockLoadEsmModule = loadEsmModule as jest.MockedFunction<
+  typeof loadEsmModule
+>;
+
+const mockReadTsconfig = readTsconfig as jest.MockedFunction<
+  typeof readTsconfig
+>;
 
 const mockStartDevServer = startDevServer as jest.MockedFunction<
   typeof startDevServer
@@ -19,7 +32,28 @@ const mockStartDevServer = startDevServer as jest.MockedFunction<
 describe(startAngularDevServer.name, () => {
   const testProjectPath = resolve(__dirname, '__tests__/fixtures/demo');
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    /* @hack mock loadEsmModule and throw an error because it is
+     * imcompatible with jest and freezes the test.
+     * Let's mock parent functions. */
+    mockLoadEsmModule.mockImplementation(async (path) => {
+      const modules = new Map<string | URL, unknown>([
+        ['@angular/compiler-cli', await import('@angular/compiler-cli')],
+      ]);
+      const module = modules.get(path);
+      if (module === undefined) {
+        throw new Error(`mockLoadEsmModule can't locate module: ${path}`);
+      }
+      return module;
+    });
+
+    /* @hack mock readTsConfig because it calls loadEsmModule which
+     * lazily imports @angular/compiler-cli using loadEsmModule
+     * which is not compatible with jest and freezes the test. */
+    mockReadTsconfig.mockResolvedValue({
+      options: {},
+    } as ParsedConfiguration);
+
     mockStartDevServer.mockResolvedValue({
       port: 4300,
       close: jest.fn(),
@@ -44,11 +78,8 @@ describe(startAngularDevServer.name, () => {
             componentFolder: resolve(testProjectPath, 'src'),
             configFile: resolve(testProjectPath, 'cypress.json'),
             projectRoot: testProjectPath,
-            version: '7.1.0',
-            testingType: 'component',
-          } as Partial<
-            Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions
-          >,
+            version: '9.1.0',
+          } as Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions,
         } as Cypress.DevServerConfig,
       });
     });
@@ -58,6 +89,13 @@ describe(startAngularDevServer.name, () => {
         expect.objectContaining({
           port: 4300,
         })
+      );
+
+      expect(mockReadTsconfig).toBeCalledTimes(1);
+      expect(mockReadTsconfig).toBeCalledWith(
+        expect.stringContaining(
+          normalize('__tests__/fixtures/demo/tsconfig.json')
+        )
       );
     });
 
@@ -71,8 +109,7 @@ describe(startAngularDevServer.name, () => {
             configFile: expect.stringContaining(
               normalize('__tests__/fixtures/demo/cypress.json')
             ),
-            version: '7.1.0',
-            testingType: 'component',
+            version: '9.1.0',
           }),
         })
       );
@@ -99,11 +136,8 @@ describe(startAngularDevServer.name, () => {
             componentFolder: resolve(testProjectPath, 'src'),
             configFile: resolve(testProjectPath, 'cypress.json'),
             projectRoot: testProjectPath,
-            version: '7.1.0',
-            testingType: 'component',
-          } as Partial<
-            Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions
-          >,
+            version: '9.1.0',
+          } as Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions,
         } as Cypress.DevServerConfig,
         webpackConfig: {
           node: {
@@ -132,11 +166,8 @@ describe(startAngularDevServer.name, () => {
             componentFolder: resolve(testProjectPath, 'src'),
             configFile: resolve(testProjectPath, 'cypress.json'),
             projectRoot: testProjectPath,
-            version: '7.1.0',
-            testingType: 'component',
-          } as Partial<
-            Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions
-          >,
+            version: '9.1.0',
+          } as Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions,
         } as Cypress.DevServerConfig,
         tsConfig: 'tsconfig.cypress.json',
       });
@@ -174,11 +205,8 @@ describe(startAngularDevServer.name, () => {
           componentFolder: resolve(testProjectPath, 'src'),
           configFile: resolve(testProjectPath, 'cypress.json'),
           projectRoot: testProjectPath,
-          version: '7.1.0',
-          testingType: 'component',
-        } as Partial<
-          Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions
-        >,
+          version: '9.1.0',
+        } as Cypress.ResolvedConfigOptions & Cypress.RuntimeConfigOptions,
       } as Cypress.DevServerConfig,
     });
 
