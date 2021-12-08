@@ -33,7 +33,9 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "postTargets": ["cypress-mount:build", "cypress-mount:publish"]
+        "postTargets": ["cypress-mount:build", "cypress-mount:publish"],
+        "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
+        "noVerify": true
       }
     },
     "publish": {

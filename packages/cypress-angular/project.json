@@ -60,7 +60,9 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "postTargets": ["cypress-angular:build", "cypress-angular:publish"]
+        "postTargets": ["cypress-angular:build", "cypress-angular:publish"],
+        "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
+        "noVerify": true
       }
     },
     "publish": {

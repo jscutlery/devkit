@@ -30,7 +30,6 @@
     "publish:cypress-harness": "npm publish dist/packages/cypress-harness",
     "publish:cypress-mount": "npm publish dist/packages/cypress-mount",
     "contributors:add": "all-contributors add",
-    "cz": "cz",
     "prepare": "husky install"
   },
   "private": true,
@@ -45,19 +44,19 @@
     "@angular/platform-browser-dynamic": "13.0.2",
     "@angular/router": "13.0.2",
     "@types/mock-fs": "^4.13.1",
-    "rxjs": "~7.0.0",
+    "rxjs": "~7.4.0",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "13.0.3",
-    "@angular-eslint/eslint-plugin": "12.6.1",
-    "@angular-eslint/eslint-plugin-template": "12.6.1",
-    "@angular-eslint/template-parser": "12.6.1",
+    "@angular-eslint/eslint-plugin": "13.0.1",
+    "@angular-eslint/eslint-plugin-template": "13.0.1",
+    "@angular-eslint/template-parser": "13.0.1",
     "@angular/compiler": "13.0.2",
     "@angular/compiler-cli": "13.0.2",
     "@angular/language-service": "13.0.2",
     "@commitlint/cli": "^15.0.0",
-    "@commitlint/config-conventional": "^15.0.0",
+    "@commitlint/config-angular": "^15.0.0",
     "@cypress/webpack-dev-server": "^1.7.0",
     "@jscutlery/semver": "^2.11.2",
     "@nrwl/angular": "13.2.3",
@@ -76,47 +75,35 @@
     "@storybook/builder-webpack5": "^6.4.3",
     "@storybook/manager-webpack5": "^6.4.3",
     "@types/jest": "27.0.3",
-    "@types/node": "16.11.10",
-    "@typescript-eslint/eslint-plugin": "5.4.0",
-    "@typescript-eslint/parser": "5.4.0",
+    "@types/node": "16.11.12",
+    "@typescript-eslint/eslint-plugin": "5.6.0",
+    "@typescript-eslint/parser": "5.6.0",
     "all-contributors-cli": "^6.20.0",
-    "commitizen": "^4.2.4",
     "cypress": "^9.0.0",
     "cypress-pipe": "^2.0.0",
-    "cz-conventional-changelog": "^3.3.0",
     "dotenv": "10.0.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-cypress": "^2.10.3",
     "html-webpack-plugin": "^5.3.2",
     "husky": "^7.0.4",
-    "jest": "27.3.1",
-    "jest-preset-angular": "11.0.0",
+    "jest": "27.4.3",
+    "jest-preset-angular": "11.0.1",
     "mock-fs": "^5.1.1",
-    "ng-dynamic-component": "^9.0.0",
+    "ng-dynamic-component": "^10.0.0",
     "ngx-deploy-npm": "^3.0.2",
     "path-browserify": "^1.0.1",
-    "prettier": "2.5.0",
-    "ts-jest": "27.0.7",
+    "prettier": "2.5.1",
+    "ts-jest": "27.1.0",
     "ts-node": "10.4.0",
     "tslib": "^2.0.0",
     "typescript": "4.4.4",
     "zone.js": "0.11.4"
   },
   "resolutions": {
-    "webpack": "5.64.4"
+    "webpack": "5.65.0"
   },
   "workspaces": [
     "packages/*"
-  ],
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  }
+  ]
 }
