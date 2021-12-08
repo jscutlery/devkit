@@ -1,38 +1,37 @@
 cypress-angular:
-- 'packages/cypress-angular/*'
-- 'packages/cypress-angular/**/*'
+  - 'packages/cypress-angular/*'
+  - 'packages/cypress-angular/**/*'
 
 cypress-angular-dev-server:
-- 'packages/cypress-angular-dev-server/*'
-- 'packages/cypress-angular-dev-server/**/*'
+  - 'packages/cypress-angular-dev-server/*'
+  - 'packages/cypress-angular-dev-server/**/*'
 
 cypress-harness:
-- 'packages/cypress-harness/*'
-- 'packages/cypress-harness/**/*'
+  - 'packages/cypress-harness/*'
+  - 'packages/cypress-harness/**/*'
 
 cypress-mount:
-- 'packages/cypress-mount/*'
-- 'packages/cypress-mount/**/*'
+  - 'packages/cypress-mount/*'
+  - 'packages/cypress-mount/**/*'
 
 operators:
-- 'packages/operators/*'
-- 'packages/operators/**/*'
+  - 'packages/operators/*'
+  - 'packages/operators/**/*'
 
 test:
-- 'packages/**/*.spec.ts'
-- 'packages/cypress-mount-integration/*'
-- 'packages/cypress-mount-integration/**/*'
-- 'packages/cypress-harness-integration/*'
-- 'packages/cypress-harness-integration/**/*'
-- 'packages/cypress-harness-e2e/*'
-- 'packages/cypress-harness-e2e/**/*'
-- 'packages/cypress-sandbox/*'
-- 'packages/cypress-sandbox/**/*'
+  - 'packages/**/*.spec.ts'
+  - 'packages/cypress-mount-integration/*'
+  - 'packages/cypress-mount-integration/**/*'
+  - 'packages/cypress-harness-integration/*'
+  - 'packages/cypress-harness-integration/**/*'
+  - 'packages/cypress-sandbox/*'
+  - 'packages/cypress-sandbox/**/*'
+  - 'tests/cypress-harness-e2e/*'
+  - 'tests/cypress-harness-e2e/**/*'
 
 docs:
-- 'README.md'
-- 'packages/cypress-angular/README.md'
-- 'packages/cypress-angular-dev-server/README.md'
-- 'packages/cypress-harness/README.md'
-- 'packages/cypress-mount/README.md'
-
+  - 'README.md'
+  - 'packages/cypress-angular/README.md'
+  - 'packages/cypress-angular-dev-server/README.md'
+  - 'packages/cypress-harness/README.md'
+  - 'packages/cypress-mount/README.md'

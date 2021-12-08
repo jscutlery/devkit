@@ -1,13 +1,13 @@
 {
-  "root": "packages/cypress-harness-e2e",
-  "sourceRoot": "packages/cypress-harness-e2e/src",
+  "root": "tests/cypress-harness-e2e",
+  "sourceRoot": "tests/cypress-harness-e2e/src",
   "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "packages/cypress-harness-e2e/cypress.json",
-        "tsConfig": "packages/cypress-harness-e2e/tsconfig.e2e.json",
+        "cypressConfig": "tests/cypress-harness-e2e/cypress.json",
+        "tsConfig": "tests/cypress-harness-e2e/tsconfig.e2e.json",
         "devServerTarget": "sandbox:serve"
       },
       "configurations": {
@@ -19,7 +19,7 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/cypress-harness-e2e/**/*.{js,ts}"]
+        "lintFilePatterns": ["tests/cypress-harness-e2e/**/*.{js,ts}"]
       },
       "outputs": ["{options.outputFile}"]
     }
