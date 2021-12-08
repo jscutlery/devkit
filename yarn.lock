@@ -2329,7 +2329,7 @@
     semver "7.3.4"
     tslib "^2.3.0"
 
-"@nrwl/devkit@13.2.4":
+"@nrwl/devkit@13.2.4", "@nrwl/devkit@^13.0.0":
   version "13.2.4"
   resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.2.4.tgz#264eeb9e8fa47f3d9467eca550e7fe85bd89cce5"
   integrity sha512-UqlpwNJ/qoTirjcV7jhx/QGTtX1Z/ZIbncQBGK+L3MQj7raY/h2X0YA8hWLprtsGvjAZEgL8HZHqfElz9eEo4w==
@@ -2340,18 +2340,6 @@
     rxjs "^6.5.4"
     semver "7.3.4"
     tslib "^2.3.0"
-
-"@nrwl/devkit@^12.10.0":
-  version "12.10.0"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-12.10.0.tgz#cf4a1dfb1036212185548d68296ac26e498a41c4"
-  integrity sha512-we0K5Hn48BXh77SV5GVSPfRJeIHNCVFSn+feLbnKz3G60Tk3wFEEFhDABA8cCfTKDxMESSjZoWBy4ZcVg0EX0g==
-  dependencies:
-    "@nrwl/tao" "12.10.0"
-    ejs "^3.1.5"
-    ignore "^5.0.4"
-    rxjs "^6.5.4"
-    semver "7.3.4"
-    tslib "^2.0.0"
 
 "@nrwl/eslint-plugin-nx@13.2.4":
   version "13.2.4"
@@ -2450,23 +2438,6 @@
     semver "7.3.4"
     ts-loader "^9.2.6"
     tsconfig-paths-webpack-plugin "3.4.1"
-
-"@nrwl/tao@12.10.0":
-  version "12.10.0"
-  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-12.10.0.tgz#28cfbbda66f5f10a4917df0e70b94d04334e1628"
-  integrity sha512-YkdgTJJsDQlItVj25vW8zEen7BAra6i41Udd0v3CuxTSEXjJJnBD2KzEOGUxXS0gMg7+ILuw2rl9aOKu43TmVA==
-  dependencies:
-    chalk "4.1.0"
-    enquirer "~2.3.6"
-    fs-extra "^9.1.0"
-    jsonc-parser "3.0.0"
-    nx "12.10.0"
-    rxjs "^6.5.4"
-    rxjs-for-await "0.0.2"
-    semver "7.3.4"
-    tmp "~0.2.1"
-    tslib "^2.0.0"
-    yargs-parser "20.0.0"
 
 "@nrwl/tao@13.2.3":
   version "13.2.3"
@@ -11261,13 +11232,6 @@ nwsapi@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.0.tgz#204879a9e3d068ff2a55139c2c772780681a38b7"
   integrity sha512-h2AatdwYH+JHiZpv7pt/gSX1XoRGb7L/qSIeuqA6GwYoF9w1vP1cw42TO0aI2pNyshRK5893hNSl+1//vHK7hQ==
-
-nx@12.10.0:
-  version "12.10.0"
-  resolved "https://registry.yarnpkg.com/nx/-/nx-12.10.0.tgz#a4e8fba7254529de69fe54e5b4b007e8a432a3fb"
-  integrity sha512-LpCfZCWsVEtmD2SI1j2KRaw1uIyn4DJ3eRzsjnDYitbq38aORpkvYO+L0zVMZRNDSYSRGTsuj0nHCS3OOxK/Cg==
-  dependencies:
-    "@nrwl/cli" "*"
 
 nx@13.2.3:
   version "13.2.3"
