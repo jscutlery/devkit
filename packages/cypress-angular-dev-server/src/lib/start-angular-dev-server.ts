@@ -59,9 +59,20 @@ export async function startAngularDevServer({
     buildOptions,
   });
   const builtWebpackConfig: WebpackConfigurationWithDevServer = {
-    ...(webpackConfig != null
-      ? merge(angularWebpackConfig, webpackConfig)
-      : angularWebpackConfig),
+    ...merge(
+      angularWebpackConfig,
+      {
+        /* @hack this fixes the following error:
+         * "Module not found: Error: Can't resolve 'path' in '.../node_modules/@storybook/store/dist/esm'"
+         * as storybook requires 'path' even though it's not used and webpack 5 removed the polyfill. */
+        resolve: {
+          fallback: {
+            path: require.resolve('path-browserify'),
+          },
+        },
+      },
+      webpackConfig ?? {}
+    ),
     devServer: undefined,
   };
 

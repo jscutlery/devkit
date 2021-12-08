@@ -122,6 +122,13 @@ describe(startAngularDevServer.name, () => {
         1
       );
     });
+
+    it('should add a polyfill for "path" to support storybook', () => {
+      const { webpackConfig } = mockStartDevServer.mock.calls[0][0];
+      expect(webpackConfig.resolve.fallback['path']).toContain(
+        'node_modules/path-browserify'
+      );
+    });
   });
 
   describe('with custom webpack config', () => {
