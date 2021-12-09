@@ -1,0 +1,25 @@
+name: Test
+
+description: Test
+
+inputs:
+  node-version:
+    description: Node.js version
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    - name: Lint
+      shell: bash
+      run: yarn nx affected --base=last-release --target=lint
+    - name: Build
+      shell: bash
+      run: yarn nx affected --base=last-release --target=build
+    - name: Test
+      shell: bash
+      run: yarn nx affected --base=last-release --target=test
+    - name: E2E
+      shell: bash
+      run: yarn nx affected --base=last-release --target=e2e --parallel=1
