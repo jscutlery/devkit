@@ -60,3 +60,6 @@ jobs:
       # This prevents you from accidentally creating recursive workflow runs.""
       - name: Release
         uses: ./.github/actions/release
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          npm_token: ${{ secrets.NPM_TOKEN }}

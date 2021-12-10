@@ -3,41 +3,33 @@ name: Release
 description: Release packages
 
 inputs:
-  github-token:
+  github_token:
     description: GitHub token
     required: true
-  npm-token:
+  npm_token:
     description: NPM token
     required: true
 
 runs:
   using: composite
   steps:
-    # Hiding secrets manually because composite actions don't support secrets
-    # so we are passing them as inputs.
-    - name: Hide secrets
-      shell: bash
-      run: |
-        echo "::add-mask::${{ inputs.github-token }}" 
-        echo "::add-mask::${{ inputs.npm-token }}"
-
     - name: Version
       env:
-        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
+        NODE_AUTH_TOKEN: ${{ inputs.npm_token }}
       # Use npx instead of yarn because yarn automagically sets NPM_* environment variables
       # like NPM_CONFIG_REGISTRY so npm publish ends up ignoring the .npmrc file
       # which is set up by `setup-node` action.
       shell: bash
-      run: npx nx affected --base=last-release --target=version
+      run: echo npx nx affected --base=last-release --target=version
 
     - name: Tag last-release
       shell: bash
-      run: git tag -f last-release
+      run: echo git tag -f last-release
 
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ inputs.github-token }}
+        github_token: ${{ inputs.github_token }}
         branch: ${{ github.ref }}
         force: true
         tags: true
