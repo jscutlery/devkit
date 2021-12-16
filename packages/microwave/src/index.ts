@@ -1,1 +1,1 @@
-export * from './lib/microwave.module';
+export { Microwave, watch } from './lib/microwave';
