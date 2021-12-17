@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Type, ɵɵdirectiveInject } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, EMPTY } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 
 /**
@@ -16,6 +16,7 @@ export function Microwave() {
         const target = factoryFn();
 
         target[_MARK_FOR_CHECK_SUBJECT_SYMBOL] = markForCheck$;
+        target[_SUBJECTS_SYMBOL] = {} as MicrowaveSubjects<T>;
 
         return target;
       },
@@ -33,7 +34,18 @@ export function watch<T, K extends keyof T = keyof T>(
   component: T,
   property: K
 ): Observable<T[K]> {
-  throw new Error('🚧 Work in progress!');
+  if (!isMicrowaved(component)) {
+    throw new Error(
+      `Component is not microwaved. Did you add @Microwave decorator?`
+    );
+  }
+
+  return EMPTY;
+}
+
+export function isMicrowaved<T>(component: T): component is Microwaved<T> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (component as any)[_MARK_FOR_CHECK_SUBJECT_SYMBOL] != null;
 }
 
 /**
@@ -89,7 +101,12 @@ export function _decorateClass<T extends Record<string | symbol, unknown>>(
 export const _MARK_FOR_CHECK_SUBJECT_SYMBOL = Symbol('MarkForCheckSubject');
 export const _SUBJECTS_SYMBOL = Symbol('Subjects');
 
+export type MicrowaveSubjects<T, K extends keyof T = keyof T> = Record<
+  K,
+  BehaviorSubject<T[K]>
+>;
+
 export type Microwaved<T, K extends keyof T = keyof T> = T & {
   [_MARK_FOR_CHECK_SUBJECT_SYMBOL]?: Subject<void>;
-  [_SUBJECTS_SYMBOL]?: Record<K, Subject<T[K]>>;
+  [_SUBJECTS_SYMBOL]?: MicrowaveSubjects<T>;
 };

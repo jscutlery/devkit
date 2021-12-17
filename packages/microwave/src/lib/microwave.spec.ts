@@ -94,6 +94,10 @@ describe(Microwave.name, () => {
 
       expect(spy.next).toBeCalledTimes(1);
     });
+
+    it('should throw error if not microwaved', () => {
+      expect(() => watch({ name: 'foo' }, 'name')).toThrow(/not microwaved/);
+    });
   });
 
   function createComponent() {
