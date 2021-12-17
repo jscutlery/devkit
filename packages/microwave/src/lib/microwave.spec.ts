@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { createObserver } from 'packages/microwave/testing/observer';
+import { createObserver } from '../../testing/observer';
 import { finalize } from 'rxjs';
 import { Microwave, watch } from './microwave';
 
