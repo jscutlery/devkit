@@ -19,20 +19,27 @@ describe(Microwave.name, () => {
     expect(cdRef.detach).toBeCalledTimes(1);
   });
 
-  xit('should trigger change detection once on startup', () => {
+  it('should not trigger change detection before one tick', () => {
     const { cdRef } = createComponent(GreetingsComponent);
+    expect(cdRef.detectChanges).toBeCalledTimes(0);
+  });
+
+  it('should trigger change detection after one tick', async () => {
+    const { cdRef } = createComponent(GreetingsComponent);
+    await flushMicrotasks();
+
     expect(cdRef.detectChanges).toBeCalledTimes(1);
   });
 
   xit('should trigger change detection once when properties change', async () => {
     const { cdRef, component } = createComponent(GreetingsComponent);
-
+    await flushMicrotasks();
     cdRef.detectChanges.mockReset();
 
     component.meal = 'Lasagna';
     component.evaluation = 'Delicious';
 
-    jest.runAllTicks();
+    await flushMicrotasks();
 
     expect(cdRef.detectChanges).toBeCalledTimes(1);
   });
@@ -69,5 +76,9 @@ describe(Microwave.name, () => {
       component: TestBed.inject(cmpClass),
       cdRef: mock,
     };
+  }
+
+  async function flushMicrotasks() {
+    await Promise.resolve();
   }
 });

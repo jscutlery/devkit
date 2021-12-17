@@ -1,3 +1,5 @@
+import { debounce } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { Type, ɵɵdirectiveInject, ChangeDetectorRef } from '@angular/core';
 import { __decorate } from 'tslib';
 
@@ -28,8 +30,21 @@ export function _decorateComponentFactory<T>(factoryFn: () => T) {
   return () => {
     const instance = factoryFn();
 
+    /* A subject that regroups change detection requests
+     * so we can coalesce and trigger change detection
+     * with a custom strategy. */
+    const markForCheck$ = new Subject<void>();
+
+    /* Grab change detector to control it. */
     const cdr = ɵɵdirectiveInject(ChangeDetectorRef);
+
+    /* @todo unsubscribe on destroy. */
+    markForCheck$
+      .pipe(debounce(() => Promise.resolve()))
+      .subscribe(() => cdr.detectChanges());
+
     cdr.detach();
+    markForCheck$.next();
 
     return instance;
   };
