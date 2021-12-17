@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Type, ɵɵdirectiveInject } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 
 /**
@@ -29,7 +29,10 @@ export function Microwave() {
 /**
  * @deprecated 🚧 Work in progress.
  */
-export function watch() {
+export function watch<T, K extends keyof T = keyof T>(
+  component: T,
+  property: K
+): Observable<T[K]> {
   throw new Error('🚧 Work in progress!');
 }
 
@@ -56,10 +59,7 @@ export function _setupMicrowave() {
   return { markForCheck$ };
 }
 
-export function _decorateClass<
-  T extends Record<string | symbol, unknown>,
-  K extends string | symbol
->(
+export function _decorateClass<T extends Record<string | symbol, unknown>>(
   originalClass: Type<T>,
   {
     wrapFactory,
@@ -87,7 +87,9 @@ export function _decorateClass<
 }
 
 export const _MARK_FOR_CHECK_SUBJECT_SYMBOL = Symbol('MarkForCheckSubject');
+export const _SUBJECTS_SYMBOL = Symbol('Subjects');
 
-export type Microwaved<T> = T & {
+export type Microwaved<T, K extends keyof T = keyof T> = T & {
   [_MARK_FOR_CHECK_SUBJECT_SYMBOL]?: Subject<void>;
+  [_SUBJECTS_SYMBOL]?: Record<K, Subject<T[K]>>;
 };

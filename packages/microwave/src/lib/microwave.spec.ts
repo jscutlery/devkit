@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { createObserver } from 'packages/microwave/testing/observer';
 import { Microwave, watch } from './microwave';
 
 @Microwave()
@@ -8,31 +9,33 @@ import { Microwave, watch } from './microwave';
 })
 class GreetingsComponent {
   meal?: string;
-  evaluation?: string;
+  evaluation = 'meh';
 }
 
 jest.useFakeTimers();
 
 describe(Microwave.name, () => {
+  const { observe } = createObserver();
+
   it('should detach change detector on startup', () => {
-    const { cdRef } = createComponent(GreetingsComponent);
+    const { cdRef } = createComponent();
     expect(cdRef.detach).toBeCalledTimes(1);
   });
 
   it('should not trigger change detection before one tick', () => {
-    const { cdRef } = createComponent(GreetingsComponent);
+    const { cdRef } = createComponent();
     expect(cdRef.detectChanges).toBeCalledTimes(0);
   });
 
   it('should trigger change detection after one tick', async () => {
-    const { cdRef } = createComponent(GreetingsComponent);
+    const { cdRef } = createComponent();
     await flushMicrotasks();
 
     expect(cdRef.detectChanges).toBeCalledTimes(1);
   });
 
-  it('should trigger change detection once when properties change', async () => {
-    const { cdRef, component } = createComponent(GreetingsComponent);
+  it('should trigger change detection once when fields change', async () => {
+    const { cdRef, component } = createComponent();
     await flushMicrotasks();
     cdRef.detectChanges.mockReset();
 
@@ -45,16 +48,55 @@ describe(Microwave.name, () => {
   });
 
   describe(watch.name, () => {
-    it.todo('should emit undefined value');
+    xit('🚧 should emit undefined value', () => {
+      const { component } = createComponent();
 
-    it.todo('should emit initial value');
+      const meal$ = watch(component, 'meal');
 
-    it.todo('should emit changes');
+      const spy = observe(meal$);
 
-    it.todo('should emit distinct values only');
+      expect(spy.next).toBeCalledTimes(1);
+      expect(spy.next).toBeCalledWith(undefined);
+    });
+
+    xit('🚧 should emit initial value', () => {
+      const { component } = createComponent();
+
+      const evaluation$ = watch(component, 'evaluation');
+
+      const spy = observe(evaluation$);
+
+      expect(spy.next).toBeCalledTimes(1);
+      expect(spy.next).toBeCalledWith('meh');
+    });
+
+    xit('🚧 should emit changes', () => {
+      const { component } = createComponent();
+
+      const evaluation$ = watch(component, 'evaluation');
+
+      const spy = observe(evaluation$);
+
+      component.evaluation = 'Delicious';
+
+      expect(spy.next).toBeCalledTimes(2);
+      expect(spy.next).lastCalledWith('Delicious');
+    });
+
+    xit('🚧 should emit distinct values only', () => {
+      const { component } = createComponent();
+
+      const evaluation$ = watch(component, 'evaluation');
+
+      const spy = observe(evaluation$);
+
+      component.evaluation = 'meh';
+
+      expect(spy.next).toBeCalledTimes(1);
+    });
   });
 
-  function createComponent<T>(cmpClass: Type<T>) {
+  function createComponent() {
     const mock: jest.Mocked<
       Pick<ChangeDetectorRef, 'detach' | 'detectChanges'>
     > = {
@@ -64,7 +106,7 @@ describe(Microwave.name, () => {
 
     TestBed.configureTestingModule({
       providers: [
-        cmpClass,
+        GreetingsComponent,
         {
           provide: ChangeDetectorRef,
           useValue: mock,
@@ -73,7 +115,7 @@ describe(Microwave.name, () => {
     });
 
     return {
-      component: TestBed.inject(cmpClass),
+      component: TestBed.inject(GreetingsComponent),
       cdRef: mock,
     };
   }
