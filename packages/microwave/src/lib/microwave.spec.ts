@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Type } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { createObserver } from 'packages/microwave/testing/observer';
 import { Microwave, watch } from './microwave';
@@ -48,8 +48,9 @@ describe(Microwave.name, () => {
   });
 
   describe(watch.name, () => {
-    xit('🚧 should emit undefined value', () => {
+    it('should emit undefined value', () => {
       const { component } = createComponent();
+      console.log(component.meal);
 
       const meal$ = watch(component, 'meal');
 
@@ -59,7 +60,7 @@ describe(Microwave.name, () => {
       expect(spy.next).toBeCalledWith(undefined);
     });
 
-    xit('🚧 should emit initial value', () => {
+    it('should emit initial value', () => {
       const { component } = createComponent();
 
       const evaluation$ = watch(component, 'evaluation');
@@ -70,7 +71,7 @@ describe(Microwave.name, () => {
       expect(spy.next).toBeCalledWith('meh');
     });
 
-    xit('🚧 should emit changes', () => {
+    it('should emit changes', () => {
       const { component } = createComponent();
 
       const evaluation$ = watch(component, 'evaluation');
@@ -83,7 +84,7 @@ describe(Microwave.name, () => {
       expect(spy.next).lastCalledWith('Delicious');
     });
 
-    xit('🚧 should emit distinct values only', () => {
+    it('should emit distinct values only', () => {
       const { component } = createComponent();
 
       const evaluation$ = watch(component, 'evaluation');
