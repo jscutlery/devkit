@@ -1,8 +1,35 @@
+import { ChangeDetectorRef, Component, Type } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { Microwave, watch } from './microwave';
 
+@Component({
+  template: `{{ meal }} is {{ evaluation }}`,
+})
+class GreetingsComponent {
+  meal?: string;
+  evaluation?: string;
+}
+
+jest.useFakeTimers();
+
 describe(Microwave.name, () => {
-  it.todo('should trigger change detection once on startup');
-  it.todo('should trigger change detection once when properties change');
+  xit('🚧 should trigger change detection once on startup', () => {
+    const { cdRef } = createComponent(GreetingsComponent);
+    expect(cdRef.detectChanges).toBeCalledTimes(1);
+  });
+
+  xit('🚧 should trigger change detection once when properties change', async () => {
+    const { cdRef, component } = createComponent(GreetingsComponent);
+
+    cdRef.detectChanges.mockReset();
+
+    component.meal = 'Lasagna';
+    component.evaluation = 'Delicious';
+
+    jest.runAllTicks();
+
+    expect(cdRef.detectChanges).toBeCalledTimes(1);
+  });
 
   describe(watch.name, () => {
     it.todo('should emit undefined value');
@@ -13,4 +40,25 @@ describe(Microwave.name, () => {
 
     it.todo('should emit distinct values only');
   });
+
+  function createComponent<T>(cmpClass: Type<T>) {
+    const mock: jest.Mocked<Pick<ChangeDetectorRef, 'detectChanges'>> = {
+      detectChanges: jest.fn(),
+    };
+
+    TestBed.configureTestingModule({
+      providers: [
+        cmpClass,
+        {
+          provide: ChangeDetectorRef,
+          useValue: mock,
+        },
+      ],
+    });
+
+    return {
+      component: TestBed.inject(cmpClass),
+      cdRef: mock,
+    };
+  }
 });
