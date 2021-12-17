@@ -1,12 +1,13 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { createObserver } from 'packages/microwave/testing/observer';
+import { finalize } from 'rxjs';
 import { Microwave, watch } from './microwave';
 
-@Microwave()
 @Component({
   template: `{{ meal }} is {{ evaluation }}`,
 })
+@Microwave()
 class GreetingsComponent {
   meal?: string;
   evaluation = 'meh';
@@ -47,10 +48,23 @@ describe(Microwave.name, () => {
     expect(cdRef.detectChanges).toBeCalledTimes(1);
   });
 
+  it('should stop triggering change detection on destroy', async () => {
+    const { cdRef, component, destroy } = createComponent();
+    await flushMicrotasks();
+    cdRef.detectChanges.mockReset();
+
+    component.evaluation = 'Delicious';
+
+    destroy();
+
+    await flushMicrotasks();
+
+    expect(cdRef.detectChanges).toBeCalledTimes(0);
+  });
+
   describe(watch.name, () => {
     it('should emit undefined value', () => {
       const { component } = createComponent();
-      console.log(component.meal);
 
       const meal$ = watch(component, 'meal');
 
@@ -96,6 +110,21 @@ describe(Microwave.name, () => {
       expect(spy.next).toBeCalledTimes(1);
     });
 
+    it('should stop watching on destroy', () => {
+      const { component, destroy } = createComponent();
+
+      const finalizeSpy = jest.fn();
+      const evaluation$ = watch(component, 'evaluation').pipe(
+        finalize(finalizeSpy)
+      );
+
+      observe(evaluation$);
+
+      destroy();
+
+      expect(finalizeSpy).toBeCalledTimes(1);
+    });
+
     it('should throw error if not microwaved', () => {
       expect(() => watch({ name: 'foo' }, 'name')).toThrow(/not microwaved/);
     });
@@ -119,9 +148,15 @@ describe(Microwave.name, () => {
       ],
     });
 
+    const component = TestBed.inject(GreetingsComponent);
+
     return {
-      component: TestBed.inject(GreetingsComponent),
+      component,
       cdRef: mock,
+      destroy() {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (component as any).ngOnDestroy();
+      },
     };
   }
 
