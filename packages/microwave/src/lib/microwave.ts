@@ -6,16 +6,22 @@ import { debounce } from 'rxjs/operators';
  * @deprecated 🚧 Work in progress.
  */
 export function Microwave() {
-  return function MicrowaveDecorator<
-    T extends Record<string | symbol, unknown>
-  >(originalClass: Type<T>): Type<T> {
-    return _decorateClass(originalClass, {
+  return function MicrowaveDecorator<T>(originalClass: Type<T>): Type<T> {
+    const microwavedClass: Type<Microwaved<T>> = originalClass;
+
+    return _decorateClass(microwavedClass, {
       wrapFactory(factoryFn) {
-        _setupMicrowave();
-        return factoryFn();
+        const { markForCheck$ } = _setupMicrowave();
+
+        const target = factoryFn();
+
+        target[_MARK_FOR_CHECK_SUBJECT_SYMBOL] = markForCheck$;
+
+        return target;
       },
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      preSet(target, property, value) {},
+      preSet(target) {
+        target[_MARK_FOR_CHECK_SUBJECT_SYMBOL]?.next();
+      },
     });
   };
 }
@@ -46,6 +52,8 @@ export function _setupMicrowave() {
 
   cdr.detach();
   markForCheck$.next();
+
+  return { markForCheck$ };
 }
 
 export function _decorateClass<
@@ -58,7 +66,7 @@ export function _decorateClass<
     preSet,
   }: {
     wrapFactory: (factoryFn: () => T) => T;
-    preSet: (target: T, property: K, value: unknown) => void;
+    preSet: (target: T) => void;
   }
 ) {
   const MicrowaveProxy: Type<T> = function (this: T, ...args: unknown[]) {
@@ -70,10 +78,16 @@ export function _decorateClass<
 
   MicrowaveProxy.prototype = new Proxy(originalClass.prototype, {
     set(target, property, value) {
-      preSet(target as T, property as K, value);
+      preSet(target as T);
       return Reflect.set(target, property, value);
     },
   });
 
   return MicrowaveProxy;
 }
+
+export const _MARK_FOR_CHECK_SUBJECT_SYMBOL = Symbol('MarkForCheckSubject');
+
+export type Microwaved<T> = T & {
+  [_MARK_FOR_CHECK_SUBJECT_SYMBOL]?: Subject<void>;
+};

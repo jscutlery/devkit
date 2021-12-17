@@ -31,7 +31,7 @@ describe(Microwave.name, () => {
     expect(cdRef.detectChanges).toBeCalledTimes(1);
   });
 
-  xit('should trigger change detection once when properties change', async () => {
+  it('should trigger change detection once when properties change', async () => {
     const { cdRef, component } = createComponent(GreetingsComponent);
     await flushMicrotasks();
     cdRef.detectChanges.mockReset();
