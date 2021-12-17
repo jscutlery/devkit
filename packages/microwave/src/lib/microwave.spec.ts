@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Microwave, watch } from './microwave';
 
+@Microwave()
 @Component({
   template: `{{ meal }} is {{ evaluation }}`,
 })
@@ -13,12 +14,17 @@ class GreetingsComponent {
 jest.useFakeTimers();
 
 describe(Microwave.name, () => {
-  xit('🚧 should trigger change detection once on startup', () => {
+  it('should detach change detector on startup', () => {
+    const { cdRef } = createComponent(GreetingsComponent);
+    expect(cdRef.detach).toBeCalledTimes(1);
+  });
+
+  xit('should trigger change detection once on startup', () => {
     const { cdRef } = createComponent(GreetingsComponent);
     expect(cdRef.detectChanges).toBeCalledTimes(1);
   });
 
-  xit('🚧 should trigger change detection once when properties change', async () => {
+  xit('should trigger change detection once when properties change', async () => {
     const { cdRef, component } = createComponent(GreetingsComponent);
 
     cdRef.detectChanges.mockReset();
@@ -42,7 +48,10 @@ describe(Microwave.name, () => {
   });
 
   function createComponent<T>(cmpClass: Type<T>) {
-    const mock: jest.Mocked<Pick<ChangeDetectorRef, 'detectChanges'>> = {
+    const mock: jest.Mocked<
+      Pick<ChangeDetectorRef, 'detach' | 'detectChanges'>
+    > = {
+      detach: jest.fn(),
       detectChanges: jest.fn(),
     };
 
