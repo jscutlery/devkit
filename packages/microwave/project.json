@@ -36,6 +36,13 @@
           "packages/microwave/src/**/*.html"
         ]
       }
+    },
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "packages/microwave/cypress.json",
+        "testingType": "component"
+      }
     }
   },
   "tags": []

@@ -11,7 +11,9 @@
     "src/test-setup.ts",
     "**/*.spec.ts",
     "testing/**.ts",
-    "**/*.test.ts"
+    "**/*.test.ts",
+    "cypress/support/**/*.ts",
+    "**/*.cy-spec.ts"
   ],
   "include": ["src/**/*.ts"]
 }
