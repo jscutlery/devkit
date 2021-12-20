@@ -1,6 +1,6 @@
 import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 
-export const _MARK_FOR_CHECK_SUBJECT_SYMBOL = Symbol(
+export const _PROPERTY_CHANGES_SUBJECT_SYMBOL = Symbol(
   'MicrowaveMarkForCheckSubject'
 );
 export const _SUBJECTS_SYMBOL = Symbol('MicrowaveSubjects');
@@ -11,17 +11,19 @@ export type MicrowaveSubjects<T, K extends keyof T = keyof T> = Map<
   BehaviorSubject<T[K]>
 >;
 
-export type Microwaved<T> = T & {
-  [_MARK_FOR_CHECK_SUBJECT_SYMBOL]?: Subject<void>;
+export type Microwaved<T, K extends keyof T = keyof T> = T & {
+  [_PROPERTY_CHANGES_SUBJECT_SYMBOL]?: Subject<{ property: K; value: T[K] }>;
   [_SUBJECTS_SYMBOL]?: MicrowaveSubjects<T>;
   [_DESTROYED_SUBJECT_SYMBOL]?: ReplaySubject<void>;
 };
 
 export function getEngine<T>(component: Microwaved<T>) {
   const destroyed$ = _getDestroyedSubject(component);
+  const propertyChanges$ = _getPropertyChangesSubject(component);
 
   return {
     destroyed$: destroyed$.asObservable(),
+    propertyChanges$: propertyChanges$.asObservable(),
     markDestroyed() {
       destroyed$.next();
     },
@@ -30,15 +32,12 @@ export function getEngine<T>(component: Microwaved<T>) {
     },
     setProperty<K extends keyof T = keyof T>(property: K, value: T[K]) {
       _getPropertySubject(component, property).next(value);
+      _getPropertyChangesSubject(component).next({ property, value });
     },
     watchProperty<K extends keyof T = keyof T>(property: K) {
       return _getPropertySubject(component, property);
     },
   };
-}
-
-export function markForCheck<T>(component: Microwaved<T>) {
-  getMarkForCheckSubject(component).next();
 }
 
 export function _getDestroyedSubject<T>(component: Microwaved<T>) {
@@ -51,9 +50,9 @@ export function _getDestroyedSubject<T>(component: Microwaved<T>) {
  * so we can coalesce and trigger change detection
  * with a custom strategy.
  */
-export function getMarkForCheckSubject<T>(component: Microwaved<T>) {
-  return (component[_MARK_FOR_CHECK_SUBJECT_SYMBOL] =
-    component[_MARK_FOR_CHECK_SUBJECT_SYMBOL] ?? new Subject());
+export function _getPropertyChangesSubject<T>(component: Microwaved<T>) {
+  return (component[_PROPERTY_CHANGES_SUBJECT_SYMBOL] =
+    component[_PROPERTY_CHANGES_SUBJECT_SYMBOL] ?? new Subject());
 }
 
 export function _getPropertySubject<T, K extends keyof T = keyof T>(

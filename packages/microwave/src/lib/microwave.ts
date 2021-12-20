@@ -1,13 +1,14 @@
 import { ChangeDetectorRef, Type, ɵɵdirectiveInject } from '@angular/core';
-import { noop, Observable } from 'rxjs';
-import { debounce, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { __decorate } from 'tslib';
 import {
-  getEngine,
-  getMarkForCheckSubject,
-  markForCheck,
-  Microwaved,
-} from './engine';
+  noop,
+  Observable,
+  debounce,
+  distinctUntilChanged,
+  startWith,
+  takeUntil,
+} from 'rxjs';
+import { __decorate } from 'tslib';
+import { getEngine, Microwaved } from './engine';
 
 /**
  * @deprecated 🚧 Work in progress.
@@ -18,7 +19,6 @@ export function Microwave() {
       wrapFactory: (factoryFn) => _microwave(factoryFn),
       preSet(target, property, value) {
         getEngine(target).setProperty(property, value);
-        markForCheck(target);
       },
     });
   };
@@ -48,17 +48,15 @@ export function _microwave<T>(factoryFn: () => Microwaved<T>) {
 
   const target = factoryFn();
 
-  const { destroyed$ } = getEngine(target);
-  const markForCheck$ = getMarkForCheckSubject(target);
+  const { destroyed$, propertyChanges$ } = getEngine(target);
 
-  markForCheck$
+  propertyChanges$
     .pipe(
+      startWith(undefined),
       debounce(() => Promise.resolve()),
       takeUntil(destroyed$)
     )
     .subscribe(() => cdr.detectChanges());
-
-  markForCheck$.next();
 
   return target;
 }
