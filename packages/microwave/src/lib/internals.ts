@@ -17,11 +17,6 @@ export type Microwaved<T> = T & {
   [_DESTROYED_SUBJECT_SYMBOL]?: ReplaySubject<void>;
 };
 
-export function isMicrowaved<T>(component: T): component is Microwaved<T> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return _MARK_FOR_CHECK_SUBJECT_SYMBOL in component;
-}
-
 export function emitPropertyChange<T, K extends keyof T = keyof T>(
   component: T,
   property: K,

@@ -1,17 +1,8 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { createObserver } from '../../testing/observer';
 import { finalize } from 'rxjs';
+import { createObserver } from '../../testing/observer';
 import { Microwave, watch } from './microwave';
-
-@Component({
-  template: `{{ meal }} is {{ evaluation }}`,
-})
-@Microwave()
-class GreetingsComponent {
-  meal?: string;
-  evaluation = 'meh';
-}
 
 jest.useFakeTimers();
 
@@ -19,24 +10,24 @@ describe(Microwave.name, () => {
   const { observe } = createObserver();
 
   it('should detach change detector on startup', () => {
-    const { cdRef } = createComponent();
+    const { cdRef } = createComponent(GreetingsComponent);
     expect(cdRef.detach).toBeCalledTimes(1);
   });
 
   it('should not trigger change detection before one tick', () => {
-    const { cdRef } = createComponent();
+    const { cdRef } = createComponent(GreetingsComponent);
     expect(cdRef.detectChanges).toBeCalledTimes(0);
   });
 
   it('should trigger change detection after one tick', async () => {
-    const { cdRef } = createComponent();
+    const { cdRef } = createComponent(GreetingsComponent);
     await flushMicrotasks();
 
     expect(cdRef.detectChanges).toBeCalledTimes(1);
   });
 
   it('should trigger change detection once when fields change', async () => {
-    const { cdRef, component } = createComponent();
+    const { cdRef, component } = createComponent(GreetingsComponent);
     await flushMicrotasks();
     cdRef.detectChanges.mockReset();
 
@@ -49,7 +40,7 @@ describe(Microwave.name, () => {
   });
 
   it('should stop triggering change detection on destroy', async () => {
-    const { cdRef, component, destroy } = createComponent();
+    const { cdRef, component, destroy } = createComponent(GreetingsComponent);
     await flushMicrotasks();
     cdRef.detectChanges.mockReset();
 
@@ -63,74 +54,92 @@ describe(Microwave.name, () => {
   });
 
   describe(watch.name, () => {
-    it('should emit undefined value', () => {
-      const { component } = createComponent();
+    describe('with eager watch', () => {
+      it('should emit initial value', () => {
+        const { component } = createComponent(GreetingsWithWatchComponent);
+        const spy = observe(component.evaluation$);
 
-      const meal$ = watch(component, 'meal');
+        expect(spy.next).toBeCalledTimes(1);
+        expect(spy.next).toBeCalledWith('meh');
+      });
 
-      const spy = observe(meal$);
+      it('should emit changes', () => {
+        const { component } = createComponent(GreetingsWithWatchComponent);
+        const spy = observe(component.evaluation$);
 
-      expect(spy.next).toBeCalledTimes(1);
-      expect(spy.next).toBeCalledWith(undefined);
+        component.evaluation = 'Delicious';
+
+        expect(spy.next).toBeCalledTimes(2);
+        expect(spy.next).lastCalledWith('Delicious');
+      });
     });
 
-    it('should emit initial value', () => {
-      const { component } = createComponent();
+    describe('with late watch', () => {
+      it('should emit undefined value', () => {
+        const { component } = createComponent(GreetingsComponent);
 
-      const evaluation$ = watch(component, 'evaluation');
+        const meal$ = watch(component, 'meal');
 
-      const spy = observe(evaluation$);
+        const spy = observe(meal$);
 
-      expect(spy.next).toBeCalledTimes(1);
-      expect(spy.next).toBeCalledWith('meh');
-    });
+        expect(spy.next).toBeCalledTimes(1);
+        expect(spy.next).toBeCalledWith(undefined);
+      });
 
-    it('should emit changes', () => {
-      const { component } = createComponent();
+      it('should emit initial value', () => {
+        const { component } = createComponent(GreetingsComponent);
 
-      const evaluation$ = watch(component, 'evaluation');
+        const evaluation$ = watch(component, 'evaluation');
 
-      const spy = observe(evaluation$);
+        const spy = observe(evaluation$);
 
-      component.evaluation = 'Delicious';
+        expect(spy.next).toBeCalledTimes(1);
+        expect(spy.next).toBeCalledWith('meh');
+      });
 
-      expect(spy.next).toBeCalledTimes(2);
-      expect(spy.next).lastCalledWith('Delicious');
-    });
+      it('should emit changes', () => {
+        const { component } = createComponent(GreetingsComponent);
 
-    it('should emit distinct values only', () => {
-      const { component } = createComponent();
+        const evaluation$ = watch(component, 'evaluation');
 
-      const evaluation$ = watch(component, 'evaluation');
+        const spy = observe(evaluation$);
 
-      const spy = observe(evaluation$);
+        component.evaluation = 'Delicious';
 
-      component.evaluation = 'meh';
+        expect(spy.next).toBeCalledTimes(2);
+        expect(spy.next).lastCalledWith('Delicious');
+      });
 
-      expect(spy.next).toBeCalledTimes(1);
-    });
+      it('should emit distinct values only', () => {
+        const { component } = createComponent(GreetingsComponent);
 
-    it('should stop watching on destroy', () => {
-      const { component, destroy } = createComponent();
+        const evaluation$ = watch(component, 'evaluation');
 
-      const finalizeSpy = jest.fn();
-      const evaluation$ = watch(component, 'evaluation').pipe(
-        finalize(finalizeSpy)
-      );
+        const spy = observe(evaluation$);
 
-      observe(evaluation$);
+        component.evaluation = 'meh';
 
-      destroy();
+        expect(spy.next).toBeCalledTimes(1);
+      });
 
-      expect(finalizeSpy).toBeCalledTimes(1);
-    });
+      it('should stop watching on destroy', () => {
+        const { component, destroy } = createComponent(GreetingsComponent);
 
-    it('should throw error if not microwaved', () => {
-      expect(() => watch({ name: 'foo' }, 'name')).toThrow(/not microwaved/);
+        const finalizeSpy = jest.fn();
+        const evaluation$ = watch(component, 'evaluation').pipe(
+          finalize(finalizeSpy)
+        );
+
+        observe(evaluation$);
+
+        destroy();
+
+        expect(finalizeSpy).toBeCalledTimes(1);
+      });
     });
   });
 
-  function createComponent() {
+  function createComponent<T>(componentClass: Type<T>) {
     const mock: jest.Mocked<
       Pick<ChangeDetectorRef, 'detach' | 'detectChanges'>
     > = {
@@ -140,7 +149,7 @@ describe(Microwave.name, () => {
 
     TestBed.configureTestingModule({
       providers: [
-        GreetingsComponent,
+        componentClass,
         {
           provide: ChangeDetectorRef,
           useValue: mock,
@@ -148,7 +157,7 @@ describe(Microwave.name, () => {
       ],
     });
 
-    const component = TestBed.inject(GreetingsComponent);
+    const component = TestBed.inject(componentClass);
 
     return {
       component,
@@ -164,3 +173,22 @@ describe(Microwave.name, () => {
     await Promise.resolve();
   }
 });
+
+@Component({
+  template: `{{ meal }} is {{ evaluation }}`,
+})
+@Microwave()
+class GreetingsComponent {
+  meal?: string;
+  evaluation = 'meh';
+}
+
+@Component({
+  template: `{{ meal }} is {{ evaluation }}`,
+})
+@Microwave()
+class GreetingsWithWatchComponent {
+  meal?: string;
+  evaluation = 'meh';
+  evaluation$ = watch(this, 'evaluation');
+}

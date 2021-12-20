@@ -6,10 +6,9 @@ import {
   getDestroyedSubject,
   getMarkForCheckSubject,
   getPropertySubject,
-  isMicrowaved,
   markDestroyed,
   markForCheck,
-  Microwaved
+  Microwaved,
 } from './internals';
 
 /**
@@ -17,18 +16,15 @@ import {
  */
 export function Microwave() {
   return function MicrowaveDecorator<T>(originalClass: Type<T>): Type<T> {
-    const microwavedProxy = _decorateClass(
-      originalClass as Type<T>,
-      {
-        wrapFactory(factoryFn) {
-          return _microwave(factoryFn);
-        },
-        preSet(target, property, value) {
-          emitPropertyChange(target, property, value);
-          markForCheck(target);
-        },
-      }
-    );
+    const microwavedProxy = _decorateClass(originalClass as Type<T>, {
+      wrapFactory(factoryFn) {
+        return _microwave(factoryFn);
+      },
+      preSet(target, property, value) {
+        emitPropertyChange(target, property, value);
+        markForCheck(target);
+      },
+    });
 
     /* Copy static properties. */
     Object.assign(microwavedProxy, originalClass);
@@ -44,12 +40,6 @@ export function watch<T, K extends keyof T = keyof T>(
   component: T,
   property: K
 ): Observable<T[K]> {
-  if (!isMicrowaved(component)) {
-    throw new Error(
-      `Component is not microwaved. Did you add @Microwave decorator?`
-    );
-  }
-
   return getPropertySubject(component, property).pipe(
     distinctUntilChanged(),
     takeUntil(getDestroyedSubject(component))
