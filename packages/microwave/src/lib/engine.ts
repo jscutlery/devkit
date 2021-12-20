@@ -17,23 +17,31 @@ export type Microwaved<T> = T & {
   [_DESTROYED_SUBJECT_SYMBOL]?: ReplaySubject<void>;
 };
 
-export function emitPropertyChange<T, K extends keyof T = keyof T>(
-  component: T,
-  property: K,
-  value: T[K]
-) {
-  getPropertySubject(component, property).next(value);
+export function getEngine<T>(component: Microwaved<T>) {
+  const destroyed$ = _getDestroyedSubject(component);
+
+  return {
+    destroyed$: destroyed$.asObservable(),
+    markDestroyed() {
+      destroyed$.next();
+    },
+    getPropertyValue<K extends keyof T = keyof T>(property: K): T[K] {
+      return _getPropertySubject(component, property).value;
+    },
+    setProperty<K extends keyof T = keyof T>(property: K, value: T[K]) {
+      _getPropertySubject(component, property).next(value);
+    },
+    watchProperty<K extends keyof T = keyof T>(property: K) {
+      return _getPropertySubject(component, property);
+    },
+  };
 }
 
 export function markForCheck<T>(component: Microwaved<T>) {
   getMarkForCheckSubject(component).next();
 }
 
-export function markDestroyed<T>(component: Microwaved<T>) {
-  getDestroyedSubject(component).next();
-}
-
-export function getDestroyedSubject<T>(component: Microwaved<T>) {
+export function _getDestroyedSubject<T>(component: Microwaved<T>) {
   return (component[_DESTROYED_SUBJECT_SYMBOL] =
     component[_DESTROYED_SUBJECT_SYMBOL] ?? new ReplaySubject(1));
 }
@@ -48,14 +56,7 @@ export function getMarkForCheckSubject<T>(component: Microwaved<T>) {
     component[_MARK_FOR_CHECK_SUBJECT_SYMBOL] ?? new Subject());
 }
 
-export function getPropertyValue<T, K extends keyof T = keyof T>(
-  component: Microwaved<T>,
-  property: K
-): T[K] {
-  return getPropertySubject(component, property).value;
-}
-
-export function getPropertySubject<T, K extends keyof T = keyof T>(
+export function _getPropertySubject<T, K extends keyof T = keyof T>(
   component: Microwaved<T>,
   property: K
 ): BehaviorSubject<T[K]> {

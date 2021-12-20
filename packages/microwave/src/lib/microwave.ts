@@ -3,15 +3,11 @@ import { noop, Observable } from 'rxjs';
 import { debounce, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { __decorate } from 'tslib';
 import {
-  emitPropertyChange,
-  getDestroyedSubject,
+  getEngine,
   getMarkForCheckSubject,
-  getPropertySubject,
-  getPropertyValue,
-  markDestroyed,
   markForCheck,
   Microwaved,
-} from './internals';
+} from './engine';
 
 /**
  * @deprecated 🚧 Work in progress.
@@ -21,7 +17,7 @@ export function Microwave() {
     _decorateClass(originalClass, {
       wrapFactory: (factoryFn) => _microwave(factoryFn),
       preSet(target, property, value) {
-        emitPropertyChange(target, property, value);
+        getEngine(target).setProperty(property, value);
         markForCheck(target);
       },
     });
@@ -35,9 +31,10 @@ export function watch<T, K extends keyof T = keyof T>(
   component: T,
   property: K
 ): Observable<T[K]> {
-  return getPropertySubject(component, property).pipe(
+  const { destroyed$, watchProperty } = getEngine(component);
+  return watchProperty(property).pipe(
     distinctUntilChanged(),
-    takeUntil(getDestroyedSubject(component))
+    takeUntil(destroyed$)
   );
 }
 
@@ -51,7 +48,7 @@ export function _microwave<T>(factoryFn: () => Microwaved<T>) {
 
   const target = factoryFn();
 
-  const destroyed$ = getDestroyedSubject(target);
+  const { destroyed$ } = getEngine(target);
   const markForCheck$ = getMarkForCheckSubject(target);
 
   markForCheck$
@@ -96,20 +93,21 @@ export function _decorateClass<
        */
       (factoryFn: () => T) => () => {
         const instance = factoryFn() as Microwaved<T>;
+        const engine = getEngine(instance);
 
         for (const property of Object.getOwnPropertyNames(
           instance
         ) as Array<K>) {
           /* Set initial value. */
-          emitPropertyChange(instance, property, instance[property]);
+          engine.setProperty(property, instance[property]);
 
           Object.defineProperty(instance, property, {
             set(value) {
               preSet(instance, property, value);
-              emitPropertyChange(instance, property, value);
+              engine.setProperty(property, value);
             },
             get() {
-              return getPropertyValue(instance, property);
+              return engine.getPropertyValue(property);
             },
           });
         }
@@ -138,9 +136,7 @@ export function _decorateClass<
     [
       (onDestroy: () => void) => {
         return function (this: T) {
-          console.log('destroy');
-
-          markDestroyed(this);
+          getEngine(this).markDestroyed();
           return onDestroy?.();
         };
       },
