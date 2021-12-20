@@ -4,8 +4,6 @@ import { finalize } from 'rxjs';
 import { createObserver } from '../../testing/observer';
 import { Microwave, watch } from './microwave';
 
-jest.useFakeTimers();
-
 describe(Microwave.name, () => {
   const { observe } = createObserver();
 
