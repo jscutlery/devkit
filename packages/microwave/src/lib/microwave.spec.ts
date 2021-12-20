@@ -20,14 +20,15 @@ describe(Microwave.name, () => {
   });
 
   it('should trigger change detection after one tick', async () => {
-    const { cdRef } = createComponent(GreetingsComponent);
+    const { cdRef, flushMicrotasks } = createComponent(GreetingsComponent);
     await flushMicrotasks();
 
     expect(cdRef.detectChanges).toBeCalledTimes(1);
   });
 
   it('should trigger change detection once when fields change', async () => {
-    const { cdRef, component } = createComponent(GreetingsComponent);
+    const { cdRef, component, flushMicrotasks } =
+      createComponent(GreetingsComponent);
     await flushMicrotasks();
     cdRef.detectChanges.mockReset();
 
@@ -40,9 +41,14 @@ describe(Microwave.name, () => {
   });
 
   it('should stop triggering change detection on destroy', async () => {
-    const { cdRef, component, destroy } = createComponent(GreetingsComponent);
-    await flushMicrotasks();
-    cdRef.detectChanges.mockReset();
+    const {
+      cdRef,
+      component,
+      destroy,
+      flushMicrotasks,
+      flushMicrotasksAndResetMocks,
+    } = createComponent(GreetingsComponent);
+    await flushMicrotasksAndResetMocks();
 
     component.evaluation = 'Delicious';
 
@@ -159,6 +165,10 @@ describe(Microwave.name, () => {
 
     const component = TestBed.inject(componentClass);
 
+    async function flushMicrotasks() {
+      await Promise.resolve();
+    }
+
     return {
       component,
       cdRef: mock,
@@ -166,11 +176,13 @@ describe(Microwave.name, () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (component as any).ngOnDestroy();
       },
+      flushMicrotasks,
+      async flushMicrotasksAndResetMocks() {
+        await flushMicrotasks();
+        mock.detach.mockReset();
+        mock.detectChanges.mockReset();
+      },
     };
-  }
-
-  async function flushMicrotasks() {
-    await Promise.resolve();
   }
 });
 
