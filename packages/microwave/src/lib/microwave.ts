@@ -1,11 +1,13 @@
 import { ChangeDetectorRef, Type, ɵɵdirectiveInject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { noop, Observable } from 'rxjs';
 import { debounce, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { __decorate } from 'tslib';
 import {
   emitPropertyChange,
   getDestroyedSubject,
   getMarkForCheckSubject,
   getPropertySubject,
+  getPropertyValue,
   markDestroyed,
   markForCheck,
   Microwaved,
@@ -15,21 +17,14 @@ import {
  * @deprecated 🚧 Work in progress.
  */
 export function Microwave() {
-  return function MicrowaveDecorator<T>(originalClass: Type<T>): Type<T> {
-    const microwavedProxy = _decorateClass(originalClass as Type<T>, {
-      wrapFactory(factoryFn) {
-        return _microwave(factoryFn);
-      },
+  return function MicrowaveDecorator<T>(originalClass: IvyComponentType<T>) {
+    _decorateClass(originalClass, {
+      wrapFactory: (factoryFn) => _microwave(factoryFn),
       preSet(target, property, value) {
         emitPropertyChange(target, property, value);
         markForCheck(target);
       },
     });
-
-    /* Copy static properties. */
-    Object.assign(microwavedProxy, originalClass);
-
-    return microwavedProxy;
   };
 }
 
@@ -76,7 +71,7 @@ export function _decorateClass<
   K extends keyof T = keyof T,
   V extends T[K] = T[K]
 >(
-  originalClass: Type<T>,
+  originalClass: IvyComponentType<T>,
   {
     wrapFactory,
     preSet,
@@ -85,24 +80,87 @@ export function _decorateClass<
     preSet: (target: T, property: K, value: V) => void;
   }
 ) {
-  const MicrowaveProxy: Type<T> = function (this: T, ...args: unknown[]) {
-    return wrapFactory(() => {
-      const instance = Reflect.construct(originalClass, args, MicrowaveProxy);
-      return new Proxy(instance, {
-        set(target, property, value) {
-          preSet(target as T, property as K, value as V);
-          return Reflect.set(target, property, value);
-        },
-      });
-    });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } as any;
+  if (!originalClass.ɵfac || !originalClass.ɵcmp) {
+    throw new Error(
+      `${originalClass.name} is either not a component or not compiled.`
+    );
+  }
 
-  const originalOnDestroy = MicrowaveProxy.prototype.ngOnDestroy;
-  MicrowaveProxy.prototype.ngOnDestroy = function () {
-    markDestroyed(this);
-    return originalOnDestroy?.();
+  /**
+   * Override component factory.
+   */
+  const factory = __decorate(
+    [
+      /*
+       * Override getters & setters.
+       */
+      (factoryFn: () => T) => () => {
+        const instance = factoryFn() as Microwaved<T>;
+
+        for (const property of Object.getOwnPropertyNames(
+          instance
+        ) as Array<K>) {
+          /* Set initial value. */
+          emitPropertyChange(instance, property, instance[property]);
+
+          Object.defineProperty(instance, property, {
+            set(value) {
+              preSet(instance, property, value);
+              emitPropertyChange(instance, property, value);
+            },
+            get() {
+              return getPropertyValue(instance, property);
+            },
+          });
+        }
+
+        return instance;
+      },
+
+      /*
+       * Use given wrapper.
+       */
+      (factoryFn: () => T) => () => wrapFactory(factoryFn),
+    ],
+    originalClass.ɵfac
+  );
+
+  Object.defineProperty(originalClass, 'ɵfac', {
+    get() {
+      return factory;
+    },
+  });
+
+  /**
+   * Override ngOnDestroy.
+   */
+  originalClass.prototype.ngOnDestroy = __decorate(
+    [
+      (onDestroy: () => void) => {
+        return function (this: T) {
+          console.log('destroy');
+
+          markDestroyed(this);
+          return onDestroy?.();
+        };
+      },
+    ],
+    /* @hack use noop, otherwise, __decorate will not decorate the function. */
+    originalClass.prototype.ngOnDestroy ?? noop
+  );
+}
+
+export interface IvyComponentType<T> extends Type<T> {
+  ɵcmp?: {
+    factory: () => T;
   };
+  ɵfac?: () => T;
+}
 
-  return MicrowaveProxy;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function _wrap<F extends (...args: any[]) => any>(
+  fn: F,
+  wrapper: (fn: F) => ReturnType<F>
+) {
+  return () => wrapper(fn);
 }

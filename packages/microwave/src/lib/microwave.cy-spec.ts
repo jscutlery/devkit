@@ -11,12 +11,12 @@ import { Microwave, watch } from './microwave';
     <button (click)="evaluation = 'delicious'">😒</button>`,
 })
 class GreetingsComponent {
-  @Input() meal?: string;
-  @Output() evaluation$ = watch(this, 'evaluation');
+  @Input() meal?: string = undefined;
+  @Output() evaluationChange = watch(this, 'evaluation');
 
-  capitalizedMeal: string;
+  capitalizedMeal: string = undefined;
 
-  evaluation?: string;
+  evaluation?: string = undefined;
 
   constructor() {
     watch(this, 'meal')
@@ -24,12 +24,14 @@ class GreetingsComponent {
         delay(10),
         map((meal) => meal?.toUpperCase())
       )
-      .subscribe((capitalizedMeal) => (this.capitalizedMeal = capitalizedMeal));
+      .subscribe((capitalizedMeal) => {
+        return (this.capitalizedMeal = capitalizedMeal);
+      });
   }
 }
 
 describe('Microwave', () => {
-  xit('🚧 should trigger change detection on property change', () => {
+  it('should trigger change detection on property change', () => {
     const { getMealEl, setInput } = setUp();
 
     setInput('meal', 'Burger');
@@ -40,6 +42,8 @@ describe('Microwave', () => {
 
     getMealEl().contains('BABAGANOUSH');
   });
+
+  xit('🚧 should trigger evaluationChange output');
 
   xit('🚧 should unsubscribe on destroy');
 

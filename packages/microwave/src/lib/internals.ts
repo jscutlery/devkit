@@ -48,6 +48,13 @@ export function getMarkForCheckSubject<T>(component: Microwaved<T>) {
     component[_MARK_FOR_CHECK_SUBJECT_SYMBOL] ?? new Subject());
 }
 
+export function getPropertyValue<T, K extends keyof T = keyof T>(
+  component: Microwaved<T>,
+  property: K
+): T[K] {
+  return getPropertySubject(component, property).value;
+}
+
 export function getPropertySubject<T, K extends keyof T = keyof T>(
   component: Microwaved<T>,
   property: K
@@ -56,7 +63,7 @@ export function getPropertySubject<T, K extends keyof T = keyof T>(
   let subject = subjectsMap?.get(property);
   if (subject == null) {
     /* Use value from component if it is initialized in constructor. */
-    subject = new BehaviorSubject(component[property]);
+    subject = new BehaviorSubject(undefined);
     subjectsMap?.set(property, subject);
   }
 

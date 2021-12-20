@@ -184,19 +184,19 @@ describe(Microwave.name, () => {
   }
 });
 
+@Microwave()
 @Component({
   template: `{{ meal }} is {{ evaluation }}`,
 })
-@Microwave()
 class GreetingsComponent {
   meal?: string;
   evaluation = 'meh';
 }
 
+@Microwave()
 @Component({
   template: `{{ meal }} is {{ evaluation }}`,
 })
-@Microwave()
 class GreetingsWithWatchComponent {
   meal?: string;
   evaluation = 'meh';
