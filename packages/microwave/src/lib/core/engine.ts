@@ -1,5 +1,5 @@
+import { BehaviorSubject, map, mapTo, Observable, ReplaySubject } from 'rxjs';
 import { ChangeDetectionFns } from './change-detection-fns';
-import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 
 /**
  * This should stay decoupled from Angular.
@@ -18,13 +18,12 @@ export function getEngine<T, K extends keyof T = keyof T>(
   }
 
   const destroyed$ = new ReplaySubject<void>(1);
-  const propertyChanges$ = new Subject<{ property: K; value: T[K] }>();
-  const subjectsMap: MicrowaveSubjectsMap<T, K> = new Map();
+  const state$ = new BehaviorSubject<Partial<T>>({});
   let changeDetectionFns: ChangeDetectionFns;
 
   return (component[_ENGINE_SYMBOL] = {
     destroyed$: destroyed$.asObservable(),
-    propertyChanges$: propertyChanges$.asObservable(),
+    changed$: state$.pipe(mapTo(undefined)),
     detach() {
       changeDetectionFns.detach();
     },
@@ -38,14 +37,19 @@ export function getEngine<T, K extends keyof T = keyof T>(
       changeDetectionFns = _changeDetectionFns;
     },
     getProperty(property) {
-      return _getPropertySubject(subjectsMap, property).value;
+      return state$.value[property];
     },
     setProperty(property, value) {
-      _getPropertySubject(subjectsMap, property).next(value);
-      propertyChanges$.next({ property, value });
+      /* Don't set value if it didn't change.
+       * This is more performant than `distinctUntilChanged` all over the place. */
+      if (state$.value[property] === value) {
+        return;
+      }
+
+      state$.next({ ...state$.value, [property]: value });
     },
     watchProperty(property) {
-      return _getPropertySubject(subjectsMap, property).asObservable();
+      return state$.pipe(map((state) => state[property]));
     },
   });
 }
@@ -61,7 +65,8 @@ export interface MicrowaveEngine<T, K extends keyof T> {
    * Functions below form the strategy facade.
    */
   destroyed$: Observable<void>;
-  propertyChanges$: Observable<{ property: K; value: T[K] }>;
+  /* Tells if some property changed. */
+  changed$: Observable<void>;
   detach(): void;
   detectChanges(): void;
 
@@ -70,9 +75,11 @@ export interface MicrowaveEngine<T, K extends keyof T> {
    */
   setChangeDetectionFns(changeDetectionFns: ChangeDetectionFns): void;
   markDestroyed(): void;
-  getProperty<PROP extends K>(property: PROP): T[PROP];
+  getProperty<PROP extends K>(property: PROP): T[PROP] | undefined;
   setProperty<PROP extends K>(property: PROP, value: T[PROP]): void;
-  watchProperty<PROP extends K>(property: PROP): Observable<T[PROP]>;
+  watchProperty<PROP extends K>(
+    property: PROP
+  ): Observable<T[PROP] | undefined>;
 }
 
 export type MicrowaveSubjectsMap<T, K extends keyof T> = Map<

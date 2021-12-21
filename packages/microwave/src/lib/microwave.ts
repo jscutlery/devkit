@@ -1,4 +1,4 @@
-import { distinctUntilChanged, Observable, takeUntil } from 'rxjs';
+import { Observable, takeUntil } from 'rxjs';
 import { applyStrategy } from './apply-strategy';
 import { getEngine } from './core/engine';
 import { IvyComponentType } from './shared/decorator';
@@ -13,10 +13,7 @@ export function Microwave(strategy = asapStrategy) {
 export function watch<T, K extends keyof T = keyof T>(
   component: T,
   property: K
-): Observable<T[K]> {
+): Observable<T[K] | undefined> {
   const { destroyed$, watchProperty } = getEngine(component);
-  return watchProperty(property).pipe(
-    distinctUntilChanged(),
-    takeUntil(destroyed$)
-  );
+  return watchProperty(property).pipe(takeUntil(destroyed$));
 }

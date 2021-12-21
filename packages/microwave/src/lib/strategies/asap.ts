@@ -1,4 +1,4 @@
-import { debounce, startWith, takeUntil } from 'rxjs';
+import { debounce, takeUntil } from 'rxjs';
 import { Strategy } from '../devkit';
 
 /**
@@ -6,7 +6,7 @@ import { Strategy } from '../devkit';
  */
 export const asapStrategy: Strategy<unknown> = ({
   destroyed$,
-  propertyChanges$,
+  changed$,
   detectChanges,
   detach,
 }) => {
@@ -19,9 +19,8 @@ export const asapStrategy: Strategy<unknown> = ({
    * Trigger change detection initially and on property changes.
    * Coalesce through micro-tasks.
    */
-  propertyChanges$
+  changed$
     .pipe(
-      startWith(undefined),
       debounce(() => Promise.resolve()),
       takeUntil(destroyed$)
     )

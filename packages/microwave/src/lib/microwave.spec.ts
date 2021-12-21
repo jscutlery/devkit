@@ -38,6 +38,21 @@ describe(Microwave.name, () => {
     expect(cdRef.detectChanges).toBeCalledTimes(1);
   });
 
+  it('should not trigger change detection if property is set to same value', async () => {
+    const { cdRef, component, flushMicrotasks } =
+      createComponent(GreetingsComponent);
+    component.meal = 'Lasagna';
+    await flushMicrotasks();
+    cdRef.detectChanges.mockReset();
+
+    /* Set property to identical value. */
+    component.meal = 'Lasagna';
+
+    await flushMicrotasks();
+
+    expect(cdRef.detectChanges).not.toBeCalled();
+  });
+
   it('should stop triggering change detection on destroy', async () => {
     const {
       cdRef,
@@ -189,7 +204,7 @@ describe(Microwave.name, () => {
   template: `{{ meal }} is {{ evaluation }}`,
 })
 class GreetingsComponent {
-  meal?: string;
+  meal?: string = undefined;
   evaluation = 'meh';
 }
 
@@ -198,7 +213,7 @@ class GreetingsComponent {
   template: `{{ meal }} is {{ evaluation }}`,
 })
 class GreetingsWithWatchComponent {
-  meal?: string;
+  meal?: string = undefined;
   evaluation = 'meh';
   evaluation$ = watch(this, 'evaluation');
 }

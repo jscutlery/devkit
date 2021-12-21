@@ -131,7 +131,7 @@ export interface DecoratorHooks<T, K extends keyof T = keyof T> {
   /**
    * Hook called to retrieve a property.
    */
-  onPropertyGet(component: T, property: K): T[K];
+  onPropertyGet(component: T, property: K): T[K] | undefined;
 
   /**
    * Hook called to set a property.
