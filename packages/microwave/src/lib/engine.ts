@@ -1,4 +1,4 @@
-import { BehaviorSubject, ReplaySubject, Subject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 
 /**
  * This should stay decoupled from Angular.
@@ -7,91 +7,70 @@ import { BehaviorSubject, ReplaySubject, Subject, Observable } from 'rxjs';
  * @returns an set of methods and observables that respectively
  * control and represent the state of the object.
  */
-export function getEngine<T>(component: Microwaved<T>): Engine<T> {
-  const destroyed$ = _getDestroyedSubject(component);
-  const propertyChanges$ = _getPropertyChangesSubject(component);
+export function getEngine<T, K extends keyof T = keyof T>(
+  component: Microwaved<T, K>
+): MicrowaveEngine<T, K> {
+  /* Memoize engine. */
+  const engine = component[_ENGINE_SYMBOL];
+  if (engine != null) {
+    return engine;
+  }
 
-  return {
+  const destroyed$ = new ReplaySubject<void>(1);
+  const propertyChanges$ = new Subject<{ property: K; value: T[K] }>();
+  const subjectsMap: MicrowaveSubjectsMap<T, K> = new Map();
+
+  return (component[_ENGINE_SYMBOL] = {
     destroyed$: destroyed$.asObservable(),
     propertyChanges$: propertyChanges$.asObservable(),
     markDestroyed() {
       destroyed$.next();
     },
     getProperty(property) {
-      return _getPropertySubject(component, property).value;
+      return _getPropertySubject(subjectsMap, property).value;
     },
     setProperty(property, value) {
-      _getPropertySubject(component, property).next(value);
-      _getPropertyChangesSubject(component).next({ property, value });
+      _getPropertySubject(subjectsMap, property).next(value);
+      propertyChanges$.next({ property, value });
     },
     watchProperty(property) {
-      return _getPropertySubject(component, property);
+      return _getPropertySubject(subjectsMap, property).asObservable();
     },
-  };
+  });
 }
 
-export interface Engine<T, K extends keyof T = keyof T> {
+export const _ENGINE_SYMBOL = Symbol('MicrowaveEngine');
+
+export type Microwaved<T, K extends keyof T> = T & {
+  [_ENGINE_SYMBOL]?: MicrowaveEngine<T, K>;
+};
+
+export interface MicrowaveEngine<T, K extends keyof T> {
   destroyed$: Observable<void>;
   propertyChanges$: Observable<{ property: K; value: T[K] }>;
   markDestroyed(): void;
-  getProperty<PROP extends keyof T = keyof T>(property: PROP): T[PROP];
-  setProperty<PROP extends keyof T = keyof T>(
-    property: PROP,
-    value: T[PROP]
-  ): void;
-  watchProperty<PROP extends keyof T = keyof T>(
-    property: PROP
-  ): Observable<T[PROP]>;
+  getProperty<PROP extends K>(property: PROP): T[PROP];
+  setProperty<PROP extends K>(property: PROP, value: T[PROP]): void;
+  watchProperty<PROP extends K>(property: PROP): Observable<T[PROP]>;
 }
 
-export const _PROPERTY_CHANGES_SUBJECT_SYMBOL = Symbol(
-  'MicrowavePropertyChanges'
-);
-export const _SUBJECTS_SYMBOL = Symbol('MicrowaveSubjects');
-export const _DESTROYED_SUBJECT_SYMBOL = Symbol('MicrowaveDestroyed');
-
-export type MicrowaveSubjects<T, K extends keyof T = keyof T> = Map<
+export type MicrowaveSubjectsMap<T, K extends keyof T> = Map<
   K,
   BehaviorSubject<T[K]>
 >;
 
-export type Microwaved<T, K extends keyof T = keyof T> = T & {
-  [_PROPERTY_CHANGES_SUBJECT_SYMBOL]?: Subject<{ property: K; value: T[K] }>;
-  [_SUBJECTS_SYMBOL]?: MicrowaveSubjects<T>;
-  [_DESTROYED_SUBJECT_SYMBOL]?: ReplaySubject<void>;
-};
+export function _getPropertySubject<T, K extends keyof T, PROP extends K>(
+  subjectsMap: MicrowaveSubjectsMap<T, K>,
+  property: PROP
+): BehaviorSubject<T[PROP]> {
+  let subject = subjectsMap.get(property);
 
-export function _getDestroyedSubject<T>(component: Microwaved<T>) {
-  return (component[_DESTROYED_SUBJECT_SYMBOL] =
-    component[_DESTROYED_SUBJECT_SYMBOL] ?? new ReplaySubject(1));
-}
-
-/**
- * @returns a subject that regroups change detection requests
- * so we can coalesce and trigger change detection
- * with a custom strategy.
- */
-export function _getPropertyChangesSubject<T>(component: Microwaved<T>) {
-  return (component[_PROPERTY_CHANGES_SUBJECT_SYMBOL] =
-    component[_PROPERTY_CHANGES_SUBJECT_SYMBOL] ?? new Subject());
-}
-
-export function _getPropertySubject<T, K extends keyof T = keyof T>(
-  component: Microwaved<T>,
-  property: K
-): BehaviorSubject<T[K]> {
-  const subjectsMap = _getPropertySubjectsMap(component);
-  let subject = subjectsMap?.get(property);
   if (subject == null) {
-    /* Use value from component if it is initialized in constructor. */
-    subject = new BehaviorSubject(undefined);
-    subjectsMap?.set(property, subject);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    subject = new BehaviorSubject(undefined as any);
+    subjectsMap.set(property, subject);
   }
 
-  return subject;
-}
-
-export function _getPropertySubjectsMap<T>(component: Microwaved<T>) {
-  return (component[_SUBJECTS_SYMBOL] =
-    component[_SUBJECTS_SYMBOL] ?? new Map());
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return subject as any;
 }
