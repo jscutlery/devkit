@@ -10,6 +10,14 @@
     "@jridgewell/resolve-uri" "1.0.0"
     sourcemap-codec "1.4.8"
 
+"@angular-devkit/architect@0.1300.3":
+  version "0.1300.3"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.1300.3.tgz#8d74a0f3cc3a0e4ecb0c6723e13fc0fee4790363"
+  integrity sha512-XY3sjRLk06Q+uAU0BePuIWcK1n3Jr0ksNV0ACNAct+MnI3QFfPPaYA/Tdhp9uWobuZ4lUrL0drc2uppNu0wKmA==
+  dependencies:
+    "@angular-devkit/core" "13.0.3"
+    rxjs "6.6.7"
+
 "@angular-devkit/architect@0.1300.4":
   version "0.1300.4"
   resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.1300.4.tgz#2b3a0606138a4f1259bb146e378a835f667fd82c"
@@ -98,6 +106,18 @@
     "@angular-devkit/architect" "0.1300.4"
     rxjs "6.6.7"
 
+"@angular-devkit/core@13.0.3":
+  version "13.0.3"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-13.0.3.tgz#05911ab964f8cbd5cade9bd48215424836ab9c87"
+  integrity sha512-5yTYW6m4pkDPSYNxThm+47h+UZ6XVEfdfsXR3o+WlRG0hc18EuQ+sXZkzhvZrk5KMLlXFex4eO40RPq2vvWS/w==
+  dependencies:
+    ajv "8.6.3"
+    ajv-formats "2.1.1"
+    fast-json-stable-stringify "2.1.0"
+    magic-string "0.25.7"
+    rxjs "6.6.7"
+    source-map "0.7.3"
+
 "@angular-devkit/core@13.0.4":
   version "13.0.4"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-13.0.4.tgz#98b7e2d34afc117cafcbba1cd71f00e3c7089289"
@@ -122,12 +142,12 @@
     rxjs "6.6.7"
     source-map "0.7.3"
 
-"@angular-devkit/schematics@13.0.4":
-  version "13.0.4"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-13.0.4.tgz#9455e695ae25b642d9a93179938149cd52ccdbb1"
-  integrity sha512-3LsmpfAEOxwPyachrktCHtGUYBzQCCzD0++CUjhK8W99v8/IAplkm4dgovFb1RiRkUm44l+HIS7387AbvEIf5A==
+"@angular-devkit/schematics@13.0.3":
+  version "13.0.3"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-13.0.3.tgz#255895e10c2b025df8ee4ff93428cb2249ae5fc0"
+  integrity sha512-+Va1E0zJBCg5jqSfITusghoMJgPAwlU+WUs49fuGVCzfJPwfSjTKSrsbhanahMd27+Ys3rovGZq0F2JUdL801A==
   dependencies:
-    "@angular-devkit/core" "13.0.4"
+    "@angular-devkit/core" "13.0.3"
     jsonc-parser "3.0.0"
     magic-string "0.25.7"
     ora "5.4.1"
@@ -199,15 +219,15 @@
   optionalDependencies:
     parse5 "^5.0.0"
 
-"@angular/cli@~13.0.0":
-  version "13.0.4"
-  resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-13.0.4.tgz#28932cb8e2c9e1eb4a65db459be851932f51eecd"
-  integrity sha512-0QMJXFNn57LVg7ZwZFPO90g6aZHDnoe5yCB7fo3nskOhDw1AW/rnbbaNVMVX/SvP30hOOTLsfVJ1Y3I6eKDgRA==
+"@angular/cli@13.0.3":
+  version "13.0.3"
+  resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-13.0.3.tgz#7d357a80dc612421115b1288291ce6278720d0a4"
+  integrity sha512-LDXDXDbQ1MBHVUstu4aNjFbyg5f9hLP52gEKB8Z6fQlf5CB1X5zD6UPcR4IvoYt03EFxg3DHco+ueJQ20oZUWQ==
   dependencies:
-    "@angular-devkit/architect" "0.1300.4"
-    "@angular-devkit/core" "13.0.4"
-    "@angular-devkit/schematics" "13.0.4"
-    "@schematics/angular" "13.0.4"
+    "@angular-devkit/architect" "0.1300.3"
+    "@angular-devkit/core" "13.0.3"
+    "@angular-devkit/schematics" "13.0.3"
+    "@schematics/angular" "13.0.3"
     "@yarnpkg/lockfile" "1.1.0"
     ansi-colors "4.1.1"
     debug "4.3.2"
@@ -2880,13 +2900,13 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@schematics/angular@13.0.4":
-  version "13.0.4"
-  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-13.0.4.tgz#e7efd26bf24abc359c902c4576451f988cc8582a"
-  integrity sha512-P9F5c8ApLbEyfNO4TZNsTyAdrtOjwIhrM/P+eEC4/x6nklWlEFE6TGMYTNjiK/RRhkbX1tBs8gcdJLYxtEqPSg==
+"@schematics/angular@13.0.3":
+  version "13.0.3"
+  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-13.0.3.tgz#08c5511b0e72a9934ac84545d3e49e05bd0dbf6c"
+  integrity sha512-qH6mnmGaDCuG1FM3vLdvSFDG394TeZO0ZvRDrw3iCYlX5Nkbz0Kvt0MPtWNZmlohwFhGlbXKVQiR++1dxa6eEA==
   dependencies:
-    "@angular-devkit/core" "13.0.4"
-    "@angular-devkit/schematics" "13.0.4"
+    "@angular-devkit/core" "13.0.3"
+    "@angular-devkit/schematics" "13.0.3"
     jsonc-parser "3.0.0"
 
 "@schematics/angular@~13.1.0":
@@ -16364,7 +16384,7 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zone.js@0.11.4:
+zone.js@~0.11.4:
   version "0.11.4"
   resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.11.4.tgz#0f70dcf6aba80f698af5735cbb257969396e8025"
   integrity sha512-DDh2Ab+A/B+9mJyajPjHFPWfYU1H+pdun4wnnk0OcQTNjem1XQSZ2CDW+rfZEUDjv5M19SBqAkjZi0x5wuB5Qw==
