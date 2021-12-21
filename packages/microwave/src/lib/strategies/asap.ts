@@ -2,7 +2,7 @@ import { debounce, startWith, takeUntil } from 'rxjs';
 import { Strategy } from '../devkit';
 
 /**
- * @deprecated 🚧 Work in progress.
+ * A strategy that coalesces changes using micro task scheduling.
  */
 export const asapStrategy: Strategy<unknown> = ({
   destroyed$,

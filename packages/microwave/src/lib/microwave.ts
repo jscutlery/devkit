@@ -4,18 +4,12 @@ import { getEngine } from './core/engine';
 import { IvyComponentType } from './shared/decorator';
 import { asapStrategy } from './strategies/asap';
 
-/**
- * @deprecated 🚧 Work in progress.
- */
 export function Microwave(strategy = asapStrategy) {
   return function MicrowaveDecorator<T>(componentType: IvyComponentType<T>) {
     applyStrategy(componentType, strategy);
   };
 }
 
-/**
- * @deprecated 🚧 Work in progress.
- */
 export function watch<T, K extends keyof T = keyof T>(
   component: T,
   property: K
