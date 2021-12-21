@@ -1,7 +1,7 @@
 import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 
 export const _PROPERTY_CHANGES_SUBJECT_SYMBOL = Symbol(
-  'MicrowaveMarkForCheckSubject'
+  'MicrowavePropertyChanges'
 );
 export const _SUBJECTS_SYMBOL = Symbol('MicrowaveSubjects');
 export const _DESTROYED_SUBJECT_SYMBOL = Symbol('MicrowaveDestroyed');
@@ -17,6 +17,13 @@ export type Microwaved<T, K extends keyof T = keyof T> = T & {
   [_DESTROYED_SUBJECT_SYMBOL]?: ReplaySubject<void>;
 };
 
+/**
+ * This should stay decoupled from Angular.
+ *
+ * @param component an instance of anything
+ * @returns an set of methods and observables that respectively
+ * control and represent the state of the object.
+ */
 export function getEngine<T>(component: Microwaved<T>) {
   const destroyed$ = _getDestroyedSubject(component);
   const propertyChanges$ = _getPropertyChangesSubject(component);
