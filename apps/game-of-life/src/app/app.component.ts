@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { GameOfLifeModule } from './game-of-life.component';
 
 @Component({
-  selector: 'jc-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  selector: 'jc-app',
+  template: `<jc-game-of-life></jc-game-of-life>`,
 })
-export class AppComponent {
-  title = 'game-of-life';
-}
+export class AppComponent {}
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, GameOfLifeModule],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
