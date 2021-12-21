@@ -1,4 +1,5 @@
 import {
+  destroy as ɵdestroy,
   mount as ɵmount,
   mountStory as ɵmountStory,
 } from './lib/cypress-mount';
@@ -13,4 +14,4 @@ export const mount = ɵmount;
  */
 export const mountStory = ɵmountStory;
 
-export { ɵmount, ɵmountStory };
+export { ɵdestroy, ɵmount, ɵmountStory };
