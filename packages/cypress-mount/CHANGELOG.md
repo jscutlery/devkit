@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.12.0](https://github.com/jscutlery/devkit/compare/cypress-mount-0.11.6...cypress-mount-0.12.0) (2021-12-21)
+
+
+### Features
+
+* **cypress-angular:** ✨ add destroy command ([6cd2e88](https://github.com/jscutlery/devkit/commit/6cd2e886aa33fd9e43c33e3378a6b45365880522))
+
+
+
 ## [0.11.6](https://github.com/jscutlery/devkit/compare/cypress-mount-0.11.5...cypress-mount-0.11.6) (2021-12-08)
 
 
