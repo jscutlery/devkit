@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostBinding, NgModule, OnDestroy } from '@angular/core';
+import { Component, NgModule, OnDestroy } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { CellModule } from './cell.component';
 import { GameOfLife } from './game-of-life';
