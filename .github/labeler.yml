@@ -14,12 +14,17 @@ cypress-mount:
   - 'packages/cypress-mount/*'
   - 'packages/cypress-mount/**/*'
 
+microwave:
+  - 'packages/microwave/*'
+  - 'packages/microwave/**/*'
+
 operators:
   - 'packages/operators/*'
   - 'packages/operators/**/*'
 
 test:
   - 'packages/**/*.spec.ts'
+  - 'packages/**/*.cy-spec.ts'
   - 'packages/cypress-sandbox/*'
   - 'packages/cypress-sandbox/**/*'
   - 'tests/cypress-mount-integration/*'
