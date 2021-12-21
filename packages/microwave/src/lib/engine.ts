@@ -34,7 +34,7 @@ export function getEngine<T>(component: Microwaved<T>) {
     markDestroyed() {
       destroyed$.next();
     },
-    getPropertyValue<K extends keyof T = keyof T>(property: K): T[K] {
+    getProperty<K extends keyof T = keyof T>(property: K): T[K] {
       return _getPropertySubject(component, property).value;
     },
     setProperty<K extends keyof T = keyof T>(property: K, value: T[K]) {
