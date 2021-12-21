@@ -1,3 +1,4 @@
+import { ChangeDetectionFns } from './change-detection-fns';
 import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 
 /**
@@ -19,12 +20,22 @@ export function getEngine<T, K extends keyof T = keyof T>(
   const destroyed$ = new ReplaySubject<void>(1);
   const propertyChanges$ = new Subject<{ property: K; value: T[K] }>();
   const subjectsMap: MicrowaveSubjectsMap<T, K> = new Map();
+  let changeDetectionFns: ChangeDetectionFns;
 
   return (component[_ENGINE_SYMBOL] = {
     destroyed$: destroyed$.asObservable(),
     propertyChanges$: propertyChanges$.asObservable(),
+    detach() {
+      changeDetectionFns.detach();
+    },
+    detectChanges() {
+      changeDetectionFns.detectChanges();
+    },
     markDestroyed() {
       destroyed$.next();
+    },
+    setChangeDetectionFns(_changeDetectionFns: ChangeDetectionFns) {
+      changeDetectionFns = _changeDetectionFns;
     },
     getProperty(property) {
       return _getPropertySubject(subjectsMap, property).value;
@@ -39,16 +50,37 @@ export function getEngine<T, K extends keyof T = keyof T>(
   });
 }
 
+export function getStrategyDevKit<T, K extends keyof T = keyof T>(
+  component: Microwaved<T, K>
+): StrategyDevKit<T, K> {
+  const { destroyed$, propertyChanges$, detach, detectChanges, markDestroyed } =
+    getEngine(component);
+  return { destroyed$, propertyChanges$, detach, detectChanges, markDestroyed };
+}
+
 export const _ENGINE_SYMBOL = Symbol('MicrowaveEngine');
 
 export type Microwaved<T, K extends keyof T> = T & {
   [_ENGINE_SYMBOL]?: MicrowaveEngine<T, K>;
 };
 
-export interface MicrowaveEngine<T, K extends keyof T> {
+/**
+ * Functions below form the strategy facade.
+ */
+export interface StrategyDevKit<T, K extends keyof T = keyof T> {
   destroyed$: Observable<void>;
   propertyChanges$: Observable<{ property: K; value: T[K] }>;
+  detach(): void;
+  detectChanges(): void;
   markDestroyed(): void;
+}
+
+/**
+ * Functions below are used to bind with component.
+ */
+export interface MicrowaveEngine<T, K extends keyof T>
+  extends StrategyDevKit<T, K> {
+  setChangeDetectionFns(changeDetectionFns: ChangeDetectionFns): void;
   getProperty<PROP extends K>(property: PROP): T[PROP];
   setProperty<PROP extends K>(property: PROP, value: T[PROP]): void;
   watchProperty<PROP extends K>(property: PROP): Observable<T[PROP]>;
