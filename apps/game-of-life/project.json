@@ -1,0 +1,93 @@
+{
+  "projectType": "application",
+  "root": "apps/game-of-life",
+  "sourceRoot": "apps/game-of-life/src",
+  "prefix": "jc",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/game-of-life",
+        "index": "apps/game-of-life/src/index.html",
+        "main": "apps/game-of-life/src/main.ts",
+        "polyfills": "apps/game-of-life/src/polyfills.ts",
+        "tsConfig": "apps/game-of-life/tsconfig.app.json",
+        "assets": [
+          "apps/game-of-life/src/favicon.ico",
+          "apps/game-of-life/src/assets"
+        ],
+        "styles": ["apps/game-of-life/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/game-of-life/src/environments/environment.ts",
+              "with": "apps/game-of-life/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "game-of-life:build:production"
+        },
+        "development": {
+          "browserTarget": "game-of-life:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "game-of-life:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/game-of-life/src/**/*.ts",
+          "apps/game-of-life/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/game-of-life"],
+      "options": {
+        "jestConfig": "apps/game-of-life/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

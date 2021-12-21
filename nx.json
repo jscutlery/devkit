@@ -24,7 +24,7 @@
     }
   },
   "workspaceLayout": {
-    "appsDir": "packages",
+    "appsDir": "apps",
     "libsDir": "packages"
   },
   "targetDependencies": {
@@ -47,12 +47,14 @@
   "generators": {
     "@nrwl/angular:application": {
       "style": "css",
+      "linter": "eslint",
       "unitTestRunner": "jest",
       "e2eTestRunner": "cypress"
     },
     "@nrwl/angular:library": {
-      "style": "css",
-      "unitTestRunner": "jest"
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "style": "css"
     },
     "@nrwl/angular:component": {
       "style": "css"
