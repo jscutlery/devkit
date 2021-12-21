@@ -1,4 +1,4 @@
-import { debounce, startWith, takeUntil } from 'rxjs/operators';
+import { debounce, startWith, takeUntil } from 'rxjs';
 import { Strategy } from '../devkit';
 
 /**
