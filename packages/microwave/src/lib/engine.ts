@@ -1,4 +1,48 @@
-import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Subject, Observable } from 'rxjs';
+
+/**
+ * This should stay decoupled from Angular.
+ *
+ * @param component an instance of anything
+ * @returns an set of methods and observables that respectively
+ * control and represent the state of the object.
+ */
+export function getEngine<T>(component: Microwaved<T>): Engine<T> {
+  const destroyed$ = _getDestroyedSubject(component);
+  const propertyChanges$ = _getPropertyChangesSubject(component);
+
+  return {
+    destroyed$: destroyed$.asObservable(),
+    propertyChanges$: propertyChanges$.asObservable(),
+    markDestroyed() {
+      destroyed$.next();
+    },
+    getProperty(property) {
+      return _getPropertySubject(component, property).value;
+    },
+    setProperty(property, value) {
+      _getPropertySubject(component, property).next(value);
+      _getPropertyChangesSubject(component).next({ property, value });
+    },
+    watchProperty(property) {
+      return _getPropertySubject(component, property);
+    },
+  };
+}
+
+export interface Engine<T, K extends keyof T = keyof T> {
+  destroyed$: Observable<void>;
+  propertyChanges$: Observable<{ property: K; value: T[K] }>;
+  markDestroyed(): void;
+  getProperty<PROP extends keyof T = keyof T>(property: PROP): T[PROP];
+  setProperty<PROP extends keyof T = keyof T>(
+    property: PROP,
+    value: T[PROP]
+  ): void;
+  watchProperty<PROP extends keyof T = keyof T>(
+    property: PROP
+  ): Observable<T[PROP]>;
+}
 
 export const _PROPERTY_CHANGES_SUBJECT_SYMBOL = Symbol(
   'MicrowavePropertyChanges'
@@ -16,36 +60,6 @@ export type Microwaved<T, K extends keyof T = keyof T> = T & {
   [_SUBJECTS_SYMBOL]?: MicrowaveSubjects<T>;
   [_DESTROYED_SUBJECT_SYMBOL]?: ReplaySubject<void>;
 };
-
-/**
- * This should stay decoupled from Angular.
- *
- * @param component an instance of anything
- * @returns an set of methods and observables that respectively
- * control and represent the state of the object.
- */
-export function getEngine<T>(component: Microwaved<T>) {
-  const destroyed$ = _getDestroyedSubject(component);
-  const propertyChanges$ = _getPropertyChangesSubject(component);
-
-  return {
-    destroyed$: destroyed$.asObservable(),
-    propertyChanges$: propertyChanges$.asObservable(),
-    markDestroyed() {
-      destroyed$.next();
-    },
-    getProperty<K extends keyof T = keyof T>(property: K): T[K] {
-      return _getPropertySubject(component, property).value;
-    },
-    setProperty<K extends keyof T = keyof T>(property: K, value: T[K]) {
-      _getPropertySubject(component, property).next(value);
-      _getPropertyChangesSubject(component).next({ property, value });
-    },
-    watchProperty<K extends keyof T = keyof T>(property: K) {
-      return _getPropertySubject(component, property);
-    },
-  };
-}
 
 export function _getDestroyedSubject<T>(component: Microwaved<T>) {
   return (component[_DESTROYED_SUBJECT_SYMBOL] =
