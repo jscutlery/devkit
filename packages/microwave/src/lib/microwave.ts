@@ -75,7 +75,7 @@ export function _decorateClass<
     preSet: (target: T, property: K, value: V) => void;
   }
 ) {
-  if (!originalClass.ɵfac || !originalClass.ɵcmp) {
+  if (!originalClass.ɵfac) {
     throw new Error(
       `${originalClass.name} is either not a component or not compiled.`
     );
@@ -145,16 +145,5 @@ export function _decorateClass<
 }
 
 export interface IvyComponentType<T> extends Type<T> {
-  ɵcmp?: {
-    factory: () => T;
-  };
   ɵfac?: () => T;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function _wrap<F extends (...args: any[]) => any>(
-  fn: F,
-  wrapper: (fn: F) => ReturnType<F>
-) {
-  return () => wrapper(fn);
 }
