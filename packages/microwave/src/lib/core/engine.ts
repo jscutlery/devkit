@@ -50,36 +50,25 @@ export function getEngine<T, K extends keyof T = keyof T>(
   });
 }
 
-export function getStrategyDevKit<T, K extends keyof T = keyof T>(
-  component: Microwaved<T, K>
-): StrategyDevKit<T, K> {
-  const { destroyed$, propertyChanges$, detach, detectChanges, markDestroyed } =
-    getEngine(component);
-  return { destroyed$, propertyChanges$, detach, detectChanges, markDestroyed };
-}
-
 export const _ENGINE_SYMBOL = Symbol('MicrowaveEngine');
 
 export type Microwaved<T, K extends keyof T> = T & {
   [_ENGINE_SYMBOL]?: MicrowaveEngine<T, K>;
 };
 
-/**
- * Functions below form the strategy facade.
- */
-export interface StrategyDevKit<T, K extends keyof T = keyof T> {
+export interface MicrowaveEngine<T, K extends keyof T> {
+  /**
+   * Functions below form the strategy facade.
+   */
   destroyed$: Observable<void>;
   propertyChanges$: Observable<{ property: K; value: T[K] }>;
   detach(): void;
   detectChanges(): void;
   markDestroyed(): void;
-}
 
-/**
- * Functions below are used to bind with component.
- */
-export interface MicrowaveEngine<T, K extends keyof T>
-  extends StrategyDevKit<T, K> {
+  /**
+   * Functions below are used to bind with component.
+   */
   setChangeDetectionFns(changeDetectionFns: ChangeDetectionFns): void;
   getProperty<PROP extends K>(property: PROP): T[PROP];
   setProperty<PROP extends K>(property: PROP, value: T[PROP]): void;

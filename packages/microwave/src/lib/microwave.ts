@@ -1,13 +1,8 @@
-import { ChangeDetectionFns } from './change-detection-fns';
-import {
-  debounce,
-  distinctUntilChanged,
-  Observable,
-  startWith,
-  takeUntil,
-} from 'rxjs';
+import { distinctUntilChanged, Observable, takeUntil } from 'rxjs';
+import { getEngine } from './core/engine';
 import { decorateComponent, IvyComponentType } from './decorator';
-import { getEngine, getStrategyDevKit, StrategyDevKit } from './engine';
+import { getStrategyDevKit } from './devkit';
+import { asapStrategy } from './strategies/asap';
 
 /**
  * @deprecated 🚧 Work in progress.
@@ -35,30 +30,6 @@ export function watch<T, K extends keyof T = keyof T>(
     takeUntil(destroyed$)
   );
 }
-
-export const asapStrategy = <T>({
-  destroyed$,
-  propertyChanges$,
-  detectChanges,
-  detach,
-}: StrategyDevKit<T>) => {
-  /**
-   * Detach change detection as we want to take control.
-   */
-  detach();
-
-  /**
-   * Trigger change detection initially and on property changes.
-   * Coalesce through micro-tasks.
-   */
-  propertyChanges$
-    .pipe(
-      startWith(undefined),
-      debounce(() => Promise.resolve()),
-      takeUntil(destroyed$)
-    )
-    .subscribe(() => detectChanges());
-};
 
 export function _bindComponentToEngine<T>(
   componentType: IvyComponentType<T>,
