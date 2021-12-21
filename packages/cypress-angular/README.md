@@ -22,8 +22,7 @@ It is aiming to make Cypress Component Testing with Angular easier than writing 
 
 # Setup
 
-
-Using Angular CLI: 
+Using Angular CLI:
 
 ```sh
 ng add @jscutlery/cypress-angular
@@ -97,6 +96,27 @@ describe('HelloCompanent', () => {
 
   it('should show some love', () => {
     cy.get('h1').contains('❤️');
+  });
+});
+```
+
+## Destroy
+
+If you want to destroy the component manually to test some tear down logic, you can use the `destroy` function:
+
+```ts
+import { destroy, mount } from '@jscutlery/cypress-angular/mount';
+
+describe('HelloCompanent', () => {
+  beforeEach(() => {
+    mount(`<jc-hello></jc-hello>`, {
+      imports: [HelloModule],
+    });
+  });
+
+  it('should show alert when destroyed', () => {
+    destroy();
+    cy.window().its('alert').should('be.called');
   });
 });
 ```

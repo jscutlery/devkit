@@ -76,9 +76,7 @@ export function mount(
     });
 
     /* Destroy existing platform. */
-    if (platformRef != null) {
-      platformRef.destroy();
-    }
+    _destroyPlatform();
 
     /* Prepare container component metadata which are
      * the same for mounting a component or template. */
@@ -120,6 +118,13 @@ export function mount(
 
     _injectStyles(options);
   });
+}
+
+/**
+ * Destroy the last mounted component by destroying the Angular platform.
+ */
+export function destroy() {
+  return cy.then(() => _destroyPlatform());
 }
 
 /**
@@ -183,6 +188,16 @@ export function _createRootModule({
   })(class {});
 
   return ContainerModule;
+}
+
+/**
+ * @internal
+ */
+export function _destroyPlatform() {
+  if (platformRef != null) {
+    platformRef.destroy();
+    platformRef = null;
+  }
 }
 
 /**
