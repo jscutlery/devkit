@@ -1,12 +1,10 @@
 import { ChangeDetectorRef, Type, ɵɵdirectiveInject } from '@angular/core';
-import { noop } from 'rxjs';
-import { __decorate } from 'tslib';
 
 /**
  * Decorate Angular components with custom hooks.
- * 
+ *
  * @param componentType the component class to decorate.
- * @param hooks 
+ * @param hooks
  */
 export function decorateComponent<T, K extends keyof T = keyof T>(
   componentType: IvyComponentType<T>,
@@ -29,62 +27,60 @@ export function decorateComponent<T, K extends keyof T = keyof T>(
   /**
    * Override component factory.
    */
-  const factory = __decorate(
-    [
-      /*
-       * Override getters & setters.
+  const factory = _decorate(
+    componentType.ɵfac,
+    /*
+     * Override getters & setters.
+     */
+    (factoryFn: () => T) => () => {
+      /* Grab change detector to control it. */
+      const cdr = ɵɵdirectiveInject(ChangeDetectorRef);
+
+      const component = factoryFn();
+
+      /**
+       * Notify about creation.
        */
-      (factoryFn: () => T) => () => {
-        /* Grab change detector to control it. */
-        const cdr = ɵɵdirectiveInject(ChangeDetectorRef);
+      onCreate(component, {
+        detach() {
+          cdr.detach();
+        },
+        detectChanges() {
+          cdr.detectChanges();
+        },
+      });
 
-        const component = factoryFn();
-
+      /**
+       * This will only list initialized properties.
+       * That's the reason why all properties should be initialized
+       * when using Microwave.
+       */
+      for (const property of Object.getOwnPropertyNames(
+        component
+      ) as Array<K>) {
         /**
-         * Notify about creation.
+         * Notify when property is discovered.
          */
-        onCreate(component, {
-          detach() {
-            cdr.detach();
+        onPropertyDeclare(component, property, component[property]);
+
+        Object.defineProperty(component, property, {
+          set(value) {
+            /**
+             * Call setter.
+             */
+            onPropertySet(component, property, value);
           },
-          detectChanges() {
-            cdr.detectChanges();
+          get() {
+            /**
+             * Call getter.
+             */
+            return onPropertyGet(component, property);
           },
         });
+      }
 
-        /**
-         * This will only list initialized properties.
-         * That's the reason why all properties should be initialized
-         * when using Microwave.
-         */
-        for (const property of Object.getOwnPropertyNames(
-          component
-        ) as Array<K>) {
-          /**
-           * Notify when property is discovered.
-           */
-          onPropertyDeclare(component, property, component[property]);
-
-          Object.defineProperty(component, property, {
-            set(value) {
-              /**
-               * Call setter.
-               */
-              onPropertySet(component, property, value);
-            },
-            get() {
-              /**
-               * Call getter.
-               */
-              return onPropertyGet(component, property);
-            },
-          });
-        }
-
-        return component;
-      },
-    ],
-    componentType.ɵfac
+      return component;
+    }
   );
 
   /**
@@ -99,17 +95,14 @@ export function decorateComponent<T, K extends keyof T = keyof T>(
   /**
    * Override ngOnDestroy.
    */
-  componentType.prototype.ngOnDestroy = __decorate(
-    [
-      (ngOnDestroy: () => void) => {
-        return function (this: T) {
-          onDestroy(this);
-          return ngOnDestroy();
-        };
-      },
-    ],
-    /* @hack use noop, otherwise, __decorate will not decorate the function. */
-    componentType.prototype.ngOnDestroy ?? noop
+  componentType.prototype.ngOnDestroy = _decorate(
+    componentType.prototype.ngOnDestroy,
+    (ngOnDestroy: () => void) => {
+      return function (this: T) {
+        onDestroy(this);
+        return ngOnDestroy?.();
+      };
+    }
   );
 }
 
@@ -150,4 +143,12 @@ export interface DecoratorHooks<T, K extends keyof T = keyof T> {
 
 export interface IvyComponentType<T> extends Type<T> {
   ɵfac?: () => T;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function _decorate<F extends (...args: any[]) => any>(
+  fn: F,
+  decorator: (fn: F) => F
+) {
+  return decorator(fn);
 }
