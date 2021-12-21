@@ -64,12 +64,12 @@ export interface MicrowaveEngine<T, K extends keyof T> {
   propertyChanges$: Observable<{ property: K; value: T[K] }>;
   detach(): void;
   detectChanges(): void;
-  markDestroyed(): void;
 
   /**
    * Functions below are used to bind with component.
    */
   setChangeDetectionFns(changeDetectionFns: ChangeDetectionFns): void;
+  markDestroyed(): void;
   getProperty<PROP extends K>(property: PROP): T[PROP];
   setProperty<PROP extends K>(property: PROP, value: T[PROP]): void;
   watchProperty<PROP extends K>(property: PROP): Observable<T[PROP]>;
