@@ -4,7 +4,7 @@
 
 It is aiming to make Cypress Component Testing with Angular easier than writing code without tests 😜.
 
-## Features
+## 🪄 Features
 
 ✅ A simple `mount` function to test any of your components.
 
@@ -16,26 +16,26 @@ It is aiming to make Cypress Component Testing with Angular easier than writing 
 
 ✅ Angular builder & Nx executor to run Cypress Component Tests.
 
-# Demo
+# 🤹🏻‍♂️ Demo
 
 [Demo](https://user-images.githubusercontent.com/2674658/118695305-554b0e80-b80d-11eb-83e2-a1066e852f89.mp4)
 
 # Table of Contents
 
 - [Cypress Angular](#cypress-angular)
-  - [Features](#features)
-- [Demo](#demo)
+  - [🪄 Features](#-features)
+- [🤹🏻‍♂️ Demo](#️-demo)
 - [Table of Contents](#table-of-contents)
-- [Usage](#usage)
+- [✨ Usage](#-usage)
   - [Mount a component](#mount-a-component)
   - [Mount a template](#mount-a-template)
   - [Mount a component with inputs](#mount-a-component-with-inputs)
   - [Mount a component with outputs](#mount-a-component-with-outputs)
   - [Storybook (and Component Story Format) support](#storybook-and-component-story-format-support)
   - [Destroy the component](#destroy-the-component)
-- [Setup](#setup)
+- [🛠 Setup](#-setup)
 
-# Usage
+# ✨ Usage
 
 ## Mount a component
 
@@ -152,7 +152,7 @@ describe(HelloComponent.name, () => {
 });
 ```
 
-# Setup
+# 🛠 Setup
 
 Using Angular CLI:
 
