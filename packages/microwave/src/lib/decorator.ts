@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Type, ɵɵdirectiveInject } from '@angular/core';
+import { ChangeDetectionFns } from './change-detection-fns';
 
 /**
  * Decorate Angular components with custom hooks.
@@ -113,10 +114,7 @@ export interface DecoratorHooks<T, K extends keyof T = keyof T> {
    * @param component the created component.
    * @param args change detection functions for controlling change detection.
    */
-  onCreate(
-    component: T,
-    args: { detach: () => void; detectChanges: () => void }
-  ): void;
+  onCreate(component: T, args: ChangeDetectionFns): void;
 
   /**
    * Hook called just before the real ngOnDestroy (if implemented) is called.
