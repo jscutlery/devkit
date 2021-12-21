@@ -23,7 +23,7 @@
   - [`@Microwave`](#microwave-1)
   - [`@Microwave` + `watch`](#microwave--watch)
   - [Upcoming features](#upcoming-features)
-    - [Nuke it](#nuke-it)
+- [Nuke it](#nuke-it)
 
 # 📝 Usage
 
@@ -74,7 +74,7 @@ class GreetingsComponent {
 - [ ] provide multiple Microwave strategies
 - [ ] automatically unsubscribe even when using operators with `watch(...).pipe(...)`
 
-### Nuke it
+# Nuke it
 
 Wordplay by [@AlyssaNicoll](https://twitter.com/AlyssaNicoll) & [@schwarty](https://twitter.com/schwarty).
 
