@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Type, ɵɵdirectiveInject } from '@angular/core';
-import { ChangeDetectionFns } from './core/change-detection-fns';
+import { ChangeDetectionFns } from '../core/change-detection-fns';
 
 /**
  * Decorate Angular components with custom hooks.

@@ -17,4 +17,4 @@ export type StrategyDevKit<T, K extends keyof T = keyof T> = Pick<
   | 'markDestroyed'
 >;
 
-export type Strategy = <T>(strategyDevKit: StrategyDevKit<T>) => void;
+export type Strategy<T> = (strategyDevKit: StrategyDevKit<T>) => void;

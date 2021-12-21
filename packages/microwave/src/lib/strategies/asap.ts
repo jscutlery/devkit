@@ -1,10 +1,10 @@
 import { debounce, startWith, takeUntil } from 'rxjs/operators';
-import { Strategy } from './../devkit';
+import { Strategy } from '../devkit';
 
 /**
  * @deprecated 🚧 Work in progress.
  */
-export const asapStrategy: Strategy = ({
+export const asapStrategy: Strategy<unknown> = ({
   destroyed$,
   propertyChanges$,
   detectChanges,
