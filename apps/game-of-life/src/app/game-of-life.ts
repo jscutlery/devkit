@@ -110,7 +110,7 @@ export class GameOfLife {
 
     const alive = true; // better than a magic value
 
-    this._cells.forEach((cell) => {
+    for (const cell of this._cells) {
       const liveNeighborCount = this.getNeighborsOfCell(cell).filter((c) =>
         c.isAlive()
       ).length;
@@ -125,7 +125,7 @@ export class GameOfLife {
           // live cell dies; dead cells remain dead
           cell.setTempState(!alive);
       }
-    });
+    }
     this._generationCount++;
     this.updateCellStates();
     this._update$.next();
@@ -140,7 +140,9 @@ export class GameOfLife {
    * after the new states have been computed.
    */
   private updateCellStates() {
-    this._cells.forEach((cell) => cell.updateCurrentState());
+    for (const cell of this._cells) {
+      cell.updateCurrentState();
+    }
   }
 
   /**

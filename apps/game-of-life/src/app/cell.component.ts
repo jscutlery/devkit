@@ -1,10 +1,18 @@
+import { Microwave } from '@jscutlery/microwave';
 import { CommonModule } from '@angular/common';
-import { Component, Input, NgModule, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  NgModule,
+  OnInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { GameOfLife } from './game-of-life';
 
+@Microwave()
 @Component({
   selector: 'jc-cell',
-  template: `<div class="content" [style.backgroundColor]="color"></div>`,
+  template: `<div class="content" [style.backgroundColor]="getColor()"></div>`,
   styles: [
     `
       :host {
@@ -21,12 +29,12 @@ import { GameOfLife } from './game-of-life';
   ],
 })
 export class CellComponent implements OnInit {
-  @Input() col?: number;
-  @Input() row?: number;
+  @Input() col?: number = undefined;
+  @Input() row?: number = undefined;
 
-  color?: string;
+  color?: string = undefined;
 
-  constructor(private _gol: GameOfLife) {}
+  constructor(private _gol: GameOfLife, private _cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     if (this.row == null || this.col == null) {
@@ -36,6 +44,14 @@ export class CellComponent implements OnInit {
     this._gol.watchCell(this.row, this.col).subscribe((cell) => {
       this.color = cell.isAlive() ? '#380030' : '#ffffff';
     });
+  }
+
+  /* Using a method + console.debug
+   * to slow down change detection. */
+  getColor() {
+    // eslint-disable-next-line no-restricted-syntax
+    console.debug('getColor');
+    return this.color;
   }
 }
 
