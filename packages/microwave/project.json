@@ -43,6 +43,20 @@
         "cypressConfig": "packages/microwave/cypress.json",
         "testingType": "component"
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "postTargets": ["microwave:build", "microwave:publish"],
+        "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
+        "noVerify": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
     }
   },
   "tags": []
