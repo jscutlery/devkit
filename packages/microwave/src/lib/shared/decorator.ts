@@ -155,7 +155,7 @@ export function _spyOnMethod<T>(
     (wrappedMethod: () => void) => {
       return function (this: T) {
         callback(this);
-        return wrappedMethod?.();
+        return wrappedMethod?.bind(this)?.();
       };
     }
   );

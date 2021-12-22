@@ -8,14 +8,22 @@ describe(decorateComponent.name, () => {
 
   it('should trigger real ngOnInit', () => {
     const { cmp, ngOnInit } = bowl;
+
     cmp.ngOnInit();
+
     expect(ngOnInit).toBeCalledTimes(1);
+    /* Make sure instance is bound to the wrapped method. */
+    expect(ngOnInit).toBeCalledWith(cmp);
   });
 
   it('should trigger real ngOnDestroy', () => {
     const { cmp, ngOnDestroy } = bowl;
+
     cmp.ngOnDestroy();
+
     expect(ngOnDestroy).toBeCalledTimes(1);
+    /* Make sure instance is bound to the wrapped method. */
+    expect(ngOnDestroy).toBeCalledWith(cmp);
   });
 
   it('should trigger onCreate', () => {
@@ -84,11 +92,13 @@ describe(decorateComponent.name, () => {
       something?: number = undefined;
 
       ngOnInit() {
-        ngOnInit();
+        /* Passing the instance to make sure that the method is bound properly. */
+        ngOnInit(this);
       }
 
       ngOnDestroy() {
-        ngOnDestroy();
+        /* Passing the instance to make sure that the method is bound properly. */
+        ngOnDestroy(this);
       }
     }
 
