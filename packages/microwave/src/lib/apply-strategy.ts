@@ -23,7 +23,7 @@ export function _bindComponentToEngine<T>(
       onCreate(component);
     },
     onInit(component) {
-      // @todo mark engine as initialized
+      getEngine(component).markInitialized();
     },
     onDestroy(component) {
       getEngine(component).markDestroyed();

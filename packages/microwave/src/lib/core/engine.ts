@@ -18,11 +18,13 @@ export function getEngine<T, K extends keyof T = keyof T>(
   }
 
   const destroyed$ = new ReplaySubject<void>(1);
+  const initialized$ = new ReplaySubject<void>(1);
   const state$ = new BehaviorSubject<Partial<T>>({});
   let changeDetectionFns: ChangeDetectionFns;
 
   return (component[_ENGINE_SYMBOL] = {
     destroyed$: destroyed$.asObservable(),
+    initialized$: initialized$.asObservable(),
     changed$: state$.pipe(mapTo(undefined)),
     detach() {
       changeDetectionFns.detach();
@@ -32,6 +34,9 @@ export function getEngine<T, K extends keyof T = keyof T>(
     },
     markDestroyed() {
       destroyed$.next();
+    },
+    markInitialized() {
+      initialized$.next();
     },
     setChangeDetectionFns(_changeDetectionFns: ChangeDetectionFns) {
       changeDetectionFns = _changeDetectionFns;
@@ -65,6 +70,8 @@ export interface MicrowaveEngine<T, K extends keyof T> {
    * Functions below form the strategy facade.
    */
   destroyed$: Observable<void>;
+  /* Tells when component is initialized (ngOnInit). */
+  initialized$: Observable<void>;
   /* Tells if some property changed. */
   changed$: Observable<void>;
   detach(): void;
@@ -75,6 +82,7 @@ export interface MicrowaveEngine<T, K extends keyof T> {
    */
   setChangeDetectionFns(changeDetectionFns: ChangeDetectionFns): void;
   markDestroyed(): void;
+  markInitialized(): void;
   getProperty<PROP extends K>(property: PROP): T[PROP] | undefined;
   setProperty<PROP extends K>(property: PROP, value: T[PROP]): void;
   watchProperty<PROP extends K>(

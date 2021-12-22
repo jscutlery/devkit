@@ -6,14 +6,14 @@ describe(getEngine.name, () => {
   const bowl = createTestingBowl(setUp);
   const { observe } = createObserver();
 
-  xit('should mark initialized', () => {
+  it('should mark initialized', () => {
     const { engine } = bowl;
 
-    // const spy = observe(engine.initialized$);
+    const spy = observe(engine.initialized$);
 
-    // engine.markInitialized();
+    engine.markInitialized();
 
-    // expect(spy.next).toBeCalledTimes(1);
+    expect(spy.next).toBeCalledTimes(1);
   });
 
   function setUp() {
