@@ -1,0 +1,49 @@
+{
+  "projectType": "library",
+  "root": "packages/microwave",
+  "sourceRoot": "packages/microwave/src",
+  "prefix": "jscutlery",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/packages/microwave"],
+      "options": {
+        "project": "packages/microwave/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/microwave/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/microwave/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/microwave"],
+      "options": {
+        "jestConfig": "packages/microwave/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "packages/microwave/src/**/*.ts",
+          "packages/microwave/src/**/*.html"
+        ]
+      }
+    },
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "packages/microwave/cypress.json",
+        "testingType": "component"
+      }
+    }
+  },
+  "tags": []
+}

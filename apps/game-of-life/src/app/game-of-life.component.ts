@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule, OnDestroy } from '@angular/core';
-import { interval, Subscription } from 'rxjs';
+import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
+import { Microwave } from '@jscutlery/microwave';
+import { Subscription } from 'rxjs';
 import { CellModule } from './cell.component';
 import { GameOfLife } from './game-of-life';
 
+@Microwave()
 @Component({
   selector: 'jc-game-of-life',
   template: `
@@ -36,9 +38,9 @@ import { GameOfLife } from './game-of-life';
     `,
   ],
 })
-export class GameOfLifeComponent implements OnDestroy {
-  colCount = 50;
-  rowCount = 50;
+export class GameOfLifeComponent implements OnDestroy, OnInit {
+  colCount = 40;
+  rowCount = 40;
   rows = range(this.colCount);
   cols = range(this.rowCount);
   gridTemplateColumns = `repeat(${this.colCount}, 1fr)`;
@@ -48,10 +50,18 @@ export class GameOfLifeComponent implements OnDestroy {
 
   constructor(private _gol: GameOfLife) {
     this._gol.initialize(this.rowCount, this.colCount);
+  }
+
+  async ngOnInit() {
     this.reset();
-    this._subscription.add(
-      interval(10).subscribe(() => this._gol.nextGeneration())
-    );
+
+    /* Using a loop to handle backpressure. */
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      await new Promise((resolve) => setTimeout(resolve));
+
+      this._gol.nextGeneration();
+    }
   }
 
   ngOnDestroy(): void {
@@ -59,7 +69,7 @@ export class GameOfLifeComponent implements OnDestroy {
   }
 
   reset() {
-    this._gol.randomizeCellStates(.1);
+    this._gol.randomizeCellStates(0.1);
   }
 }
 

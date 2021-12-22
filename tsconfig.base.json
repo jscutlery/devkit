@@ -17,11 +17,12 @@
     "baseUrl": ".",
     "paths": {
       "@jscutlery/cypress-angular": ["packages/cypress-angular/src/index.ts"],
-      "@jscutlery/cypress-angular-dev-server": [
-        "packages/cypress-angular-dev-server/src/index.ts"
-      ],
+      "@jscutlery/cypress-angular/mount": ["packages/cypress-angular/mount.ts"],
       "@jscutlery/cypress-angular/support": [
         "packages/cypress-angular/support.ts"
+      ],
+      "@jscutlery/cypress-angular-dev-server": [
+        "packages/cypress-angular-dev-server/src/index.ts"
       ],
       "@jscutlery/cypress-harness": ["packages/cypress-harness/src/index.ts"],
       "@jscutlery/cypress-harness/support": [
@@ -29,6 +30,7 @@
       ],
       "@jscutlery/cypress-mount": ["packages/cypress-mount/src/index.ts"],
       "@jscutlery/cypress-mount/support": ["packages/cypress-mount/support.ts"],
+      "@jscutlery/microwave": ["packages/microwave/src/index.ts"],
       "@jscutlery/operators": ["packages/operators/src/index.ts"]
     }
   },
