@@ -1,18 +1,18 @@
-import { defer, Observable, Subject } from 'rxjs';
-import { createIndependentStrategy } from './independent';
+import { audit, MonoTypeOperatorFunction, Subject } from 'rxjs';
+import { createLocalStrategy } from './local';
 
-describe(createIndependentStrategy.name, () => {
-  xit('🚧 should detach change detector immediately', () => {
+describe(createLocalStrategy.name, () => {
+  it('should detach change detector immediately', () => {
     const { detach } = setUp();
     expect(detach).toBeCalledTimes(1);
   });
 
-  xit('🚧 should not trigger change detection too early', () => {
+  it('should not trigger change detection too early', () => {
     const { detectChanges } = setUp();
     expect(detectChanges).not.toBeCalled();
   });
 
-  xit('🚧 should not trigger change detection before initialization', () => {
+  it('should not trigger change detection before initialization', () => {
     const { detectChanges, markChanged } = setUp();
 
     markChanged();
@@ -20,7 +20,7 @@ describe(createIndependentStrategy.name, () => {
     expect(detectChanges).not.toBeCalled();
   });
 
-  xit('🚧 should trigger change detection after initialized then destroyed', () => {
+  it('should trigger change detection after initialized then destroyed', () => {
     const {
       detectChanges,
       markInitialized,
@@ -38,7 +38,7 @@ describe(createIndependentStrategy.name, () => {
     expect(detectChanges).not.toBeCalled();
   });
 
-  xit('🚧 should trigger change detection when initialized', () => {
+  it('should trigger change detection when initialized', () => {
     const { detectChanges, markInitialized } = setUp();
 
     markInitialized();
@@ -46,7 +46,7 @@ describe(createIndependentStrategy.name, () => {
     expect(detectChanges).toBeCalledTimes(1);
   });
 
-  xit('🚧 should trigger change detection when changed', () => {
+  it('should trigger change detection when changed', () => {
     const { detectChanges, markInitialized, markChanged, clearMocks } = setUp();
 
     markInitialized();
@@ -57,13 +57,13 @@ describe(createIndependentStrategy.name, () => {
     expect(detectChanges).toBeCalledTimes(1);
   });
 
-  xit('🚧 should coalesce using given coalescing source', async () => {
+  it('should coalesce using given coalescing source', async () => {
     const {
       detectChanges,
       markInitialized,
       markChanged,
       clearMocks: clearMocks,
-    } = setUp({ coalesce: defer(() => Promise.resolve()) });
+    } = setUp({ coalescer: audit(() => Promise.resolve()) });
 
     markInitialized();
     clearMocks();
@@ -80,8 +80,10 @@ describe(createIndependentStrategy.name, () => {
     expect(afterCount).toEqual(1);
   });
 
-  function setUp({ coalesce }: { coalesce?: Observable<void> } = {}) {
-    const strategy = createIndependentStrategy({ coalesce });
+  function setUp({
+    coalescer,
+  }: { coalescer?: MonoTypeOperatorFunction<void> } = {}) {
+    const strategy = createLocalStrategy({ coalescer });
 
     const initialized$ = new Subject<void>();
     const changed$ = new Subject<void>();
@@ -99,9 +101,15 @@ describe(createIndependentStrategy.name, () => {
 
     strategy(devkit);
 
-    const markInitialized = () => initialized$.next();
+    const markInitialized = () => {
+      initialized$.next();
+      initialized$.complete();
+    };
     const markChanged = () => changed$.next();
-    const markDestroyed = () => destroyed$.next();
+    const markDestroyed = () => {
+      destroyed$.next();
+      destroyed$.complete();
+    };
 
     return {
       markInitialized,
