@@ -1,4 +1,4 @@
-import { audit, MonoTypeOperatorFunction, Subject } from 'rxjs';
+import { audit, MonoTypeOperatorFunction, Subject, switchMap } from 'rxjs';
 import { createLocalStrategy } from './local';
 
 describe(createLocalStrategy.name, () => {
@@ -57,23 +57,24 @@ describe(createLocalStrategy.name, () => {
     expect(detectChanges).toBeCalledTimes(1);
   });
 
-  it('should coalesce using given coalescing source', async () => {
-    const {
-      detectChanges,
-      markInitialized,
-      markChanged,
-      clearMocks: clearMocks,
-    } = setUp({ coalescer: audit(() => Promise.resolve()) });
+  it('should coalesce using given coalescing source', () => {
+    /* A subject to simulate the coalescer's tick. */
+    const coalescerSubject = new Subject<void>();
+
+    const { detectChanges, markInitialized, markChanged } = setUp({
+      coalescer: switchMap(() => coalescerSubject),
+    });
 
     markInitialized();
-    clearMocks();
-
     markChanged();
     markChanged();
     markChanged();
 
     const beforeCount = detectChanges.mock.calls.length;
-    await flushMicrotasks();
+
+    /* The coalescer's tick. */
+    coalescerSubject.next();
+
     const afterCount = detectChanges.mock.calls.length;
 
     expect(beforeCount).toEqual(0);
@@ -91,15 +92,13 @@ describe(createLocalStrategy.name, () => {
     const detach = jest.fn();
     const detectChanges = jest.fn();
 
-    const devkit = {
+    strategy({
       initialized$,
       changed$,
       destroyed$,
       detach,
       detectChanges,
-    };
-
-    strategy(devkit);
+    });
 
     const markInitialized = () => {
       initialized$.next();
