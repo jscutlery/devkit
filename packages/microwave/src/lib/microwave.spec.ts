@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Type } from '@angular/core';
+import { ChangeDetectorRef, Component, Type, OnInit } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { finalize } from 'rxjs';
 import { createObserver } from '../../testing/observer';
@@ -177,6 +177,8 @@ describe(Microwave.name, () => {
     });
 
     const component = TestBed.inject(componentClass);
+
+    (component as T & OnInit).ngOnInit();
 
     async function flushMicrotasks() {
       await Promise.resolve();
