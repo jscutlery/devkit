@@ -1,6 +1,9 @@
+import { createTestingBowl } from '../../../testing/testing-bowl';
 import { decorateComponent, DecoratorHooks } from './decorator';
 
 describe(decorateComponent.name, () => {
+  const bowl = createTestingBowl(setUp);
+
   it.todo('🚧 should trigger real ngOnInit');
 
   it.todo('🚧 should trigger real ngOnDestroy');
