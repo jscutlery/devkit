@@ -48,7 +48,7 @@ export class GameOfLifeComponent implements OnDestroy {
 
   constructor(private _gol: GameOfLife) {
     this._gol.initialize(this.rowCount, this.colCount);
-    this._gol.randomizeCellStates(0.1);
+    this.reset();
     this._subscription.add(
       interval(10).subscribe(() => this._gol.nextGeneration())
     );
@@ -59,7 +59,7 @@ export class GameOfLifeComponent implements OnDestroy {
   }
 
   reset() {
-    this._gol.randomizeCellStates();
+    this._gol.randomizeCellStates(.1);
   }
 }
 
