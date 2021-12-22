@@ -1,4 +1,5 @@
-import { audit, MonoTypeOperatorFunction, Subject, switchMap } from 'rxjs';
+import { createStrategyGlove } from '../../../testing/create-strategy-glove';
+import { MonoTypeOperatorFunction, Subject, switchMap } from 'rxjs';
 import { createLocalStrategy } from './local';
 
 describe(createLocalStrategy.name, () => {
@@ -85,45 +86,6 @@ describe(createLocalStrategy.name, () => {
     coalescer,
   }: { coalescer?: MonoTypeOperatorFunction<void> } = {}) {
     const strategy = createLocalStrategy({ coalescer });
-
-    const initialized$ = new Subject<void>();
-    const changed$ = new Subject<void>();
-    const destroyed$ = new Subject<void>();
-    const detach = jest.fn();
-    const detectChanges = jest.fn();
-
-    strategy({
-      initialized$,
-      changed$,
-      destroyed$,
-      detach,
-      detectChanges,
-    });
-
-    const markInitialized = () => {
-      initialized$.next();
-      initialized$.complete();
-    };
-    const markChanged = () => changed$.next();
-    const markDestroyed = () => {
-      destroyed$.next();
-      destroyed$.complete();
-    };
-
-    return {
-      markInitialized,
-      markChanged,
-      markDestroyed,
-      clearMocks() {
-        detach.mockClear();
-        detectChanges.mockClear();
-      },
-      detach,
-      detectChanges,
-    };
-  }
-
-  async function flushMicrotasks() {
-    await Promise.resolve();
+    return createStrategyGlove({ strategy });
   }
 });

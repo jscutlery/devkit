@@ -1,4 +1,4 @@
-import { NEVER, of, Subject } from 'rxjs';
+import { createStrategyGlove } from '../../../testing/create-strategy-glove';
 import { asapStrategy } from './asap';
 
 describe(asapStrategy.name, () => {
@@ -16,27 +16,10 @@ describe(asapStrategy.name, () => {
   });
 
   function setUp() {
-    const changed$ = new Subject<void>();
-    const detach = jest.fn();
-    const detectChanges = jest.fn();
+    const glove = createStrategyGlove({ strategy: asapStrategy });
 
-    asapStrategy({
-      initialized$: of(undefined),
-      changed$,
-      destroyed$: NEVER,
-      detach,
-      detectChanges,
-    });
+    glove.markInitialized();
 
-    const markChanged = () => changed$.next();
-    return {
-      markChanged,
-      clearMocks() {
-        detach.mockClear();
-        detectChanges.mockClear();
-      },
-      detach,
-      detectChanges,
-    };
+    return glove;
   }
 });
