@@ -1,14 +1,19 @@
 # @jscutlery/devkit
 
-This project is a monorepo that includes the following packages.
+This is the home of the following tools which are aiming to:
 
-| Package                                                                        | Description                                                                | Version                                                                    |
-| ------------------------------------------------------------------------------ | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| [@jscutlery/cypress-angular](./packages/cypress-angular)                       | Cypress Component Testing support for Angular.                             | <img src="https://badgen.net/npm/v/@jscutlery/cypress-angular">            |
-| [@jscutlery/cypress-harness](./packages/cypress-harness)                       | Cypress support for Angular Component Test Harnesses.                      | <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness">            |
-| [@jscutlery/cypress-angular-dev-server](./packages/cypress-angular-dev-server) | Internal package used by @jscutlery/cypress-angular to start a dev server. | <img src="https://badgen.net/npm/v/@jscutlery/cypress-angular-dev-server"> |
-| [@jscutlery/cypress-mount](./packages/cypress-mount)                           | Internal package exposed through @jscutlery/cypress-angular.               | <img src="https://badgen.net/npm/v/@jscutlery/cypress-mount">              |
-| [@jscutlery/operators](./packages/operators)                                   | Set of operators for RxJS.                                                 | <img src="https://badgen.net/npm/v/@jscutlery/operators">                  |
+🍰 Improve JavaScript & Angular Developer eXperience
+
+✅ Encourage pragmatic testing
+
+⚡️ Optimize performance
+
+| Package                                                  | Description                                           | Version                                                         |
+| -------------------------------------------------------- | ----------------------------------------------------- | --------------------------------------------------------------- |
+| [@jscutlery/cypress-angular](./packages/cypress-angular) | Cypress Component Testing support for Angular.        | <img src="https://badgen.net/npm/v/@jscutlery/cypress-angular"> |
+| [@jscutlery/cypress-harness](./packages/cypress-harness) | Cypress support for Angular Component Test Harnesses. | <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness"> |
+| [@jscutlery/microwave](./packages/microwave)             | Optimize Angular change detection effortlessly.       | <img src="https://badgen.net/npm/v/@jscutlery/microwave">       |
+| [@jscutlery/operators](./packages/operators)             | Set of operators for RxJS like `suspensify`.          | <img src="https://badgen.net/npm/v/@jscutlery/operators">       |
 
 # Contributors
 
