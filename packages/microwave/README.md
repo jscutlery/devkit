@@ -22,8 +22,11 @@
 - [📝 Usage](#-usage)
   - [`@Microwave`](#microwave-1)
   - [`@Microwave` + `watch`](#microwave--watch)
+  - [Change detection strategies](#change-detection-strategies)
+    - [Custom strategies.](#custom-strategies)
   - [Upcoming features](#upcoming-features)
-- [Nuke it](#nuke-it)
+- [Acknowledgements](#acknowledgements)
+  - [Nuke it](#nuke-it)
 
 # 📝 Usage
 
@@ -68,13 +71,39 @@ class GreetingsComponent {
 }
 ```
 
+## Change detection strategies
+
+You can customize the change detection strategy using the `strategy` parameter.
+
+```ts
+@Microwave({
+  strategy: asyncStrategy,
+})
+export class MyComponent {}
+```
+
+Here are the current strategies.
+
+### Custom strategies.
+
+You can implement your own strategy using the `Strategy<T>` signature.
+
+| Strategy     | Description                                                                                                                                                                          |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| asapStrategy | This is the default strategy. It will trigger change detection independently for each component while coalescing changes and scheduling the change detection on the microtask queue. |
+| syncStrategy | This strategy is local too but without coalescing so it will trigger change detection each time a property changes.                                                                  |
+
 ## Upcoming features
 
-- [ ] `watch` multiple properties
 - [ ] provide multiple Microwave strategies
+- [ ] `watch` multiple properties
 - [ ] automatically unsubscribe even when using operators with `watch(...).pipe(...)`
 
-# Nuke it
+# Acknowledgements
+
+The [RxAngular](https://github.com/rx-angular/rx-angular) team for the inspiration. In fact, the first prototype was built during the creation of the RxState Marmicode Tasting video: https://youtu.be/CcQYj4V2IKw
+
+## Nuke it
 
 Wordplay by [@AlyssaNicoll](https://twitter.com/AlyssaNicoll) & [@schwarty](https://twitter.com/schwarty).
 
