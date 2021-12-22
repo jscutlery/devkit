@@ -1,4 +1,11 @@
-import { BehaviorSubject, map, mapTo, Observable, ReplaySubject } from 'rxjs';
+import {
+  BehaviorSubject,
+  map,
+  mapTo,
+  Observable,
+  ReplaySubject,
+  take,
+} from 'rxjs';
 import { ChangeDetectionFns } from './change-detection-fns';
 
 /**
@@ -23,8 +30,8 @@ export function getEngine<T, K extends keyof T = keyof T>(
   let changeDetectionFns: ChangeDetectionFns;
 
   return (component[_ENGINE_SYMBOL] = {
-    destroyed$: destroyed$.asObservable(),
-    initialized$: initialized$.asObservable(),
+    destroyed$: destroyed$.pipe(take(1)),
+    initialized$: initialized$.pipe(take(1)),
     changed$: state$.pipe(mapTo(undefined)),
     detach() {
       changeDetectionFns.detach();

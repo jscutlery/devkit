@@ -14,6 +14,18 @@ describe(getEngine.name, () => {
     engine.markInitialized();
 
     expect(spy.next).toBeCalledTimes(1);
+    expect(spy.complete).toBeCalledTimes(1);
+  });
+
+  it('should mark destroyed', () => {
+    const { engine } = bowl;
+
+    const spy = observe(engine.destroyed$);
+
+    engine.markDestroyed();
+
+    expect(spy.next).toBeCalledTimes(1);
+    expect(spy.complete).toBeCalledTimes(1);
   });
 
   function setUp() {
