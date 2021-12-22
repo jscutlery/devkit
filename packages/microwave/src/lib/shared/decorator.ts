@@ -95,30 +95,10 @@ export function decorateComponent<T, K extends keyof T = keyof T>(
   });
 
   /**
-   * Override ngOnInit.
+   * Link hooks.
    */
-  componentType.prototype.ngOnInit = _decorate(
-    componentType.prototype.ngOnInit,
-    (ngOnInit: () => void) => {
-      return function (this: T) {
-        onInit(this);
-        return ngOnInit?.();
-      };
-    }
-  );
-
-  /**
-   * Override ngOnDestroy.
-   */
-  componentType.prototype.ngOnDestroy = _decorate(
-    componentType.prototype.ngOnDestroy,
-    (ngOnDestroy: () => void) => {
-      return function (this: T) {
-        onDestroy(this);
-        return ngOnDestroy?.();
-      };
-    }
-  );
+  _spyOnMethod(componentType, 'ngOnInit', onInit);
+  _spyOnMethod(componentType, 'ngOnDestroy', onDestroy);
 }
 
 export interface DecoratorHooks<T, K extends keyof T = keyof T> {
@@ -162,6 +142,23 @@ export interface DecoratorHooks<T, K extends keyof T = keyof T> {
 
 export interface IvyComponentType<T> extends Type<T> {
   ɵfac?: () => T;
+}
+
+export function _spyOnMethod<T>(
+  klass: Type<T>,
+  methodName: string,
+  callback: (instance: T) => void
+) {
+  const proto = klass.prototype;
+  proto[methodName] = _decorate(
+    proto[methodName],
+    (wrappedMethod: () => void) => {
+      return function (this: T) {
+        callback(this);
+        return wrappedMethod?.();
+      };
+    }
+  );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
