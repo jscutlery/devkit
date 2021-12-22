@@ -88,10 +88,12 @@ Here are the current strategies.
 
 You can implement your own strategy using the `Strategy<T>` signature.
 
-| Strategy     | Description                                                                                                                                                                          |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| asapStrategy | This is the default strategy. It will trigger change detection independently for each component while coalescing changes and scheduling the change detection on the microtask queue. |
-| syncStrategy | This strategy is local too but without coalescing so it will trigger change detection each time a property changes.                                                                  |
+| Strategy      | Description                                                                                                                                                                          |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| asapStrategy  | This is the default strategy. It will trigger change detection independently for each component while coalescing changes and scheduling the change detection on the microtask queue. |
+| asyncStrategy | Local strategy coalescing using macrotasks                                                                                                                                           |
+| rafStrategy   | Local strategy coalescing using `requestAnimationFrame`                                                                                                                              |
+| syncStrategy  | Local strategy without coalescing so it will trigger change detection each time a property changes.                                                                                  |
 
 ## Upcoming features
 

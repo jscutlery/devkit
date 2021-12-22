@@ -1,17 +1,19 @@
 import { createStrategyGlove } from '../../../testing/create-strategy-glove';
-import { asapStrategy } from './asap';
+import { asyncStrategy } from './async';
 
-describe(asapStrategy.name, () => {
-  it('should coalesce using microtasks', async () => {
+jest.useFakeTimers();
+
+describe(asyncStrategy.name, () => {
+  it('should coalesce using macrotasks', async () => {
     const { detectChanges, markChanged, markInitialized } = createStrategyGlove(
-      { strategy: asapStrategy }
+      { strategy: asyncStrategy }
     );
 
     markInitialized();
     markChanged();
 
     const beforeCount = detectChanges.mock.calls.length;
-    await Promise.resolve();
+    jest.runAllTimers();
     const aftertCount = detectChanges.mock.calls.length;
 
     expect(beforeCount).toEqual(0);
