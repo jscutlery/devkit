@@ -22,6 +22,9 @@ export function _bindComponentToEngine<T>(
       getEngine(component).setChangeDetectionFns(changeDetectionFns);
       onCreate(component);
     },
+    onInit(component) {
+      // @todo mark engine as initialized
+    },
     onDestroy(component) {
       getEngine(component).markDestroyed();
     },

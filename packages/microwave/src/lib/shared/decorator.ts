@@ -13,6 +13,7 @@ export function decorateComponent<T, K extends keyof T = keyof T>(
 ) {
   const {
     onCreate,
+    onInit,
     onDestroy,
     onPropertyDeclare,
     onPropertyGet,
@@ -94,6 +95,19 @@ export function decorateComponent<T, K extends keyof T = keyof T>(
   });
 
   /**
+   * Override ngOnInit.
+   */
+  componentType.prototype.ngOnInit = _decorate(
+    componentType.prototype.ngOnInit,
+    (ngOnInit: () => void) => {
+      return function (this: T) {
+        onInit(this);
+        return ngOnInit?.();
+      };
+    }
+  );
+
+  /**
    * Override ngOnDestroy.
    */
   componentType.prototype.ngOnDestroy = _decorate(
@@ -115,6 +129,13 @@ export interface DecoratorHooks<T, K extends keyof T = keyof T> {
    * @param args change detection functions for controlling change detection.
    */
   onCreate(component: T, args: ChangeDetectionFns): void;
+
+  /**
+   * Hook called when a new component is initialized.
+   *
+   * @param component the created component.
+   */
+  onInit(component: T): void;
 
   /**
    * Hook called just before the real ngOnDestroy (if implemented) is called.

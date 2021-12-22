@@ -23,7 +23,11 @@ describe(decorateComponent.name, () => {
     expect(mockHooks.onCreate).toBeCalledTimes(1);
   });
 
-  it.todo('🚧 should trigger onInit');
+  it('should trigger onInit', () => {
+    const { cmp, mockHooks } = bowl;
+    cmp.ngOnInit();
+    expect(mockHooks.onInit).toBeCalledTimes(1);
+  });
 
   it('should trigger onDestroy', () => {
     const { cmp, mockHooks } = bowl;
@@ -61,6 +65,14 @@ describe(decorateComponent.name, () => {
     expect(mockHooks.onPropertySet).toBeCalledWith(cmp, 'something', 42);
   });
 
+  it('should not call any hook except onCreate & onPropertyDeclare when created', () => {
+    const { mockHooks } = bowl;
+
+    expect(mockHooks.onDestroy).not.toBeCalled();
+    expect(mockHooks.onPropertyGet).not.toBeCalled();
+    expect(mockHooks.onPropertySet).not.toBeCalled();
+  });
+
   function setUp() {
     const ngOnInit = jest.fn();
     const ngOnDestroy = jest.fn();
@@ -82,6 +94,7 @@ describe(decorateComponent.name, () => {
 
     const mockHooks: jest.Mocked<DecoratorHooks<MyComponent>> = {
       onCreate: jest.fn(),
+      onInit: jest.fn(),
       onDestroy: jest.fn(),
       onPropertyDeclare: jest.fn(),
       onPropertyGet: jest.fn(),
