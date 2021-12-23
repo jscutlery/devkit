@@ -36,8 +36,10 @@ export class GameOfLife {
 
     /* On first generation, all cells must be processed. */
     for (const index of this._cellIndexesToProcess ?? new Set(cells.keys())) {
-      const { isAlive, neighborsIndexes } =
-        this._processCellNextGeneration(index);
+      const { isAlive, neighborsIndexes } = this._processCellNextGeneration(
+        cells,
+        index
+      );
 
       /* Update cell state. */
       newCells[index] = isAlive;
@@ -52,7 +54,7 @@ export class GameOfLife {
     }
 
     this._cellIndexesToProcess = newCellIndexesToProcess;
-    this._cells$.next(newCells);
+    this._updateCells(newCells);
   }
 
   isAlive({ col, row }: { col: number; row: number }) {
@@ -68,7 +70,7 @@ export class GameOfLife {
       | { percentAlive?: number }
     )
   ) {
-    this._cells$.next(this._generateCells(args));
+    this._updateCells(this._generateCells(args));
     /* Reset optimization set. */
     this._cellIndexesToProcess = undefined;
   }
@@ -109,8 +111,7 @@ export class GameOfLife {
     );
   }
 
-  private _processCellNextGeneration(index: number) {
-    const cells = this._cells$.value;
+  private _processCellNextGeneration(cells: boolean[], index: number) {
     let isAlive = cells[index];
     const { col, row } = this._getCoords(index);
 
@@ -150,6 +151,10 @@ export class GameOfLife {
     }
 
     return { isAlive, neighborsIndexes };
+  }
+
+  private _updateCells(cells: boolean[]) {
+    this._cells$.next(cells);
   }
 
   private _getCoords(index: number) {
