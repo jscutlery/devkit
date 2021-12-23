@@ -3,7 +3,7 @@ import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { Microwave } from '@jscutlery/microwave';
 import { Subscription } from 'rxjs';
 import { CellModule } from './cell.component';
-import { GameOfLife } from './game-of-life.service';
+import { GameOfLife, range } from './game-of-life.service';
 
 @Microwave()
 @Component({
@@ -41,8 +41,8 @@ import { GameOfLife } from './game-of-life.service';
 export class GameOfLifeComponent implements OnDestroy, OnInit {
   colCount = 100;
   rowCount = 100;
-  rows = range(this.colCount);
-  cols = range(this.rowCount);
+  rows = range(this.rowCount);
+  cols = range(this.colCount);
   gridTemplateColumns = `repeat(${this.colCount}, 1fr)`;
   gridTemplateRows = `repeat(${this.rowCount}, 1fr)`;
 
@@ -73,10 +73,6 @@ export class GameOfLifeComponent implements OnDestroy, OnInit {
       percentAlive: 0.1,
     });
   }
-}
-
-function range(count: number): Array<number> {
-  return Array.from(Array(count).keys());
 }
 
 @NgModule({
