@@ -1,15 +1,17 @@
-import { Microwave } from '@jscutlery/microwave';
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   Input,
   NgModule,
   OnInit,
-  ChangeDetectorRef,
 } from '@angular/core';
-import { GameOfLife } from './game-of-life';
+import { Microwave, syncStrategy } from '@jscutlery/microwave';
+import { GameOfLife } from './game-of-life.service';
 
-@Microwave()
+@Microwave({
+  strategy: syncStrategy,
+})
 @Component({
   selector: 'jc-cell',
   template: `<div class="content" [style.backgroundColor]="getColor()"></div>`,
@@ -41,8 +43,8 @@ export class CellComponent implements OnInit {
       throw new Error(`${CellComponent.name} col or row inputs are missing`);
     }
 
-    this._gol.watchCell(this.row, this.col).subscribe((cell) => {
-      this.color = cell.isAlive() ? '#380030' : '#ffffff';
+    this._gol.isAlive({ col: this.col, row: this.row }).subscribe((isAlive) => {
+      this.color = isAlive ? '#380030' : '#ffffff';
     });
   }
 

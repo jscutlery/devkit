@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { Microwave } from '@jscutlery/microwave';
-import { Subscription } from 'rxjs';
+import { animationFrames, Subscription, throttleTime } from 'rxjs';
 import { CellModule } from './cell.component';
-import { GameOfLife } from './game-of-life';
+import { GameOfLife, range } from './game-of-life.service';
 
 @Microwave()
 @Component({
@@ -39,29 +39,27 @@ import { GameOfLife } from './game-of-life';
   ],
 })
 export class GameOfLifeComponent implements OnDestroy, OnInit {
-  colCount = 40;
-  rowCount = 40;
-  rows = range(this.colCount);
-  cols = range(this.rowCount);
+  colCount = 100;
+  rowCount = 100;
+  rows = range(this.rowCount);
+  cols = range(this.colCount);
   gridTemplateColumns = `repeat(${this.colCount}, 1fr)`;
   gridTemplateRows = `repeat(${this.rowCount}, 1fr)`;
 
   private _subscription = new Subscription();
 
-  constructor(private _gol: GameOfLife) {
-    this._gol.initialize(this.rowCount, this.colCount);
-  }
+  constructor(private _gol: GameOfLife) {}
 
   async ngOnInit() {
     this.reset();
 
-    /* Using a loop to handle backpressure. */
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-      await new Promise((resolve) => setTimeout(resolve));
+    const sub = animationFrames()
+      .pipe(throttleTime(20))
+      .subscribe(() => {
+        this._gol.nextGeneration();
+      });
 
-      this._gol.nextGeneration();
-    }
+    this._subscription.add(sub);
   }
 
   ngOnDestroy(): void {
@@ -69,12 +67,12 @@ export class GameOfLifeComponent implements OnDestroy, OnInit {
   }
 
   reset() {
-    this._gol.randomizeCellStates(0.1);
+    this._gol.reset({
+      cols: this.colCount,
+      rows: this.rowCount,
+      percentAlive: 0.1,
+    });
   }
-}
-
-function range(count: number): Array<number> {
-  return Array.from(Array(count).keys());
 }
 
 @NgModule({
