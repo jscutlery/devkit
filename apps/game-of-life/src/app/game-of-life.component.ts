@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { Microwave } from '@jscutlery/microwave';
-import { Subscription } from 'rxjs';
+import { animationFrames, Subscription, throttleTime } from 'rxjs';
 import { CellModule } from './cell.component';
 import { GameOfLife, range } from './game-of-life.service';
 
@@ -53,13 +53,13 @@ export class GameOfLifeComponent implements OnDestroy, OnInit {
   async ngOnInit() {
     this.reset();
 
-    /* Using a loop to handle backpressure. */
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-      await new Promise((resolve) => setTimeout(resolve));
+    const sub = animationFrames()
+      .pipe(throttleTime(20))
+      .subscribe(() => {
+        this._gol.nextGeneration();
+      });
 
-      this._gol.nextGeneration();
-    }
+    this._subscription.add(sub);
   }
 
   ngOnDestroy(): void {
