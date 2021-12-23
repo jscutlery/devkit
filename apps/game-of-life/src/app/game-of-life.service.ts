@@ -4,9 +4,7 @@ import { BehaviorSubject, Observable, distinctUntilChanged, map } from 'rxjs';
 /**
  * Service that simulates Conway's Game of Life.
  *
- * @todo make this more reactive and immutable.
- *
- * @author @kevcomedia
+ * Inspired from the work of @kevcomedia
  * Source: https://github.com/kevcomedia/ng-game-of-life/blob/master/src/app/game-of-life.service.ts
  */
 @Injectable({
