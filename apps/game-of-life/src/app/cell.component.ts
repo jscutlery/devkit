@@ -1,15 +1,17 @@
-import { Microwave } from '@jscutlery/microwave';
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   Input,
   NgModule,
   OnInit,
-  ChangeDetectorRef,
 } from '@angular/core';
+import { Microwave, syncStrategy } from '@jscutlery/microwave';
 import { GameOfLife } from './game-of-life.service';
 
-@Microwave()
+@Microwave({
+  strategy: syncStrategy,
+})
 @Component({
   selector: 'jc-cell',
   template: `<div class="content" [style.backgroundColor]="getColor()"></div>`,
@@ -32,7 +34,7 @@ export class CellComponent implements OnInit {
   @Input() col?: number = undefined;
   @Input() row?: number = undefined;
 
-  private _color?: string = undefined;
+  color?: string = undefined;
 
   constructor(private _gol: GameOfLife, private _cdr: ChangeDetectorRef) {}
 
@@ -42,7 +44,7 @@ export class CellComponent implements OnInit {
     }
 
     this._gol.isAlive({ col: this.col, row: this.row }).subscribe((isAlive) => {
-      this._color = isAlive ? '#380030' : '#ffffff';
+      this.color = isAlive ? '#380030' : '#ffffff';
     });
   }
 
@@ -51,7 +53,7 @@ export class CellComponent implements OnInit {
   getColor() {
     // eslint-disable-next-line no-restricted-syntax
     console.debug('getColor');
-    return this._color;
+    return this.color;
   }
 }
 
