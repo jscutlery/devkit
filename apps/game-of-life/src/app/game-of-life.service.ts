@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 /**
@@ -17,9 +17,17 @@ export class GameOfLife {
   rows = 10;
   cols = 10;
 
+  cells$: Observable<boolean[]>;
+
   private _cells: Cell[] = [];
   private _generationCount = 0;
   private _update$ = new BehaviorSubject<void>(undefined);
+
+  constructor() {
+    this.cells$ = this._update$.pipe(
+      map(() => this._cells.map((cell) => cell.isAlive()))
+    );
+  }
 
   get generationCount(): number {
     return this._generationCount;
@@ -109,7 +117,28 @@ export class GameOfLife {
       | { percentAlive?: number }
     )
   ) {
-    throw new Error('🚧 Work in progress!');
+    const { cols, rows } = args;
+    // const cells =
+    //   'cells' in args
+    //     ? args.cells
+    //     : this._generateCells(cols * rows, args.percentAlive);
+
+    /*
+     * @todo remove this legacy compat block
+     */
+    this.initialize(rows, cols);
+    if ('cells' in args) {
+      this._cells = args.cells.map((isAlive, index) => {
+        const { col, row } = this._getCoords(index, rows);
+        const cell = new Cell(row, col);
+        if (isAlive) {
+          cell.toggleState();
+        }
+        return cell;
+      });
+    } else {
+      this.randomizeCellStates(args.percentAlive);
+    }
   }
 
   /**
@@ -145,6 +174,23 @@ export class GameOfLife {
 
   watchCell(row: number, col: number) {
     return this._update$.pipe(map(() => this.getCellAt({ row, col })));
+  }
+
+  private _generateCells(count: number, percentAlive = 0.2): boolean[] {
+    if (percentAlive < 0 || 1 < percentAlive) {
+      throw Error(
+        `percentAlive must be a number between 0 and 1, inclusive. Value: ${percentAlive}`
+      );
+    }
+
+    return range(count).map(() => Math.random() < percentAlive);
+  }
+
+  private _getCoords(index: number, cols: number) {
+    return {
+      col: index % cols,
+      row: Math.floor(index / cols),
+    };
   }
 
   /**

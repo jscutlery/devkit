@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 import { GameOfLife, range } from './game-of-life.service';
+
 describe(GameOfLife.name, () => {
-  xit('🚧 should compute next generation', async () => {
-    const { gameOfLife, act } = setUp();
+  it('should compute next generation', async () => {
+    const { gameOfLife, setAliveCells, getActiveCells } = setUp();
 
-    act();
+    setAliveCells([50, 149, 150, 151]);
 
-    // const cells = await lastValueFrom(gameOfLife.cells$);
+    gameOfLife.nextGeneration();
 
-    // expect(cells).toEqual([
-    //   /* @todo */
-    // ]);
+    expect(await getActiveCells()).toEqual([49, 50, 51, 149, 150, 151, 250]);
   });
 
   function setUp() {
@@ -18,19 +18,22 @@ describe(GameOfLife.name, () => {
     const cols = 100;
     const rows = 100;
 
-    const aliveCells = [50, 149, 150, 151];
-    const cells = range(rows * cols).map((i) => aliveCells.includes(i));
-
-    gameOfLife.resetV2({
-      cols,
-      rows,
-      cells,
-    });
-
     return {
       gameOfLife,
-      act() {
-        gameOfLife.nextGeneration();
+      setAliveCells(aliveCells: number[]) {
+        const cells = range(rows * cols).map((i) => aliveCells.includes(i));
+
+        gameOfLife.resetV2({
+          cols,
+          rows,
+          cells,
+        });
+      },
+      async getActiveCells() {
+        const cells = await firstValueFrom(gameOfLife.cells$);
+        return cells.reduce((activeCells, isActive, index) => {
+          return isActive ? [...activeCells, index] : activeCells;
+        }, [] as number[]);
       },
     };
   }
