@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.1.1](https://github.com/jscutlery/devkit/compare/microwave-0.1.0...microwave-0.1.1) (2021-12-23)
+
+
+### Bug Fixes
+
+* **microwave:** 🐞 remove invalid deps & peerDeps ([bb58f67](https://github.com/jscutlery/devkit/commit/bb58f67cce541d5a52662ba83ad4eb74eeb7b4ad))
+
+
+
 # 0.1.0 (2021-12-22)
 
 
