@@ -23,7 +23,7 @@ describe(GameOfLife.name, () => {
       setAliveCells(aliveCells: number[]) {
         const cells = range(rows * cols).map((i) => aliveCells.includes(i));
 
-        gameOfLife.resetV2({
+        gameOfLife.reset({
           cols,
           rows,
           cells,

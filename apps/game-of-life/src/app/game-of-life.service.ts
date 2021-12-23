@@ -14,315 +14,134 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class GameOfLife {
-  rows = 10;
-  cols = 10;
   cells$: Observable<boolean[]>;
 
-  private _cells: boolean[];
-
-  private _cellsLegacy: Cell[] = [];
-  private _generationCount = 0;
-  private _update$ = new BehaviorSubject<void>(undefined);
+  private _cells$: BehaviorSubject<boolean[]>;
+  private _cols = 10;
+  private _rows = 10;
 
   constructor() {
-    this.cells$ = this._update$.pipe(
-      map(() => this._cellsLegacy.map((cell) => cell.isAlive()))
+    this._cells$ = new BehaviorSubject(
+      this._generateCells({ cols: this._cols, rows: this._rows })
     );
-
-    this._cells = this._generateCells({ cols: 10, rows: 10 });
-  }
-
-  get generationCount(): number {
-    return this._generationCount;
-  }
-
-  /**
-   * Initializes the grid with dead cells. This should be called prior to
-   * calling any other function.
-   * @param rows The number of rows. Defaults to 10.
-   * @param cols The number of columns. Defaults to 10.
-   */
-  initialize(rows = this.rows, cols = this.cols) {
-    const minDimension = 5;
-    if (rows < minDimension || cols < minDimension) {
-      throw Error(`Width and height must be at least ${minDimension}.`);
-    }
-
-    this.rows = rows;
-    this.cols = cols;
-    this._generationCount = 0;
-    this._cellsLegacy = Array.from({
-      length: rows * cols,
-    }).map((_, i, a) => new Cell(Math.floor(i / this.cols), i % this.cols));
-  }
-
-  /**
-   * Makes a percentage of cells alive, depending on the input rate.
-   * @param percentAlive The amount of cells that will become alive. A value of
-   * `0.2` means 20% of the cells in the grid will become alive. This must be a
-   * positive value not greater than 1. Defaults to 0.2.
-   */
-  randomizeCellStates(percentAlive = 0.2) {
-    if (!this._cellsLegacy) {
-      throw Error('Grid has not yet been initialized.');
-    }
-
-    if (percentAlive < 0 || 1 < percentAlive) {
-      throw Error(
-        `percentAlive must be a number between 0 and 1, inclusive. Value: ${percentAlive}`
-      );
-    }
-
-    this.reset();
-    this._cellsLegacy.forEach((cell) => {
-      if (Math.random() < percentAlive) {
-        cell.toggleState();
-      }
-    });
-    // no need to update the previous states because we're starting from scratch anyway
-  }
-
-  /**
-   * Gets all the cells as an array of arrays. Each subarray contains all
-   * cells that share the same row, arranged by column number. The subarrays are
-   * arranged by row number.
-   */
-  getGrid(): Cell[][] {
-    if (!this._cellsLegacy) {
-      throw Error('Grid has not yet been initialized.');
-    }
-
-    const grid = [];
-    for (let i = 0; i < this.rows; i++) {
-      grid.push(this._cellsLegacy.slice(i * this.cols, (i + 1) * this.cols));
-    }
-    return grid;
-  }
-
-  /**
-   * Kills all cells and reverts the generation counter to 0.
-   */
-  reset() {
-    if (!this._cellsLegacy) {
-      throw Error('Grid has not yet been initialized.');
-    }
-
-    this._cellsLegacy.forEach((cell) => cell.reset());
-    this._generationCount = 0;
-  }
-
-  /**
-   * @deprecated 🚧 Work in progress.
-   */
-  resetV2(
-    args: { cols: number; rows: number } & (
-      | { cells: boolean[] }
-      | { percentAlive?: number }
-    )
-  ) {
-    const { cols, rows } = args;
-    this._cells = this._generateCells(args);
-
-    /*
-     * @todo remove this legacy compat block
-     */
-    this.initialize(rows, cols);
-    if ('cells' in args) {
-      this._cellsLegacy = args.cells.map((isAlive, index) => {
-        const { col, row } = this._getCoords(index, rows);
-        const cell = new Cell(row, col);
-        if (isAlive) {
-          cell.toggleState();
-        }
-        return cell;
-      });
-    } else {
-      this.randomizeCellStates(args.percentAlive);
-    }
+    this.cells$ = this._cells$.asObservable();
   }
 
   /**
    * Advances the simulation to the next generation.
    */
   nextGeneration() {
-    this._computeNextGenerationLegacy();
-    this._update$.next();
+    let cells = this._cells$.value;
+    cells = cells.map((isAlive, index) => {
+      const { col, row } = this._getCoords(index);
+
+      /* This might contain -1 if out of range
+       * -1 doesn't exist so it will return undefined
+       * and it will be considered dead. */
+      const neighborsIndexes = [
+        this._getIndex({ col: col - 1, row: row - 1 }),
+        this._getIndex({ col: col - 1, row }),
+        this._getIndex({ col: col - 1, row: row + 1 }),
+        this._getIndex({ col, row: row - 1 }),
+        this._getIndex({ col, row: row + 1 }),
+        this._getIndex({ col: col + 1, row: row - 1 }),
+        this._getIndex({ col: col + 1, row }),
+        this._getIndex({ col: col + 1, row: row + 1 }),
+      ];
+
+      /* Using a for loop to break when we decide to kill the cell. */
+      let aliveNeighborsCount = 0;
+      for (const neighborIndex of neighborsIndexes) {
+        if (cells[neighborIndex]) {
+          ++aliveNeighborsCount;
+        }
+
+        if (aliveNeighborsCount === 3) {
+          isAlive = true;
+        }
+
+        if (aliveNeighborsCount === 4) {
+          isAlive = false;
+          break;
+        }
+      }
+
+      if (aliveNeighborsCount <= 1) {
+        isAlive = false;
+      }
+
+      return isAlive;
+    });
+
+    this._cells$.next(cells);
   }
 
-  watchCell(row: number, col: number) {
-    return this._update$.pipe(map(() => this.getCellAt({ row, col })));
+  isAlive({ col, row }: { col: number; row: number }) {
+    return this._cells$.pipe(
+      map((cells) => cells[this._getIndex({ col, row })])
+    );
   }
 
-  private _generateCells(
+  reset(
     args: { cols: number; rows: number } & (
       | { cells: boolean[] }
       | { percentAlive?: number }
     )
   ) {
-    const { cols, rows } = args;
-    return 'cells' in args
-      ? args.cells
-      : this._generateRandomCells(cols * rows, args.percentAlive);
+    this._cells$.next(this._generateCells(args));
   }
 
-  private _generateRandomCells(count: number, percentAlive = 0.2): boolean[] {
+  private _generateCells({
+    cols,
+    rows,
+    ...args
+  }: { cols: number; rows: number } & (
+    | { cells: boolean[] }
+    | { percentAlive?: number }
+  )) {
+    this._cols = cols;
+    this._rows = rows;
+
+    if ('cells' in args) {
+      if (args.cells.length !== cols * rows) {
+        throw new Error(
+          `Invalid cell count: ${args.cells.length} should be equal to cols=${cols} x rows=${rows}`
+        );
+      }
+
+      return args.cells;
+    } else {
+      return this._generateRandomCells(args.percentAlive);
+    }
+  }
+
+  private _generateRandomCells(percentAlive = 0.2): boolean[] {
     if (percentAlive < 0 || 1 < percentAlive) {
       throw Error(
         `percentAlive must be a number between 0 and 1, inclusive. Value: ${percentAlive}`
       );
     }
 
-    return range(count).map(() => Math.random() < percentAlive);
+    return range(this._cols * this._rows).map(
+      () => Math.random() < percentAlive
+    );
   }
 
-  private _computeNextGenerationLegacy() {
-    if (!this._cellsLegacy) {
-      throw Error('Grid has not yet been initialized.');
-    }
-
-    const alive = true; // better than a magic value
-
-    for (const cell of this._cellsLegacy) {
-      const liveNeighborCount = this.getNeighborsOfCell(cell).filter((c) =>
-        c.isAlive()
-      ).length;
-
-      switch (liveNeighborCount) {
-        case 2: // cell retains status; do nothing
-          break;
-        case 3: // dead cell comes to life; live cells remain alive anyway
-          cell.setTempState(alive);
-          break;
-        default:
-          // live cell dies; dead cells remain dead
-          cell.setTempState(!alive);
-      }
-    }
-    this._generationCount++;
-    this.updateCellStates();
-  }
-
-  private _getCoords(index: number, cols: number) {
+  private _getCoords(index: number) {
     return {
-      col: index % cols,
-      row: Math.floor(index / cols),
+      col: index % this._cols,
+      row: Math.floor(index / this._cols),
     };
   }
 
   /**
-   * Updates all of the cell states with their new states. This should be called
-   * after the new states have been computed.
+   * @returns -1 if out of range
    */
-  private updateCellStates() {
-    for (const cell of this._cellsLegacy) {
-      cell.updateCurrentState();
+  private _getIndex({ col, row }: { col: number; row: number }) {
+    if (row < 0 || row >= this._rows || col < 0 || col >= this._cols) {
+      return -1;
     }
-  }
-
-  /**
-   * Gets all the cells that are adjacent to the input cell.
-   * @param cell The cell whose neighbors we are interested with.
-   */
-  private getNeighborsOfCell(cell: Cell): Cell[] {
-    if (this.isOutOfBounds(cell)) {
-      throw Error('Cell coordinates are out of bounds.');
-    }
-
-    const { row, col } = cell;
-    const possibleNeighborCoords = [
-      { row: row - 1, col: col },
-      { row: row - 1, col: col + 1 },
-      { row: row, col: col + 1 },
-      { row: row + 1, col: col + 1 },
-      { row: row + 1, col: col },
-      { row: row + 1, col: col - 1 },
-      { row: row, col: col - 1 },
-      { row: row - 1, col: col - 1 },
-    ].filter((offset) => !this.isOutOfBounds(offset));
-
-    return possibleNeighborCoords.map((coords) => this.getCellAt(coords));
-  }
-
-  /**
-   * Gets the cell with the specified row and column numbers.
-   * @param row The cell's row number.
-   * @param col The cell's column number.
-   */
-  private getCellAt({ row = 0, col = 0 } = {}): Cell {
-    if (this.isOutOfBounds({ row, col })) {
-      throw Error(
-        `Cell coordinates are out of bounds. Bounds: ${this.rows} rows, ${
-          this.cols
-        } cols. Value: ${{ row, col }}`
-      );
-    }
-
-    return this._cellsLegacy[row * this.cols + col];
-  }
-
-  /**
-   * Returns true if the supplied coords are outside the bounds of the grid.
-   * @param param0 The coordinates we want to check.
-   */
-  private isOutOfBounds({ row, col }: { row: number; col: number }): boolean {
-    return this.isRowOutOfBounds(row) || this.isColOutOfBounds(col);
-  }
-
-  private isRowOutOfBounds(row: number) {
-    return row < 0 || this.rows <= row;
-  }
-
-  private isColOutOfBounds(col: number) {
-    return col < 0 || this.cols <= col;
-  }
-}
-
-/**
- * Represents a cell in the Game of Life.
- */
-export class Cell {
-  // The actual state of the cell.
-  private currentState = false;
-  // This is where the cell's new state will be stored after
-  // computing the next generation.
-  private tempState = false;
-  private _row: number;
-  private _col: number;
-
-  // The dead state will be represented by `false`.
-  // The live state by `true`.
-  constructor(row: number, col: number) {
-    this._row = row;
-    this._col = col;
-  }
-
-  get row(): number {
-    return this._row;
-  }
-
-  get col(): number {
-    return this._col;
-  }
-
-  setTempState(state: boolean) {
-    this.tempState = state;
-  }
-
-  toggleState() {
-    this.tempState = !this.tempState;
-    this.updateCurrentState();
-  }
-
-  updateCurrentState() {
-    this.currentState = this.tempState;
-  }
-
-  isAlive(): boolean {
-    return this.currentState;
-  }
-
-  reset() {
-    this.currentState = this.tempState = false;
+    return row * this._cols + col;
   }
 }
 

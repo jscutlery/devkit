@@ -39,8 +39,8 @@ import { GameOfLife } from './game-of-life.service';
   ],
 })
 export class GameOfLifeComponent implements OnDestroy, OnInit {
-  colCount = 40;
-  rowCount = 40;
+  colCount = 50;
+  rowCount = 50;
   rows = range(this.colCount);
   cols = range(this.rowCount);
   gridTemplateColumns = `repeat(${this.colCount}, 1fr)`;
@@ -48,9 +48,7 @@ export class GameOfLifeComponent implements OnDestroy, OnInit {
 
   private _subscription = new Subscription();
 
-  constructor(private _gol: GameOfLife) {
-    this._gol.initialize(this.rowCount, this.colCount);
-  }
+  constructor(private _gol: GameOfLife) {}
 
   async ngOnInit() {
     this.reset();
@@ -69,7 +67,11 @@ export class GameOfLifeComponent implements OnDestroy, OnInit {
   }
 
   reset() {
-    this._gol.randomizeCellStates(0.1);
+    this._gol.reset({
+      cols: this.colCount,
+      rows: this.rowCount,
+      percentAlive: 0.1,
+    });
   }
 }
 
