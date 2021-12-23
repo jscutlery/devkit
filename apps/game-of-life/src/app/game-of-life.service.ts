@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, distinctUntilChanged, map } from 'rxjs';
 
 /**
  * Service that simulates Conway's Game of Life.
@@ -16,9 +15,11 @@ import { map } from 'rxjs/operators';
 export class GameOfLife {
   cells$: Observable<boolean[]>;
 
-  private _cells$: BehaviorSubject<boolean[]>;
   private _cols = 10;
   private _rows = 10;
+  private _cells$: BehaviorSubject<boolean[]>;
+  /* An optomization set containing the cells to process on next generation. */
+  private _cellIndexesToProcess?: Set<number>;
 
   constructor() {
     this._cells$ = new BehaviorSubject(
@@ -31,54 +32,35 @@ export class GameOfLife {
    * Advances the simulation to the next generation.
    */
   nextGeneration() {
-    let cells = this._cells$.value;
-    cells = cells.map((isAlive, index) => {
-      const { col, row } = this._getCoords(index);
+    const cells = this._cells$.value;
+    const newCells = [...cells];
+    const newCellIndexesToProcess = new Set<number>();
 
-      /* This might contain -1 if out of range
-       * -1 doesn't exist so it will return undefined
-       * and it will be considered dead. */
-      const neighborsIndexes = [
-        this._getIndex({ col: col - 1, row: row - 1 }),
-        this._getIndex({ col: col - 1, row }),
-        this._getIndex({ col: col - 1, row: row + 1 }),
-        this._getIndex({ col, row: row - 1 }),
-        this._getIndex({ col, row: row + 1 }),
-        this._getIndex({ col: col + 1, row: row - 1 }),
-        this._getIndex({ col: col + 1, row }),
-        this._getIndex({ col: col + 1, row: row + 1 }),
-      ];
+    /* On first generation, all cells must be processed. */
+    for (const index of this._cellIndexesToProcess ?? new Set(cells.keys())) {
+      const { isAlive, neighborsIndexes } =
+        this._processCellNextGeneration(index);
 
-      /* Using a for loop to break when we decide to kill the cell. */
-      let aliveNeighborsCount = 0;
-      for (const neighborIndex of neighborsIndexes) {
-        if (cells[neighborIndex]) {
-          ++aliveNeighborsCount;
-        }
+      /* Update cell state. */
+      newCells[index] = isAlive;
 
-        if (aliveNeighborsCount === 3) {
-          isAlive = true;
-        }
-
-        if (aliveNeighborsCount === 4) {
-          isAlive = false;
-          break;
-        }
+      /* Mark cell and neighboors to be processed on next generation. */
+      if (isAlive) {
+        newCellIndexesToProcess.add(index);
+        neighborsIndexes.forEach((_index) =>
+          newCellIndexesToProcess.add(_index)
+        );
       }
+    }
 
-      if (aliveNeighborsCount <= 1) {
-        isAlive = false;
-      }
-
-      return isAlive;
-    });
-
-    this._cells$.next(cells);
+    this._cellIndexesToProcess = newCellIndexesToProcess;
+    this._cells$.next(newCells);
   }
 
   isAlive({ col, row }: { col: number; row: number }) {
     return this._cells$.pipe(
-      map((cells) => cells[this._getIndex({ col, row })])
+      map((cells) => cells[this._getIndex({ col, row })]),
+      distinctUntilChanged()
     );
   }
 
@@ -89,6 +71,8 @@ export class GameOfLife {
     )
   ) {
     this._cells$.next(this._generateCells(args));
+    /* Reset optimization set. */
+    this._cellIndexesToProcess = undefined;
   }
 
   private _generateCells({
@@ -125,6 +109,49 @@ export class GameOfLife {
     return range(this._cols * this._rows).map(
       () => Math.random() < percentAlive
     );
+  }
+
+  private _processCellNextGeneration(index: number) {
+    const cells = this._cells$.value;
+    let isAlive = cells[index];
+    const { col, row } = this._getCoords(index);
+
+    /* This might contain -1 if out of range
+     * -1 doesn't exist so it will return undefined
+     * and it will be considered dead. */
+    const neighborsIndexes = [
+      this._getIndex({ col: col - 1, row: row - 1 }),
+      this._getIndex({ col: col - 1, row }),
+      this._getIndex({ col: col - 1, row: row + 1 }),
+      this._getIndex({ col, row: row - 1 }),
+      this._getIndex({ col, row: row + 1 }),
+      this._getIndex({ col: col + 1, row: row - 1 }),
+      this._getIndex({ col: col + 1, row }),
+      this._getIndex({ col: col + 1, row: row + 1 }),
+    ];
+
+    /* Using a for loop to break when we decide to kill the cell. */
+    let aliveNeighborsCount = 0;
+    for (const neighborIndex of neighborsIndexes) {
+      if (cells[neighborIndex]) {
+        ++aliveNeighborsCount;
+      }
+
+      if (aliveNeighborsCount === 3) {
+        isAlive = true;
+      }
+
+      if (aliveNeighborsCount === 4) {
+        isAlive = false;
+        break;
+      }
+    }
+
+    if (aliveNeighborsCount <= 1) {
+      isAlive = false;
+    }
+
+    return { isAlive, neighborsIndexes };
   }
 
   private _getCoords(index: number) {

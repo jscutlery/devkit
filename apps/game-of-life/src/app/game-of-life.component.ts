@@ -39,8 +39,8 @@ import { GameOfLife } from './game-of-life.service';
   ],
 })
 export class GameOfLifeComponent implements OnDestroy, OnInit {
-  colCount = 50;
-  rowCount = 50;
+  colCount = 100;
+  rowCount = 100;
   rows = range(this.colCount);
   cols = range(this.rowCount);
   gridTemplateColumns = `repeat(${this.colCount}, 1fr)`;
