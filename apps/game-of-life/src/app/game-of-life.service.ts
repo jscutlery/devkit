@@ -16,17 +16,20 @@ import { map } from 'rxjs/operators';
 export class GameOfLife {
   rows = 10;
   cols = 10;
-
   cells$: Observable<boolean[]>;
 
-  private _cells: Cell[] = [];
+  private _cells: boolean[];
+
+  private _cellsLegacy: Cell[] = [];
   private _generationCount = 0;
   private _update$ = new BehaviorSubject<void>(undefined);
 
   constructor() {
     this.cells$ = this._update$.pipe(
-      map(() => this._cells.map((cell) => cell.isAlive()))
+      map(() => this._cellsLegacy.map((cell) => cell.isAlive()))
     );
+
+    this._cells = this._generateCells({ cols: 10, rows: 10 });
   }
 
   get generationCount(): number {
@@ -48,7 +51,7 @@ export class GameOfLife {
     this.rows = rows;
     this.cols = cols;
     this._generationCount = 0;
-    this._cells = Array.from({
+    this._cellsLegacy = Array.from({
       length: rows * cols,
     }).map((_, i, a) => new Cell(Math.floor(i / this.cols), i % this.cols));
   }
@@ -60,7 +63,7 @@ export class GameOfLife {
    * positive value not greater than 1. Defaults to 0.2.
    */
   randomizeCellStates(percentAlive = 0.2) {
-    if (!this._cells) {
+    if (!this._cellsLegacy) {
       throw Error('Grid has not yet been initialized.');
     }
 
@@ -71,7 +74,7 @@ export class GameOfLife {
     }
 
     this.reset();
-    this._cells.forEach((cell) => {
+    this._cellsLegacy.forEach((cell) => {
       if (Math.random() < percentAlive) {
         cell.toggleState();
       }
@@ -85,13 +88,13 @@ export class GameOfLife {
    * arranged by row number.
    */
   getGrid(): Cell[][] {
-    if (!this._cells) {
+    if (!this._cellsLegacy) {
       throw Error('Grid has not yet been initialized.');
     }
 
     const grid = [];
     for (let i = 0; i < this.rows; i++) {
-      grid.push(this._cells.slice(i * this.cols, (i + 1) * this.cols));
+      grid.push(this._cellsLegacy.slice(i * this.cols, (i + 1) * this.cols));
     }
     return grid;
   }
@@ -100,11 +103,11 @@ export class GameOfLife {
    * Kills all cells and reverts the generation counter to 0.
    */
   reset() {
-    if (!this._cells) {
+    if (!this._cellsLegacy) {
       throw Error('Grid has not yet been initialized.');
     }
 
-    this._cells.forEach((cell) => cell.reset());
+    this._cellsLegacy.forEach((cell) => cell.reset());
     this._generationCount = 0;
   }
 
@@ -118,17 +121,14 @@ export class GameOfLife {
     )
   ) {
     const { cols, rows } = args;
-    // const cells =
-    //   'cells' in args
-    //     ? args.cells
-    //     : this._generateCells(cols * rows, args.percentAlive);
+    this._cells = this._generateCells(args);
 
     /*
      * @todo remove this legacy compat block
      */
     this.initialize(rows, cols);
     if ('cells' in args) {
-      this._cells = args.cells.map((isAlive, index) => {
+      this._cellsLegacy = args.cells.map((isAlive, index) => {
         const { col, row } = this._getCoords(index, rows);
         const cell = new Cell(row, col);
         if (isAlive) {
@@ -145,13 +145,44 @@ export class GameOfLife {
    * Advances the simulation to the next generation.
    */
   nextGeneration() {
-    if (!this._cells) {
+    this._computeNextGenerationLegacy();
+    this._update$.next();
+  }
+
+  watchCell(row: number, col: number) {
+    return this._update$.pipe(map(() => this.getCellAt({ row, col })));
+  }
+
+  private _generateCells(
+    args: { cols: number; rows: number } & (
+      | { cells: boolean[] }
+      | { percentAlive?: number }
+    )
+  ) {
+    const { cols, rows } = args;
+    return 'cells' in args
+      ? args.cells
+      : this._generateRandomCells(cols * rows, args.percentAlive);
+  }
+
+  private _generateRandomCells(count: number, percentAlive = 0.2): boolean[] {
+    if (percentAlive < 0 || 1 < percentAlive) {
+      throw Error(
+        `percentAlive must be a number between 0 and 1, inclusive. Value: ${percentAlive}`
+      );
+    }
+
+    return range(count).map(() => Math.random() < percentAlive);
+  }
+
+  private _computeNextGenerationLegacy() {
+    if (!this._cellsLegacy) {
       throw Error('Grid has not yet been initialized.');
     }
 
     const alive = true; // better than a magic value
 
-    for (const cell of this._cells) {
+    for (const cell of this._cellsLegacy) {
       const liveNeighborCount = this.getNeighborsOfCell(cell).filter((c) =>
         c.isAlive()
       ).length;
@@ -169,21 +200,6 @@ export class GameOfLife {
     }
     this._generationCount++;
     this.updateCellStates();
-    this._update$.next();
-  }
-
-  watchCell(row: number, col: number) {
-    return this._update$.pipe(map(() => this.getCellAt({ row, col })));
-  }
-
-  private _generateCells(count: number, percentAlive = 0.2): boolean[] {
-    if (percentAlive < 0 || 1 < percentAlive) {
-      throw Error(
-        `percentAlive must be a number between 0 and 1, inclusive. Value: ${percentAlive}`
-      );
-    }
-
-    return range(count).map(() => Math.random() < percentAlive);
   }
 
   private _getCoords(index: number, cols: number) {
@@ -198,7 +214,7 @@ export class GameOfLife {
    * after the new states have been computed.
    */
   private updateCellStates() {
-    for (const cell of this._cells) {
+    for (const cell of this._cellsLegacy) {
       cell.updateCurrentState();
     }
   }
@@ -241,7 +257,7 @@ export class GameOfLife {
       );
     }
 
-    return this._cells[row * this.cols + col];
+    return this._cellsLegacy[row * this.cols + col];
   }
 
   /**
