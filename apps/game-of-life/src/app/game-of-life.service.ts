@@ -101,6 +101,18 @@ export class GameOfLife {
   }
 
   /**
+   * @deprecated 🚧 Work in progress.
+   */
+  resetV2(
+    args: { cols: number; rows: number } & (
+      | { cells: boolean[] }
+      | { percentAlive?: number }
+    )
+  ) {
+    throw new Error('🚧 Work in progress!');
+  }
+
+  /**
    * Advances the simulation to the next generation.
    */
   nextGeneration() {
@@ -250,4 +262,8 @@ export class Cell {
   reset() {
     this.currentState = this.tempState = false;
   }
+}
+
+export function range(length: number) {
+  return [...Array(length).keys()];
 }

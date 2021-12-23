@@ -7,7 +7,7 @@ import {
   OnInit,
   ChangeDetectorRef,
 } from '@angular/core';
-import { GameOfLife } from './game-of-life';
+import { GameOfLife } from './game-of-life.service';
 
 @Microwave()
 @Component({

@@ -3,7 +3,7 @@ import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { Microwave } from '@jscutlery/microwave';
 import { Subscription } from 'rxjs';
 import { CellModule } from './cell.component';
-import { GameOfLife } from './game-of-life';
+import { GameOfLife } from './game-of-life.service';
 
 @Microwave()
 @Component({
