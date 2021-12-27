@@ -2229,9 +2229,9 @@
   integrity sha512-9oLAnygRMi8Q5QkYEU4XWK04B+nuoXoxjRvRxgjuChkLZFBja0YPSgdZ7dZtwhncLBcQe/I/E+fLuk5qxcYVJA==
 
 "@jscutlery/semver@^2.11.2":
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-2.15.0.tgz#5f5d37d8dfd481c19e200df16a5bc17b9516f500"
-  integrity sha512-4KRkAQmXQgCoX2ZGg2VR7H+gCJA5FzT7VTp5JQAfBm8GNvaoW0vEs5GxV4j9dY/JS/HXhcciIYe+lp5l0I23WA==
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-2.16.0.tgz#d3b132ccd831015139265e01e2a3d9056227a56a"
+  integrity sha512-8DfFY52Sz3K6ccjz5W3nzav4VBhClUh8cFgg+G4UtPZdFY/Dbpx++LYnREIXsXJmtktVj8+3z8AiRBiO7xYfiQ==
   dependencies:
     "@nrwl/devkit" "^13.0.2"
     inquirer "^8.2.0"
@@ -2426,6 +2426,18 @@
     yargs "15.4.1"
     yargs-parser "20.0.0"
 
+"@nrwl/cli@13.4.1":
+  version "13.4.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-13.4.1.tgz#f01e3442ce9c22d8d4fc4b55285000561de27f3c"
+  integrity sha512-U0ik9wrumTxg+l0f17xajOLgKPQH2hFFPiDlegOupef7mR3JBxrEzadkTXjRH7wXSOWBdzYyVYsfx+6UwS9Ilw==
+  dependencies:
+    "@nrwl/tao" "13.4.1"
+    chalk "4.1.0"
+    enquirer "~2.3.6"
+    v8-compile-cache "2.3.0"
+    yargs "15.4.1"
+    yargs-parser "20.0.0"
+
 "@nrwl/cypress@13.3.12":
   version "13.3.12"
   resolved "https://registry.yarnpkg.com/@nrwl/cypress/-/cypress-13.3.12.tgz#7a99f2c62cace4953326c017bc9a75b9e8fead04"
@@ -2483,11 +2495,11 @@
     tslib "^2.0.0"
 
 "@nrwl/devkit@^13.0.2":
-  version "13.3.9"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.3.9.tgz#bc246803a95f75dfa60affce1f46b197e736cede"
-  integrity sha512-nvO1PAc3r8ifBy/7xsZirOYQcv/14U5PYwxuMZHoHgN2MZUviVpeX7Eev1dSJoaZnpxh5ZTduJoxQDMck/uJvg==
+  version "13.4.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.4.1.tgz#32395f506be9e2adabf95febf774609168b21449"
+  integrity sha512-dk/moNFriAFnAFro9EQILJWkYQsgkRI1rIou2uCkbrhUHeFZ1nZECjBNdBj/hocz76O24xH7+A8HneacXlKZHg==
   dependencies:
-    "@nrwl/tao" "13.3.9"
+    "@nrwl/tao" "13.4.1"
     ejs "^3.1.5"
     ignore "^5.0.4"
     rxjs "^6.5.4"
@@ -2673,6 +2685,25 @@
     ignore "^5.0.4"
     jsonc-parser "3.0.0"
     nx "13.3.9"
+    rxjs "^6.5.4"
+    rxjs-for-await "0.0.2"
+    semver "7.3.4"
+    tmp "~0.2.1"
+    tslib "^2.3.0"
+    yargs-parser "20.0.0"
+
+"@nrwl/tao@13.4.1":
+  version "13.4.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-13.4.1.tgz#914214bda8d64c61369218e7c53b4dfdcfe756e7"
+  integrity sha512-bgVzHlKfY7TK0ZLlM9+yQxfw8+NGsfl1+612advLYI46NRYAOpY3yOPBWX+69M+W3SwdjKQDyTi57hHbgx1XBA==
+  dependencies:
+    chalk "4.1.0"
+    enquirer "~2.3.6"
+    fast-glob "3.2.7"
+    fs-extra "^9.1.0"
+    ignore "^5.0.4"
+    jsonc-parser "3.0.0"
+    nx "13.4.1"
     rxjs "^6.5.4"
     rxjs-for-await "0.0.2"
     semver "7.3.4"
@@ -5915,10 +5946,19 @@ conventional-changelog-config-spec@2.1.0:
   resolved "https://registry.yarnpkg.com/conventional-changelog-config-spec/-/conventional-changelog-config-spec-2.1.0.tgz#874a635287ef8b581fd8558532bf655d4fb59f2d"
   integrity sha512-IpVePh16EbbB02V+UA+HQnnPIohgXvJRxHcS5+Uwk4AT5LjzCZJm5sp/yqs5C6KZJ1jMsV4paEV13BN1pvDuxQ==
 
-conventional-changelog-conventionalcommits@4.6.1, conventional-changelog-conventionalcommits@^4.5.0:
+conventional-changelog-conventionalcommits@4.6.1:
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/conventional-changelog-conventionalcommits/-/conventional-changelog-conventionalcommits-4.6.1.tgz#f4c0921937050674e578dc7875f908351ccf4014"
   integrity sha512-lzWJpPZhbM1R0PIzkwzGBCnAkH5RKJzJfFQZcl/D+2lsJxAwGnDKBqn/F4C1RD31GJNn8NuKWQzAZDAVXPp2Mw==
+  dependencies:
+    compare-func "^2.0.0"
+    lodash "^4.17.15"
+    q "^1.5.1"
+
+conventional-changelog-conventionalcommits@^4.5.0:
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/conventional-changelog-conventionalcommits/-/conventional-changelog-conventionalcommits-4.6.2.tgz#6debf07a894f7c7e22b950e2f872de334d5d49ed"
+  integrity sha512-fo+VhM0VtD3wdHZtrPhgvTFjAhAMUjYeQV6B5+DB/cupG1O554pJdTwrvBInq8JLHl+GucKQpZycMPye/OpgSw==
   dependencies:
     compare-func "^2.0.0"
     lodash "^4.17.15"
@@ -11801,6 +11841,13 @@ nx@13.3.9:
   integrity sha512-+CpxBoyPtOtFhcJ5tlUKUQ8OJ0h25PoWK86RKjNw3ThFHhtyaY6FYijnuzRvnb0ZlYkxgmylUlP+L4QN50oRYg==
   dependencies:
     "@nrwl/cli" "13.3.9"
+
+nx@13.4.1:
+  version "13.4.1"
+  resolved "https://registry.yarnpkg.com/nx/-/nx-13.4.1.tgz#e96df3f954fc6c8c67c109c1d773ac3c8195efdf"
+  integrity sha512-x/fbcY/mg6rHhVho2oWDKPk+ZTHCuNvaBSe959BY7OkPiGaP5yydfXfP+tuRdxrEGIL0ZD+UzsjH/1ITdnZP3w==
+  dependencies:
+    "@nrwl/cli" "13.4.1"
 
 object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
