@@ -1,0 +1,11 @@
+{
+  "migrations": [
+    {
+      "version": "13.1.0-beta",
+      "description": "As of Angular version 13, `entryComponents` are no longer necessary.",
+      "factory": "./migrations/entry-components/index",
+      "package": "@angular/core",
+      "name": "migration-v13.1-entry-components"
+    }
+  ]
+}

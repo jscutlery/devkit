@@ -1,30 +1,17 @@
+import type {
+  AssetPattern,
+  ExtraEntryPoint,
+  IndexUnion,
+  StylePreprocessorOptions,
+} from '@angular-devkit/build-angular/src/builders/browser/schema';
 import { normalizeBrowserSchema } from '@angular-devkit/build-angular/src/utils';
 import { generateWebpackConfig } from '@angular-devkit/build-angular/src/utils/webpack-browser-config';
 import {
-  getBrowserConfig,
   getCommonConfig,
-  getStatsConfig,
   getStylesConfig,
-  getTypeScriptConfig,
 } from '@angular-devkit/build-angular/src/webpack/configs';
 import { getSystemPath, normalize, resolve } from '@angular-devkit/core';
-
 import type { Configuration } from 'webpack';
-import type { WebpackConfigOptions } from '@angular-devkit/build-angular/src/utils/build-options';
-import type {
-  ExtraEntryPoint,
-  AssetPattern,
-  StylePreprocessorOptions,
-  IndexUnion,
-} from '@angular-devkit/build-angular/src/builders/browser/schema';
-
-function getCompilerConfig(wco: WebpackConfigOptions) {
-  if (wco.buildOptions.main || wco.buildOptions.polyfills) {
-    return getTypeScriptConfig(wco);
-  }
-
-  return {};
-}
 
 export async function createAngularWebpackConfig(config: {
   workspaceRoot: string;
@@ -76,16 +63,13 @@ export async function createAngularWebpackConfig(config: {
     normalizedOptions,
     (wco) => [
       getCommonConfig(wco),
-      getBrowserConfig(wco),
       getStylesConfig({
         ...wco,
         root: config.workspaceRoot,
       }),
-      getStatsConfig(wco),
-      getCompilerConfig(wco),
     ],
     _createFakeLogger(),
-    {},
+    {}
   );
 
   return webpackConfig;

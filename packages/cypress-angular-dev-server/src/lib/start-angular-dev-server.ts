@@ -1,4 +1,3 @@
-/// <reference types="cypress"/>
 import { startDevServer } from '@cypress/webpack-dev-server';
 import { merge } from 'webpack-merge';
 import type { Configuration } from 'webpack';
