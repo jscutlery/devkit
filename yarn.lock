@@ -11367,10 +11367,10 @@ ng-dynamic-component@^10.0.0:
   dependencies:
     tslib "^2.0.0"
 
-ng-packagr@13.1.2:
-  version "13.1.2"
-  resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-13.1.2.tgz#d0c82fb276cdde8f433be42c0a7cf90a789de107"
-  integrity sha512-SYa+BWdcHI63Jp2V5mvck3sDOAwYDvgGCxl7qpnu3r8P9W0rbblzE3c4cQzsa26icpytCxshRRY6fSdRIsa/zw==
+ng-packagr@13.1.3:
+  version "13.1.3"
+  resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-13.1.3.tgz#d1f2067e335d4e19f97a29ae32c4c8d1e1503bd1"
+  integrity sha512-u6Idmh4qAFYKNYP7tsm+Oys8enZ0FrZLN0muJFx7VY5CChq+PYqHeuWPd2a/JD0dL1Ffzr7qHL4Yak8/Ld0/0Q==
   dependencies:
     "@rollup/plugin-json" "^4.1.0"
     "@rollup/plugin-node-resolve" "^13.0.0"
@@ -11389,13 +11389,13 @@ ng-packagr@13.1.2:
     less "^4.1.0"
     ora "^5.1.0"
     postcss "^8.2.4"
-    postcss-preset-env "^6.7.0"
+    postcss-preset-env "^7.0.0"
     postcss-url "^10.1.1"
     rollup "^2.45.1"
     rollup-plugin-sourcemaps "^0.6.3"
     rxjs "^6.5.0"
     sass "^1.32.8"
-    stylus "^0.55.0"
+    stylus "^0.56.0"
   optionalDependencies:
     esbuild "^0.14.0"
 
@@ -12918,7 +12918,7 @@ postcss-place@^7.0.3:
   dependencies:
     postcss-value-parser "^4.2.0"
 
-postcss-preset-env@6.7.0, postcss-preset-env@^6.7.0:
+postcss-preset-env@6.7.0:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/postcss-preset-env/-/postcss-preset-env-6.7.0.tgz#c34ddacf8f902383b35ad1e030f178f4cdf118a5"
   integrity sha512-eU4/K5xzSFwUFJ8hTdTQzo2RBLbDVt83QZrAvI07TULOkmyQlnYlpwep+2yIK+K+0KlZO4BvFcleOCCcUtwchg==
@@ -14909,6 +14909,18 @@ stylus@0.55.0, stylus@^0.55.0:
     safer-buffer "^2.1.2"
     sax "~1.2.4"
     semver "^6.3.0"
+    source-map "^0.7.3"
+
+stylus@^0.56.0:
+  version "0.56.0"
+  resolved "https://registry.yarnpkg.com/stylus/-/stylus-0.56.0.tgz#13fc85c48082db483c90d2530942fe8b0be988eb"
+  integrity sha512-Ev3fOb4bUElwWu4F9P9WjnnaSpc8XB9OFHSFZSKMFL1CE1oM+oFXWEgAqPmmZIyhBihuqIQlFsVTypiiS9RxeA==
+  dependencies:
+    css "^3.0.0"
+    debug "^4.3.2"
+    glob "^7.1.6"
+    safer-buffer "^2.1.2"
+    sax "~1.2.4"
     source-map "^0.7.3"
 
 supports-color@^5.3.0:
