@@ -17,12 +17,12 @@
     "baseUrl": ".",
     "paths": {
       "@jscutlery/cypress-angular": ["packages/cypress-angular/src/index.ts"],
+      "@jscutlery/cypress-angular-dev-server": [
+        "packages/cypress-angular-dev-server/src/index.ts"
+      ],
       "@jscutlery/cypress-angular/mount": ["packages/cypress-angular/mount.ts"],
       "@jscutlery/cypress-angular/support": [
         "packages/cypress-angular/support.ts"
-      ],
-      "@jscutlery/cypress-angular-dev-server": [
-        "packages/cypress-angular-dev-server/src/index.ts"
       ],
       "@jscutlery/cypress-harness": ["packages/cypress-harness/src/index.ts"],
       "@jscutlery/cypress-harness/support": [
