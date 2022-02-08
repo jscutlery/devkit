@@ -2231,9 +2231,9 @@
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
 "@jscutlery/semver@^2.11.2":
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-2.18.0.tgz#e7e6a8e4e0f5586e514a55098d537cf3662f1de9"
-  integrity sha512-YK00dXy/nrGUCKC5sSUEmBfRRLw59MlcTm4wp5jepWkI/pynB9SyTqq5V1IxVn/+SlCsBLx6od5ANi34+iq5Ow==
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-2.18.1.tgz#6a21adc5691f02d5270e0fa2bff8d69aa440d5a8"
+  integrity sha512-yvi5cg4KQX+PQXT7IeD8tt3i3fwflh+dg+QNmzDl6lOWKGWEShpxilFlyFRqhYuuSAcaWwkbYJTL4OL7Cg5kCQ==
   dependencies:
     "@nrwl/devkit" "^13.0.2"
     inquirer "^8.2.0"
@@ -2413,6 +2413,17 @@
     v8-compile-cache "2.3.0"
     yargs-parser "20.0.0"
 
+"@nrwl/cli@13.8.0":
+  version "13.8.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-13.8.0.tgz#346327870bf7ac7d6b9199ae5bc19977b0e7711a"
+  integrity sha512-4CYkvvXBHbBkWiuZiR1M3oJq/3aKg6KQqUWTe6irsm9XwNfZhjlfW8SKlvzxCHZ/9aj8jzwvjisee4gccXmS6w==
+  dependencies:
+    "@nrwl/tao" "13.8.0"
+    chalk "4.1.0"
+    enquirer "~2.3.6"
+    v8-compile-cache "2.3.0"
+    yargs-parser "20.0.0"
+
 "@nrwl/cypress@13.6.1":
   version "13.6.1"
   resolved "https://registry.yarnpkg.com/@nrwl/cypress/-/cypress-13.6.1.tgz#71f4d9d052e0f30668f174481fcbaa627a486875"
@@ -2444,7 +2455,7 @@
     semver "7.3.4"
     tslib "^2.3.0"
 
-"@nrwl/devkit@13.7.3", "@nrwl/devkit@^13.0.2":
+"@nrwl/devkit@13.7.3":
   version "13.7.3"
   resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.7.3.tgz#6159b205e743e6127df432a5e33c2fab04a01c93"
   integrity sha512-HUfiQuq1qNaavQgbTjYG2UpjrtKtrlOSIq9OPUGYRpmCVNoT5IOtovn7BT+o1Dg6qYW/6F14ydbnubv/SAKXMw==
@@ -2467,6 +2478,18 @@
     rxjs "^6.5.4"
     semver "7.3.4"
     tslib "^2.0.0"
+
+"@nrwl/devkit@^13.0.2":
+  version "13.8.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.8.0.tgz#d380d7921d3d83777fdd5dc1f638eb193336f3f2"
+  integrity sha512-agiund/d2IJA0g+6QfruvTy1thxvHDlKALMkJgSSA2pDdh2fwMG+gX4arsu7kSa53CvPMddIsC5Nc+5vEiQSTw==
+  dependencies:
+    "@nrwl/tao" "13.8.0"
+    ejs "^3.1.5"
+    ignore "^5.0.4"
+    rxjs "^6.5.4"
+    semver "7.3.4"
+    tslib "^2.3.0"
 
 "@nrwl/eslint-plugin-nx@13.6.1":
   version "13.6.1"
@@ -2635,6 +2658,25 @@
     ignore "^5.0.4"
     jsonc-parser "3.0.0"
     nx "13.7.3"
+    rxjs "^6.5.4"
+    rxjs-for-await "0.0.2"
+    semver "7.3.4"
+    tmp "~0.2.1"
+    tslib "^2.3.0"
+    yargs-parser "20.0.0"
+
+"@nrwl/tao@13.8.0":
+  version "13.8.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-13.8.0.tgz#973e78526f6df2b7b403e03283a7f0d8613e688f"
+  integrity sha512-lKyl+YhArdk5jT++P2As8QnGXQns1lEXbEwMvkAiwALpsUix06I7bxJgH8X1DWkRbKhCqYPpqnm2C2hKszrtoA==
+  dependencies:
+    chalk "4.1.0"
+    enquirer "~2.3.6"
+    fast-glob "3.2.7"
+    fs-extra "^9.1.0"
+    ignore "^5.0.4"
+    jsonc-parser "3.0.0"
+    nx "13.8.0"
     rxjs "^6.5.4"
     rxjs-for-await "0.0.2"
     semver "7.3.4"
@@ -12097,6 +12139,13 @@ nx@13.7.3:
   dependencies:
     "@nrwl/cli" "13.7.3"
 
+nx@13.8.0:
+  version "13.8.0"
+  resolved "https://registry.yarnpkg.com/nx/-/nx-13.8.0.tgz#3c9bc20c185833d8df9ee968068e713d022966e5"
+  integrity sha512-ABn9aVg64RwYbgkx72rpu4il2qmzp3EujGv7bjsAKDxF6fJyN0vgpHySKZKrGlbjeUF34kamz3OX96QfmHk7Rg==
+  dependencies:
+    "@nrwl/cli" "13.8.0"
+
 object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
@@ -14237,14 +14286,14 @@ rxjs@6.6.7, rxjs@^6.5.4, rxjs@^6.6.0:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^7.0.0, rxjs@^7.2.0, rxjs@^7.4.0, rxjs@^7.5.1:
+rxjs@^7.0.0, rxjs@^7.5.1:
   version "7.5.2"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.2.tgz#11e4a3a1dfad85dbf7fb6e33cbba17668497490b"
   integrity sha512-PwDt186XaL3QN5qXj/H9DGyHhP3/RYYgZZwqBv9Tv8rsAaiwFH1IsJJlcgD37J7UW5a6O67qX0KWKS3/pu0m4w==
   dependencies:
     tslib "^2.1.0"
 
-rxjs@~7.5.0:
+rxjs@^7.2.0, rxjs@^7.4.0, rxjs@~7.5.0:
   version "7.5.3"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.3.tgz#1359f8a4704797bee74357d65a125dbc7d8f4a91"
   integrity sha512-6162iC/N7L7K8q3UvdOMWix1ju+esADGrDaPrTu5XJmCv69YNdYoUaop/iatN8GHK+YHOdszPP+qygA0yi04zQ==
@@ -15681,9 +15730,9 @@ typescript@4.5.5, typescript@^4.4.3, typescript@^4.5.3:
   integrity sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==
 
 uglify-js@^3.1.4:
-  version "3.15.0"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.15.0.tgz#2d6a689d94783cab43975721977a13c2afec28f1"
-  integrity sha512-x+xdeDWq7FiORDvyIJ0q/waWd4PhjBNOm5dQUOq2AKC0IEjxOS66Ha9tctiVDGcRQuh69K7fgU5oRuTK4cysSg==
+  version "3.15.1"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.15.1.tgz#9403dc6fa5695a6172a91bc983ea39f0f7c9086d"
+  integrity sha512-FAGKF12fWdkpvNJZENacOH0e/83eG6JyVQyanIJaBXCN1J11TUQv1T1/z8S+Z0CG0ZPk1nPcreF/c7lrTd0TEQ==
 
 unbox-primitive@^1.0.1:
   version "1.0.1"
