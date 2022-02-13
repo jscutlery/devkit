@@ -5739,10 +5739,15 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001251, caniuse-lite@^1.0.30001299:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001307.tgz#27a67f13ebc4aa9c977e6b8256a11d5eafb30f27"
   integrity sha512-+MXEMczJ4FuxJAUp0jvAl6Df0NI/OfW1RWEE61eSmzS7hw6lz4IKutbhbXendwq8BljfFuHtu26VWsg4afQ7Ng==
 
-caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001286, caniuse-lite@^1.0.30001297:
+caniuse-lite@^1.0.30001109:
   version "1.0.30001311"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001311.tgz#682ef3f4e617f1a177ad943de59775ed3032e511"
   integrity sha512-mleTFtFKfykEeW34EyfhGIFjGCqzhh38Y0LhdQ9aWF+HorZTtdgKV/1hEE0NlFkG2ubvisPV6l400tlbPys98A==
+
+caniuse-lite@^1.0.30001286, caniuse-lite@^1.0.30001297:
+  version "1.0.30001312"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001312.tgz#e11eba4b87e24d22697dae05455d5aea28550d5f"
+  integrity sha512-Wiz1Psk2MEK0pX3rUzWaunLTZzqS2JYZFzNKqAiJGiuxIjRPLgV6+VDPOg6lQOUxmDwhTlh198JsTTi8Hzw6aQ==
 
 canonical-path@1.0.0:
   version "1.0.0"
@@ -6675,10 +6680,10 @@ cssdb@^5.0.0:
   resolved "https://registry.yarnpkg.com/cssdb/-/cssdb-5.1.0.tgz#ec728d5f5c0811debd0820cbebda505d43003400"
   integrity sha512-/vqjXhv1x9eGkE/zO6o8ZOI7dgdZbLVLUGyVRbPgk6YipXbW87YzUCcO+Jrmi5bwJlAH6oD+MNeZyRgXea1GZw==
 
-cssdb@^6.2.1:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/cssdb/-/cssdb-6.2.1.tgz#8904c3f8005bfc334009ee20ddb201330d5a5199"
-  integrity sha512-TBIhtDCOeYjwr44Vpl1g/224/18lI0jW+PKdA5ZP30dhre3eEutVUb2mnqUnpRPiPWQB7BQf8CWiUGOa966Fnw==
+cssdb@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/cssdb/-/cssdb-6.3.0.tgz#d5df430a6ff7bb09af377b8c6d8da61d8f4017a4"
+  integrity sha512-U/nJSGsM0NIEsVPwat6r6QrvtqZ8m+eYb8qLoSFXXWNghy5x3z6ftubzbb6AMFcvaYVVRXKAmgD1I1e2A31qug==
 
 cssesc@^3.0.0:
   version "3.0.0"
@@ -13361,9 +13366,9 @@ postcss-preset-env@7.2.3:
     postcss-selector-not "^5.0.0"
 
 postcss-preset-env@^7.0.0:
-  version "7.3.2"
-  resolved "https://registry.yarnpkg.com/postcss-preset-env/-/postcss-preset-env-7.3.2.tgz#67565c1970859b12724ea5da449c30c96c29e4e2"
-  integrity sha512-bxKNZu7/JWTiePds3IJlDdnCaYkIQt38KkfMX9mKmDw0+D8tpf/a+1sog34BuiDsRsKWYYGaPvfKw61gJs7f6A==
+  version "7.3.3"
+  resolved "https://registry.yarnpkg.com/postcss-preset-env/-/postcss-preset-env-7.3.3.tgz#2c08a717549b282c89be7c90827147814d41809b"
+  integrity sha512-/4EIceyxf6LKihp88YnQ0uExt//EHozxOspsCQbLq9/RB4W0zutdk52XJZzDYtCkvergw0NTTQvB7TpdxBRbvQ==
   dependencies:
     "@csstools/postcss-font-format-keywords" "^1.0.0"
     "@csstools/postcss-hwb-function" "^1.0.0"
@@ -13375,7 +13380,7 @@ postcss-preset-env@^7.0.0:
     css-blank-pseudo "^3.0.3"
     css-has-pseudo "^3.0.4"
     css-prefers-color-scheme "^6.0.3"
-    cssdb "^6.2.1"
+    cssdb "^6.3.0"
     postcss-attribute-case-insensitive "^5.0.0"
     postcss-clamp "^3.0.0"
     postcss-color-functional-notation "^4.2.2"
