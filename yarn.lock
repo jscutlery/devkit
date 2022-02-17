@@ -2159,9 +2159,9 @@
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
 "@jscutlery/semver@^2.11.2":
-  version "2.18.2"
-  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-2.18.2.tgz#2cb1b470c22fb70525fe364b83d27270d6eddde8"
-  integrity sha512-XXurKkjYAa00xvgOItmr9q3rBkes+8uyDdFl4T4f3XPT8e/SP5IiI6sSXztVCUlB7iqt7O9gj6f1W58cJzYNpg==
+  version "2.19.1"
+  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-2.19.1.tgz#176d48fbf06a2ca99efddd01162168723d418255"
+  integrity sha512-je5UaOFRWtqFh+UzNjjupkRtjLG6DO8M8/Nx2z+9rZELZdKuKg+6WhZ01nRqNjTYdJQ0hG7RvmD5gTWJ8Pjt/Q==
   dependencies:
     "@nrwl/devkit" "^13.0.2"
     inquirer "^8.2.0"
@@ -2352,6 +2352,17 @@
     v8-compile-cache "2.3.0"
     yargs-parser "20.0.0"
 
+"@nrwl/cli@13.8.2":
+  version "13.8.2"
+  resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-13.8.2.tgz#d4fa10d633565d15a4171ed5e558649e8f44ba79"
+  integrity sha512-wpSKo/78y1oNeBhwHIRYaqDddNhzdOmTOkYNf+J6wuaeaEMlnrJFgDrTyy14ysgPFiW0vzb5AdrDb6W2tGigYQ==
+  dependencies:
+    "@nrwl/tao" "13.8.2"
+    chalk "4.1.0"
+    enquirer "~2.3.6"
+    v8-compile-cache "2.3.0"
+    yargs-parser "20.0.0"
+
 "@nrwl/cypress@13.6.1":
   version "13.6.1"
   resolved "https://registry.yarnpkg.com/@nrwl/cypress/-/cypress-13.6.1.tgz#71f4d9d052e0f30668f174481fcbaa627a486875"
@@ -2408,11 +2419,11 @@
     tslib "^2.0.0"
 
 "@nrwl/devkit@^13.0.2":
-  version "13.8.1"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.8.1.tgz#03184e057b04b2a451dd7856e0e8008b8def1685"
-  integrity sha512-zznDaYf6yTBbr8xOb8l4Dn7L0QhCS7BMUoCq/PMCBLwRnRBDpbd801tD06qIVvhh3XkwEJVS2v7EEF3TOypIyw==
+  version "13.8.2"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.8.2.tgz#1ff50b4e04628652a481462a07ccd81d74e04753"
+  integrity sha512-i1LC2ha/RnmwF3TJLgus1yKWG4uFWKMYwOlngIrS6Zi0qSx2tCKknhaMqLZxn84vw5C42u1vUzm9C483ueASRQ==
   dependencies:
-    "@nrwl/tao" "13.8.1"
+    "@nrwl/tao" "13.8.2"
     ejs "^3.1.5"
     ignore "^5.0.4"
     rxjs "^6.5.4"
@@ -2605,6 +2616,25 @@
     ignore "^5.0.4"
     jsonc-parser "3.0.0"
     nx "13.8.1"
+    rxjs "^6.5.4"
+    rxjs-for-await "0.0.2"
+    semver "7.3.4"
+    tmp "~0.2.1"
+    tslib "^2.3.0"
+    yargs-parser "20.0.0"
+
+"@nrwl/tao@13.8.2":
+  version "13.8.2"
+  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-13.8.2.tgz#871ddad20de93ca68efb11721c1a9f7cabaa138f"
+  integrity sha512-68GsErwpOQDZPunJrpXDpauQo40dP66dO7uHQUu1Jf+css0uu1dfXtIR4CrAikvLJ57fZZw09l1xFrI9+OfXjA==
+  dependencies:
+    chalk "4.1.0"
+    enquirer "~2.3.6"
+    fast-glob "3.2.7"
+    fs-extra "^9.1.0"
+    ignore "^5.0.4"
+    jsonc-parser "3.0.0"
+    nx "13.8.2"
     rxjs "^6.5.4"
     rxjs-for-await "0.0.2"
     semver "7.3.4"
@@ -11753,6 +11783,13 @@ nx@13.8.1:
   integrity sha512-8oHkh/Hli/OGGkumH8C9NArFjvFoNEgSfVkzCB7zoGddnIJlGAx+sSpHp0zJbXJV55Lk7iXbpKyeOJNnQDsEyQ==
   dependencies:
     "@nrwl/cli" "13.8.1"
+
+nx@13.8.2:
+  version "13.8.2"
+  resolved "https://registry.yarnpkg.com/nx/-/nx-13.8.2.tgz#93e560925eb70802c1ce5b266863ae2fb9a532a7"
+  integrity sha512-raCluwNq9lK1sb71omgWfgXiQS8r+mnmXraL4p4aI7P07hEer2Oo8QI9ec4KbVc04HKkLOMkzg6YkZ94Glkc/g==
+  dependencies:
+    "@nrwl/cli" "13.8.2"
 
 object-assign@^4.1.1:
   version "4.1.1"
