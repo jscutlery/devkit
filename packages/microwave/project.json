@@ -50,7 +50,8 @@
       "options": {
         "postTargets": ["microwave:build", "microwave:publish"],
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
-        "noVerify": true
+        "noVerify": true,
+        "push": true
       }
     },
     "publish": {

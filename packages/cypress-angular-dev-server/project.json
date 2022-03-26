@@ -37,7 +37,8 @@
           "cypress-angular-dev-server:publish"
         ],
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
-        "noVerify": true
+        "noVerify": true,
+        "push": true
       }
     },
     "publish": {

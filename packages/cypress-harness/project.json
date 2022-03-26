@@ -35,7 +35,8 @@
       "options": {
         "postTargets": ["cypress-harness:build", "cypress-harness:publish"],
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
-        "noVerify": true
+        "noVerify": true,
+        "push": true
       }
     },
     "publish": {
