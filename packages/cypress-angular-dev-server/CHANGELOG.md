@@ -2,6 +2,24 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.7.4](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.7.3...cypress-angular-dev-server-1.7.4) (2022-03-26)
+
+
+### Bug Fixes
+
+* 📦 update dependency @angular-devkit/build-angular to v13.1.3 ([7262792](https://github.com/jscutlery/test-utils/commit/726279213144bf13f6584b3cb5d5b9e239c22c76))
+* 📦 update dependency @angular-devkit/build-angular to v13.1.4 ([2aec218](https://github.com/jscutlery/test-utils/commit/2aec2188ac1cfc5653999c0d471896940003190a))
+* 📦 update dependency @angular-devkit/build-angular to v13.2.1 ([f16dcb2](https://github.com/jscutlery/test-utils/commit/f16dcb22b32ddd2c7fb4befd918f90fe87c5b17c))
+* 📦 update dependency @angular-devkit/build-angular to v13.2.2 ([e3c1159](https://github.com/jscutlery/test-utils/commit/e3c11592bd6b51ae85d1361ced38a997867c9574))
+* 📦 update dependency @angular-devkit/build-angular to v13.2.3 ([25473ca](https://github.com/jscutlery/test-utils/commit/25473ca8d3aa536006339edb508f9df596497fac))
+* 📦 update dependency @angular-devkit/build-angular to v13.2.4 ([7f114b8](https://github.com/jscutlery/test-utils/commit/7f114b8d3871ae6e3b54a3f7fb5f6e9535723139))
+* 📦 update dependency @angular-devkit/build-angular to v13.2.5 ([d190c44](https://github.com/jscutlery/test-utils/commit/d190c44dcffc0d1e5a4df8110f096b96fee55089))
+* 📦 update dependency @angular-devkit/build-angular to v13.2.6 ([f3945fb](https://github.com/jscutlery/test-utils/commit/f3945fb352105290cc6c972ada9fd880042bc3dc))
+* 📦 update dependency @angular-devkit/build-angular to v13.3.0 ([b78fb08](https://github.com/jscutlery/test-utils/commit/b78fb08fb93a2849b9f3c8d1d53b88f7634ba987))
+* **cypress-angular-dev-server:** 📦 update nx + set devkit as dep ([90f0acb](https://github.com/jscutlery/test-utils/commit/90f0acb6ae21979c69151038d70b5b78a6c7ecbf))
+
+
+
 ## [1.7.3](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.7.2...cypress-angular-dev-server-1.7.3) (2021-12-22)
 
 
