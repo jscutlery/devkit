@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.1.2](https://github.com/jscutlery/devkit/compare/microwave-0.1.1...microwave-0.1.2) (2022-03-27)
+
+
+
 ## [0.1.1](https://github.com/jscutlery/devkit/compare/microwave-0.1.0...microwave-0.1.1) (2021-12-23)
 
 
