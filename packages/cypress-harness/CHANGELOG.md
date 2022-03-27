@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.11](https://github.com/jscutlery/devkit/compare/cypress-harness-0.3.10...cypress-harness-0.3.11) (2022-03-27)
+
+
+### Bug Fixes
+
+* 🐞 add missing peerDependencies ([f820bad](https://github.com/jscutlery/devkit/commit/f820bad0f2c1f2f41ecbc1f388a366601cbe16b5))
+* 🐞 bump workspace ([127c808](https://github.com/jscutlery/devkit/commit/127c808e61cd9e8be3f3e3fd32f64fe7ad1f7e55))
+
+
+
 ## [0.3.10](https://github.com/jscutlery/devkit/compare/cypress-harness-0.3.9...cypress-harness-0.3.10) (2022-03-26)
 
 
