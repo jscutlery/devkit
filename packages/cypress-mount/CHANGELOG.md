@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.12.2](https://github.com/jscutlery/devkit/compare/cypress-mount-0.12.1...cypress-mount-0.12.2) (2022-03-27)
+
+
+### Bug Fixes
+
+* 🐞 add missing peerDependencies ([f820bad](https://github.com/jscutlery/devkit/commit/f820bad0f2c1f2f41ecbc1f388a366601cbe16b5))
+* 🐞 bump workspace ([127c808](https://github.com/jscutlery/devkit/commit/127c808e61cd9e8be3f3e3fd32f64fe7ad1f7e55))
+
+
+
 ## [0.12.1](https://github.com/jscutlery/devkit/compare/cypress-mount-0.12.0...cypress-mount-0.12.1) (2022-03-26)
 
 
