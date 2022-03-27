@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.7.5](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.7.4...cypress-angular-dev-server-1.7.5) (2022-03-27)
+
+
+### Bug Fixes
+
+* 🐞 bump workspace ([127c808](https://github.com/jscutlery/devkit/commit/127c808e61cd9e8be3f3e3fd32f64fe7ad1f7e55))
+
+
+
 ## [1.7.4](https://github.com/jscutlery/test-utils/compare/cypress-angular-dev-server-1.7.3...cypress-angular-dev-server-1.7.4) (2022-03-26)
 
 
