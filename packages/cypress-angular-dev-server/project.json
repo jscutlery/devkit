@@ -19,7 +19,7 @@
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "options": {
         "outputPath": "dist/packages/cypress-angular-dev-server",
         "tsConfig": "packages/cypress-angular-dev-server/tsconfig.lib.json",

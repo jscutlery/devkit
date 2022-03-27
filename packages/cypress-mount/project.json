@@ -20,7 +20,7 @@
       "outputs": ["coverage/packages/cypress-mount"]
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "options": {
         "outputPath": "dist/packages/cypress-mount",
         "tsConfig": "packages/cypress-mount/tsconfig.lib.json",

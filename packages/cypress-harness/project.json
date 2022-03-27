@@ -20,7 +20,7 @@
       "outputs": ["coverage/packages/cypress-harness"]
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "options": {
         "outputPath": "dist/packages/cypress-harness",
         "tsConfig": "packages/cypress-harness/tsconfig.lib.json",
