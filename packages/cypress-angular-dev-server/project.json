@@ -34,14 +34,22 @@
       "options": {
         "postTargets": [
           "cypress-angular-dev-server:build",
-          "cypress-angular-dev-server:publish"
+          "cypress-angular-dev-server:npm",
+          "cypress-angular-dev-server:github"
         ],
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
         "noVerify": true,
         "push": true
       }
     },
-    "publish": {
+    "github": {
+      "executor": "@jscutlery/semver:github",
+      "options": {
+        "notes": "${notes}",
+        "tag": "${tag}"
+      }
+    },
+    "npm": {
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public"

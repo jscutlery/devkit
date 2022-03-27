@@ -33,13 +33,20 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "postTargets": ["cypress-mount:build", "cypress-mount:publish"],
+        "postTargets": ["cypress-mount:build", "cypress-mount:npm", "cypress-mount:github"],
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
         "noVerify": true,
         "push": true
       }
     },
-    "publish": {
+    "github": {
+      "executor": "@jscutlery/semver:github",
+      "options": {
+        "notes": "${notes}",
+        "tag": "${tag}"
+      }
+    },
+    "npm": {
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public"
