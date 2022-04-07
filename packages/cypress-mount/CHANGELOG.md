@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.12.3](https://github.com/jscutlery/devkit/compare/cypress-mount-0.12.2...cypress-mount-0.12.3) (2022-04-07)
+
+
+### Bug Fixes
+
+* 🐞 remove useless optional dependency ([1c286c5](https://github.com/jscutlery/devkit/commit/1c286c5c60c735793f031dfbe7952d1e74c0be2f))
+
+
+
 ## [0.12.2](https://github.com/jscutlery/devkit/compare/cypress-mount-0.12.1...cypress-mount-0.12.2) (2022-03-27)
 
 
