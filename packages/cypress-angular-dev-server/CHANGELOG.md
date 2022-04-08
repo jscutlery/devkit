@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.7.8](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.7.7...cypress-angular-dev-server-1.7.8) (2022-04-07)
+
+
+### Bug Fixes
+
+* **cypress-angular-dev-server:** 🐞 add missing dep path-browserify ([5876b78](https://github.com/jscutlery/devkit/commit/5876b7890aa1becc38b111e61f52d8af5a5a4358))
+
+
+
 ## [1.7.7](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.7.6...cypress-angular-dev-server-1.7.7) (2022-04-06)
 
 
