@@ -2390,6 +2390,13 @@
   dependencies:
     nx "13.10.3"
 
+"@nrwl/cli@14.0.1":
+  version "14.0.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-14.0.1.tgz#7751167c746ecdc93ce624d38c04fed142b908cc"
+  integrity sha512-+tsQdHyVlgolmHrRVEUkybOcOucbh9Q6zQCsHw6qlIApk/a9kNE9meTGvZTo9W0njoeWhtJAnCaXB1l7fmqBQg==
+  dependencies:
+    nx "14.0.1"
+
 "@nrwl/cypress@13.10.3":
   version "13.10.3"
   resolved "https://registry.yarnpkg.com/@nrwl/cypress/-/cypress-13.10.3.tgz#c82a3ddae3b8dd6a4f9967f47db6319d51caf368"
@@ -2617,6 +2624,13 @@
   integrity sha512-wvHdEuTxamADvQoGJa3BOZoijQm3Irol0vAxkxzoFS47SYXNvoBPtLhvrtF8P+yJv+gTLW8C0QnUHPVtsnenPA==
   dependencies:
     nx "13.9.5"
+
+"@nrwl/tao@14.0.1":
+  version "14.0.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-14.0.1.tgz#32f9af09b405856728e9103b7d9aed1f512e2490"
+  integrity sha512-xvNvkqRDAlreZc9FFMm0C+Fup4uCrZAp4w+KMzdibM0tJJBKC37rEdCJnXl0HWFV79aCJIwqW3BlDxHxMeVMBg==
+  dependencies:
+    nx "14.0.1"
 
 "@nrwl/web@13.10.3":
   version "13.10.3"
@@ -12084,6 +12098,43 @@ nx@13.9.5:
     tslib "^2.3.0"
     v8-compile-cache "2.3.0"
     yargs-parser "20.0.0"
+
+nx@14.0.1:
+  version "14.0.1"
+  resolved "https://registry.yarnpkg.com/nx/-/nx-14.0.1.tgz#d8cec87e7716d5b8cfe0e226b22759c9d12494a6"
+  integrity sha512-m/td2BGYnUgRtxyhDAFssjKQt2FYfhAV14Igrnyvaleo0385yQIjzkcfJh9XAyvMvuhq6uzlvMqOd85EL6aTwg==
+  dependencies:
+    "@nrwl/cli" "14.0.1"
+    "@nrwl/tao" "14.0.1"
+    "@parcel/watcher" "2.0.4"
+    "@swc-node/register" "^1.4.2"
+    "@swc/core" "^1.2.152"
+    chalk "4.1.0"
+    chokidar "^3.5.1"
+    cli-cursor "3.1.0"
+    cli-spinners "2.6.1"
+    dotenv "~10.0.0"
+    enquirer "~2.3.6"
+    fast-glob "3.2.7"
+    figures "3.2.0"
+    flat "^5.0.2"
+    fs-extra "^9.1.0"
+    glob "7.1.4"
+    ignore "^5.0.4"
+    jsonc-parser "3.0.0"
+    minimatch "3.0.4"
+    npm-run-path "^4.0.1"
+    open "^8.4.0"
+    rxjs "^6.5.4"
+    rxjs-for-await "0.0.2"
+    semver "7.3.4"
+    tar-stream "~2.2.0"
+    tmp "~0.2.1"
+    tsconfig-paths "^3.9.0"
+    tslib "^2.3.0"
+    v8-compile-cache "2.3.0"
+    yargs "^17.4.0"
+    yargs-parser "21.0.1"
 
 object-assign@^4.1.1:
   version "4.1.1"
