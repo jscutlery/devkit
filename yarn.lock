@@ -2158,12 +2158,12 @@
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
 "@jscutlery/semver@^2.21.4":
-  version "2.22.0"
-  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-2.22.0.tgz#937033557661615098b257e64a16d0348d38617a"
-  integrity sha512-3+DqosM8rhoI4m6+YAa/LTjhFULvnL0PBCo60VADgfSYnZdXO6RdnSwcfLOJ4agc0OOs4ea2cjN+THXz2jYrCQ==
+  version "2.23.2"
+  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-2.23.2.tgz#9070461f62b36c4a4a7db6bcd56b9d0607fa0ab8"
+  integrity sha512-4s0Afr5SYdPW/Uhu73e3bvVTV9Vri3AOOCOk0WjQQAXwbS65i/KxsxA+huUInFHjohqSG+Ie0f7/VMUlmAAEiQ==
   dependencies:
-    "@nrwl/devkit" "13.10.2"
-    inquirer "8.2.2"
+    "@nrwl/devkit" "14.0.3"
+    inquirer "8.2.3"
     rxjs "7.5.5"
     standard-version "9.3.2"
 
@@ -2344,13 +2344,6 @@
   dependencies:
     nx "13.10.1"
 
-"@nrwl/cli@13.10.2":
-  version "13.10.2"
-  resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-13.10.2.tgz#dea96a771fd1809b9fc6e5ecf64ada119d8cb60b"
-  integrity sha512-e9TK7CBaOb2jvnnuypPTox+l3vr1Lubjrq7rvyVrUDfSFsRe33Em1FTEdT7RCwjzF1ypvGkF0Fm2Cxi9/ljxVg==
-  dependencies:
-    nx "13.10.2"
-
 "@nrwl/cli@14.0.3":
   version "14.0.3"
   resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-14.0.3.tgz#7542f9e20aa1a44e9c8ffdef13054131bedbfcf0"
@@ -2385,18 +2378,6 @@
     ejs "^3.1.5"
     ignore "^5.0.4"
     nx "13.10.1"
-    rxjs "^6.5.4"
-    semver "7.3.4"
-    tslib "^2.3.0"
-
-"@nrwl/devkit@13.10.2":
-  version "13.10.2"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.10.2.tgz#41208074c9b219deb6ec510706edd81fda094361"
-  integrity sha512-7jM86MAHc/vvQ4jJt8QjMncC0lFfhkxZ/d5Nt5b+s3AUQgFPkwg1TXt/uj+qo0goS/Mbv5UNVIdMGlEchnbvVQ==
-  dependencies:
-    ejs "^3.1.5"
-    ignore "^5.0.4"
-    nx "13.10.2"
     rxjs "^6.5.4"
     semver "7.3.4"
     tslib "^2.3.0"
@@ -2564,13 +2545,6 @@
   integrity sha512-QYtMISnJPYyA9ADfBTXiEWvwzjgMICGIrM6sWc018dI2pQ8rWiTRRGOKq5YOsyHGhVd+MSEQYJlElGl3Y4gDIA==
   dependencies:
     nx "13.10.1"
-
-"@nrwl/tao@13.10.2":
-  version "13.10.2"
-  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-13.10.2.tgz#76dad0d2fd4eae95b867014fe842a56529159ec4"
-  integrity sha512-Eq/u4tRRRtrMYBormdeTrRFj/rpcP5fsa3QrwcHjUSNnQDM/FZ9kt7fRgbnh+2QzdTJnU4QmaX6t4Kt+qYtsTQ==
-  dependencies:
-    nx "13.10.2"
 
 "@nrwl/tao@13.9.5":
   version "13.9.5"
@@ -9522,10 +9496,10 @@ inquirer@8.2.0:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
-inquirer@8.2.2:
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.2.2.tgz#1310517a87a0814d25336c78a20b44c3d9b7629d"
-  integrity sha512-pG7I/si6K/0X7p1qU+rfWnpTE1UIkTONN1wxtzh0d+dHXtT/JG6qBgLxoyHVsQa8cFABxAPh0pD6uUUHiAoaow==
+inquirer@8.2.3:
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.2.3.tgz#9c0b8a3fda91fdb00590557ec8530160e908c6e7"
+  integrity sha512-jmoBlmWUChXgVi1wGDZsD7pWCaibJKmL+8+E2jaiWiRj8OlJLwQdQQS2CIjgvdg8UUHX+oyagQKicVVcqwxi9Q==
   dependencies:
     ansi-escapes "^4.2.1"
     chalk "^4.1.1"
@@ -9541,6 +9515,7 @@ inquirer@8.2.2:
     string-width "^4.1.0"
     strip-ansi "^6.0.0"
     through "^2.3.6"
+    wrap-ansi "^7.0.0"
 
 inquirer@^7.0.4:
   version "7.3.3"
@@ -11902,43 +11877,6 @@ nx@13.10.1:
   dependencies:
     "@nrwl/cli" "13.10.1"
     "@nrwl/tao" "13.10.1"
-    "@parcel/watcher" "2.0.4"
-    "@swc-node/register" "^1.4.2"
-    "@swc/core" "^1.2.152"
-    chalk "4.1.0"
-    chokidar "^3.5.1"
-    cli-cursor "3.1.0"
-    cli-spinners "2.6.1"
-    dotenv "~10.0.0"
-    enquirer "~2.3.6"
-    fast-glob "3.2.7"
-    figures "3.2.0"
-    flat "^5.0.2"
-    fs-extra "^9.1.0"
-    glob "7.1.4"
-    ignore "^5.0.4"
-    jsonc-parser "3.0.0"
-    minimatch "3.0.4"
-    npm-run-path "^4.0.1"
-    open "^8.4.0"
-    rxjs "^6.5.4"
-    rxjs-for-await "0.0.2"
-    semver "7.3.4"
-    tar-stream "~2.2.0"
-    tmp "~0.2.1"
-    tsconfig-paths "^3.9.0"
-    tslib "^2.3.0"
-    v8-compile-cache "2.3.0"
-    yargs "^17.4.0"
-    yargs-parser "21.0.1"
-
-nx@13.10.2:
-  version "13.10.2"
-  resolved "https://registry.yarnpkg.com/nx/-/nx-13.10.2.tgz#4e0227233cb5c468ce99cfba53a8773439a12de4"
-  integrity sha512-6ac/7DO66asndgsMVC+YR5oa0jfEmmXjmE19gvIuAJtii00dSKd6o+n1G8lbl8RPZcz43wVY0zwV/eMpCSNFXw==
-  dependencies:
-    "@nrwl/cli" "13.10.2"
-    "@nrwl/tao" "13.10.2"
     "@parcel/watcher" "2.0.4"
     "@swc-node/register" "^1.4.2"
     "@swc/core" "^1.2.152"
