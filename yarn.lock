@@ -2415,6 +2415,13 @@
   dependencies:
     nx "14.0.3"
 
+"@nrwl/cli@14.1.1":
+  version "14.1.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-14.1.1.tgz#5814932d771f1c00705bdfc957a45df56af5da79"
+  integrity sha512-QSARR7H2nmYfWT78MP3DszM9QLPYxia99sO8w5Y4iuz63AoilC4vQfsFaWwhRLxp05LzouAiBkdk3RytQazoqA==
+  dependencies:
+    nx "14.1.1"
+
 "@nrwl/cypress@14.0.5":
   version "14.0.5"
   resolved "https://registry.yarnpkg.com/@nrwl/cypress/-/cypress-14.0.5.tgz#c9c8c29fde3dfc2ed73acc8bd24ca217613e72ca"
@@ -2615,6 +2622,13 @@
   integrity sha512-sxnouiZALWF5ujp9XPf8HGbUS1KLIoUtN9IJ/H3lVV8jCQNJ1FPwriM9HPLYajORZ+nSU9DRi2aqMIuaI9yxhQ==
   dependencies:
     nx "14.0.5"
+
+"@nrwl/tao@14.1.1":
+  version "14.1.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-14.1.1.tgz#56b4d39c8ca1e1ca04ac3defb2c8f98ac2bd188b"
+  integrity sha512-sMD2Ada6goyAClRW5d8ODN78Z8uPMhMdC5axBrhDlb2h+obNVI2S1d6G9Hp72KxlnujpI7wQdjK+CuKwpc1KAw==
+  dependencies:
+    nx "14.1.1"
 
 "@nrwl/web@14.0.5":
   version "14.0.5"
@@ -11906,6 +11920,45 @@ nx@14.0.5:
   dependencies:
     "@nrwl/cli" "14.0.5"
     "@nrwl/tao" "14.0.5"
+    "@parcel/watcher" "2.0.4"
+    "@swc-node/register" "^1.4.2"
+    "@swc/core" "^1.2.173"
+    chalk "4.1.0"
+    chokidar "^3.5.1"
+    cli-cursor "3.1.0"
+    cli-spinners "2.6.1"
+    cliui "^7.0.2"
+    dotenv "~10.0.0"
+    enquirer "~2.3.6"
+    fast-glob "3.2.7"
+    figures "3.2.0"
+    flat "^5.0.2"
+    fs-extra "^9.1.0"
+    glob "7.1.4"
+    ignore "^5.0.4"
+    jsonc-parser "3.0.0"
+    minimatch "3.0.4"
+    npm-run-path "^4.0.1"
+    open "^8.4.0"
+    rxjs "^6.5.4"
+    rxjs-for-await "0.0.2"
+    semver "7.3.4"
+    string-width "^4.2.3"
+    tar-stream "~2.2.0"
+    tmp "~0.2.1"
+    tsconfig-paths "^3.9.0"
+    tslib "^2.3.0"
+    v8-compile-cache "2.3.0"
+    yargs "^17.4.0"
+    yargs-parser "21.0.1"
+
+nx@14.1.1:
+  version "14.1.1"
+  resolved "https://registry.yarnpkg.com/nx/-/nx-14.1.1.tgz#91b4076f8c268ec13acf1cbf5821f0a3fcddb473"
+  integrity sha512-+fZ7Bi2qhmP03I0dz6/cIOXPSwKjJD+xv3MBW4Ex9MtsW0BnMQ7bJOCjn0Nuk29oaz5NnojpXiens8UcZDQSAQ==
+  dependencies:
+    "@nrwl/cli" "14.1.1"
+    "@nrwl/tao" "14.1.1"
     "@parcel/watcher" "2.0.4"
     "@swc-node/register" "^1.4.2"
     "@swc/core" "^1.2.173"
