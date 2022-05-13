@@ -19,6 +19,7 @@
 - [Microwave](#microwave)
 - [🪄 Features](#-features)
 - [Table of Contents](#table-of-contents)
+- [👾 Demo](#-demo)
 - [📝 Usage](#-usage)
   - [`@Microwave`](#microwave-1)
   - [`@Microwave` + `watch`](#microwave--watch)
@@ -27,6 +28,10 @@
   - [Upcoming features](#upcoming-features)
 - [Acknowledgements](#acknowledgements)
   - [Nuke it](#nuke-it)
+
+# 👾 Demo
+
+https://stackblitz.com/edit/game-of-life-microwave?file=src%2Fapp%2Fcell.component.ts
 
 # 📝 Usage
 
