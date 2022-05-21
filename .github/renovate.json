@@ -14,7 +14,7 @@
   "commitMessage": "{{{commitMessagePrefix}}} 📦 {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
   "packageRules": [
     {
-      "matchPackagePatterns": ["^@angular/", "^@nrwl/"],
+      "matchPackagePatterns": ["^@angular/", "^@nrwl/", "nx"],
       "groupName": "Nrwl workspace",
       "enabled": false
     },
