@@ -1735,7 +1735,7 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@csstools/postcss-cascade-layers@^1.0.1":
+"@csstools/postcss-cascade-layers@^1.0.1", "@csstools/postcss-cascade-layers@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@csstools/postcss-cascade-layers/-/postcss-cascade-layers-1.0.2.tgz#7c48b5f773c4cdcdc6b57d6099fbdc2332e12219"
   integrity sha512-n5fSd3N/RTLjwC6TLnHjlVEt5tRg6S6Pu+LpRgXayX0QVJHvlMzE3+R12cd2F0we8WB4OE8o5r5iWgmBPpqUyQ==
@@ -1807,6 +1807,13 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@csstools/postcss-stepped-value-functions/-/postcss-stepped-value-functions-1.0.0.tgz#f8ffc05e163ba7bcbefc5fdcaf264ce9fd408c16"
   integrity sha512-q8c4bs1GumAiRenmFjASBcWSLKrbzHzWl6C2HcaAxAXIiL2rUlUWbqQZUjwVG5tied0rld19j/Mm90K3qI26vw==
+  dependencies:
+    postcss-value-parser "^4.2.0"
+
+"@csstools/postcss-trigonometric-functions@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@csstools/postcss-trigonometric-functions/-/postcss-trigonometric-functions-1.0.0.tgz#b0d79e39a1a448ae4bb7fe2bb1dd1991fc83f3aa"
+  integrity sha512-a8Qd3A0Ly3cmQnjIv1SRGlvXRsjVzemID2b0ki0q6mRIx98OIQ+6aC13AKDez2d7W8IPbdzB/Qco2vXqKAvVPQ==
   dependencies:
     postcss-value-parser "^4.2.0"
 
@@ -6493,7 +6500,7 @@ cssdb@^5.0.0:
   resolved "https://registry.yarnpkg.com/cssdb/-/cssdb-5.1.0.tgz#ec728d5f5c0811debd0820cbebda505d43003400"
   integrity sha512-/vqjXhv1x9eGkE/zO6o8ZOI7dgdZbLVLUGyVRbPgk6YipXbW87YzUCcO+Jrmi5bwJlAH6oD+MNeZyRgXea1GZw==
 
-cssdb@^6.6.1:
+cssdb@^6.6.1, cssdb@^6.6.2:
   version "6.6.2"
   resolved "https://registry.yarnpkg.com/cssdb/-/cssdb-6.6.2.tgz#6c1c1777483c909a8fc64f296a51546136b35f45"
   integrity sha512-w08LaP+DRoPlw4g4LSUp+EWRrWTPlrzWREcU7/6IeMfL7tPR2P9oeQ1G+pxyfMmLWBNDwqHWa6kxiuGMLb71EA==
@@ -12545,7 +12552,7 @@ postcss-clamp@^4.1.0:
   dependencies:
     postcss-value-parser "^4.2.0"
 
-postcss-color-functional-notation@^4.2.1, postcss-color-functional-notation@^4.2.2:
+postcss-color-functional-notation@^4.2.1, postcss-color-functional-notation@^4.2.2, postcss-color-functional-notation@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/postcss-color-functional-notation/-/postcss-color-functional-notation-4.2.3.tgz#23c9d73c76113b75473edcf66f443c6f1872bd0f"
   integrity sha512-5fbr6FzFzjwHXKsVnkmEYrJYG8VNNzvD1tAXaPPWR97S6rhKI5uh2yOfV5TAzhDkZoq4h+chxEplFDc8GeyFtw==
@@ -12877,7 +12884,7 @@ postcss-modules@^4.0.0:
     postcss-modules-values "^4.0.0"
     string-hash "^1.1.1"
 
-postcss-nesting@^10.1.2, postcss-nesting@^10.1.6:
+postcss-nesting@^10.1.2, postcss-nesting@^10.1.6, postcss-nesting@^10.1.7:
   version "10.1.7"
   resolved "https://registry.yarnpkg.com/postcss-nesting/-/postcss-nesting-10.1.7.tgz#0101bd6c7d386e7ad8e2e86ebcc0e0109833b86e"
   integrity sha512-Btho5XzDTpl117SmB3tvUHP8txg5n7Ayv7vQ5m4b1zXkfs1Y52C67uZjZ746h7QvOJ+rLRg50OlhhjFW+IQY6A==
@@ -13017,7 +13024,7 @@ postcss-preset-env@7.2.3:
     postcss-replace-overflow-wrap "^4.0.0"
     postcss-selector-not "^5.0.0"
 
-postcss-preset-env@^7.0.0, postcss-preset-env@~7.6.0:
+postcss-preset-env@^7.0.0:
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/postcss-preset-env/-/postcss-preset-env-7.6.0.tgz#4e6178d97fc1ddd7fec168c9034eb17258a5bf12"
   integrity sha512-5cnzpSFZnQJOlBu85xn4Nnluy/WjIST/ugn+gOVcKnmFJ+GLtkfRhmJPo/TW9UDpG7oyA467kvDOO8mtcpOL4g==
@@ -13060,6 +13067,59 @@ postcss-preset-env@^7.0.0, postcss-preset-env@~7.6.0:
     postcss-logical "^5.0.4"
     postcss-media-minmax "^5.0.0"
     postcss-nesting "^10.1.6"
+    postcss-opacity-percentage "^1.1.2"
+    postcss-overflow-shorthand "^3.0.3"
+    postcss-page-break "^3.0.4"
+    postcss-place "^7.0.4"
+    postcss-pseudo-class-any-link "^7.1.4"
+    postcss-replace-overflow-wrap "^4.0.0"
+    postcss-selector-not "^5.0.0"
+    postcss-value-parser "^4.2.0"
+
+postcss-preset-env@~7.7.0:
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/postcss-preset-env/-/postcss-preset-env-7.7.0.tgz#bcc9be9725a85d34e72a8fa69dc5e1130abee301"
+  integrity sha512-2Q9YARQju+j2BVgAyDnW1pIWIMlaHZqbaGISPMmalznNlWcNFIZFQsJfRLXS+WHmHJDCmV7wIWpVf9JNKR4Elw==
+  dependencies:
+    "@csstools/postcss-cascade-layers" "^1.0.2"
+    "@csstools/postcss-color-function" "^1.1.0"
+    "@csstools/postcss-font-format-keywords" "^1.0.0"
+    "@csstools/postcss-hwb-function" "^1.0.1"
+    "@csstools/postcss-ic-unit" "^1.0.0"
+    "@csstools/postcss-is-pseudo-class" "^2.0.4"
+    "@csstools/postcss-normalize-display-values" "^1.0.0"
+    "@csstools/postcss-oklab-function" "^1.1.0"
+    "@csstools/postcss-progressive-custom-properties" "^1.3.0"
+    "@csstools/postcss-stepped-value-functions" "^1.0.0"
+    "@csstools/postcss-trigonometric-functions" "^1.0.0"
+    "@csstools/postcss-unset-value" "^1.0.1"
+    autoprefixer "^10.4.7"
+    browserslist "^4.20.3"
+    css-blank-pseudo "^3.0.3"
+    css-has-pseudo "^3.0.4"
+    css-prefers-color-scheme "^6.0.3"
+    cssdb "^6.6.2"
+    postcss-attribute-case-insensitive "^5.0.0"
+    postcss-clamp "^4.1.0"
+    postcss-color-functional-notation "^4.2.3"
+    postcss-color-hex-alpha "^8.0.3"
+    postcss-color-rebeccapurple "^7.0.2"
+    postcss-custom-media "^8.0.0"
+    postcss-custom-properties "^12.1.7"
+    postcss-custom-selectors "^6.0.0"
+    postcss-dir-pseudo-class "^6.0.4"
+    postcss-double-position-gradients "^3.1.1"
+    postcss-env-function "^4.0.6"
+    postcss-focus-visible "^6.0.4"
+    postcss-focus-within "^5.0.4"
+    postcss-font-variant "^5.0.0"
+    postcss-gap-properties "^3.0.3"
+    postcss-image-set-function "^4.0.6"
+    postcss-initial "^4.0.1"
+    postcss-lab-function "^4.2.0"
+    postcss-logical "^5.0.4"
+    postcss-media-minmax "^5.0.0"
+    postcss-nesting "^10.1.7"
     postcss-opacity-percentage "^1.1.2"
     postcss-overflow-shorthand "^3.0.3"
     postcss-page-break "^3.0.4"
