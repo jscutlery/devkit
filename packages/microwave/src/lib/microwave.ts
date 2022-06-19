@@ -2,7 +2,7 @@ import { Observable, takeUntil } from 'rxjs';
 import { applyStrategy } from './apply-strategy';
 import { getEngine } from './core/engine';
 import { IvyComponentType } from './shared/decorator';
-import { asapStrategy } from './strategies/asap';
+import { asapStrategy } from './strategies';
 
 export function Microwave({ strategy = asapStrategy } = {}) {
   return function MicrowaveDecorator<T>(componentType: IvyComponentType<T>) {
