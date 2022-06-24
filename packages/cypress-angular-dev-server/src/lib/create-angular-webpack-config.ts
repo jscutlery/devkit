@@ -1,7 +1,8 @@
 import type {
   AssetPattern,
-  ExtraEntryPoint,
   IndexUnion,
+  ScriptElement,
+  StyleElement,
   StylePreprocessorOptions,
 } from '@angular-devkit/build-angular/src/builders/browser/schema';
 import { normalizeBrowserSchema } from '@angular-devkit/build-angular/src/utils';
@@ -27,8 +28,8 @@ export async function createAngularWebpackConfig(config: {
 
   const buildOptions = config.buildOptions ?? {};
   const polyfills = (buildOptions.polyfills as string) ?? 'placeholder';
-  const styles = (buildOptions.styles as ExtraEntryPoint[]) ?? [];
-  const scripts = (buildOptions.scripts as ExtraEntryPoint[]) ?? [];
+  const styles = (buildOptions.styles as StyleElement[]) ?? [];
+  const scripts = (buildOptions.scripts as ScriptElement[]) ?? [];
   const assets = (buildOptions.assets as AssetPattern[]) ?? [];
   const stylePreprocessorOptions =
     buildOptions?.stylePreprocessorOptions as StylePreprocessorOptions;

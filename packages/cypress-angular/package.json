@@ -8,17 +8,17 @@
     "url": "https://github.com/jscutlery/devkit"
   },
   "dependencies": {
-    "@cypress/webpack-dev-server": "^1.7.0",
-    "@jscutlery/cypress-angular-dev-server": "^1.4.0",
+    "@cypress/webpack-dev-server": "^2.0.0",
+    "@jscutlery/cypress-angular-dev-server": "^1.7.13",
     "@jscutlery/cypress-mount": "^0.x",
     "@nrwl/devkit": "^12.10.0",
     "html-webpack-plugin": "^5.4.0"
   },
   "peerDependencies": {
-    "@angular/core": "^13.0.0",
-    "@angular/platform-browser": "^13.0.0",
-    "@angular/platform-browser-dynamic": "^13.0.0",
-    "@angular/compiler": "^13.0.0",
+    "@angular/core": "^14.0.2",
+    "@angular/platform-browser": "^14.0.2",
+    "@angular/platform-browser-dynamic": "^14.0.2",
+    "@angular/compiler": "^14.0.2",
     "zone.js": "^0.11.4"
   }
 }
