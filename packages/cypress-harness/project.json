@@ -1,5 +1,5 @@
 {
-  "root": "packages/cypress-harness",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/cypress-harness/src",
   "projectType": "library",
   "generators": {},
@@ -33,7 +33,11 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "postTargets": ["cypress-harness:build", "cypress-harness:npm", "cypress-harness:github"],
+        "postTargets": [
+          "cypress-harness:build",
+          "cypress-harness:npm",
+          "cypress-harness:github"
+        ],
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
         "noVerify": true,
         "push": true

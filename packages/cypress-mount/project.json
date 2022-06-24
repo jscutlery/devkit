@@ -1,5 +1,5 @@
 {
-  "root": "packages/cypress-mount",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/cypress-mount/src",
   "projectType": "library",
   "generators": {},
@@ -33,7 +33,11 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "postTargets": ["cypress-mount:build", "cypress-mount:npm", "cypress-mount:github"],
+        "postTargets": [
+          "cypress-mount:build",
+          "cypress-mount:npm",
+          "cypress-mount:github"
+        ],
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
         "noVerify": true,
         "push": true

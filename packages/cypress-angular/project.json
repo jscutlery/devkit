@@ -1,5 +1,5 @@
 {
-  "root": "packages/cypress-angular",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/cypress-angular/src",
   "projectType": "library",
   "targets": {
@@ -60,7 +60,11 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "postTargets": ["cypress-angular:build", "cypress-angular:npm", "cypress-angular:github"],
+        "postTargets": [
+          "cypress-angular:build",
+          "cypress-angular:npm",
+          "cypress-angular:github"
+        ],
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
         "noVerify": true,
         "push": true
