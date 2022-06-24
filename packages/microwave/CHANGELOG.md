@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.1.4](https://github.com/jscutlery/devkit/compare/microwave-0.1.3...microwave-0.1.4) (2022-06-24)
+
+
+### Bug Fixes
+
+* update to Angular 14 ([#188](https://github.com/jscutlery/devkit/issues/188)) ([9341dd6](https://github.com/jscutlery/devkit/commit/9341dd6df516d1c8e6995c8be3ba1589a6effcd5))
+
+
+
 ## [0.1.3](https://github.com/jscutlery/devkit/compare/microwave-0.1.2...microwave-0.1.3) (2022-05-13)
 
 
