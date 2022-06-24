@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.7.15](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.7.14...cypress-angular-dev-server-1.7.15) (2022-06-24)
+
+
+### Bug Fixes
+
+* update to Angular 14 ([#188](https://github.com/jscutlery/devkit/issues/188)) ([9341dd6](https://github.com/jscutlery/devkit/commit/9341dd6df516d1c8e6995c8be3ba1589a6effcd5))
+
+
+
 ## [1.7.14](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.7.13...cypress-angular-dev-server-1.7.14) (2022-06-15)
 
 
