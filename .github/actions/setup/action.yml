@@ -34,4 +34,4 @@ runs:
 
     - name: yarn install
       shell: bash
-      run: yarn --frozen-lockfile --no-progress --non-interactive --prefer-offline
+      run: yarn install --immutable
