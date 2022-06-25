@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.12.7](https://github.com/jscutlery/devkit/compare/cypress-mount-0.12.6...cypress-mount-0.12.7) (2022-06-25)
+
+
+
 ## [0.12.6](https://github.com/jscutlery/devkit/compare/cypress-mount-0.12.5...cypress-mount-0.12.6) (2022-06-24)
 
 
