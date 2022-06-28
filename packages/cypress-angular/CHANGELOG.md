@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.9.19](https://github.com/jscutlery/devkit/compare/cypress-angular-0.9.18...cypress-angular-0.9.19) (2022-06-28)
+
+
+### Bug Fixes
+
+* 📦 update dependency @jscutlery/cypress-angular-dev-server to v1 ([58e2ab4](https://github.com/jscutlery/devkit/commit/58e2ab4e993ff85324273b295bb44a3e613569d4))
+
+
+
 ## [0.9.18](https://github.com/jscutlery/devkit/compare/cypress-angular-0.9.17...cypress-angular-0.9.18) (2022-06-28)
 
 
