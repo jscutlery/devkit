@@ -3117,7 +3117,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jscutlery/cypress-angular-dev-server@^1.0.0, @jscutlery/cypress-angular-dev-server@workspace:packages/cypress-angular-dev-server":
+"@jscutlery/cypress-angular-dev-server@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@jscutlery/cypress-angular-dev-server@npm:0.1.0"
+  peerDependencies:
+    "@cypress/webpack-dev-server": ^1.1.0
+    "@ngtools/webpack": "*"
+  checksum: 19c9392eb1e5befa4a177dfffa047dff6adaa60a1c2150463e9201214ca69f7fb394ed282833fedffef6da1c1fbfba8b03d62ffb42b80a108a31ef5de5c943cf
+  languageName: node
+  linkType: hard
+
+"@jscutlery/cypress-angular-dev-server@workspace:packages/cypress-angular-dev-server":
   version: 0.0.0-use.local
   resolution: "@jscutlery/cypress-angular-dev-server@workspace:packages/cypress-angular-dev-server"
   dependencies:
@@ -3134,7 +3144,7 @@ __metadata:
   resolution: "@jscutlery/cypress-angular@workspace:packages/cypress-angular"
   dependencies:
     "@cypress/webpack-dev-server": ^2.0.0
-    "@jscutlery/cypress-angular-dev-server": ^1.0.0
+    "@jscutlery/cypress-angular-dev-server": ^0.1.0
     "@jscutlery/cypress-mount": ^0.x
     "@nrwl/devkit": ^12.10.0
     html-webpack-plugin: ^5.4.0
