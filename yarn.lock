@@ -302,64 +302,64 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-eslint/bundled-angular-compiler@npm:14.0.1":
-  version: 14.0.1
-  resolution: "@angular-eslint/bundled-angular-compiler@npm:14.0.1"
-  checksum: 8a29d45159462efc7b32b96399ab9a6c959cbca1f1c62d9eb1e96d3034330949fcd4bc7f26745bfb8b8d88e3d4a5eb4aa9c541971887707cd3aa9bca07a4c080
+"@angular-eslint/bundled-angular-compiler@npm:14.0.2":
+  version: 14.0.2
+  resolution: "@angular-eslint/bundled-angular-compiler@npm:14.0.2"
+  checksum: 20473222a1127336c36cd8fe64f206cafeb4ff08a9553bb0f8f1bdb0c0d2dfa031b4d66bd5eb9ad068e1513b549287ada0211700a50c1f2a02006e565e151504
   languageName: node
   linkType: hard
 
-"@angular-eslint/eslint-plugin-template@npm:14.0.1":
-  version: 14.0.1
-  resolution: "@angular-eslint/eslint-plugin-template@npm:14.0.1"
+"@angular-eslint/eslint-plugin-template@npm:14.0.2":
+  version: 14.0.2
+  resolution: "@angular-eslint/eslint-plugin-template@npm:14.0.2"
   dependencies:
-    "@angular-eslint/bundled-angular-compiler": 14.0.1
+    "@angular-eslint/bundled-angular-compiler": 14.0.2
     "@typescript-eslint/utils": 5.29.0
     aria-query: 5.0.0
     axobject-query: 3.0.1
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0
     typescript: "*"
-  checksum: a0547d3f4044fad82164c5067c3e5e17605fb23d1a0c1a6ad6e9a8d1b02ff32b2c7e1000599527c9678e93a6ca887f0e283e14a8a932e206c6d91cb295548562
+  checksum: 0fa552cf3015346e95f40e3e1035ba6ca5339459f3745394572253633737954b152e55a4d500c74e867e6ef2dcb34de12ed278bc61bceff3b0f9f95348b93638
   languageName: node
   linkType: hard
 
-"@angular-eslint/eslint-plugin@npm:14.0.1":
-  version: 14.0.1
-  resolution: "@angular-eslint/eslint-plugin@npm:14.0.1"
+"@angular-eslint/eslint-plugin@npm:14.0.2":
+  version: 14.0.2
+  resolution: "@angular-eslint/eslint-plugin@npm:14.0.2"
   dependencies:
-    "@angular-eslint/utils": 14.0.1
+    "@angular-eslint/utils": 14.0.2
     "@typescript-eslint/utils": 5.29.0
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0
     typescript: "*"
-  checksum: bdb6ec344d19658275ac0a4a830c875c276fa8e89c6165b287911212b9aec4f1767d11747050503e93a653585cdf28cb5bb325a5b2820392de813eabc688ee31
+  checksum: e681b0a0d51fd494651fb969fb331312383f0eb66a26e05a5c51974d842787042a4cb707ebddfbb78b468ea701add9ef5cedc8c01f1ee04ae2514845e674ce9b
   languageName: node
   linkType: hard
 
-"@angular-eslint/template-parser@npm:14.0.1":
-  version: 14.0.1
-  resolution: "@angular-eslint/template-parser@npm:14.0.1"
+"@angular-eslint/template-parser@npm:14.0.2":
+  version: 14.0.2
+  resolution: "@angular-eslint/template-parser@npm:14.0.2"
   dependencies:
-    "@angular-eslint/bundled-angular-compiler": 14.0.1
+    "@angular-eslint/bundled-angular-compiler": 14.0.2
     eslint-scope: ^5.1.0
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0
     typescript: "*"
-  checksum: 8ee1874bc3e807897366b6e18497e48bfc1f553cf2246f538b4dda0f5ce050a19cbe39f5aa6ece9092f8821ed16c1cfa7ce340866f62bdaec473d1db9c483797
+  checksum: 8aea50fd99a74874f1564ff9061e4899336327d3777d1e22bbfad339ff0b6814ab8cfe0b777b648b3fe14bc84d87d2942b53cdc9972fa66c16a05683f734df01
   languageName: node
   linkType: hard
 
-"@angular-eslint/utils@npm:14.0.1":
-  version: 14.0.1
-  resolution: "@angular-eslint/utils@npm:14.0.1"
+"@angular-eslint/utils@npm:14.0.2":
+  version: 14.0.2
+  resolution: "@angular-eslint/utils@npm:14.0.2"
   dependencies:
-    "@angular-eslint/bundled-angular-compiler": 14.0.1
+    "@angular-eslint/bundled-angular-compiler": 14.0.2
     "@typescript-eslint/utils": 5.29.0
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0
     typescript: "*"
-  checksum: 5a37856cddffd4af41496c1aabeccec547b7da9a1657ecaa01bb48ab076a6d4e392009cbdaede3bf6604c23693d6b909a21e5689b14c339ed4a687c30b0b781b
+  checksum: 79ea1e3b9df01d6549b7593e4c273eab1d381d123e50fc9bb90944ab47a707bee13106f789a48a010705d307159de9e17c8ca29b4de582acdaf3e1f726469bbb
   languageName: node
   linkType: hard
 
@@ -3315,9 +3315,9 @@ __metadata:
   resolution: "@jscutlery/devkit@workspace:."
   dependencies:
     "@angular-devkit/build-angular": 14.0.5
-    "@angular-eslint/eslint-plugin": 14.0.1
-    "@angular-eslint/eslint-plugin-template": 14.0.1
-    "@angular-eslint/template-parser": 14.0.1
+    "@angular-eslint/eslint-plugin": 14.0.2
+    "@angular-eslint/eslint-plugin-template": 14.0.2
+    "@angular-eslint/template-parser": 14.0.2
     "@angular/animations": 14.0.3
     "@angular/cdk": 14.0.3
     "@angular/cli": ~14.0.0
