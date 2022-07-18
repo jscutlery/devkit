@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.7.18](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.7.17...cypress-angular-dev-server-1.7.18) (2022-07-18)
+
+
+### Bug Fixes
+
+* **cypress-angular,cypress-angular-dev-server:** 🐞 fix @cypress/webpack-dev-server version ([aa0bc5b](https://github.com/jscutlery/devkit/commit/aa0bc5bd9c5dac54ac8b4440f181df02ca63cc46))
+
+
+
 ## [1.7.17](https://github.com/jscutlery/devkit/compare/cypress-angular-dev-server-1.7.16...cypress-angular-dev-server-1.7.17) (2022-06-25)
 
 
