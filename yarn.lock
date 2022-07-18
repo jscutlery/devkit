@@ -2695,23 +2695,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/webpack-dev-server@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@cypress/webpack-dev-server@npm:2.0.0"
-  dependencies:
-    find-up: 6.3.0
-    fs-extra: 9.1.0
-    html-webpack-plugin-4: "npm:html-webpack-plugin@^4"
-    html-webpack-plugin-5: "npm:html-webpack-plugin@^5"
-    local-pkg: 0.4.1
-    speed-measure-webpack-plugin: 1.4.2
-    tslib: ^2.3.1
-    webpack-dev-server: ^4.7.4
-    webpack-merge: ^5.4.0
-  checksum: 5516301c83c34c1f1f2e754260ae1537ccfa848c96a4ed0c9b000a482f571347538adcb87b523033fe349e128fe24a070f08814b6c68203c6a9da520560cfe96
-  languageName: node
-  linkType: hard
-
 "@cypress/webpack-preprocessor@npm:^5.9.1":
   version: 5.12.0
   resolution: "@cypress/webpack-preprocessor@npm:5.12.0"
@@ -3282,10 +3265,9 @@ __metadata:
   resolution: "@jscutlery/cypress-angular-dev-server@workspace:packages/cypress-angular-dev-server"
   dependencies:
     "@angular-devkit/build-angular": 14.0.3
+    "@cypress/webpack-dev-server": ^1.7.0
     path-browserify: ^1.0.1
     webpack-merge: ^5.8.0
-  peerDependencies:
-    "@cypress/webpack-dev-server": ^1.7.0
   languageName: unknown
   linkType: soft
 
@@ -3293,7 +3275,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jscutlery/cypress-angular@workspace:packages/cypress-angular"
   dependencies:
-    "@cypress/webpack-dev-server": ^2.0.0
     "@jscutlery/cypress-angular-dev-server": ^1.0.0
     "@jscutlery/cypress-mount": ^0.x
     "@nrwl/devkit": ^12.10.0
@@ -11378,16 +11359,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"find-up@npm:6.3.0":
-  version: 6.3.0
-  resolution: "find-up@npm:6.3.0"
-  dependencies:
-    locate-path: ^7.1.0
-    path-exists: ^5.0.0
-  checksum: 9a21b7f9244a420e54c6df95b4f6fc3941efd3c3e5476f8274eb452f6a85706e7a6a90de71353ee4f091fcb4593271a6f92810a324ec542650398f928783c280
-  languageName: node
-  linkType: hard
-
 "find-up@npm:^1.0.0":
   version: 1.1.2
   resolution: "find-up@npm:1.1.2"
@@ -11630,18 +11601,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:9.1.0, fs-extra@npm:^9.0.0, fs-extra@npm:^9.0.1, fs-extra@npm:^9.1.0":
-  version: 9.1.0
-  resolution: "fs-extra@npm:9.1.0"
-  dependencies:
-    at-least-node: ^1.0.0
-    graceful-fs: ^4.2.0
-    jsonfile: ^6.0.1
-    universalify: ^2.0.0
-  checksum: ba71ba32e0faa74ab931b7a0031d1523c66a73e225de7426e275e238e312d07313d2da2d33e34a52aa406c8763ade5712eb3ec9ba4d9edce652bcacdc29e6b20
-  languageName: node
-  linkType: hard
-
 "fs-extra@npm:^10.0.0, fs-extra@npm:^10.1.0":
   version: 10.1.0
   resolution: "fs-extra@npm:10.1.0"
@@ -11661,6 +11620,18 @@ __metadata:
     jsonfile: ^4.0.0
     universalify: ^0.1.0
   checksum: bf44f0e6cea59d5ce071bba4c43ca76d216f89e402dc6285c128abc0902e9b8525135aa808adad72c9d5d218e9f4bcc63962815529ff2f684ad532172a284880
+  languageName: node
+  linkType: hard
+
+"fs-extra@npm:^9.0.0, fs-extra@npm:^9.0.1, fs-extra@npm:^9.1.0":
+  version: 9.1.0
+  resolution: "fs-extra@npm:9.1.0"
+  dependencies:
+    at-least-node: ^1.0.0
+    graceful-fs: ^4.2.0
+    jsonfile: ^6.0.1
+    universalify: ^2.0.0
+  checksum: ba71ba32e0faa74ab931b7a0031d1523c66a73e225de7426e275e238e312d07313d2da2d33e34a52aa406c8763ade5712eb3ec9ba4d9edce652bcacdc29e6b20
   languageName: node
   linkType: hard
 
@@ -12532,7 +12503,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-webpack-plugin-4@npm:html-webpack-plugin@^4, html-webpack-plugin@npm:^4.0.0":
+"html-webpack-plugin@npm:^4.0.0":
   version: 4.5.2
   resolution: "html-webpack-plugin@npm:4.5.2"
   dependencies:
@@ -12551,7 +12522,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-webpack-plugin-5@npm:html-webpack-plugin@^5, html-webpack-plugin@npm:^5.0.0, html-webpack-plugin@npm:^5.3.2, html-webpack-plugin@npm:^5.4.0":
+"html-webpack-plugin@npm:^5.0.0, html-webpack-plugin@npm:^5.3.2, html-webpack-plugin@npm:^5.4.0":
   version: 5.5.0
   resolution: "html-webpack-plugin@npm:5.5.0"
   dependencies:
@@ -15286,13 +15257,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"local-pkg@npm:0.4.1":
-  version: 0.4.1
-  resolution: "local-pkg@npm:0.4.1"
-  checksum: 4ab3b4853ffbc3b292a3ae2e22618dbc348418a2ebf60ada55fdcc5a8583f9167c89fc7977194ffa39d0a4c5078f9c421d246afdd252fea7a840f7a8f3b5f96b
-  languageName: node
-  linkType: hard
-
 "locate-path@npm:^2.0.0":
   version: 2.0.0
   resolution: "locate-path@npm:2.0.0"
@@ -15328,15 +15292,6 @@ __metadata:
   dependencies:
     p-locate: ^5.0.0
   checksum: 72eb661788a0368c099a184c59d2fee760b3831c9c1c33955e8a19ae4a21b4116e53fa736dc086cdeb9fce9f7cc508f2f92d2d3aae516f133e16a2bb59a39f5a
-  languageName: node
-  linkType: hard
-
-"locate-path@npm:^7.1.0":
-  version: 7.1.1
-  resolution: "locate-path@npm:7.1.1"
-  dependencies:
-    p-locate: ^6.0.0
-  checksum: 1d88af5b512d6e6398026252e17382907126683ab09ae5d6b8918d0bc72ca2642e1ad6e2fe635c5920840e369618e5d748c08deb57ba537fdd3f78e87ca993e0
   languageName: node
   linkType: hard
 
@@ -17111,15 +17066,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-limit@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "p-limit@npm:4.0.0"
-  dependencies:
-    yocto-queue: ^1.0.0
-  checksum: 01d9d70695187788f984226e16c903475ec6a947ee7b21948d6f597bed788e3112cc7ec2e171c1d37125057a5f45f3da21d8653e04a3a793589e12e9e80e756b
-  languageName: node
-  linkType: hard
-
 "p-locate@npm:^2.0.0":
   version: 2.0.0
   resolution: "p-locate@npm:2.0.0"
@@ -17153,15 +17099,6 @@ __metadata:
   dependencies:
     p-limit: ^3.0.2
   checksum: 1623088f36cf1cbca58e9b61c4e62bf0c60a07af5ae1ca99a720837356b5b6c5ba3eb1b2127e47a06865fee59dd0453cad7cc844cda9d5a62ac1a5a51b7c86d3
-  languageName: node
-  linkType: hard
-
-"p-locate@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "p-locate@npm:6.0.0"
-  dependencies:
-    p-limit: ^4.0.0
-  checksum: 2bfe5234efa5e7a4e74b30a5479a193fdd9236f8f6b4d2f3f69e3d286d9a7d7ab0c118a2a50142efcf4e41625def635bd9332d6cbf9cc65d85eb0718c579ab38
   languageName: node
   linkType: hard
 
@@ -17449,13 +17386,6 @@ __metadata:
   version: 4.0.0
   resolution: "path-exists@npm:4.0.0"
   checksum: 505807199dfb7c50737b057dd8d351b82c033029ab94cb10a657609e00c1bc53b951cfdbccab8de04c5584d5eff31128ce6afd3db79281874a5ef2adbba55ed1
-  languageName: node
-  linkType: hard
-
-"path-exists@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "path-exists@npm:5.0.0"
-  checksum: 8ca842868cab09423994596eb2c5ec2a971c17d1a3cb36dbf060592c730c725cd524b9067d7d2a1e031fef9ba7bd2ac6dc5ec9fb92aa693265f7be3987045254
   languageName: node
   linkType: hard
 
@@ -20562,17 +20492,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"speed-measure-webpack-plugin@npm:1.4.2":
-  version: 1.4.2
-  resolution: "speed-measure-webpack-plugin@npm:1.4.2"
-  dependencies:
-    chalk: ^4.1.0
-  peerDependencies:
-    webpack: ^1 || ^2 || ^3 || ^4 || ^5
-  checksum: 888d9697a6a45bf4ce69de92c5f5862d73ae1a2716072c6e56e388f71ba60ce59960fcc2228eba10178883595fd841fece8bd0d71bdbf16334fdd778a31d9a2c
-  languageName: node
-  linkType: hard
-
 "split-string@npm:^3.0.1, split-string@npm:^3.0.2":
   version: 3.1.0
   resolution: "split-string@npm:3.1.0"
@@ -22549,7 +22468,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-dev-server@npm:^4.3.1, webpack-dev-server@npm:^4.7.4":
+"webpack-dev-server@npm:^4.3.1":
   version: 4.9.3
   resolution: "webpack-dev-server@npm:4.9.3"
   dependencies:
@@ -23193,13 +23112,6 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
-  languageName: node
-  linkType: hard
-
-"yocto-queue@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "yocto-queue@npm:1.0.0"
-  checksum: 2cac84540f65c64ccc1683c267edce396b26b1e931aa429660aefac8fbe0188167b7aee815a3c22fa59a28a58d898d1a2b1825048f834d8d629f4c2a5d443801
   languageName: node
   linkType: hard
 
