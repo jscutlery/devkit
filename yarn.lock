@@ -3588,15 +3588,16 @@ __metadata:
   linkType: soft
 
 "@jscutlery/semver@npm:^2.21.4":
-  version: 2.25.2
-  resolution: "@jscutlery/semver@npm:2.25.2"
+  version: 2.26.0
+  resolution: "@jscutlery/semver@npm:2.26.0"
   dependencies:
+    detect-indent: 6.1.0
     inquirer: 8.2.4
-    rxjs: 7.5.5
+    rxjs: 7.5.6
     standard-version: 9.5.0
   peerDependencies:
     "@nrwl/devkit": ^14.0.0
-  checksum: 35071a3838eb4078fe62dadf1fde2f0a5d6c1ba2b53d99e574bfc5c5b843ed575526330063c005979beca99b0a7559e1709e43775c566208cbd4fb0bf3590850
+  checksum: bdd0642420f4780b237670480eae753395e37e6079a1d7accdfc1c5aadce908b414579fb6a7ac66fe5a3a8822cb1714ce4842099790168d5d965bad4f5d50696
   languageName: node
   linkType: hard
 
@@ -9927,7 +9928,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"detect-indent@npm:^6.0.0":
+"detect-indent@npm:6.1.0, detect-indent@npm:^6.0.0":
   version: 6.1.0
   resolution: "detect-indent@npm:6.1.0"
   checksum: ab953a73c72dbd4e8fc68e4ed4bfd92c97eb6c43734af3900add963fd3a9316f3bc0578b018b24198d4c31a358571eff5f0656e81a1f3b9ad5c547d58b2d093d
@@ -20256,15 +20257,6 @@ __metadata:
   dependencies:
     tslib: ^1.9.0
   checksum: bc334edef1bb8bbf56590b0b25734ba0deaf8825b703256a93714308ea36dff8a11d25533671adf8e104e5e8f256aa6fdfe39b2e248cdbd7a5f90c260acbbd1b
-  languageName: node
-  linkType: hard
-
-"rxjs@npm:7.5.5":
-  version: 7.5.5
-  resolution: "rxjs@npm:7.5.5"
-  dependencies:
-    tslib: ^2.1.0
-  checksum: e034f60805210cce756dd2f49664a8108780b117cf5d0e2281506e9e6387f7b4f1532d974a8c8b09314fa7a16dd2f6cff3462072a5789672b5dcb45c4173f3c6
   languageName: node
   linkType: hard
 
