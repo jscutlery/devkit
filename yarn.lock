@@ -3654,16 +3654,16 @@ __metadata:
   linkType: soft
 
 "@jscutlery/semver@npm:^2.21.4":
-  version: 2.27.1
-  resolution: "@jscutlery/semver@npm:2.27.1"
+  version: 2.27.2
+  resolution: "@jscutlery/semver@npm:2.27.2"
   dependencies:
     detect-indent: 6.1.0
-    inquirer: 8.2.4
-    rxjs: 7.5.6
+    inquirer: 8.2.5
+    rxjs: 7.5.7
     standard-version: 9.5.0
   peerDependencies:
     "@nrwl/devkit": ^14.0.0
-  checksum: b301147750a109a2bd8d1b81d6a140cdffd49fb6c259404b38f7af39cd48bb766632f61b40997ea9c1b41ee88706c93419222c6d975e1a54e623367d639f1bbb
+  checksum: 9ec09da5053dc35397f671d875c0723e15c376a5c0a023e26da3333d565b2fd8263832dbca4672ca959f06ed094d9025e51d3f9e0c91ba84ccb16a1520505f6d
   languageName: node
   linkType: hard
 
@@ -13517,6 +13517,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"inquirer@npm:8.2.5":
+  version: 8.2.5
+  resolution: "inquirer@npm:8.2.5"
+  dependencies:
+    ansi-escapes: ^4.2.1
+    chalk: ^4.1.1
+    cli-cursor: ^3.1.0
+    cli-width: ^3.0.0
+    external-editor: ^3.0.3
+    figures: ^3.0.0
+    lodash: ^4.17.21
+    mute-stream: 0.0.8
+    ora: ^5.4.1
+    run-async: ^2.4.0
+    rxjs: ^7.5.5
+    string-width: ^4.1.0
+    strip-ansi: ^6.0.0
+    through: ^2.3.6
+    wrap-ansi: ^7.0.0
+  checksum: f13ee4c444187786fb393609dedf6b30870115a57b603f2e6424f29a99abc13446fd45ee22461c33c9c40a92a60a8df62d0d6b25d74fc6676fa4cb211de55b55
+  languageName: node
+  linkType: hard
+
 "inquirer@npm:^7.3.3":
   version: 7.3.3
   resolution: "inquirer@npm:7.3.3"
@@ -20572,6 +20595,15 @@ __metadata:
   dependencies:
     tslib: ^2.1.0
   checksum: fc05f01364a74dac57490fb3e07ea63b422af04017fae1db641a009073f902ef69f285c5daac31359620dc8d9aee7d81e42b370ca2a8573d1feae0b04329383b
+  languageName: node
+  linkType: hard
+
+"rxjs@npm:7.5.7":
+  version: 7.5.7
+  resolution: "rxjs@npm:7.5.7"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: edabcdb73b0f7e0f5f6e05c2077aff8c52222ac939069729704357d6406438acca831c24210db320aba269e86dbe1a400f3769c89101791885121a342fb15d9c
   languageName: node
   linkType: hard
 
