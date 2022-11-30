@@ -15,6 +15,9 @@ runs:
     - name: Test
       shell: bash
       run: yarn nx affected --base=last-release --target=test
+    - name: Component Test
+      shell: bash
+      run: yarn nx affected --base=last-release --target=component-test --parallel=1
     - name: E2E
       shell: bash
       run: yarn nx affected --base=last-release --target=e2e --parallel=1
