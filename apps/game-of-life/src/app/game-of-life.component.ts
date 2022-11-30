@@ -63,7 +63,7 @@ export class GameOfLifeComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
-    this._subscription.unsubscribe;
+    this._subscription.unsubscribe();
   }
 
   reset() {
