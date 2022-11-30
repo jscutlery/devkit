@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = {
   displayName: 'game-of-life',
   preset: '../../jest.preset.js',

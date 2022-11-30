@@ -4,5 +4,6 @@
     "allowSyntheticDefaultImports": true,
     "types": ["cypress"]
   },
-  "include": ["cypress/support/**/*.ts", "**/*.cy-spec.ts"]
+  "include": ["cypress/support/**/*.ts", "**/*.cy-spec.ts"],
+  "exclude": ["jest.config.ts"]
 }

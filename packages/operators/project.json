@@ -1,4 +1,5 @@
 {
+  "name": "operators",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/operators/src",
   "projectType": "library",
@@ -23,9 +24,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/operators"],
+      "outputs": ["{workspaceRoot}/coverage/packages/operators"],
       "options": {
-        "jestConfig": "packages/operators/jest.config.js",
+        "jestConfig": "packages/operators/jest.config.ts",
         "passWithNoTests": true
       }
     },

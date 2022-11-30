@@ -10,10 +10,10 @@ export function Microwave({ strategy = asapStrategy } = {}) {
   };
 }
 
-export function watch<T, K extends keyof T = keyof T>(
-  component: T,
+export function watch<COMPONENT, K extends keyof COMPONENT = keyof COMPONENT>(
+  component: COMPONENT,
   property: K
-): Observable<T[K] | undefined> {
+): Observable<COMPONENT[K] | undefined> {
   const { destroyed$, watchProperty } = getEngine(component);
   return watchProperty(property).pipe(takeUntil(destroyed$));
 }

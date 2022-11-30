@@ -1,4 +1,5 @@
 {
+  "name": "cypress-angular",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/cypress-angular/src",
   "projectType": "library",
@@ -12,9 +13,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/cypress-angular"],
+      "outputs": ["{workspaceRoot}/coverage/packages/cypress-angular"],
       "options": {
-        "jestConfig": "packages/cypress-angular/jest.config.js",
+        "jestConfig": "packages/cypress-angular/jest.config.ts",
         "passWithNoTests": true
       }
     },

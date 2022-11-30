@@ -1,4 +1,5 @@
 {
+  "name": "sandbox",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/sandbox/src",
@@ -78,10 +79,10 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
-        "jestConfig": "apps/sandbox/jest.config.js",
+        "jestConfig": "apps/sandbox/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/apps/sandbox"]
+      "outputs": ["{workspaceRoot}/coverage/apps/sandbox"]
     }
   },
   "tags": []

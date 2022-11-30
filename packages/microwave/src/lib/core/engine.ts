@@ -15,21 +15,22 @@ import { ChangeDetectionFns } from './change-detection-fns';
  * @returns an set of methods and observables that respectively
  * control and represent the state of the object.
  */
-export function getEngine<T, K extends keyof T = keyof T>(
-  component: Microwaved<T, K>
-): MicrowaveEngine<T, K> {
+export function getEngine<COMPONENT, K extends keyof COMPONENT = keyof COMPONENT>(
+  component: COMPONENT
+): MicrowaveEngine<COMPONENT, K> {
   /* Memoize engine. */
-  const engine = component[_ENGINE_SYMBOL];
+  const microwavedComponent = component as Microwaved<COMPONENT>;
+  const engine = microwavedComponent[_ENGINE_SYMBOL];
   if (engine != null) {
     return engine;
   }
 
   const destroyed$ = new ReplaySubject<void>(1);
   const initialized$ = new ReplaySubject<void>(1);
-  const state$ = new BehaviorSubject<Partial<T>>({});
+  const state$ = new BehaviorSubject<Partial<COMPONENT>>({});
   let changeDetectionFns: ChangeDetectionFns;
 
-  return (component[_ENGINE_SYMBOL] = {
+  return (microwavedComponent[_ENGINE_SYMBOL] = {
     destroyed$: destroyed$.pipe(take(1)),
     initialized$: initialized$.pipe(take(1)),
     changed$: state$.pipe(mapTo(undefined)),
@@ -68,7 +69,7 @@ export function getEngine<T, K extends keyof T = keyof T>(
 
 export const _ENGINE_SYMBOL = Symbol('MicrowaveEngine');
 
-export type Microwaved<T, K extends keyof T> = T & {
+export type Microwaved<T, K extends keyof T = keyof T> = T & {
   [_ENGINE_SYMBOL]?: MicrowaveEngine<T, K>;
 };
 
