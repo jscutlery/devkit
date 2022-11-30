@@ -10,9 +10,8 @@ export class TitleHarness extends ComponentHarness {
 }
 
 describe('cypress-harness-sandbox', () => {
-  beforeEach(() => cy.visit('/'));
-
   it('should display welcome message', () => {
+    cy.visit('/');
     getHarness(TitleHarness).invoke('text').should('equal', `🚀 Let's test!`);
   });
 });
