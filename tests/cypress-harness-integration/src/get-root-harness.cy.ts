@@ -1,13 +1,14 @@
 import { ComponentHarness } from '@angular/cdk/testing';
 import { Component } from '@angular/core';
 import { getRootHarness } from '@jscutlery/cypress-harness';
-import { mount } from '@jscutlery/cypress-mount';
 
 @Component({
+  standalone: true,
   selector: 'jc-tested',
-  template: '<input>',
+  template: '<input>'
 })
-export class TestedComponent {}
+export class TestedComponent {
+}
 
 export class TestedHarness extends ComponentHarness {
   static hostSelector = 'jc-tested';
@@ -24,11 +25,8 @@ export class TestedHarness extends ComponentHarness {
 }
 
 describe(getRootHarness.name, () => {
-  beforeEach(() => {
-    mount(TestedComponent);
-  });
-
   it('should setInputValue', () => {
+    cy.mount(TestedComponent);
     getRootHarness(TestedHarness).invoke('setValue', 'test');
     getRootHarness(TestedHarness).invoke('getValue').should('equal', 'test');
   });

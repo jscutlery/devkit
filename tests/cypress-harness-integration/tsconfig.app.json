@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "types": []
+  },
+  "include": [
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "jest.config.ts",
+    "cypress/**/*",
+    "cypress.config.ts",
+    "**/*.cy.ts",
+    "**/*.cy.js",
+    "**/*.cy.tsx",
+    "**/*.cy.jsx"
+  ]
+}

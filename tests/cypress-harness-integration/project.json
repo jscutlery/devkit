@@ -4,12 +4,24 @@
   "sourceRoot": "tests/cypress-harness-integration/src",
   "projectType": "application",
   "targets": {
-    "e2e": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/tests/cypress-harness-integration",
+        "index": "tests/cypress-harness-integration/does-not-exist/index.html",
+        "main": "tests/cypress-harness-integration/does-not-exist/main.ts",
+        "polyfills": "tests/cypress-harness-integration/src/polyfills.ts",
+        "tsConfig": "tests/cypress-harness-integration/tsconfig.app.json",
+        "styles": ["node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css"]
+      }
+    },
+    "component-test": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "tests/cypress-harness-integration/cypress.json",
-        "tsConfig": "tests/cypress-harness-integration/tsconfig.e2e.json",
-        "testingType": "component"
+        "cypressConfig": "tests/cypress-harness-integration/cypress.config.ts",
+        "testingType": "component",
+        "skipServe": true,
+        "devServerTarget": "cypress-harness-integration:build"
       }
     },
     "lint": {
