@@ -4,7 +4,7 @@
   "sourceRoot": "tests/cypress-harness-wide/src",
   "projectType": "application",
   "targets": {
-    "build": {
+    "component-test-build": {
       "executor": "@angular-devkit/build-angular:browser",
       "options": {
         "outputPath": "dist/tests/cypress-harness-wide",
@@ -15,13 +15,13 @@
         "styles": ["node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css"]
       }
     },
-    "component-test": {
+    "test": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
         "cypressConfig": "tests/cypress-harness-wide/cypress.config.ts",
         "testingType": "component",
         "skipServe": true,
-        "devServerTarget": "cypress-harness-wide:build"
+        "devServerTarget": "cypress-harness-wide:component-test-build"
       }
     },
     "lint": {
