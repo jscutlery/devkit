@@ -17,7 +17,7 @@ runs:
     - name: Checkout all commits
       uses: actions/checkout@v3
       with:
-        token: ${{ inputs.git_bot_token }}
+        token: ${{ inputs.git_bot_token || github.token }}
         fetch-depth: 0
 
     - name: Setup git user to "🤖 JSCutlery Bot"
