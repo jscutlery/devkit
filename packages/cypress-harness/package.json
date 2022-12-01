@@ -23,11 +23,12 @@
     }
   },
   "dependencies": {
-    "@cypress/webpack-batteries-included-preprocessor": "^2.2.4"
+    "@cypress/webpack-batteries-included-preprocessor": "^2.2.4",
+    "@cypress/webpack-preprocessor": "^5.0.0",
+    "webpack": "^5.0.0"
   },
   "peerDependencies": {
     "@angular/cdk": "*",
-    "@cypress/webpack-preprocessor": "^5.0.0",
     "cypress": "*",
     "cypress-pipe": "*",
     "zone.js": "*"

@@ -24,13 +24,42 @@ yarn add -D @jscutlery/cypress-harness @angular/cdk cypress-pipe
 npm install -D @jscutlery/cypress-harness @angular/cdk cypress-pipe
 ```
 
-### 2. Import support commands
+### 2. Setup
 
-Update your e2e folder's `*-e2e/src/support/index.ts` and add:
+#### 2.a. Cypress E2E
+
+Update your e2e folder's `cypress/support/e2e.ts` and add:
 
 ```ts
 import '@jscutlery/cypress-harness/support';
 ```
+
+then update the `cypress.config.ts` file as follows:
+
+```ts
+import { defineConfig } from 'cypress';
+import { getPreprocessorConfig } from '@jscutlery/cypress-harness/preprocessor-config';
+
+export default defineConfig({
+  e2e: {
+    // ... other existing settings if any (like nxE2EPreset() if using Nx).
+    ...getPreprocessorConfig()
+  }
+});
+```
+
+This last part is needed to add support for [package exports conditionals](https://nodejs.org/api/packages.html#conditional-exports)
+and allow us to import harnesses from `@angular/cdk/testing` for example.
+
+#### 2.b. Cypress Component Testing
+
+If you are using Cypress Component Testing then there is a different import to add to the following file: `cypress/support/component.ts`:
+
+```ts
+import '@jscutlery/cypress-harness/support-ct';
+```
+
+_(the `getPreprocessorConfig()` is not required here as it is already set up by `cypress/angular`.)_
 
 ## Usage
 
@@ -42,6 +71,7 @@ describe('datepicker', () => {
   const calendars = getAllHarnesses(MatCalendarHarness);
 
   it('should set date', () => {
+    cy.visit('/'); // or cy.mount(MyComponent); for component testing.
     datepicker.setValue('1/1/2010');
     datepicker.openCalendar();
     datepicker.getCalendar().invoke('next'); // next method is already used
