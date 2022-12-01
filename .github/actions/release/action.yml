@@ -3,6 +3,9 @@ name: Release
 description: Release packages
 
 inputs:
+  git_bot_token:
+    description: Git Bot token used to push to protected branches because github token can't
+    required: true
   github_token:
     description: GitHub token
     required: true
@@ -15,6 +18,8 @@ runs:
   steps:
     - name: Use JSCutlery Bot credentials
       shell: bash
+      env:
+        GIT_BOT_TOKEN: ${{ inputs.git_bot_token }}
       run: git remote set-url origin "https://${GIT_BOT_TOKEN}@github.com/jscutlery/devkit"
 
     - name: Version
