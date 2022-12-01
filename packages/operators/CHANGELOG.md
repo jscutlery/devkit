@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.1.8](https://github.com/jscutlery/devkit/compare/operators-0.1.7...operators-0.1.8) (2022-12-01)
+
+
+
 ## [0.1.7](https://github.com/jscutlery/devkit/compare/operators-0.1.6...operators-0.1.7) (2022-06-24)
 
 
