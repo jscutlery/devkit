@@ -10,7 +10,6 @@ This is the home of the following tools which are aiming to:
 
 | Package                                                  | Description                                           | Version                                                         |
 | -------------------------------------------------------- | ----------------------------------------------------- | --------------------------------------------------------------- |
-| [@jscutlery/cypress-angular](./packages/cypress-angular) | Cypress Component Testing support for Angular.        | <img src="https://badgen.net/npm/v/@jscutlery/cypress-angular"> |
 | [@jscutlery/cypress-harness](./packages/cypress-harness) | Cypress support for Angular Component Test Harnesses. | <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness"> |
 | [@jscutlery/microwave](./packages/microwave)             | Optimize Angular change detection effortlessly.       | <img src="https://badgen.net/npm/v/@jscutlery/microwave">       |
 | [@jscutlery/operators](./packages/operators)             | Set of operators for RxJS like `suspensify`.          | <img src="https://badgen.net/npm/v/@jscutlery/operators">       |
