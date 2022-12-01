@@ -1,0 +1,36 @@
+{
+  "name": "cypress-harness-wide",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tests/cypress-harness-wide/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/tests/cypress-harness-wide",
+        "index": "tests/cypress-harness-wide/does-not-exist/index.html",
+        "main": "tests/cypress-harness-wide/does-not-exist/main.ts",
+        "polyfills": "tests/cypress-harness-wide/src/polyfills.ts",
+        "tsConfig": "tests/cypress-harness-wide/tsconfig.app.json",
+        "styles": ["node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css"]
+      }
+    },
+    "component-test": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "tests/cypress-harness-wide/cypress.config.ts",
+        "testingType": "component",
+        "skipServe": true,
+        "devServerTarget": "cypress-harness-wide:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["tests/cypress-harness-wide/**/*.{js,ts}"]
+      },
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}
