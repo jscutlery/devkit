@@ -39,11 +39,23 @@
         ]
       }
     },
-    "e2e": {
+    "component-test-build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/packages/microwave",
+        "index": "packages/microwave/does-not-exist/index.html",
+        "main": "packages/microwave/does-not-exist/main.ts",
+        "polyfills": "packages/microwave/polyfills.ts",
+        "tsConfig": "packages/microwave/tsconfig.lib.json"
+      }
+    },
+    "component-test": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "packages/microwave/cypress.json",
-        "testingType": "component"
+        "cypressConfig": "packages/microwave/cypress.config.ts",
+        "testingType": "component",
+        "skipServe": true,
+        "devServerTarget": "microwave:component-test-build"
       }
     },
     "version": {

@@ -15,7 +15,7 @@
         "styles": ["node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css"]
       }
     },
-    "test": {
+    "component-test": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
         "cypressConfig": "tests/cypress-harness-wide/cypress.config.ts",

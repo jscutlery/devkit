@@ -1,5 +1,5 @@
 import { Component, Injectable, Input, Output } from '@angular/core';
-import { destroy, mount } from '@jscutlery/cypress-angular/mount';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { delay, finalize, map } from 'rxjs';
 import { Microwave, watch } from './microwave';
 
@@ -14,17 +14,18 @@ class Snitch {
 @Microwave()
 @Component({
   selector: 'jscutlery-meal',
-  template: `<div data-role="meal-name">{{ capitalizedMeal }}</div>
-    <button data-role="meh" (click)="evaluation = 'meh'">😋</button>
-    <button data-role="delicious" (click)="evaluation = 'delicious'">
+  template: `
+    <div data-role='meal-name'>{{ capitalizedMeal }}</div>
+    <button data-role='meh' (click)="evaluation = 'meh'">😋</button>
+    <button data-role='delicious' (click)="evaluation = 'delicious'">
       😒
-    </button>`,
+    </button>`
 })
-class GreetingsComponent {
+class MealComponent {
   @Input() meal?: string = undefined;
   @Output() evaluationChange = watch(this, 'evaluation');
 
-  capitalizedMeal: string = undefined;
+  capitalizedMeal?: string = undefined;
 
   evaluation?: string = undefined;
 
@@ -69,7 +70,7 @@ describe('Microwave', () => {
   });
 
   it('should unsubscribe on destroy', () => {
-    const { snitch } = setUp();
+    const { snitch, destroy } = setUp();
 
     destroy();
 
@@ -80,23 +81,19 @@ describe('Microwave', () => {
     const evaluationChangeStub = cy.stub();
     const snitch = new Snitch();
 
-    mount(GreetingsComponent, {
+    cy.mount(MealComponent, {
       providers: [
         {
           provide: Snitch,
-          useValue: snitch,
-        },
-      ],
-      outputs: {
-        evaluationChange: evaluationChangeStub,
-      },
-    });
+          useValue: snitch
+        }
+      ]
+    }).its('fixture').as('fixture');
 
-    function getComponent() {
-      return cy
-        .get('jscutlery-meal')
-        .then((el) => globalThis.ng.getComponent(el.get(0)));
-    }
+    const getFixture = () => cy.get<ComponentFixture<MealComponent>>('@fixture');
+    const getComponent = () => getFixture().its('componentInstance');
+
+    getComponent().then((cmp) => cmp.evaluationChange.subscribe(evaluationChangeStub));
 
     return {
       evaluationChangeStub,
@@ -104,15 +101,18 @@ describe('Microwave', () => {
       clickEvaluation(evaluation: 'delicious' | 'meh') {
         return cy.get(`[data-role=${evaluation}]`).click();
       },
-      setInput<K extends keyof GreetingsComponent = keyof GreetingsComponent>(
-        property: keyof GreetingsComponent,
-        value: GreetingsComponent[K]
+      setInput<K extends keyof MealComponent = keyof MealComponent>(
+        property: K,
+        value: MealComponent[K]
       ) {
         return getComponent().then((cmp) => (cmp[property] = value));
       },
       getMealEl() {
         return cy.get('[data-role=meal-name]');
       },
+      destroy() {
+        return getFixture().then(fixture => fixture.destroy());
+      }
     };
   }
 });
