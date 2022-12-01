@@ -5,36 +5,77 @@ on:
   - pull_request
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Test
+        shell: bash
+        run: yarn nx affected --base=last-release --target=build
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Test
+        shell: bash
+        run: yarn nx affected --base=last-release --target=lint
+
   test:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node_version: [ 16, 18, 19 ]
-
     steps:
       - uses: actions/checkout@v3
-
       - name: Setup
         uses: ./.github/actions/setup
         with:
           node_version: ${{ matrix.node_version }}
-
       - name: Test
-        uses: ./.github/actions/test
+        shell: bash
+        run: yarn nx affected --base=last-release --target=test
+
+  component-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Test
+        shell: bash
+        run: yarn nx affected --base=last-release --target=component-test --parallel=1
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Test
+        shell: bash
+        run: yarn nx affected --base=last-release --target=e2e --parallel=1
 
   release:
     runs-on: ubuntu-latest
 
     if: github.ref == 'refs/heads/main'
 
-    needs: [ test ]
+    needs:
+      - build
+      - lint
+      - test
+      - component-test
+      - e2e
 
     steps:
       - uses: actions/checkout@v3
       - name: Setup
         uses: ./.github/actions/setup
-
       - name: Release
         uses: ./.github/actions/release
         with:
