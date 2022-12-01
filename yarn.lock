@@ -3080,6 +3080,7 @@ __metadata:
     "@nrwl/nx-plugin": 15.2.3
     "@nrwl/web": 15.2.3
     "@nrwl/workspace": 15.2.3
+    "@playwright/test": ^1.28.1
     "@storybook/angular": 6.5.10
     "@storybook/builder-webpack5": 6.5.10
     "@storybook/manager-webpack5": 6.5.10
@@ -3137,6 +3138,12 @@ __metadata:
   resolution: "@jscutlery/operators@workspace:packages/operators"
   peerDependencies:
     rxjs: ">=6.0.0"
+  languageName: unknown
+  linkType: soft
+
+"@jscutlery/playwright-ct-angular@workspace:packages/playwright-ct-angular":
+  version: 0.0.0-use.local
+  resolution: "@jscutlery/playwright-ct-angular@workspace:packages/playwright-ct-angular"
   languageName: unknown
   linkType: soft
 
@@ -4559,6 +4566,18 @@ __metadata:
   peerDependencies:
     typescript: ^3 || ^4
   checksum: 64eb6d90aafa889f62fe73d128b7be2b3295dffde4d5dff63bad75d512b6bc1d8419d8fc784a1a60b45aba4cda2eaf6e233bf59797a1d91b26fac27d99dae047
+  languageName: node
+  linkType: hard
+
+"@playwright/test@npm:^1.28.1":
+  version: 1.28.1
+  resolution: "@playwright/test@npm:1.28.1"
+  dependencies:
+    "@types/node": "*"
+    playwright-core: 1.28.1
+  bin:
+    playwright: cli.js
+  checksum: dc39dfdf848171a6c65fc32a9dbc95162684a4a1e3401dd157d7d6822a065d8dcb96b2484fc3b223baea4da774450fddaeaa6d4d21546d17d45f01884fa8d7c5
   languageName: node
   linkType: hard
 
@@ -18318,6 +18337,15 @@ __metadata:
   dependencies:
     find-up: ^4.0.0
   checksum: 9863e3f35132bf99ae1636d31ff1e1e3501251d480336edb1c211133c8d58906bed80f154a1d723652df1fda91e01c7442c2eeaf9dc83157c7ae89087e43c8d6
+  languageName: node
+  linkType: hard
+
+"playwright-core@npm:1.28.1":
+  version: 1.28.1
+  resolution: "playwright-core@npm:1.28.1"
+  bin:
+    playwright: cli.js
+  checksum: 8899e0d65de43ee10fadc171e0d48cd514bb574f3505478700094afa8a6e0dcd888a5c87af22acf31ebad455ada1327028909c42e20b8e25908b6255dc143bf0
   languageName: node
   linkType: hard
 
