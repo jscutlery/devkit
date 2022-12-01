@@ -13,6 +13,10 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Use JSCutlery Bot credentials
+      shell: bash
+      run: git remote set-url origin "https://${GIT_BOT_TOKEN}@github.com/jscutlery/devkit"
+
     - name: Version
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm_token }}
