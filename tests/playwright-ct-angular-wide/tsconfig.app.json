@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "types": []
+  },
+  "include": [
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "playwright-ct.config.ts",
+    "**/*.pw.ts",
+    "**/*.pw.js",
+    "**/*.pw.tsx",
+    "**/*.pw.jsx"
+  ]
+}
