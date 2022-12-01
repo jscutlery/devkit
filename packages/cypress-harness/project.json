@@ -1,4 +1,5 @@
 {
+  "name": "cypress-harness",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/cypress-harness/src",
   "projectType": "library",
@@ -14,10 +15,10 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
-        "jestConfig": "packages/cypress-harness/jest.config.js",
+        "jestConfig": "packages/cypress-harness/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/packages/cypress-harness"]
+      "outputs": ["{workspaceRoot}/coverage/packages/cypress-harness"]
     },
     "build": {
       "executor": "@nrwl/js:tsc",

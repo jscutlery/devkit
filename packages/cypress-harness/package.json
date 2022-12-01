@@ -4,10 +4,32 @@
   "repository": {
     "url": "https://github.com/jscutlery/devkit"
   },
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./preprocessor-config": {
+      "types": "./src/preprocessor-config.d.ts",
+      "default": "./src/preprocessor-config.js"
+    },
+    "./support": {
+      "types": "./src/support.d.ts",
+      "default": "./src/support.js"
+    },
+    "./support-ct": {
+      "types": "./src/support-ct.d.ts",
+      "default": "./src/support-ct.js"
+    }
+  },
+  "dependencies": {
+    "@cypress/webpack-batteries-included-preprocessor": "^2.2.4"
+  },
   "peerDependencies": {
     "@angular/cdk": "*",
+    "@cypress/webpack-preprocessor": "^5.0.0",
     "cypress": "*",
     "cypress-pipe": "*",
-    "zone.js": "^0.11.4"
+    "zone.js": "*"
   }
 }

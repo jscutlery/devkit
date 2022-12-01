@@ -1,4 +1,5 @@
 {
+  "name": "cypress-harness-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "tests/cypress-harness-e2e/src",
   "projectType": "application",
@@ -6,14 +7,9 @@
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "tests/cypress-harness-e2e/cypress.json",
-        "tsConfig": "tests/cypress-harness-e2e/tsconfig.e2e.json",
-        "devServerTarget": "sandbox:serve"
-      },
-      "configurations": {
-        "production": {
-          "devServerTarget": "sandbox:serve:production"
-        }
+        "cypressConfig": "tests/cypress-harness-e2e/cypress.config.ts",
+        "devServerTarget": "sandbox:serve",
+        "testingType": "e2e"
       }
     },
     "lint": {

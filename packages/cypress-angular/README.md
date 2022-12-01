@@ -1,5 +1,13 @@
 # Cypress Angular
 
+**⚠️ THIS PACKAGE IS NOW DEPRECATED, SINCE CYPRESS 10, YOU SHOULD PREFER USING THE OFFICIAL PACKAGE [`cypress/angular`](https://github.com/cypress-io/cypress/tree/develop/npm/angular)**
+
+**👉 but don't forget to check out our Angular CDK Harness support with [@jscutlery/cypress-harness](../cypress-harness) 👈**
+
+Last version's source code: [cypress-angular-0.9.22](https://github.com/jscutlery/devkit/tree/37bd902c2e369be901a38d9704ae613155b5a594)
+
+<hr>
+
 `@jscutlery/cypress-angular` brings Angular support to [Cypress Component Testing](https://docs.cypress.io/guides/component-testing/introduction.html#What-is-Cypress-Component-Testing).
 
 It is aiming to make Cypress Component Testing with Angular easier than writing code without tests 😜.

@@ -1,4 +1,5 @@
 {
+  "name": "game-of-life",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/game-of-life/src",
@@ -82,9 +83,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/game-of-life"],
+      "outputs": ["{workspaceRoot}/coverage/apps/game-of-life"],
       "options": {
-        "jestConfig": "apps/game-of-life/jest.config.js",
+        "jestConfig": "apps/game-of-life/jest.config.ts",
         "passWithNoTests": true
       }
     }
