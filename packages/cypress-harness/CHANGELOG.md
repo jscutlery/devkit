@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.1](https://github.com/jscutlery/devkit/compare/cypress-harness-0.4.0...cypress-harness-0.4.1) (2022-12-01)
+
+
+
 # [0.4.0](https://github.com/jscutlery/devkit/compare/cypress-harness-0.3.12...cypress-harness-0.4.0) (2022-12-01)
 
 
