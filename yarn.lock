@@ -3875,11 +3875,13 @@ __metadata:
 "@jscutlery/cypress-harness@workspace:packages/cypress-harness":
   version: 0.0.0-use.local
   resolution: "@jscutlery/cypress-harness@workspace:packages/cypress-harness"
+  dependencies:
+    "@cypress/webpack-batteries-included-preprocessor": ^2.2.4
   peerDependencies:
     "@angular/cdk": "*"
     cypress: "*"
     cypress-pipe: "*"
-    zone.js: ^0.11.4
+    zone.js: "*"
   languageName: unknown
   linkType: soft
 
