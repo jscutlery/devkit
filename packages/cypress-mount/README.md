@@ -1,7 +1,12 @@
 # Cypress Mount
 
-**⚠️ This package is now internal, please use [`@jscutlery/cypress-angular`](../../packages/cypress-angular) instead.
-**
+**⚠️ THIS PACKAGE IS NOW DEPRECATED, SINCE CYPRESS 10, YOU SHOULD PREFER USING THE OFFICIAL PACKAGE [`cypress/angular`](https://github.com/cypress-io/cypress/tree/develop/npm/angular)**
+
+**👉 but don't forget to check out our Angular CDK Harness support with [@jscutlery/cypress-harness](../cypress-harness) 👈**
+
+Last version's source code: [cypress-mount-0.12.7](https://github.com/jscutlery/devkit/tree/3d7519f2ed1cf964c3cf86cd6a57f70ee57680ec)
+
+<hr>
 
 This module brings Angular support to [Cypress Component Testing](https://docs.cypress.io/guides/component-testing/introduction.html#What-is-Cypress-Component-Testing).
 
