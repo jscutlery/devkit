@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.4.0](https://github.com/jscutlery/devkit/compare/cypress-harness-0.3.12...cypress-harness-0.4.0) (2022-12-01)
+
+
+### Features
+
+* **cypress-harness:** ✨ provide getPreprocessorConfig util ([56d74c9](https://github.com/jscutlery/devkit/commit/56d74c954785b4cc30d4aac63d7e87015e4b858f))
+* **cypress-harness:** ✨add support for Cypress 10 & 11 ([4d29535](https://github.com/jscutlery/devkit/commit/4d2953594f280031d8df0e5f429f74171ad236bf))
+
+
+
 ## [0.3.12](https://github.com/jscutlery/devkit/compare/cypress-harness-0.3.11...cypress-harness-0.3.12) (2022-06-24)
 
 
