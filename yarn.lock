@@ -25,14 +25,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/build-angular@npm:15.0.1":
-  version: 15.0.1
-  resolution: "@angular-devkit/build-angular@npm:15.0.1"
+"@angular-devkit/architect@npm:0.1500.2":
+  version: 0.1500.2
+  resolution: "@angular-devkit/architect@npm:0.1500.2"
+  dependencies:
+    "@angular-devkit/core": 15.0.2
+    rxjs: 6.6.7
+  checksum: d29ba17ea3eebcbdf22ea016a3c2437c4c39b511f252e0f0012bb7498acaa434f4705b3c26d005a905a6ed22b9fbc469599344f85b742d82f21a18af185ebb61
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/build-angular@npm:15.0.2":
+  version: 15.0.2
+  resolution: "@angular-devkit/build-angular@npm:15.0.2"
   dependencies:
     "@ampproject/remapping": 2.2.0
-    "@angular-devkit/architect": 0.1500.1
-    "@angular-devkit/build-webpack": 0.1500.1
-    "@angular-devkit/core": 15.0.1
+    "@angular-devkit/architect": 0.1500.2
+    "@angular-devkit/build-webpack": 0.1500.2
+    "@angular-devkit/core": 15.0.2
     "@babel/core": 7.20.2
     "@babel/generator": 7.20.4
     "@babel/helper-annotate-as-pure": 7.18.6
@@ -43,7 +53,7 @@ __metadata:
     "@babel/runtime": 7.20.1
     "@babel/template": 7.18.10
     "@discoveryjs/json-ext": 0.5.7
-    "@ngtools/webpack": 15.0.1
+    "@ngtools/webpack": 15.0.2
     ansi-colors: 4.1.3
     autoprefixer: 10.4.13
     babel-loader: 9.1.0
@@ -117,20 +127,20 @@ __metadata:
       optional: true
     tailwindcss:
       optional: true
-  checksum: c1c5a396c7a93205907459c215a6d874fd3f9a85bd778f0c23d2e9a1ad1599409e977bd6bcc5adb3057ea78d7598197519e8a4ac710464ce02588b71162e4210
+  checksum: e3d446ffa2cc7691892f88c2b26fc5ba6f4e39822797410eeb61477684f05b2f7f8dfb441978403b1d93f93f6666e851522b70ef25c86d63c615ac7f8f9fc9e6
   languageName: node
   linkType: hard
 
-"@angular-devkit/build-webpack@npm:0.1500.1":
-  version: 0.1500.1
-  resolution: "@angular-devkit/build-webpack@npm:0.1500.1"
+"@angular-devkit/build-webpack@npm:0.1500.2":
+  version: 0.1500.2
+  resolution: "@angular-devkit/build-webpack@npm:0.1500.2"
   dependencies:
-    "@angular-devkit/architect": 0.1500.1
+    "@angular-devkit/architect": 0.1500.2
     rxjs: 6.6.7
   peerDependencies:
     webpack: ^5.30.0
     webpack-dev-server: ^4.0.0
-  checksum: 68fa7d2476dfeb5f1730c582a67c73000ad097cb35cc8a7d2b529a266035454a40f3b4985554ae142c03bbb0384627dbfa44552df56fb1ca2288ffea53018aad
+  checksum: fbc1c1c361305a646fbdbd5a2988311a090d74dbd645a92d8117bc92f2dae411503f93a329f1cf61ca2dc209128afc65d479db66bc7d08ce3c453e5ab1372ccc
   languageName: node
   linkType: hard
 
@@ -149,6 +159,24 @@ __metadata:
     chokidar:
       optional: true
   checksum: bf83989379be8acfd22e3a360a209406664c68521b726f868aaebb4716a691d33b11acef1e012cd13203e2d6e046179e12ace2ddbdad75c15a4333518247ddfd
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/core@npm:15.0.2":
+  version: 15.0.2
+  resolution: "@angular-devkit/core@npm:15.0.2"
+  dependencies:
+    ajv: 8.11.0
+    ajv-formats: 2.1.1
+    jsonc-parser: 3.2.0
+    rxjs: 6.6.7
+    source-map: 0.7.4
+  peerDependencies:
+    chokidar: ^3.5.2
+  peerDependenciesMeta:
+    chokidar:
+      optional: true
+  checksum: bdff77f981c4ee3f434370d63b7e07001c1a32f407dd0a3ef11875b08bbf177ac42a7d056e9d6255b38589462a17d8b65275db53895daeb46b0e7abbd4172497
   languageName: node
   linkType: hard
 
@@ -3019,7 +3047,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jscutlery/devkit@workspace:."
   dependencies:
-    "@angular-devkit/build-angular": 15.0.1
+    "@angular-devkit/build-angular": 15.0.2
     "@angular-eslint/eslint-plugin": 14.0.4
     "@angular-eslint/eslint-plugin-template": 14.0.4
     "@angular-eslint/template-parser": 14.0.4
@@ -3973,14 +4001,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ngtools/webpack@npm:15.0.1":
-  version: 15.0.1
-  resolution: "@ngtools/webpack@npm:15.0.1"
+"@ngtools/webpack@npm:15.0.2":
+  version: 15.0.2
+  resolution: "@ngtools/webpack@npm:15.0.2"
   peerDependencies:
     "@angular/compiler-cli": ^15.0.0
     typescript: ~4.8.2
     webpack: ^5.54.0
-  checksum: 8ccf45924279b62049b320ac2b49e511600f2f07a3f6c834d5a950f679e7ba32563197b930b41d12b15e79ebb988d442c3164701728f7881ebd5d04359b6a930
+  checksum: 6d4f7af36848bfc951bd98bb9cc7fb79bf583123a6acf8b4cd1aa4a663a2759f60774072878abbcfa484a29350c5cdd2291b1aab19090af8ea7ac831b05760a0
   languageName: node
   linkType: hard
 
