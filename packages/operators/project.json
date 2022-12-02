@@ -5,14 +5,27 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "project": "packages/operators/package.json",
         "outputPath": "dist/packages/operators",
+        "entryFile": "packages/operators/src/index.ts",
         "tsConfig": "packages/operators/tsconfig.lib.json",
-        "packageJson": "packages/operators/package.json",
         "main": "packages/operators/src/index.ts",
-        "assets": ["LICENSE", "packages/operators/*.md"]
+        "format": ["cjs", "esm"],
+        "assets": [
+          {
+            "glob": "LICENSE",
+            "input": ".",
+            "output": "."
+          },
+          {
+            "glob": "*.md",
+            "input": "packages/operators",
+            "output": "."
+          }
+        ]
       }
     },
     "lint": {
