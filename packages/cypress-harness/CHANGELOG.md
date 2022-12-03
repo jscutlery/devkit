@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.2](https://github.com/jscutlery/devkit/compare/cypress-harness-0.4.1...cypress-harness-0.4.2) (2022-12-03)
+
+
+### Bug Fixes
+
+* **cypress-harness:** 🐞 fix webpack import error ([787219c](https://github.com/jscutlery/devkit/commit/787219c243128c819567fe9f8678168d30fd8e12))
+
+
+
 ## [0.4.1](https://github.com/jscutlery/devkit/compare/cypress-harness-0.4.0...cypress-harness-0.4.1) (2022-12-01)
 
 
