@@ -1,0 +1,15 @@
+{
+  "name": "playwright-ct-angular-wide",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tests/playwright-ct-angular-wide/src",
+  "projectType": "application",
+  "targets": {
+    "component-test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "playwright test -c tests/playwright-ct-angular-wide/playwright-ct.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

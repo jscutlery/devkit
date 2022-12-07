@@ -3080,6 +3080,7 @@ __metadata:
     "@nrwl/nx-plugin": 15.2.3
     "@nrwl/web": 15.2.3
     "@nrwl/workspace": 15.2.3
+    "@playwright/test": ^1.28.1
     "@storybook/angular": 6.5.10
     "@storybook/builder-webpack5": 6.5.10
     "@storybook/manager-webpack5": 6.5.10
@@ -3118,6 +3119,7 @@ __metadata:
     ts-node: 10.9.1
     tslib: 2.4.0
     typescript: 4.8.4
+    vite: ^3.2.4
     zone.js: 0.11.8
   languageName: unknown
   linkType: soft
@@ -3137,6 +3139,22 @@ __metadata:
   resolution: "@jscutlery/operators@workspace:packages/operators"
   peerDependencies:
     rxjs: ">=6.0.0"
+  languageName: unknown
+  linkType: soft
+
+"@jscutlery/playwright-ct-angular@workspace:packages/playwright-ct-angular":
+  version: 0.0.0-use.local
+  resolution: "@jscutlery/playwright-ct-angular@workspace:packages/playwright-ct-angular"
+  dependencies:
+    "@playwright/test": ^1.28.1
+    jest-mock: ^28.1.3
+    rxjs: ^7.5.7
+    vite: ^3.2.1
+  peerDependencies:
+    "@angular/core": "*"
+    "@angular/platform-browser": "*"
+    "@angular/platform-browser-dynamic": "*"
+    tslib: "*"
   languageName: unknown
   linkType: soft
 
@@ -4559,6 +4577,18 @@ __metadata:
   peerDependencies:
     typescript: ^3 || ^4
   checksum: 64eb6d90aafa889f62fe73d128b7be2b3295dffde4d5dff63bad75d512b6bc1d8419d8fc784a1a60b45aba4cda2eaf6e233bf59797a1d91b26fac27d99dae047
+  languageName: node
+  linkType: hard
+
+"@playwright/test@npm:^1.28.1":
+  version: 1.28.1
+  resolution: "@playwright/test@npm:1.28.1"
+  dependencies:
+    "@types/node": "*"
+    playwright-core: 1.28.1
+  bin:
+    playwright: cli.js
+  checksum: dc39dfdf848171a6c65fc32a9dbc95162684a4a1e3401dd157d7d6822a065d8dcb96b2484fc3b223baea4da774450fddaeaa6d4d21546d17d45f01884fa8d7c5
   languageName: node
   linkType: hard
 
@@ -18321,6 +18351,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"playwright-core@npm:1.28.1":
+  version: 1.28.1
+  resolution: "playwright-core@npm:1.28.1"
+  bin:
+    playwright: cli.js
+  checksum: 8899e0d65de43ee10fadc171e0d48cd514bb574f3505478700094afa8a6e0dcd888a5c87af22acf31ebad455ada1327028909c42e20b8e25908b6255dc143bf0
+  languageName: node
+  linkType: hard
+
 "pnp-webpack-plugin@npm:1.6.4":
   version: 1.6.4
   resolution: "pnp-webpack-plugin@npm:1.6.4"
@@ -19232,7 +19271,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.4.19, postcss@npm:^8.2.14, postcss@npm:^8.2.15, postcss@npm:^8.3.5, postcss@npm:^8.3.7, postcss@npm:^8.3.9, postcss@npm:^8.4.14, postcss@npm:^8.4.16, postcss@npm:^8.4.7":
+"postcss@npm:8.4.19, postcss@npm:^8.2.14, postcss@npm:^8.2.15, postcss@npm:^8.3.5, postcss@npm:^8.3.7, postcss@npm:^8.3.9, postcss@npm:^8.4.14, postcss@npm:^8.4.16, postcss@npm:^8.4.18, postcss@npm:^8.4.7":
   version: 8.4.19
   resolution: "postcss@npm:8.4.19"
   dependencies:
@@ -20378,9 +20417,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.56.2":
-  version: 2.79.0
-  resolution: "rollup@npm:2.79.0"
+"rollup@npm:^2.56.2, rollup@npm:^2.79.1":
+  version: 2.79.1
+  resolution: "rollup@npm:2.79.1"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -20388,7 +20427,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 166f1ffea1898e157003920065b3a328e7012ea6808860ee8fe5d1ce94804fcce9985c95a3c0f7fe9c611aff0d09a70f073f1d6f715c8faba28e4e40f71ee3bb
+  checksum: 6a2bf167b3587d4df709b37d149ad0300692cc5deb510f89ac7bdc77c8738c9546ae3de9322b0968e1ed2b0e984571f5f55aae28fa7de4cfcb1bc5402a4e2be6
   languageName: node
   linkType: hard
 
@@ -20440,7 +20479,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:7.5.7, rxjs@npm:^7.5.1, rxjs@npm:^7.5.5, rxjs@npm:^7.5.6, rxjs@npm:~7.5.0":
+"rxjs@npm:7.5.7, rxjs@npm:^7.5.1, rxjs@npm:^7.5.5, rxjs@npm:^7.5.6, rxjs@npm:^7.5.7, rxjs@npm:~7.5.0":
   version: 7.5.7
   resolution: "rxjs@npm:7.5.7"
   dependencies:
@@ -23113,6 +23152,44 @@ __metadata:
     unist-util-stringify-position: ^2.0.0
     vfile-message: ^2.0.0
   checksum: ee5726e10d170472cde778fc22e0f7499caa096eb85babea5d0ce0941455b721037ee1c9e6ae506ca2803250acd313d0f464328ead0b55cfe7cb6315f1b462d6
+  languageName: node
+  linkType: hard
+
+"vite@npm:^3.2.1, vite@npm:^3.2.4":
+  version: 3.2.5
+  resolution: "vite@npm:3.2.5"
+  dependencies:
+    esbuild: ^0.15.9
+    fsevents: ~2.3.2
+    postcss: ^8.4.18
+    resolve: ^1.22.1
+    rollup: ^2.79.1
+  peerDependencies:
+    "@types/node": ">= 14"
+    less: "*"
+    sass: "*"
+    stylus: "*"
+    sugarss: "*"
+    terser: ^5.4.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+    less:
+      optional: true
+    sass:
+      optional: true
+    stylus:
+      optional: true
+    sugarss:
+      optional: true
+    terser:
+      optional: true
+  bin:
+    vite: bin/vite.js
+  checksum: ad35b7008c2b62a167d1d1a82f0a0c60fa457733f1969e9eedf0b0077f67a7ac74b4c9477e75a397895150f09b6551f0c17841c5b05c34d9fe302bb0b5dc28a8
   languageName: node
   linkType: hard
 
