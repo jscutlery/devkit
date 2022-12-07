@@ -10,6 +10,8 @@ This will allow us to test our Angular components with Playwright without buildi
 - 🎛 **Passing type-safe inputs to the tested components** 
 - 🎭 **Spying on component outputs in a type-safe fashion**
 
+https://user-images.githubusercontent.com/2674658/206226065-ba856329-dda7-43b1-9c28-4416b190f4d4.mp4
+
 # 🚀 Writing our first
 
 First, we will have to set up Playwright Component Testing as [mentioned below](#setup).
