@@ -47,6 +47,12 @@ jobs:
         run: yarn playwright install --with-deps
       - name: Test
         run: yarn nx affected --base=last-release --target=component-test --parallel=1
+      - name: Upload test results on failure
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: test-results
+          path: test-results
 
   e2e:
     runs-on: ubuntu-latest
