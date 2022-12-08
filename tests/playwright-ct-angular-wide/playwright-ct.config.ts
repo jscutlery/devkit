@@ -8,8 +8,7 @@ import { env } from 'process';
 const config: PlaywrightTestConfig = {
   testDir: 'src',
   testMatch: /pw\.tsx?/,
-  snapshotPathTemplate: './__snapshots__/{testFilePath}/{arg}-{projectName}{ext}',
-  updateSnapshots: 'missing',
+  snapshotDir: './__snapshots__',
   /* Maximum time one test can run for. */
   timeout: 10 * 1000,
   /* Run tests in files in parallel */
