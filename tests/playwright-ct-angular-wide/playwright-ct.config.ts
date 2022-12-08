@@ -8,8 +8,8 @@ import { env } from 'process';
 const config: PlaywrightTestConfig = {
   testDir: 'src',
   testMatch: /pw\.tsx?/,
-  /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
-  snapshotDir: './__snapshots__',
+  snapshotPathTemplate: './__snapshots__/{testFilePath}/{arg}-{projectName}{ext}',
+  updateSnapshots: 'missing',
   /* Maximum time one test can run for. */
   timeout: 10 * 1000,
   /* Run tests in files in parallel */
