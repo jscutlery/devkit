@@ -29,6 +29,9 @@ jobs:
         if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
         run: yarn install --no-immutable
 
+      - name: Install Playwright Browsers
+        run: yarn playwright install --with-deps
+
       - name: Check if has migrations
         id: nrwl-workspace-has-migrations
         run: |
