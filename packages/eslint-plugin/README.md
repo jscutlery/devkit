@@ -9,8 +9,9 @@ Large projects can be difficult to maintain and understand, especially for new t
 ## Install
 
 ```
-npm install @jscutlery/eslint-plugin
+npm install @jscutlery/eslint-plugin -D
 ```
 
 ## Rules
 
+- [max-public-exports]()
