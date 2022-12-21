@@ -2,18 +2,18 @@
 
 This is the home of the following tools which are aiming to:
 
-🍰 Improve JavaScript & Angular Developer eXperience
+- 🍰 Improve JavaScript & Angular Developer eXperience
+- ✅ Encourage pragmatic testing
+- ⚡️ Optimize performance
+- 📁 Enhance code maintainability and organization
 
-✅ Encourage pragmatic testing
-
-⚡️ Optimize performance
-
-| Package                                                              | Description                                           | Version                                                               |
-|----------------------------------------------------------------------|-------------------------------------------------------|-----------------------------------------------------------------------|
-| [@jscutlery/cypress-harness](./packages/cypress-harness)             | Cypress support for Angular Component Test Harnesses. | <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness">       |
-| [@jscutlery/microwave](./packages/microwave)                         | Optimize Angular change detection effortlessly.       | <img src="https://badgen.net/npm/v/@jscutlery/microwave">             |
-| [@jscutlery/operators](./packages/operators)                         | Set of operators for RxJS like `suspensify`.          | <img src="https://badgen.net/npm/v/@jscutlery/operators">             |
-| [@jscutlery/playwright-ct-angular](./packages/playwright-ct-angular) | Playwright Component Testing support for Angular.     | <img src="https://badgen.net/npm/v/@jscutlery/playwright-ct-angular"> |
+| Package                                                              | Description                                            | Version                                                               |
+| -------------------------------------------------------------------- | ------------------------------------------------------ | --------------------------------------------------------------------- |
+| [@jscutlery/cypress-harness](./packages/cypress-harness)             | Cypress support for Angular Component Test Harnesses.  | <img src="https://badgen.net/npm/v/@jscutlery/cypress-harness">       |
+| [@jscutlery/microwave](./packages/microwave)                         | Optimize Angular change detection effortlessly.        | <img src="https://badgen.net/npm/v/@jscutlery/microwave">             |
+| [@jscutlery/operators](./packages/operators)                         | Set of operators for RxJS like `suspensify`.           | <img src="https://badgen.net/npm/v/@jscutlery/operators">             |
+| [@jscutlery/playwright-ct-angular](./packages/playwright-ct-angular) | Playwright Component Testing support for Angular.      | <img src="https://badgen.net/npm/v/@jscutlery/playwright-ct-angular"> |
+| [@jscutlery/eslint-plugin](./packages/eslint-plugin)                 | ESLint plugin to enhance Nx workspace maintainability. | <img src="https://badgen.net/npm/v/@jscutlery/eslint-plugin">         |
 
 # Contributors
 
