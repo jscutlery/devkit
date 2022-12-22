@@ -15,8 +15,10 @@ export type Options = [{
 
 const createRule = ESLintUtils.RuleCreator(getDocsUrl);
 
+export const RULE_NAME = parse(__filename).name;
+
 export default createRule<Options, MessageIds>({
-  name: parse(__filename).name,
+  name: RULE_NAME,
   meta: {
     type: 'suggestion',
     docs: {
