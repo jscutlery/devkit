@@ -1,5 +1,4 @@
-import { parse, resolve } from 'path';
-import { realpathSync } from 'fs';
+import { parse } from 'path';
 import { ESLintUtils } from '@typescript-eslint/utils';
 import { ExportNamedDeclaration } from '@typescript-eslint/types/dist/generated/ast-spec';
 import { getDocsUrl } from '../utils/docs';
@@ -9,11 +8,10 @@ export const enum MessageIds {
   MaxPublicExports = 'max-public-exports',
 }
 
-export type Options = {
-  entry: string;
+export type Options = [{
   max: number;
   noExportAll: boolean;
-}[];
+}];
 
 const createRule = ESLintUtils.RuleCreator(getDocsUrl);
 
@@ -36,32 +34,26 @@ export default createRule<Options, MessageIds>({
       {
         type: 'object',
         properties: {
-          entry: {
-            type: 'string',
-          },
           max: {
             type: 'integer',
-            default: 10,
           },
           noExportAll: {
             type: 'boolean',
-            default: true,
           },
         },
         additionalProperties: false,
       },
     ],
   },
-  defaultOptions: [],
+  defaultOptions: [{ max: 10, noExportAll: true }],
   create(context) {
     let publicExportCount = 0;
 
-    const { entry, max, noExportAll } = context.options[0];
-    const entryPath = getFilePath(entry);
+    const { max, noExportAll } = context.options[0];
 
     return {
       ExportAllDeclaration(node) {
-        if (context.getFilename() === entryPath && noExportAll) {
+        if (noExportAll) {
           context.report({
             node,
             messageId: MessageIds.NoUseOfExportAll,
@@ -69,17 +61,16 @@ export default createRule<Options, MessageIds>({
         }
       },
       ExportNamedDeclaration(node) {
-        if (context.getFilename() === entryPath && isPublic(node)) {
+        if (hasPublicExports(node)) {
           publicExportCount += node.specifiers.length;
         }
       },
       'Program:exit'(node) {
-        if (context.getFilename() === entryPath && publicExportCount > max) {
+        if (publicExportCount > max) {
           context.report({
             node,
             messageId: MessageIds.MaxPublicExports,
             data: {
-              entryPath,
               max,
               publicExportCount,
             },
@@ -90,10 +81,6 @@ export default createRule<Options, MessageIds>({
   },
 });
 
-function getFilePath(filePath: string): string {
-  return realpathSync(resolve(process.cwd(), filePath));
-}
-
-function isPublic(node: ExportNamedDeclaration): boolean {
+function hasPublicExports(node: ExportNamedDeclaration): boolean {
   return node.specifiers.length > 0;
 }
