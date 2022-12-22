@@ -8,10 +8,12 @@ export const enum MessageIds {
   MaxPublicExports = 'max-public-exports',
 }
 
-export type Options = [{
-  max: number;
-  noExportAll: boolean;
-}];
+export type Options = [
+  {
+    max?: number;
+    noExportAll?: boolean;
+  }
+];
 
 const createRule = ESLintUtils.RuleCreator(getDocsUrl);
 
@@ -68,7 +70,7 @@ export default createRule<Options, MessageIds>({
         }
       },
       'Program:exit'(node) {
-        if (publicExportCount > max) {
+        if (max != null && publicExportCount > max) {
           context.report({
             node,
             messageId: MessageIds.MaxPublicExports,
