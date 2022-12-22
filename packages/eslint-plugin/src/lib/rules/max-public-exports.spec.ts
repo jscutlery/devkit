@@ -1,4 +1,3 @@
-import { describe, expect, it } from '@jest/globals';
 import * as parser from '@typescript-eslint/parser';
 import { TSESLint } from '@typescript-eslint/utils';
 import rule, { Options, RULE_NAME } from './max-public-exports';
