@@ -15,3 +15,4 @@ npm install @jscutlery/eslint-plugin -D
 ## Rules
 
 - [max-public-exports]()
+- [prefer-inline]()

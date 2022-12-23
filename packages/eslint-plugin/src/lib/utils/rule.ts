@@ -4,14 +4,14 @@ import { TSESLint } from '@typescript-eslint/utils';
 
 const linter = new TSESLint.Linter();
 
-export function configureRule<TOptions extends readonly unknown[]>(
+export function configureRule<TOptions extends readonly unknown[] = []>(
   name: string,
   rule: TSESLint.RuleModule<string, TOptions>
 ) {
   return function runRule(
     content: string,
     contentPath: string,
-    args: TOptions[0]
+    args: TOptions[0] = []
   ) {
     const config = {
       parser: '@typescript-eslint/parser',
