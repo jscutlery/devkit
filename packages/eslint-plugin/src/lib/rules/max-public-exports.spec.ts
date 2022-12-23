@@ -1,8 +1,9 @@
-import * as parser from '@typescript-eslint/parser';
-import { TSESLint } from '@typescript-eslint/utils';
+import { configureRule } from '../utils/rule';
 import rule, { Options, RULE_NAME } from './max-public-exports';
 
 describe(RULE_NAME, () => {
+  const runRule = configureRule<Options>(RULE_NAME, rule);
+
   it('should allow few public exports when max is set', () => {
     const result = runRule(`export { A, B, C } from './a';`, 'foo.ts', {
       max: 3,
@@ -42,26 +43,3 @@ describe(RULE_NAME, () => {
     ]);
   });
 });
-
-const linter = new TSESLint.Linter();
-
-function runRule(
-  content: string,
-  contentPath: string,
-  ruleArguments: Options[0]
-) {
-  const config = {
-    parser: '@typescript-eslint/parser',
-    parserOptions: {
-      ecmaVersion: 2018 as const,
-      sourceType: 'module' as const,
-    },
-    rules: {
-      [RULE_NAME]: ['error', ruleArguments],
-    },
-  };
-  linter.defineParser('@typescript-eslint/parser', parser as any);
-  linter.defineRule(RULE_NAME, rule);
-
-  return linter.verify(content, config as any, contentPath);
-}
