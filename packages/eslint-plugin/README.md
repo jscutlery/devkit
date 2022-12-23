@@ -14,5 +14,8 @@ npm install @jscutlery/eslint-plugin -D
 
 ## Rules
 
-- [max-public-exports]()
-- [prefer-inline]()
+- Nx
+  - [max-public-exports]()
+- Angular
+  - [prefer-inline]()
+  - [prefer-inject-function]()
