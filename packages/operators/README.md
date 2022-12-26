@@ -124,7 +124,7 @@ export class MyComponent {
 
 ## Alternatives
 
-- [@rx-angular/state's rxLet](https://github.com/rx-angular/rx-angular/blob/master/libs/template/docs/api/let-directive.md#using-the-template-binding)
+- [@rx-angular/state's rxLet](https://www.rx-angular.io/docs/template/api/let-directive)
 
 ## F.A.Q.
 
