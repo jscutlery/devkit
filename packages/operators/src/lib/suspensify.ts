@@ -27,6 +27,9 @@ export function suspensify<T, R>(
 ): OperatorFunction<T, R>;
 export function suspensify<T, R = Suspense<T>>(
   projector?: (data: Suspense<T>) => R
+): OperatorFunction<T, R | Suspense<T>>;
+export function suspensify<T, R = Suspense<T>>(
+  projector?: (data: Suspense<T>) => R
 ): OperatorFunction<T, R | Suspense<T>> {
   return (source$: Observable<T>): Observable<R | Suspense<T>> => {
     return source$.pipe(_suspensify(projector), _coalesceFirstEmittedValue());
@@ -60,9 +63,12 @@ function _suspensify<T, R>(
 ): OperatorFunction<T, R>;
 function _suspensify<T, R = Suspense<T>>(
   projector?: (data: Suspense<T>) => R
+): OperatorFunction<T, R | Suspense<T>>;
+function _suspensify<T, R = Suspense<T>>(
+  projector?: (data: Suspense<T>) => R
 ): OperatorFunction<T, R | Suspense<T>> {
   return (source$: Observable<T>): Observable<R | Suspense<T>> => {
-    const initialState = {
+    const initialState: Suspense<T> = {
       value: undefined,
       error: undefined,
       finalized: false,
@@ -91,7 +97,7 @@ function _suspensify<T, R = Suspense<T>>(
           finalized,
           pending: false,
         };
-      }, undefined),
+      }, initialState),
       startWith(initialState)
     );
 
