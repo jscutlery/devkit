@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.2](https://github.com/jscutlery/devkit/compare/operators-0.2.1...operators-0.2.2) (2023-01-16)
+
+
+### Bug Fixes
+
+* **operators:** 🏷️ fix typing errors ([91c084c](https://github.com/jscutlery/devkit/commit/91c084c29c6ad760376c10bc17004a2bfcd3a306))
+
+
+
 ## [0.2.1](https://github.com/jscutlery/devkit/compare/operators-0.2.0...operators-0.2.1) (2022-12-26)
 
 
