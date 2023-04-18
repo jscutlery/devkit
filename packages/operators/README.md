@@ -7,8 +7,8 @@ This package regroups a couple of RxJS operators meant to simplify some common p
 - [`suspensify`](#suspensify)
   - [Goals](#goals)
   - [Usage](#usage)
-    - [Strict mode (will become default in 3.0.0)](#strict-mode-will-become-default-in-300)
-    - [Lax mode (default)](#lax-mode-default)
+    - [Strict mode (default)](#strict-mode-default)
+    - [Lax mode](#lax-mode)
     - [With Angular](#with-angular)
     - [With `@rx-angular/state`](#with-rx-angularstate)
   - [Alternatives](#alternatives)
@@ -48,13 +48,13 @@ The `suspensify` operator is meant to provide a simple and efficient way of deal
 
 ## Usage
 
-### Strict mode (will become default in 3.0.0)
+### Strict mode (default)
 
 Thanks to strict mode the emitted suspense can be narrowed down.
 
 ```ts
 interval(1000)
-  .pipe(take(2), suspensify({strict: true}))
+  .pipe(take(2), suspensify())
   .subscribe((suspense) => {
     suspense.value; // 💥
     suspense.error; // 💥
@@ -93,11 +93,11 @@ interval(1000)
 }
 ```
 
-### Lax mode (default)
+### Lax mode
 
 ```ts
 interval(1000)
-  .pipe(take(2), suspensify())
+  .pipe(take(2), suspensify({strict: false}))
   .subscribe((data) => console.log(data));
 ```
 

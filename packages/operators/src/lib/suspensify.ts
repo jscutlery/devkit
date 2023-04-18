@@ -47,16 +47,11 @@ export interface SuspenseEmpty {
   pending: false;
 }
 
-export type SuspenseStrict<T> =
+export type Suspense<T> =
   | SuspensePending
   | SuspenseWithValue<T>
   | SuspenseWithError
   | SuspenseEmpty;
-
-/**
- * @todo 3.0.0: Make `Suspense` an alias for `SuspenseStrict`.
- */
-export type Suspense<T> = SuspenseLax<T>;
 
 export interface SuspensifyOptions {
   strict?: boolean;
@@ -74,13 +69,10 @@ export function suspensify<T>(options?: {
 }): OperatorFunction<T, SuspenseLax<T>>;
 export function suspensify<T>(options: {
   strict: true;
-}): OperatorFunction<T, SuspenseStrict<T>>;
+}): OperatorFunction<T, Suspense<T>>;
 export function suspensify<T>({
-  strict = false,
-}: SuspensifyOptions = {}): OperatorFunction<
-  T,
-  SuspenseLax<T> | SuspenseStrict<T>
-> {
+  strict = true,
+}: SuspensifyOptions = {}): OperatorFunction<T, SuspenseLax<T> | Suspense<T>> {
   return (source$: Observable<T>): Observable<Suspense<T>> => {
     const strictSuspense$ = source$.pipe(
       _suspensify(),
@@ -124,14 +116,14 @@ function _coalesceFirstEmittedValue<T>(): MonoTypeOperatorFunction<T> {
 const TRUE = true as const;
 const FALSE = false as const;
 
-function _suspensify<T>(): OperatorFunction<T, SuspenseStrict<T>> {
-  return (source$: Observable<T>): Observable<SuspenseStrict<T>> => {
+function _suspensify<T>(): OperatorFunction<T, Suspense<T>> {
+  return (source$: Observable<T>): Observable<Suspense<T>> => {
     const initialState = {
       finalized: false,
       hasError: false,
       hasValue: false,
       pending: true,
-    } as SuspenseStrict<T>;
+    } as Suspense<T>;
 
     return source$.pipe(
       materialize(),
