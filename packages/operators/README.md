@@ -7,7 +7,8 @@ This package regroups a couple of RxJS operators meant to simplify some common p
 - [`suspensify`](#suspensify)
   - [Goals](#goals)
   - [Usage](#usage)
-    - [Basic](#basic)
+    - [Strict mode (will become default in 3.0.0)](#strict-mode-will-become-default-in-300)
+    - [Lax mode (default)](#lax-mode-default)
     - [With Angular](#with-angular)
     - [With `@rx-angular/state`](#with-rx-angularstate)
   - [Alternatives](#alternatives)
@@ -32,7 +33,7 @@ When dealing with an asynchronous source of data in a web application, it is a c
 - **pending**: the data is being fetched
 - **error**: an error occurred while fetching the data
 - **success**: some data has been fetched
-- **finalized**: there is no more data to fetch or an error happened
+- **finalized**: there is no more data to fetch or an error happened _(it is called `finalized` and not `completed` to avoid confusion with RxJS `complete` event which only happens if there is no error)_.
 
 The most common ways of implementing this are error-prone as they are either based on a complex combination of native RxJS operators or side effects that break the reactivity chain.
 
@@ -47,7 +48,52 @@ The `suspensify` operator is meant to provide a simple and efficient way of deal
 
 ## Usage
 
-### Basic
+### Strict mode (will become default in 3.0.0)
+
+Thanks to strict mode the emitted suspense can be narrowed down.
+
+```ts
+interval(1000)
+  .pipe(take(2), suspensify({strict: true}))
+  .subscribe((suspense) => {
+    suspense.value; // 💥
+    suspense.error; // 💥
+    if (suspense.hasValue) {
+      suspense.value; // ✅
+      suspense.error; // 💥
+    }
+    if (suspense.hasError) {
+      suspense.value; // 💥
+      suspense.error; // ✅
+    }
+  });
+```
+
+```ts
+{
+  finalized: false,
+  hasError: false,
+  hasValue: false,
+  pending: true,
+}
+{
+  finalized: false,
+  hasError: false,
+  hasValue: false,
+  pending: false,
+  value: 0,
+}
+...
+{
+  finalized: true,
+  hasError: false,
+  hasValue: true,
+  pending: false,
+  value: 1,
+}
+```
+
+### Lax mode (default)
 
 ```ts
 interval(1000)
@@ -57,23 +103,29 @@ interval(1000)
 
 ```ts
 {
+  finalized: false,
+  hasError: false,
+  hasValue: false,
+  pending: true,
   value: undefined,
   error: undefined,
-  pending: true,
-  finalized: false,
 }
 {
+  finalized: false,
+  hasError: false,
+  hasValue: false,
+  pending: false,
   value: 0,
   error: undefined,
-  pending: false,
-  finalized: false,
 }
 ...
 {
+  finalized: true,
+  hasError: false,
+  hasValue: true,
+  pending: false,
   value: 1,
   error: undefined,
-  pending: false,
-  finalized: true,
 }
 ```
 
@@ -86,9 +138,15 @@ interval(1000)
 
       <my-spinner *ngIf="suspense.pending"></my-spinner>
 
-      <div *ngIf="suspense.error">{{ suspense.error }}</div>
+      <div *ngIf="suspense.hasError">
+        {{ suspense.error }} // ✅
+        {{ suspense.value }} // 💥 will not compile in strict mode
+      </div>
 
-      <div *ngIf="suspense.value">{{ suspense.value }}</div>
+      <div *ngIf="suspense.hasValue">
+        {{ suspense.error }} // 💥 will not compile in strict mode
+        {{ suspense.value }} // ✅
+      </div>
 
     </ng-container>
   `,
