@@ -7,38 +7,38 @@ describe(suspensify.name, () => {
   const { observe } = createObserver();
 
   describe('strict mode', () => {
-    xit('🚧 should always have pending, finalized, hasValue & hasError properties', async () => {
-      // const suspense = await getFirstSuspenseValue();
-      // suspense.pending;
-      // suspense.finalized;
-      // suspense.hasError;
-      // suspense.hasValue;
+    it('should always have pending, finalized, hasValue & hasError properties', async () => {
+      const suspense = await getFirstSuspenseValue();
+      suspense.pending;
+      suspense.finalized;
+      suspense.hasError;
+      suspense.hasValue;
     });
 
-    xit('🚧 should not have value or error before narrowing', async () => {
-      // const suspense = await getFirstSuspenseValue();
-      // // @ts-expect-error error property should not exist before narrowing
-      // suspense.error;
-      // // @ts-expect-error value property should not exist before narrowing
-      // suspense.value;
+    it('should not have value or error before narrowing', async () => {
+      const suspense = await getFirstSuspenseValue();
+      // @ts-expect-error error property should not exist before narrowing
+      suspense.error;
+      // @ts-expect-error value property should not exist before narrowing
+      suspense.value;
     });
 
-    xit('🚧 should narrow value type', async () => {
-      // const suspense = await getFirstSuspenseValue();
-      // if (suspense.hasValue) {
-      //   suspense.value;
-      //   // @ts-expect-error error property should not exist on value type
-      //   suspense.error;
-      // }
+    it('should narrow value type', async () => {
+      const suspense = await getFirstSuspenseValue();
+      if (suspense.hasValue) {
+        suspense.value;
+        // @ts-expect-error error property should not exist on value type
+        suspense.error;
+      }
     });
 
-    xit('🚧 should narrow error type', async () => {
-      // const suspense = await getFirstSuspenseValue();
-      // if (suspense.hasError) {
-      //   suspense.error;
-      //   // @ts-expect-error value property should not exist on error type
-      //   suspense.value;
-      // }
+    it('should narrow error type', async () => {
+      const suspense = await getFirstSuspenseValue();
+      if (suspense.hasError) {
+        suspense.error;
+        // @ts-expect-error value property should not exist on error type
+        suspense.value;
+      }
     });
 
     it.todo('🚧 should emit pending');

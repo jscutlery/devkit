@@ -6,7 +6,7 @@ import {
 } from 'rxjs';
 import { debounce, materialize, scan, startWith } from 'rxjs/operators';
 
-export interface Suspense<T> {
+export interface SuspenseLax<T> {
   value: undefined | T;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: undefined | any;
@@ -14,14 +14,63 @@ export interface Suspense<T> {
   pending: boolean;
 }
 
+export interface SuspensePending {
+  finalized: false;
+  hasError: false;
+  hasValue: false;
+  pending: true;
+}
+
+export interface SuspenseWithValue<T> {
+  finalized: boolean;
+  hasError: false;
+  hasValue: true;
+  pending: false;
+  value: T;
+}
+
+export interface SuspenseWithError {
+  finalized: true;
+  hasError: true;
+  hasValue: false;
+  pending: false;
+  error: unknown;
+}
+
+export type SuspenseStrict<T> =
+  | SuspensePending
+  | SuspenseWithValue<T>
+  | SuspenseWithError;
+
+/**
+ * @todo 3.0.0: Make `Suspense` an alias for `SuspenseStrict`.
+ */
+export type Suspense<T> = SuspenseLax<T>;
+
+export interface SuspensifyOptions {
+  /**
+   * @deprecated 🚧 Work in progress.
+   */
+  strict?: boolean;
+}
+
 /**
  * @description creates a derivated state from the source observable.
  *
  * @example source$.pipe(suspensify())
  *
- * @returns Observable<Suspense<T>>
+ * @returns Observable<SuspenseLax<T> | SuspenseStrict<T>>
  */
-export function suspensify<T>(): OperatorFunction<T, Suspense<T>> {
+export function suspensify<T>(options?: {
+  strict: false;
+}): OperatorFunction<T, SuspenseLax<T>>;
+export function suspensify<T>(options: {
+  strict: true;
+}): OperatorFunction<T, SuspenseStrict<T>>;
+export function suspensify<T>(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  options?: SuspensifyOptions
+): OperatorFunction<T, SuspenseLax<T> | SuspenseStrict<T>> {
   return (source$: Observable<T>): Observable<Suspense<T>> => {
     return source$.pipe(_suspensify(), _coalesceFirstEmittedValue());
   };
