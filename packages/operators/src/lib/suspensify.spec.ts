@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import { Observable, Subject, of, throwError } from 'rxjs';
+import { Observable, Subject, firstValueFrom, of, throwError } from 'rxjs';
 import { suspensify } from './suspensify';
 import { createObserver } from './testing/observer';
 
@@ -7,11 +7,39 @@ describe(suspensify.name, () => {
   const { observe } = createObserver();
 
   describe('strict mode', () => {
-    it.todo('🚧 should narrow pending type');
+    xit('🚧 should always have pending, finalized, hasValue & hasError properties', async () => {
+      // const suspense = await getFirstSuspenseValue();
+      // suspense.pending;
+      // suspense.finalized;
+      // suspense.hasError;
+      // suspense.hasValue;
+    });
 
-    it.todo('🚧 should narrow has value type');
+    xit('🚧 should not have value or error before narrowing', async () => {
+      // const suspense = await getFirstSuspenseValue();
+      // // @ts-expect-error error property should not exist before narrowing
+      // suspense.error;
+      // // @ts-expect-error value property should not exist before narrowing
+      // suspense.value;
+    });
 
-    it.todo('🚧 should narrow has error type');
+    xit('🚧 should narrow value type', async () => {
+      // const suspense = await getFirstSuspenseValue();
+      // if (suspense.hasValue) {
+      //   suspense.value;
+      //   // @ts-expect-error error property should not exist on value type
+      //   suspense.error;
+      // }
+    });
+
+    xit('🚧 should narrow error type', async () => {
+      // const suspense = await getFirstSuspenseValue();
+      // if (suspense.hasError) {
+      //   suspense.error;
+      //   // @ts-expect-error value property should not exist on error type
+      //   suspense.value;
+      // }
+    });
 
     it.todo('🚧 should emit pending');
 
@@ -24,6 +52,10 @@ describe(suspensify.name, () => {
     it.todo('🚧 should mark finalized on complete');
 
     it.todo('🚧 should reset pending to false when value is emitted');
+
+    async function getFirstSuspenseValue() {
+      return await firstValueFrom(of('🍔').pipe(suspensify({ strict: true })));
+    }
   });
 
   it('should emit result with value', () => {
