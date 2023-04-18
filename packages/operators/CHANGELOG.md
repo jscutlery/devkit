@@ -2,6 +2,25 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [1.0.0](https://github.com/jscutlery/devkit/compare/operators-0.2.1...operators-1.0.0) (2023-04-18)
+
+
+### Bug Fixes
+
+* **operators:** 🏷️ fix typing errors ([91c084c](https://github.com/jscutlery/devkit/commit/91c084c29c6ad760376c10bc17004a2bfcd3a306))
+
+
+### Features
+
+* **operators:** ✨ drop support for suspensify's projector ([f4bf6dc](https://github.com/jscutlery/devkit/commit/f4bf6dc413e866b5c047578162c1c1cbcb3c73f9)), closes [#236](https://github.com/jscutlery/devkit/issues/236)
+
+
+### BREAKING CHANGES
+
+* **operators:** suspensify's operator "projector" function is not supported anymore
+
+
+
 ## [0.2.1](https://github.com/jscutlery/devkit/compare/operators-0.2.0...operators-0.2.1) (2022-12-26)
 
 
