@@ -1,5 +1,12 @@
 import { describe, expect, it } from '@jest/globals';
-import { Observable, Subject, firstValueFrom, of, throwError } from 'rxjs';
+import {
+  EMPTY,
+  Observable,
+  Subject,
+  firstValueFrom,
+  of,
+  throwError,
+} from 'rxjs';
 import { suspensify } from './suspensify';
 import { createObserver } from './testing/observer';
 
@@ -41,25 +48,101 @@ describe(suspensify.name, () => {
       }
     });
 
-    it.todo('🚧 should emit pending');
+    xit('🚧 should emit pending', () => {
+      const { next } = setUp(new Subject<'🍔'>());
+      expect(next).toBeCalledTimes(1);
+      expect(next).toBeCalledWith({
+        finalized: false,
+        hasError: false,
+        hasValue: false,
+        pending: true,
+      });
+    });
 
-    it.todo('🚧 should emit value');
+    xit('🚧 should emit value', () => {
+      const subject = new Subject<'🍔'>();
+      subject.next('🍔');
 
-    it.todo('🚧 should emit error');
+      const { next } = setUp(subject);
 
-    it.todo('🚧 should mark finalized on error');
+      expect(next).toBeCalledWith({
+        finalized: false,
+        hasError: false,
+        hasValue: true,
+        pending: false,
+        value: '🍔',
+      });
+    });
 
-    it.todo('🚧 should mark finalized on complete');
+    xit('🚧 should emit once (not pending + value)', () => {
+      const { next } = setUp(of('🍔'));
+      expect(next).toBeCalledTimes(1);
+    });
 
-    it.todo('🚧 should reset pending to false when value is emitted');
+    it('🚧 should emit error', () => {
+      const { next } = setUp(throwError(() => new Error('🐞')));
+      expect(next).toBeCalledTimes(1);
+      expect(next).toBeCalledWith({
+        finalized: true,
+        hasError: true,
+        hasValue: false,
+        pending: false,
+        error: new Error('🐞'),
+      });
+    });
+
+    xit('🚧 should mark finalized on complete with value', () => {
+      const { next } = setUp(of('🍔'));
+
+      expect(next).toBeCalledWith({
+        finalized: true,
+        hasError: false,
+        hasValue: true,
+        pending: false,
+        value: '🍔',
+      });
+    });
+
+    xit('🚧 should mark finalized on complete without value', () => {
+      const { next } = setUp(EMPTY);
+
+      expect(next).toBeCalledWith({
+        finalized: true,
+        hasError: false,
+        hasValue: false,
+        pending: false,
+      });
+    });
+
+    xit('🚧 should reset pending to false when value is emitted', () => {
+      const subject = new Subject<'🍔'>();
+      const { next } = setUp(subject);
+
+      subject.error(new Error('🐞'));
+
+      expect(next).toBeCalledTimes(2);
+      expect(next).lastCalledWith(
+        expect.objectContaining({
+          pending: false,
+          error: new Error('🐞'),
+        })
+      );
+    });
 
     async function getFirstSuspenseValue() {
       return await firstValueFrom(of('🍔').pipe(suspensify({ strict: true })));
     }
+
+    function setUp<T>(source$: Observable<T>) {
+      const observer = observe(source$.pipe(suspensify({ strict: true })));
+      return {
+        next: observer.next,
+      };
+    }
   });
 
   it('should emit result with value', () => {
-    const { next } = setUp(of('🍔'));
+    const { next } = setUpLax(of('🍔'));
     expect(next).toBeCalledTimes(1);
     expect(next).toBeCalledWith({
       error: undefined,
@@ -70,7 +153,7 @@ describe(suspensify.name, () => {
   });
 
   it('should emit result with error', () => {
-    const { next } = setUp(throwError(() => new Error('🐞')));
+    const { next } = setUpLax(throwError(() => new Error('🐞')));
     expect(next).toBeCalledTimes(1);
     expect(next).toBeCalledWith({
       error: new Error('🐞'),
@@ -81,7 +164,7 @@ describe(suspensify.name, () => {
   });
 
   it('should emit result with pending=true and without value nor error', () => {
-    const { next } = setUp(new Subject<'🍔'>());
+    const { next } = setUpLax(new Subject<'🍔'>());
     expect(next).toBeCalledTimes(1);
     expect(next).toBeCalledWith({
       error: undefined,
@@ -93,7 +176,7 @@ describe(suspensify.name, () => {
 
   it('should reset pending to false when value is emitted', () => {
     const subject = new Subject<'🍔'>();
-    const { next } = setUp(subject);
+    const { next } = setUpLax(subject);
 
     subject.next('🍔');
 
@@ -108,7 +191,7 @@ describe(suspensify.name, () => {
 
   it('should reset pending to false on error', () => {
     const subject = new Subject<'🍔'>();
-    const { next } = setUp(subject);
+    const { next } = setUpLax(subject);
 
     subject.error(new Error('🐞'));
 
@@ -121,7 +204,7 @@ describe(suspensify.name, () => {
     );
   });
 
-  function setUp<T>(source$: Observable<T>) {
+  function setUpLax<T>(source$: Observable<T>) {
     const observer = observe(source$.pipe(suspensify()));
     return {
       next: observer.next,
