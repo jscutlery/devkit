@@ -4,7 +4,7 @@ import {
   OperatorFunction,
   ReplaySubject,
 } from 'rxjs';
-import { debounce, map, materialize, scan, startWith } from 'rxjs/operators';
+import { debounce, materialize, scan, startWith } from 'rxjs/operators';
 
 export interface Suspense<T> {
   value: undefined | T;
@@ -21,18 +21,9 @@ export interface Suspense<T> {
  *
  * @returns Observable<Suspense<T>>
  */
-export function suspensify<T, R = Suspense<T>>(): OperatorFunction<T, R>;
-export function suspensify<T, R>(
-  projector: (data: Suspense<T>) => R
-): OperatorFunction<T, R>;
-export function suspensify<T, R = Suspense<T>>(
-  projector?: (data: Suspense<T>) => R
-): OperatorFunction<T, R | Suspense<T>>;
-export function suspensify<T, R = Suspense<T>>(
-  projector?: (data: Suspense<T>) => R
-): OperatorFunction<T, R | Suspense<T>> {
-  return (source$: Observable<T>): Observable<R | Suspense<T>> => {
-    return source$.pipe(_suspensify(projector), _coalesceFirstEmittedValue());
+export function suspensify<T>(): OperatorFunction<T, Suspense<T>> {
+  return (source$: Observable<T>): Observable<Suspense<T>> => {
+    return source$.pipe(_suspensify(), _coalesceFirstEmittedValue());
   };
 }
 
@@ -57,17 +48,8 @@ function _coalesceFirstEmittedValue<T>(): MonoTypeOperatorFunction<T> {
   };
 }
 
-function _suspensify<T, R = Suspense<T>>(): OperatorFunction<T, R>;
-function _suspensify<T, R>(
-  projector: (data: Suspense<T>) => R
-): OperatorFunction<T, R>;
-function _suspensify<T, R = Suspense<T>>(
-  projector?: (data: Suspense<T>) => R
-): OperatorFunction<T, R | Suspense<T>>;
-function _suspensify<T, R = Suspense<T>>(
-  projector?: (data: Suspense<T>) => R
-): OperatorFunction<T, R | Suspense<T>> {
-  return (source$: Observable<T>): Observable<R | Suspense<T>> => {
+function _suspensify<T>(): OperatorFunction<T, Suspense<T>> {
+  return (source$: Observable<T>): Observable<Suspense<T>> => {
     const initialState: Suspense<T> = {
       value: undefined,
       error: undefined,
@@ -75,7 +57,7 @@ function _suspensify<T, R = Suspense<T>>(
       pending: true,
     };
 
-    const result$ = source$.pipe(
+    return source$.pipe(
       materialize(),
       scan((state = initialState, notification) => {
         /* On complete, merge `finalized: true & pending: false`
@@ -100,7 +82,5 @@ function _suspensify<T, R = Suspense<T>>(
       }, initialState),
       startWith(initialState)
     );
-
-    return projector != null ? result$.pipe(map(projector)) : result$;
   };
 }

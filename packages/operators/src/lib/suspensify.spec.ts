@@ -69,25 +69,6 @@ describe(suspensify.name, () => {
     );
   });
 
-  it('should project using custom projector', () => {
-    const { next } = observe(
-      of('🍔').pipe(
-        suspensify((suspense) => ({
-          e: suspense.error,
-          f: suspense.finalized,
-          p: suspense.pending,
-          v: suspense.value,
-        }))
-      )
-    );
-    expect(next).lastCalledWith({
-      e: undefined,
-      f: true,
-      p: false,
-      v: '🍔',
-    });
-  });
-
   function setUp<T>(source$: Observable<T>) {
     const observer = observe(source$.pipe(suspensify()));
     return {
