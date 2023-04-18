@@ -1,128 +1,97 @@
 import { of, Observable, throwError, Subject } from 'rxjs';
 import { suspensify, Suspense } from './suspensify';
+import { describe, expect, it } from '@jest/globals';
+import { createObserver } from './testing/observer';
 
 describe(suspensify.name, () => {
-  let observer: jest.Mock<Suspense<'🍔'>>;
+  const { observe } = createObserver();
 
-  describe('with successful source', () => {
-    beforeEach(() => _suspensifyAndSubscribe(of('🍔')));
-
-    it('should emit result with value', () => {
-      expect(observer).toBeCalledTimes(1);
-      expect(observer).toBeCalledWith({
-        error: undefined,
-        finalized: true,
-        pending: false,
-        value: '🍔',
-      });
+  it('should emit result with value', () => {
+    const { next } = setUp(of('🍔'));
+    expect(next).toBeCalledTimes(1);
+    expect(next).toBeCalledWith({
+      error: undefined,
+      finalized: true,
+      pending: false,
+      value: '🍔',
     });
   });
 
-  describe('with failed source', () => {
-    beforeEach(() => _suspensifyAndSubscribe(throwError(() => new Error('🐞'))));
+  it('should emit result with error', () => {
+    const { next } = setUp(throwError(() => new Error('🐞')));
+    expect(next).toBeCalledTimes(1);
+    expect(next).toBeCalledWith({
+      error: new Error('🐞'),
+      finalized: true,
+      pending: false,
+      value: undefined,
+    });
+  });
 
-    it('should emit result with error', () => {
-      expect(observer).toBeCalledTimes(1);
-      expect(observer).toBeCalledWith({
+  it('should emit result with pending=true and without value nor error', () => {
+    const { next } = setUp(new Subject<'🍔'>());
+    expect(next).toBeCalledTimes(1);
+    expect(next).toBeCalledWith({
+      error: undefined,
+      finalized: false,
+      pending: true,
+      value: undefined,
+    });
+  });
+
+  it('should reset pending to false when value is emitted', () => {
+    const subject = new Subject<'🍔'>();
+    const { next } = setUp(subject);
+
+    subject.next('🍔');
+
+    expect(next).toBeCalledTimes(2);
+    expect(next).lastCalledWith({
+      error: undefined,
+      finalized: false,
+      pending: false,
+      value: '🍔',
+    });
+  });
+
+  it('should reset pending to false on error', () => {
+    const subject = new Subject<'🍔'>();
+    const { next } = setUp(subject);
+
+    subject.error(new Error('🐞'));
+
+    expect(next).toBeCalledTimes(2);
+    expect(next).lastCalledWith(
+      expect.objectContaining({
+        pending: false,
         error: new Error('🐞'),
-        finalized: true,
-        pending: false,
-        value: undefined,
-      });
-    });
-  });
-
-  describe('with pending source', () => {
-    let source$: Subject<'🍔'>;
-
-    beforeEach(() => {
-      source$ = new Subject<'🍔'>();
-      _suspensifyAndSubscribe(source$);
-    });
-
-    afterEach(() => source$.complete());
-
-    it('should emit result with pending=true and without value nor error', () => {
-      expect(observer).toBeCalledTimes(1);
-      expect(observer).toBeCalledWith({
-        error: undefined,
-        finalized: false,
-        pending: true,
-        value: undefined,
-      });
-    });
-
-    it('should reset pending to false when value is emitted', () => {
-      observer.mockClear();
-
-      source$.next('🍔');
-
-      expect(observer).toBeCalledTimes(1);
-      expect(observer).toBeCalledWith({
-        error: undefined,
-        finalized: false,
-        pending: false,
-        value: '🍔',
-      });
-    });
-  });
-
-  describe('with failed source after emitting value', () => {
-    let source$: Subject<'🍔'>;
-
-    beforeEach(() => {
-      source$ = new Subject<'🍔'>();
-      _suspensifyAndSubscribe(source$);
-    });
-
-    afterEach(() => source$.complete());
-
-    it('should reset pending to false on error', () => {
-      observer.mockClear();
-
-      source$.error(new Error('🐞'));
-
-      expect(observer).toBeCalledTimes(1);
-      expect(observer).toBeCalledWith(
-        expect.objectContaining({
-          pending: false,
-          error: new Error('🐞'),
-        })
-      );
-    });
-  });
-
-  describe('with projector', () => {
-    beforeEach(() =>
-      _suspensifyAndSubscribe(of('🍔'), {
-        projector: ({ error, finalized, pending, value }) => ({
-          e: error,
-          f: finalized,
-          p: pending,
-          v: value,
-        }),
       })
     );
+  });
 
-    it('should project using custom projector', () => {
-      expect(observer).toHaveBeenLastCalledWith({
-        e: undefined,
-        f: true,
-        p: false,
-        v: '🍔',
-      });
+  it('should project using custom projector', () => {
+    const { next } = observe(
+      of('🍔').pipe(
+        suspensify((suspense) => ({
+          e: suspense.error,
+          f: suspense.finalized,
+          p: suspense.pending,
+          v: suspense.value,
+        }))
+      )
+    );
+    expect(next).lastCalledWith({
+      e: undefined,
+      f: true,
+      p: false,
+      v: '🍔',
     });
   });
 
-  /**
-   * Apply `suspensify` operator, subscribe and notify `observer`.
-   */
-  function _suspensifyAndSubscribe<R>(
-    source$: Observable<'🍔'>,
-    { projector }: { projector?: (data: Suspense<'🍔'>) => R } = {}
-  ) {
-    const result$ = source$.pipe(suspensify(projector));
-    observer = jest.fn();
-    result$.subscribe(observer);
+  function setUp<T>(source$: Observable<T>) {
+    const observer = observe(source$.pipe(suspensify()));
+    return {
+      next: observer.next,
+    };
   }
 });
