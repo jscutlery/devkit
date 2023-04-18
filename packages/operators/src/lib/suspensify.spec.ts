@@ -1,10 +1,30 @@
-import { of, Observable, throwError, Subject } from 'rxjs';
-import { suspensify, Suspense } from './suspensify';
 import { describe, expect, it } from '@jest/globals';
+import { Observable, Subject, of, throwError } from 'rxjs';
+import { suspensify } from './suspensify';
 import { createObserver } from './testing/observer';
 
 describe(suspensify.name, () => {
   const { observe } = createObserver();
+
+  describe('strict mode', () => {
+    it.todo('🚧 should narrow pending type');
+
+    it.todo('🚧 should narrow has value type');
+
+    it.todo('🚧 should narrow has error type');
+
+    it.todo('🚧 should emit pending');
+
+    it.todo('🚧 should emit value');
+
+    it.todo('🚧 should emit error');
+
+    it.todo('🚧 should mark finalized on error');
+
+    it.todo('🚧 should mark finalized on complete');
+
+    it.todo('🚧 should reset pending to false when value is emitted');
+  });
 
   it('should emit result with value', () => {
     const { next } = setUp(of('🍔'));
