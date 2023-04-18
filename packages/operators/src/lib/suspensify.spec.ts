@@ -48,8 +48,8 @@ describe(suspensify.name, () => {
       }
     });
 
-    xit('🚧 should emit pending', () => {
-      const { next } = setUp(new Subject<'🍔'>());
+    it('should emit pending', () => {
+      const { next } = setUpStrict(new Subject<'🍔'>());
       expect(next).toBeCalledTimes(1);
       expect(next).toBeCalledWith({
         finalized: false,
@@ -59,13 +59,13 @@ describe(suspensify.name, () => {
       });
     });
 
-    xit('🚧 should emit value', () => {
-      const subject = new Subject<'🍔'>();
-      subject.next('🍔');
+    it('should emit value', () => {
+      /* Unfinished observable. */
+      const { next } = setUpStrict(
+        new Observable((observer) => observer.next('🍔'))
+      );
 
-      const { next } = setUp(subject);
-
-      expect(next).toBeCalledWith({
+      expect(next).lastCalledWith({
         finalized: false,
         hasError: false,
         hasValue: true,
@@ -74,13 +74,13 @@ describe(suspensify.name, () => {
       });
     });
 
-    xit('🚧 should emit once (not pending + value)', () => {
-      const { next } = setUp(of('🍔'));
+    it('should emit once (not pending + value)', () => {
+      const { next } = setUpStrict(of('🍔'));
       expect(next).toBeCalledTimes(1);
     });
 
-    xit('🚧 should emit error', () => {
-      const { next } = setUp(throwError(() => new Error('🐞')));
+    it('should emit error', () => {
+      const { next } = setUpStrict(throwError(() => new Error('🐞')));
       expect(next).toBeCalledTimes(1);
       expect(next).toBeCalledWith({
         finalized: true,
@@ -91,8 +91,8 @@ describe(suspensify.name, () => {
       });
     });
 
-    xit('🚧 should mark finalized on complete with value', () => {
-      const { next } = setUp(of('🍔'));
+    it('should mark finalized on complete with value', () => {
+      const { next } = setUpStrict(of('🍔'));
 
       expect(next).toBeCalledWith({
         finalized: true,
@@ -103,8 +103,8 @@ describe(suspensify.name, () => {
       });
     });
 
-    xit('🚧 should mark finalized on complete without value', () => {
-      const { next } = setUp(EMPTY);
+    it('should mark finalized on complete without value', () => {
+      const { next } = setUpStrict(EMPTY);
 
       expect(next).toBeCalledWith({
         finalized: true,
@@ -114,9 +114,9 @@ describe(suspensify.name, () => {
       });
     });
 
-    xit('🚧 should reset pending to false when value is emitted', () => {
+    it('should reset pending to false when value is emitted', () => {
       const subject = new Subject<'🍔'>();
-      const { next } = setUp(subject);
+      const { next } = setUpStrict(subject);
 
       subject.error(new Error('🐞'));
 
@@ -133,7 +133,7 @@ describe(suspensify.name, () => {
       return await firstValueFrom(of('🍔').pipe(suspensify({ strict: true })));
     }
 
-    function setUp<T>(source$: Observable<T>) {
+    function setUpStrict<T>(source$: Observable<T>) {
       const observer = observe(source$.pipe(suspensify({ strict: true })));
       return {
         next: observer.next,
@@ -141,73 +141,83 @@ describe(suspensify.name, () => {
     }
   });
 
-  it('should emit result with value', () => {
-    const { next } = setUpLax(of('🍔'));
-    expect(next).toBeCalledTimes(1);
-    expect(next).toBeCalledWith({
-      error: undefined,
-      finalized: true,
-      pending: false,
-      value: '🍔',
+  describe('lax mode', () => {
+    it('should emit result with value', () => {
+      const { next } = setUpLax(of('🍔'));
+      expect(next).toBeCalledTimes(1);
+      expect(next).toBeCalledWith({
+        finalized: true,
+        hasError: false,
+        hasValue: true,
+        pending: false,
+        error: undefined,
+        value: '🍔',
+      });
     });
-  });
 
-  it('should emit result with error', () => {
-    const { next } = setUpLax(throwError(() => new Error('🐞')));
-    expect(next).toBeCalledTimes(1);
-    expect(next).toBeCalledWith({
-      error: new Error('🐞'),
-      finalized: true,
-      pending: false,
-      value: undefined,
-    });
-  });
-
-  it('should emit result with pending=true and without value nor error', () => {
-    const { next } = setUpLax(new Subject<'🍔'>());
-    expect(next).toBeCalledTimes(1);
-    expect(next).toBeCalledWith({
-      error: undefined,
-      finalized: false,
-      pending: true,
-      value: undefined,
-    });
-  });
-
-  it('should reset pending to false when value is emitted', () => {
-    const subject = new Subject<'🍔'>();
-    const { next } = setUpLax(subject);
-
-    subject.next('🍔');
-
-    expect(next).toBeCalledTimes(2);
-    expect(next).lastCalledWith({
-      error: undefined,
-      finalized: false,
-      pending: false,
-      value: '🍔',
-    });
-  });
-
-  it('should reset pending to false on error', () => {
-    const subject = new Subject<'🍔'>();
-    const { next } = setUpLax(subject);
-
-    subject.error(new Error('🐞'));
-
-    expect(next).toBeCalledTimes(2);
-    expect(next).lastCalledWith(
-      expect.objectContaining({
+    it('should emit result with error', () => {
+      const { next } = setUpLax(throwError(() => new Error('🐞')));
+      expect(next).toBeCalledTimes(1);
+      expect(next).toBeCalledWith({
+        finalized: true,
+        hasError: true,
+        hasValue: false,
         pending: false,
         error: new Error('🐞'),
-      })
-    );
-  });
+        value: undefined,
+      });
+    });
 
-  function setUpLax<T>(source$: Observable<T>) {
-    const observer = observe(source$.pipe(suspensify()));
-    return {
-      next: observer.next,
-    };
-  }
+    it('should emit result with pending=true and without value nor error', () => {
+      const { next } = setUpLax(new Subject<'🍔'>());
+      expect(next).toBeCalledTimes(1);
+      expect(next).toBeCalledWith({
+        finalized: false,
+        hasError: false,
+        hasValue: false,
+        pending: true,
+        error: undefined,
+        value: undefined,
+      });
+    });
+
+    it('should reset pending to false when value is emitted', () => {
+      const subject = new Subject<'🍔'>();
+      const { next } = setUpLax(subject);
+
+      subject.next('🍔');
+
+      expect(next).toBeCalledTimes(2);
+      expect(next).lastCalledWith({
+        finalized: false,
+        hasError: false,
+        hasValue: true,
+        pending: false,
+        error: undefined,
+        value: '🍔',
+      });
+    });
+
+    it('should reset pending to false on error', () => {
+      const subject = new Subject<'🍔'>();
+      const { next } = setUpLax(subject);
+
+      subject.error(new Error('🐞'));
+
+      expect(next).toBeCalledTimes(2);
+      expect(next).lastCalledWith(
+        expect.objectContaining({
+          pending: false,
+          error: new Error('🐞'),
+        })
+      );
+    });
+
+    function setUpLax<T>(source$: Observable<T>) {
+      const observer = observe(source$.pipe(suspensify()));
+      return {
+        next: observer.next,
+      };
+    }
+  });
 });

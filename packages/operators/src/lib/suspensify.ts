@@ -3,15 +3,19 @@ import {
   Observable,
   OperatorFunction,
   ReplaySubject,
+  iif,
 } from 'rxjs';
-import { debounce, materialize, scan, startWith } from 'rxjs/operators';
+import { debounce, map, materialize, scan, startWith } from 'rxjs/operators';
 
 export interface SuspenseLax<T> {
-  value: undefined | T;
+  finalized: boolean;
+  hasError: boolean;
+  hasValue: boolean;
+  pending: boolean;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: undefined | any;
-  finalized: boolean;
-  pending: boolean;
+  value: undefined | T;
 }
 
 export interface SuspensePending {
@@ -37,10 +41,18 @@ export interface SuspenseWithError {
   error: unknown;
 }
 
+export interface SuspenseEmpty {
+  finalized: true;
+  hasError: false;
+  hasValue: false;
+  pending: false;
+}
+
 export type SuspenseStrict<T> =
   | SuspensePending
   | SuspenseWithValue<T>
-  | SuspenseWithError;
+  | SuspenseWithError
+  | SuspenseEmpty;
 
 /**
  * @todo 3.0.0: Make `Suspense` an alias for `SuspenseStrict`.
@@ -48,9 +60,6 @@ export type SuspenseStrict<T> =
 export type Suspense<T> = SuspenseLax<T>;
 
 export interface SuspensifyOptions {
-  /**
-   * @deprecated 🚧 Work in progress.
-   */
   strict?: boolean;
 }
 
@@ -67,12 +76,27 @@ export function suspensify<T>(options?: {
 export function suspensify<T>(options: {
   strict: true;
 }): OperatorFunction<T, SuspenseStrict<T>>;
-export function suspensify<T>(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  options?: SuspensifyOptions
-): OperatorFunction<T, SuspenseLax<T> | SuspenseStrict<T>> {
+export function suspensify<T>({
+  strict = false,
+}: SuspensifyOptions = {}): OperatorFunction<
+  T,
+  SuspenseLax<T> | SuspenseStrict<T>
+> {
   return (source$: Observable<T>): Observable<Suspense<T>> => {
-    return source$.pipe(_suspensify(), _coalesceFirstEmittedValue());
+    const strictSuspense$ = source$.pipe(
+      _suspensify(),
+      _coalesceFirstEmittedValue()
+    );
+    return strict
+      ? strictSuspense$
+      : (strictSuspense$.pipe(
+          map((strictSuspense) => ({
+            error: undefined,
+            value: undefined,
+            ...strictSuspense,
+          }))
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ) as any);
   };
 }
 
@@ -97,37 +121,49 @@ function _coalesceFirstEmittedValue<T>(): MonoTypeOperatorFunction<T> {
   };
 }
 
-function _suspensify<T>(): OperatorFunction<T, Suspense<T>> {
-  return (source$: Observable<T>): Observable<Suspense<T>> => {
-    const initialState: Suspense<T> = {
-      value: undefined,
-      error: undefined,
+/* Use values as types for better type checking. */
+const TRUE = true as const;
+const FALSE = false as const;
+
+function _suspensify<T>(): OperatorFunction<T, SuspenseStrict<T>> {
+  return (source$: Observable<T>): Observable<SuspenseStrict<T>> => {
+    const initialState = {
       finalized: false,
+      hasError: false,
+      hasValue: false,
       pending: true,
-    };
+    } as SuspenseStrict<T>;
 
     return source$.pipe(
       materialize(),
       scan((state = initialState, notification) => {
-        /* On complete, merge `finalized: true & pending: false`
-         * with the current state. */
-        if (notification.kind === 'C') {
-          return {
-            ...state,
-            finalized: true,
-            pending: false,
-          };
+        switch (notification.kind) {
+          /* Value. */
+          case 'N':
+            return {
+              finalized: FALSE,
+              hasError: FALSE,
+              hasValue: TRUE,
+              value: notification.value,
+              pending: FALSE,
+            };
+          /* Error. */
+          case 'E':
+            return {
+              finalized: TRUE,
+              hasError: TRUE,
+              hasValue: FALSE,
+              pending: FALSE,
+              error: notification.error,
+            };
+          /* Complete. */
+          case 'C':
+            return {
+              ...state,
+              finalized: TRUE,
+              pending: FALSE,
+            };
         }
-
-        /* Mark as finalized on error as complete is only triggered on success. */
-        const finalized = notification.kind === 'E';
-
-        return {
-          value: notification.value,
-          error: notification.error,
-          finalized,
-          pending: false,
-        };
       }, initialState),
       startWith(initialState)
     );
