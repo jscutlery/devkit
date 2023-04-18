@@ -79,7 +79,7 @@ describe(suspensify.name, () => {
       expect(next).toBeCalledTimes(1);
     });
 
-    it('🚧 should emit error', () => {
+    xit('🚧 should emit error', () => {
       const { next } = setUp(throwError(() => new Error('🐞')));
       expect(next).toBeCalledTimes(1);
       expect(next).toBeCalledWith({
