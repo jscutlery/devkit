@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.0.0](https://github.com/jscutlery/devkit/compare/operators-1.1.1...operators-2.0.0) (2023-04-18)
+
+
+### Tests
+
+* **operators:** make suspensify strict by default ([93b8c05](https://github.com/jscutlery/devkit/commit/93b8c0576086ff476e9239ead6175c8832f39c0e))
+
+
+### BREAKING CHANGES
+
+* **operators:** suspensify() without options will return a strict suspense object
+
+
+
 ## [1.1.1](https://github.com/jscutlery/devkit/compare/operators-1.1.0...operators-1.1.1) (2023-04-18)
 
 
