@@ -47,9 +47,12 @@ jobs:
         id: test
         if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
         continue-on-error: true
-        uses: ./.github/actions/test
-        with:
-          codecov_token: ${{ secrets.CODECOV_TOKEN }}
+        run: |
+          yarn nx affected --base=last-release --target=build
+          yarn nx affected --base=last-release --target=lint
+          yarn nx affected --base=last-release --target=test
+          yarn nx affected --base=last-release --target=component-test --parallel=1
+          yarn nx affected --base=last-release --target=e2e --parallel=1
 
       - name: Commit changes
         if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
