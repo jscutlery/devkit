@@ -1,6 +1,7 @@
 name: 'Nx migrate'
 
 on:
+  workflow_dispatch:
   schedule:
     # Every day at 6am UTC
     - cron: '0 6 * * *'
@@ -13,13 +14,15 @@ jobs:
       - uses: actions/checkout@v3
       - name: Setup
         uses: ./.github/actions/setup
+        with:
+          git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
 
       - name: Check if @nrwl/workspace is outdated
         id: nrwl-workspace-outdated
         run: |
           IS_OUTDATED=$(test ! -z "$(npm outdated @nrwl/workspace)" && echo true || echo false)
           echo $IS_OUTDATED
-          echo "::set-output name=outdated::$IS_OUTDATED"
+          echo "outdated=$IS_OUTDATED" >> $GITHUB_OUTPUT
 
       - name: Update @nrwl/workspace
         if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
@@ -29,34 +32,31 @@ jobs:
         if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
         run: yarn install --no-immutable
 
-      - name: Install Playwright Browsers
-        run: yarn playwright install --with-deps
-
       - name: Check if has migrations
         id: nrwl-workspace-has-migrations
         run: |
           HAS_MIGRATIONS=$(test -f migrations.json && echo true || echo false)
           echo $HAS_MIGRATIONS
-          echo "::set-output name=has_migrations::$HAS_MIGRATIONS"
+          echo "has_migrations=$HAS_MIGRATIONS" >> $GITHUB_OUTPUT
 
       - name: Run @nrwl/workspace migrations
         if: steps.nrwl-workspace-has-migrations.outputs.has_migrations == 'true'
         run: yarn nx migrate --run-migrations
 
       - name: Test
+        id: test
         if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
-        run: |
-          yarn nx affected --base=last-release --target=build
-          yarn nx affected --base=last-release --target=lint
-          yarn nx affected --base=last-release --target=test
-          yarn nx affected --base=last-release --target=component-test --parallel=1
-          yarn nx affected --base=last-release --target=e2e --parallel=1
+        continue-on-error: true
+        uses: ./.github/actions/test
+        with:
+          codecov_token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Commit changes
         if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
         run: |
-          git add . 
-          [[ $(git status --porcelain) ]] && git commit -m "build: 📦 update nrwl workspace" || echo "nothing to commit"
+          LAST_VERSION=$(npm view @nrwl/workspace version)
+          git add .
+          [[ $(git status --porcelain) ]] && git commit -m "build: 📦 update nrwl workspace to ${LAST_VERSION}" || echo "nothing to commit"
 
       - name: Remove migrations.json & commit
         if: steps.nrwl-workspace-has-migrations.outputs.has_migrations == 'true'
@@ -65,7 +65,7 @@ jobs:
           git commit -m "build: 📦 remove migrations.json"
 
       - name: Push changes
-        if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
+        if: steps.nrwl-workspace-outdated.outputs.outdated == 'true' && steps.test.outcome == 'success'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -73,16 +73,13 @@ jobs:
           force: true
           tags: true
 
-      # Trigger release manually because automated commits
-      # don't trigger "push" workflows.
-      #
-      # Cf. https://docs.github.com/en/actions/security-guides/automatic-token-authentication#using-the-github_token-in-a-workflow
-      #
-      # "When you use the repository's GITHUB_TOKEN to perform tasks on behalf of the GitHub Actions app,
-      # events triggered by the GITHUB_TOKEN will not create a new workflow run.
-      # This prevents you from accidentally creating recursive workflow runs.""
-      - name: Release
-        uses: ./.github/actions/release
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          npm_token: ${{ secrets.NPM_TOKEN }}
+      - name: Create PR
+        if: steps.nrwl-workspace-outdated.outputs.outdated == 'true' && steps.test.outcome != 'success'
+        run: |
+          LAST_VERSION=$(npm view @nrwl/workspace version)
+          BRANCH="update-nrwl-workspace-${LAST_VERSION}"
+          git checkout -b ${BRANCH}
+          git push -f --set-upstream origin ${BRANCH}
+          gh pr view ${BRANCH} || gh pr create -t "Update @nrwl/workspace to ${BRANCH}" -b "Update @nrwl/workspace dependencies to ${LAST_VERSION}."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_BOT_TOKEN }}
