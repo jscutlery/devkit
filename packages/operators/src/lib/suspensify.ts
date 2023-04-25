@@ -64,10 +64,10 @@ export interface SuspensifyOptions {
  *
  * @returns Observable<SuspenseLax<T> | SuspenseStrict<T>>
  */
-export function suspensify<T>(options?: {
+export function suspensify<T>(options: {
   strict: false;
 }): OperatorFunction<T, SuspenseLax<T>>;
-export function suspensify<T>(options: {
+export function suspensify<T>(options?: {
   strict: true;
 }): OperatorFunction<T, Suspense<T>>;
 export function suspensify<T>({

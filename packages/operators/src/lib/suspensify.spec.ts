@@ -130,11 +130,11 @@ describe(suspensify.name, () => {
     });
 
     async function getFirstSuspenseValue() {
-      return await firstValueFrom(of('🍔').pipe(suspensify({ strict: true })));
+      return await firstValueFrom(of('🍔').pipe(suspensify()));
     }
 
     function setUpStrict<T>(source$: Observable<T>) {
-      const observer = observe(source$.pipe(suspensify({ strict: true })));
+      const observer = observe(source$.pipe(suspensify()));
       return {
         next: observer.next,
       };
@@ -214,7 +214,7 @@ describe(suspensify.name, () => {
     });
 
     function setUpLax<T>(source$: Observable<T>) {
-      const observer = observe(source$.pipe(suspensify()));
+      const observer = observe(source$.pipe(suspensify({ strict: false })));
       return {
         next: observer.next,
       };
