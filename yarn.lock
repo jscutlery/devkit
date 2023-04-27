@@ -3430,16 +3430,18 @@ __metadata:
   linkType: soft
 
 "@jscutlery/semver@npm:^2.21.4":
-  version: 2.27.2
-  resolution: "@jscutlery/semver@npm:2.27.2"
+  version: 2.30.1
+  resolution: "@jscutlery/semver@npm:2.30.1"
   dependencies:
+    chalk: 4.1.2
+    conventional-changelog: ^3.1.25
+    conventional-recommended-bump: ^6.1.0
     detect-indent: 6.1.0
     inquirer: 8.2.5
-    rxjs: 7.5.7
-    standard-version: 9.5.0
+    rxjs: 7.8.0
   peerDependencies:
-    "@nrwl/devkit": ^14.0.0
-  checksum: 9ec09da5053dc35397f671d875c0723e15c376a5c0a023e26da3333d565b2fd8263832dbca4672ca959f06ed094d9025e51d3f9e0c91ba84ccb16a1520505f6d
+    "@nrwl/devkit": ^15.0.0
+  checksum: 8e4219c49214746b9a75d4a0c96cc8d2bfa1f375bd26c849fde3601416b3c1a67f86f92f4755486697ffbb0e616b6d12f11f8b90410910a5732b2f396e80facf
   languageName: node
   linkType: hard
 
@@ -9097,7 +9099,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^2.0.0, chalk@npm:^2.4.1, chalk@npm:^2.4.2":
+"chalk@npm:4.1.2, chalk@npm:^4.0.0, chalk@npm:^4.0.2, chalk@npm:^4.1.0, chalk@npm:^4.1.1, chalk@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "chalk@npm:4.1.2"
+  dependencies:
+    ansi-styles: ^4.1.0
+    supports-color: ^7.1.0
+  checksum: fe75c9d5c76a7a98d45495b91b2172fa3b7a09e0cc9370e5c8feb1c567b85c4288e2b3fded7cfdd7359ac28d6b3844feb8b82b8686842e93d23c827c417e83fc
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^2.0.0, chalk@npm:^2.4.1":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
   dependencies:
@@ -9105,16 +9117,6 @@ __metadata:
     escape-string-regexp: ^1.0.5
     supports-color: ^5.3.0
   checksum: ec3661d38fe77f681200f878edbd9448821924e0f93a9cefc0e26a33b145f1027a2084bf19967160d11e1f03bfe4eaffcabf5493b89098b2782c3fe0b03d80c2
-  languageName: node
-  linkType: hard
-
-"chalk@npm:^4.0.0, chalk@npm:^4.0.2, chalk@npm:^4.1.0, chalk@npm:^4.1.1, chalk@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "chalk@npm:4.1.2"
-  dependencies:
-    ansi-styles: ^4.1.0
-    supports-color: ^7.1.0
-  checksum: fe75c9d5c76a7a98d45495b91b2172fa3b7a09e0cc9370e5c8feb1c567b85c4288e2b3fded7cfdd7359ac28d6b3844feb8b82b8686842e93d23c827c417e83fc
   languageName: node
   linkType: hard
 
@@ -9755,14 +9757,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"conventional-changelog-config-spec@npm:2.1.0":
-  version: 2.1.0
-  resolution: "conventional-changelog-config-spec@npm:2.1.0"
-  checksum: 1c3bec23e3558e25ba0f2884ef1c1266afa70084f156b90045dde654504af3d8f3e88ad1c0dd6c1aaf2f394069d6e8b39da8cab319bc2d8ca0c80e8042a8a33c
-  languageName: node
-  linkType: hard
-
-"conventional-changelog-conventionalcommits@npm:4.6.3, conventional-changelog-conventionalcommits@npm:^4.5.0":
+"conventional-changelog-conventionalcommits@npm:^4.5.0":
   version: 4.6.3
   resolution: "conventional-changelog-conventionalcommits@npm:4.6.3"
   dependencies:
@@ -9867,7 +9862,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"conventional-changelog@npm:3.1.25":
+"conventional-changelog@npm:^3.1.25":
   version: 3.1.25
   resolution: "conventional-changelog@npm:3.1.25"
   dependencies:
@@ -9912,7 +9907,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"conventional-recommended-bump@npm:6.1.0":
+"conventional-recommended-bump@npm:^6.1.0":
   version: 6.1.0
   resolution: "conventional-recommended-bump@npm:6.1.0"
   dependencies:
@@ -10879,14 +10874,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"detect-indent@npm:6.1.0, detect-indent@npm:^6.0.0":
+"detect-indent@npm:6.1.0":
   version: 6.1.0
   resolution: "detect-indent@npm:6.1.0"
   checksum: ab953a73c72dbd4e8fc68e4ed4bfd92c97eb6c43734af3900add963fd3a9316f3bc0578b018b24198d4c31a358571eff5f0656e81a1f3b9ad5c547d58b2d093d
   languageName: node
   linkType: hard
 
-"detect-newline@npm:^3.0.0, detect-newline@npm:^3.1.0":
+"detect-newline@npm:^3.0.0":
   version: 3.1.0
   resolution: "detect-newline@npm:3.1.0"
   checksum: ae6cd429c41ad01b164c59ea36f264a2c479598e61cba7c99da24175a7ab80ddf066420f2bec9a1c57a6bead411b4655ff15ad7d281c000a89791f48cbe939e7
@@ -11111,16 +11106,6 @@ __metadata:
   version: 10.0.0
   resolution: "dotenv@npm:10.0.0"
   checksum: f412c5fe8c24fbe313d302d2500e247ba8a1946492db405a4de4d30dd0eb186a88a43f13c958c5a7de303938949c4231c56994f97d05c4bc1f22478d631b4005
-  languageName: node
-  linkType: hard
-
-"dotgitignore@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "dotgitignore@npm:2.1.0"
-  dependencies:
-    find-up: ^3.0.0
-    minimatch: ^3.0.4
-  checksum: 67589446765ddc25539f414b7649442a649f047343030342f309ba69172beb916b9e54feb7d552db422111265f9e93344f31b5697e8e6c81ffc13d33c0d910a0
   languageName: node
   linkType: hard
 
@@ -12343,7 +12328,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"figures@npm:3.2.0, figures@npm:^3.0.0, figures@npm:^3.1.0, figures@npm:^3.2.0":
+"figures@npm:3.2.0, figures@npm:^3.0.0, figures@npm:^3.2.0":
   version: 3.2.0
   resolution: "figures@npm:3.2.0"
   dependencies:
@@ -13051,7 +13036,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"git-semver-tags@npm:^4.0.0, git-semver-tags@npm:^4.1.1":
+"git-semver-tags@npm:^4.1.1":
   version: 4.1.1
   resolution: "git-semver-tags@npm:4.1.1"
   dependencies:
@@ -20653,7 +20638,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:7.5.7, rxjs@npm:^7.5.1, rxjs@npm:^7.5.5, rxjs@npm:^7.5.6, rxjs@npm:^7.5.7, rxjs@npm:~7.5.0":
+"rxjs@npm:7.8.0":
+  version: 7.8.0
+  resolution: "rxjs@npm:7.8.0"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: 61b4d4fd323c1043d8d6ceb91f24183b28bcf5def4f01ca111511d5c6b66755bc5578587fe714ef5d67cf4c9f2e26f4490d4e1d8cabf9bd5967687835e9866a2
+  languageName: node
+  linkType: hard
+
+"rxjs@npm:^7.5.1, rxjs@npm:^7.5.5, rxjs@npm:^7.5.6, rxjs@npm:^7.5.7, rxjs@npm:~7.5.0":
   version: 7.5.7
   resolution: "rxjs@npm:7.5.7"
   dependencies:
@@ -21581,30 +21575,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"standard-version@npm:9.5.0":
-  version: 9.5.0
-  resolution: "standard-version@npm:9.5.0"
-  dependencies:
-    chalk: ^2.4.2
-    conventional-changelog: 3.1.25
-    conventional-changelog-config-spec: 2.1.0
-    conventional-changelog-conventionalcommits: 4.6.3
-    conventional-recommended-bump: 6.1.0
-    detect-indent: ^6.0.0
-    detect-newline: ^3.1.0
-    dotgitignore: ^2.1.0
-    figures: ^3.1.0
-    find-up: ^5.0.0
-    git-semver-tags: ^4.0.0
-    semver: ^7.1.1
-    stringify-package: ^1.0.1
-    yargs: ^16.0.0
-  bin:
-    standard-version: bin/cli.js
-  checksum: 55003206f7eca18ee9962566e5222d3930a1fa3c4692615d64e88f08873b9685837d669dc58361831bd3f211b6687c1681ad6a1749edf346b2db3e4564b4933c
-  languageName: node
-  linkType: hard
-
 "state-toggle@npm:^1.0.0":
   version: 1.0.3
   resolution: "state-toggle@npm:1.0.3"
@@ -21786,13 +21756,6 @@ __metadata:
   dependencies:
     safe-buffer: ~5.1.0
   checksum: 9ab7e56f9d60a28f2be697419917c50cac19f3e8e6c28ef26ed5f4852289fe0de5d6997d29becf59028556f2c62983790c1d9ba1e2a3cc401768ca12d5183a5b
-  languageName: node
-  linkType: hard
-
-"stringify-package@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "stringify-package@npm:1.0.1"
-  checksum: 462036085a0cf7ae073d9b88a2bbf7efb3792e3df3e1fd436851f64196eb0234c8f8ffac436357e355687d6030b7af42e98af9515929e41a6a5c8653aa62a5aa
   languageName: node
   linkType: hard
 
@@ -24143,7 +24106,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^16.0.0, yargs@npm:^16.2.0":
+"yargs@npm:^16.2.0":
   version: 16.2.0
   resolution: "yargs@npm:16.2.0"
   dependencies:
