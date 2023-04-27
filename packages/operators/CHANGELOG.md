@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.0.1](https://github.com/jscutlery/devkit/compare/operators-2.0.0...operators-2.0.1) (2023-04-27)
+
+
+### Bug Fixes
+
+* **operators:** 🐞 fix suspensify type to be strict by default too ([c5d424c](https://github.com/jscutlery/devkit/commit/c5d424cea4faee0df5ab112851565a36fb575ebe))
+
+
+
 # [2.0.0](https://github.com/jscutlery/devkit/compare/operators-1.1.1...operators-2.0.0) (2023-04-18)
 
 
