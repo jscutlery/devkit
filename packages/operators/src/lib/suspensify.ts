@@ -1,6 +1,7 @@
 import {
   MonoTypeOperatorFunction,
   Observable,
+  ObservableNotification,
   OperatorFunction,
   ReplaySubject,
 } from 'rxjs';
@@ -91,6 +92,19 @@ export function suspensify<T>({
   };
 }
 
+/**
+ * This is the initial state of the Suspense.
+ * It is exposed for convenience and edge cases where the initial state must be set initially.
+ * e.g. when using {@link suspensify} on inner observables.
+ * @example toSignal(source$.pipe(switchMap(() => fetchData().pipe(suspensify()))), {initialValue: pending});
+ */
+export const pending: SuspensePending = {
+  finalized: false,
+  hasError: false,
+  hasValue: false,
+  pending: true,
+};
+
 function _coalesceFirstEmittedValue<T>(): MonoTypeOperatorFunction<T> {
   return (source$: Observable<T>): Observable<T> => {
     return new Observable<T>((observer) => {
@@ -118,16 +132,9 @@ const FALSE = false as const;
 
 function _suspensify<T>(): OperatorFunction<T, Suspense<T>> {
   return (source$: Observable<T>): Observable<Suspense<T>> => {
-    const initialState = {
-      finalized: false,
-      hasError: false,
-      hasValue: false,
-      pending: true,
-    } as Suspense<T>;
-
     return source$.pipe(
       materialize(),
-      scan((state = initialState, notification) => {
+      scan<ObservableNotification<T>, Suspense<T>>((state, notification) => {
         switch (notification.kind) {
           /* Value. */
           case 'N':
@@ -155,8 +162,8 @@ function _suspensify<T>(): OperatorFunction<T, Suspense<T>> {
               pending: FALSE,
             };
         }
-      }, initialState),
-      startWith(initialState)
+      }, pending),
+      startWith(pending)
     );
   };
 }
