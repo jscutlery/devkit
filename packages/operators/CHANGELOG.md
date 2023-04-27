@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.1.0](https://github.com/jscutlery/devkit/compare/operators-2.0.1...operators-2.1.0) (2023-04-27)
+
+
+### Features
+
+* **operators:** ✨ expose pending state constant ([caaea8e](https://github.com/jscutlery/devkit/commit/caaea8e3144aca71ecf75830777bcadd2ba23c37))
+
+
+
 ## [2.0.1](https://github.com/jscutlery/devkit/compare/operators-2.0.0...operators-2.0.1) (2023-04-27)
 
 
