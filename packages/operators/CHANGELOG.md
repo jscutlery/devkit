@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.1.1](https://github.com/jscutlery/devkit/compare/operators-2.1.0...operators-2.1.1) (2023-04-28)
+
+
+### Bug Fixes
+
+* **operators:** 🐞 export missing types + pending const ([96eed66](https://github.com/jscutlery/devkit/commit/96eed664a96e86e9e21e107b89d220a2f0addd9e))
+
+
+
 # [2.1.0](https://github.com/jscutlery/devkit/compare/operators-2.0.1...operators-2.1.0) (2023-04-27)
 
 
