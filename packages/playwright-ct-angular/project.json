@@ -5,7 +5,7 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/web:rollup",
+      "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "project": "packages/playwright-ct-angular/package.json",
@@ -29,35 +29,6 @@
           },
           {
             "glob": "README.md",
-            "input": "packages/playwright-ct-angular",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "build-rollup": {
-      "executor": "@nx/web:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "project": "packages/playwright-ct-angular/package.json",
-        "outputPath": "dist/packages/playwright-ct-angular",
-        "entryFile": "packages/playwright-ct-angular/src/index.ts",
-        "tsConfig": "packages/playwright-ct-angular/tsconfig.lib.json",
-        "main": "packages/playwright-ct-angular/src/index.ts",
-        "format": ["cjs", "esm"],
-        "assets": [
-          {
-            "glob": "register-source.mjs",
-            "input": "packages/playwright-ct-angular/src/lib",
-            "output": "."
-          },
-          {
-            "glob": "LICENSE",
-            "input": ".",
-            "output": "."
-          },
-          {
-            "glob": "*.md",
             "input": "packages/playwright-ct-angular",
             "output": "."
           }
