@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.3](https://github.com/jscutlery/devkit/compare/cypress-harness-0.4.2...cypress-harness-0.4.3) (2023-05-22)
+
+
+### Bug Fixes
+
+* **cypress-harness:** fix cypress harness chaining issue with Cypress 12 ([06e6c31](https://github.com/jscutlery/devkit/commit/06e6c31111471604609b6e29fce7f9f39eaf3986)), closes [/docs.cypress.io/guides/references/changelog#12-0-0](https://github.com//docs.cypress.io/guides/references/changelog/issues/12-0-0) [#232](https://github.com/jscutlery/devkit/issues/232)
+
+
+
 ## [0.4.2](https://github.com/jscutlery/devkit/compare/cypress-harness-0.4.1...cypress-harness-0.4.2) (2022-12-03)
 
 
