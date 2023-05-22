@@ -1,10 +1,7 @@
-const { readFileSync } = require('fs');
-const { normalize, resolve } = require('path');
+const { readdirSync } = require('fs');
+const { join } = require('path');
 
-const workspaceJson = JSON.parse(
-  readFileSync(normalize(resolve(__dirname, 'workspace.json')))
-);
-const projects = Object.keys(workspaceJson.projects);
+const projects = readdirSync(join(__dirname, 'packages'));
 
 module.exports = {
   extends: ['@commitlint/config-angular'],

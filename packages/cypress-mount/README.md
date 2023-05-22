@@ -33,7 +33,7 @@ yarn create nx-workspace # or npm init nx-workspace
 ... otherwise, you can migrate to Nx using:
 
 ```shell
-ng add @nrwl/workspace
+ng add @nx/workspace
 ```
 
 ### 1. Install

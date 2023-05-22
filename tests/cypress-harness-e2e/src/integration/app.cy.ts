@@ -12,6 +12,6 @@ export class TitleHarness extends ComponentHarness {
 describe('cypress-harness-sandbox', () => {
   it('should display welcome message', () => {
     cy.visit('/');
-    getHarness(TitleHarness).invoke('text').should('equal', `🚀 Let's test!`);
+    getHarness(TitleHarness).text().should('equal', `🚀 Let's test!`);
   });
 });

@@ -73,7 +73,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "apps/game-of-life/src/**/*.ts",
@@ -82,7 +82,7 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/game-of-life"],
       "options": {
         "jestConfig": "apps/game-of-life/jest.config.ts",

@@ -5,7 +5,7 @@
   "npmScope": "jscutlery",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "@nx/workspace/tasks-runners/default",
       "options": {
         "cacheableOperations": ["build", "lint", "test", "e2e"],
         "parallel": 3
@@ -17,18 +17,18 @@
     "libsDir": "packages"
   },
   "generators": {
-    "@nrwl/angular:application": {
+    "@nx/angular:application": {
       "style": "css",
       "linter": "eslint",
       "unitTestRunner": "jest",
       "e2eTestRunner": "cypress"
     },
-    "@nrwl/angular:library": {
+    "@nx/angular:library": {
       "linter": "eslint",
       "unitTestRunner": "jest",
       "style": "css"
     },
-    "@nrwl/angular:component": {
+    "@nx/angular:component": {
       "style": "css"
     }
   },
