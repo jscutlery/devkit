@@ -5,10 +5,9 @@ import { getRootHarness } from '@jscutlery/cypress-harness';
 @Component({
   standalone: true,
   selector: 'jc-tested',
-  template: '<input>'
+  template: '<input>',
 })
-export class TestedComponent {
-}
+export class TestedComponent {}
 
 export class TestedHarness extends ComponentHarness {
   static hostSelector = 'jc-tested';
@@ -27,7 +26,7 @@ export class TestedHarness extends ComponentHarness {
 describe(getRootHarness.name, () => {
   it('should setInputValue', () => {
     cy.mount(TestedComponent);
-    getRootHarness(TestedHarness).invoke('setValue', 'test');
-    getRootHarness(TestedHarness).invoke('getValue').should('equal', 'test');
+    getRootHarness(TestedHarness).setValue('test');
+    getRootHarness(TestedHarness).getValue().should('equal', 'test');
   });
 });

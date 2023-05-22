@@ -18,8 +18,10 @@ export class CypressHarnessEnvironment extends HarnessEnvironment<Element> {
     this._documentRoot = documentRoot;
   }
 
-  forceStabilize(): Promise<void> {
-    throw new Error('Method not implemented.');
+  async forceStabilize(): Promise<void> {
+    console.warn(
+      '`HarnessEnvironment#forceStabilize()` was called but it is a noop in Cypress environment.'
+    );
   }
 
   waitForTasksOutsideAngular(): Promise<void> {
