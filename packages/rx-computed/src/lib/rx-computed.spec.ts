@@ -1,15 +1,49 @@
+import { Component, Injector, runInInjectionContext } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { Observable, of } from 'rxjs';
 import { rxComputed } from './rx-computed';
 
 describe(rxComputed.name, () => {
 
   it.todo('should return initial value');
 
-  it.todo('should return emitted sync value');
+  it('should return emitted sync value', () => {
+    const { rxComputed, flushEffects } = setUp();
+
+    const signal = rxComputed(() => of(42));
+
+    flushEffects();
+
+    expect(signal()).toBe(42);
+  });
 
   it.todo('should return emitted async value');
 
   it.todo('should throw error');
 
   it.todo('should throw unsubscribe when dependency changes');
+
+  function setUp() {
+    const injector = TestBed.inject(Injector);
+
+    @Component({
+      template: '',
+      standalone: true,
+    })
+    class MyComponent {
+    }
+
+    const fixture = TestBed.createComponent(MyComponent);
+
+    return {
+      /* Inspiration: https://github.com/angular/angular/blob/06b498f67f2ad16bb465ef378bdb16da84e41a1c/packages/core/rxjs-interop/test/to_observable_spec.ts#LL30C25-L30C25 */
+      flushEffects() {
+        fixture.detectChanges();
+      },
+      rxComputed<T>(fn: () => Observable<T>) {
+        return runInInjectionContext(injector, () => rxComputed(fn));
+      }
+    };
+  }
 
 });
