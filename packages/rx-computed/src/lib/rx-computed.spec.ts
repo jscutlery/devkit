@@ -1,11 +1,21 @@
 import { Component, Injector, runInInjectionContext } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Observable, of } from 'rxjs';
+import { NEVER, Observable, of } from 'rxjs';
 import { rxComputed } from './rx-computed';
 
 describe(rxComputed.name, () => {
 
-  it.todo('should return initial value');
+  it('should return undefined as default initial value', () => {
+    const { rxComputed, flushEffects } = setUp();
+
+    const signal = rxComputed(() => NEVER);
+
+    flushEffects();
+
+    expect(signal()).toBeUndefined();
+  });
+
+  it.todo('should return custom initial value')
 
   it('should return emitted sync value', () => {
     const { rxComputed, flushEffects } = setUp();
