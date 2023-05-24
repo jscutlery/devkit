@@ -1,0 +1,50 @@
+{
+  "name": "rx-computed",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/rx-computed/src",
+  "prefix": "jscutlery",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/rx-computed/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/rx-computed/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/rx-computed/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/rx-computed/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/rx-computed/**/*.ts",
+          "packages/rx-computed/**/*.html"
+        ]
+      }
+    }
+  }
+}
