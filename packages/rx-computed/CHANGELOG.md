@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.1](https://github.com/jscutlery/devkit/compare/rx-computed-0.2.0...rx-computed-0.2.1) (2023-05-25)
+
+
+### Bug Fixes
+
+* **rx-computed:** adjust peer dependencies ([30277ca](https://github.com/jscutlery/devkit/commit/30277ca6e14d68c19497fa280e95ed6a262d562b))
+
+
+
 # [0.2.0](https://github.com/jscutlery/devkit/compare/rx-computed-0.1.1...rx-computed-0.2.0) (2023-05-25)
 
 
