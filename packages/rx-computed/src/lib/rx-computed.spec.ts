@@ -13,7 +13,13 @@ describe(rxComputed.name, () => {
     expect(signal()).toBeUndefined();
   });
 
-  it.todo('should return custom initial value')
+  it('should return custom initial value', () => {
+    const { rxComputed } = setUp();
+
+    const signal = rxComputed(() => NEVER, { initialValue: null });
+
+    expect(signal()).toBeNull()
+  })
 
   it('should return emitted sync value', () => {
     const { rxComputed } = setUp();
