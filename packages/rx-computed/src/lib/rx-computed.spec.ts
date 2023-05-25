@@ -41,8 +41,8 @@ describe(rxComputed.name, () => {
     const fixture = TestBed.createComponent(MyComponent);
 
     return {
-      rxComputed<T>(fn: () => Observable<T>) {
-        const signal = runInInjectionContext(injector, () => rxComputed(fn));
+      rxComputed<T>(...args: Parameters<typeof rxComputed<T>>) {
+        const signal = runInInjectionContext(injector, () => rxComputed(...args));
 
         /* Inspiration: https://github.com/angular/angular/blob/06b498f67f2ad16bb465ef378bdb16da84e41a1c/packages/core/rxjs-interop/test/to_observable_spec.ts#LL30C25-L30C25 */
         fixture.detectChanges();
