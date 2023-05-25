@@ -45,6 +45,15 @@
           "packages/rx-computed/**/*.html"
         ]
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "postTargets": ["rx-computed:build", "rx-computed:npm", "rx-computed:github"],
+        "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
+        "noVerify": true,
+        "push": true
+      }
     }
   }
 }
