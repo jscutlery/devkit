@@ -1,0 +1,1 @@
+export { rxComputed } from './lib/rx-computed';
