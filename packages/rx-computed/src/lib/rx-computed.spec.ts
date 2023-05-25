@@ -1,6 +1,6 @@
 import { Component, Injector, runInInjectionContext } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { NEVER, Observable, of } from 'rxjs';
+import { NEVER, Observable, of, Subject } from 'rxjs';
 import { rxComputed } from './rx-computed';
 
 describe(rxComputed.name, () => {
@@ -29,7 +29,17 @@ describe(rxComputed.name, () => {
     expect(signal()).toBe(42);
   });
 
-  it.todo('should return emitted async value');
+  it('should return emitted async value', () => {
+    const { rxComputed } = setUp();
+
+    const subject = new Subject<number>();
+
+    const signal = rxComputed(() => subject);
+
+    subject.next(42);
+
+    expect(signal()).toBe(42);
+  });
 
   it.todo('should throw error when observable throws error');
 
