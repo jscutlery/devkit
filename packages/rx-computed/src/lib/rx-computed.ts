@@ -9,10 +9,11 @@ export function rxComputed<T, INITIAL_VALUE = T | null | undefined>(
   const sig = signal<Suspense<T | INITIAL_VALUE>>(pending);
 
   effect(
-    () => {
-      fn()
+    (onCleanup) => {
+      const sub = fn()
         .pipe(suspensify())
         .subscribe((value) => sig.set(value));
+      onCleanup(() => sub.unsubscribe());
     },
     { allowSignalWrites: true }
   );

@@ -1,4 +1,4 @@
-import { Component, Injector, runInInjectionContext } from '@angular/core';
+import { Component, Injector, runInInjectionContext, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { NEVER, Observable, of, Subject, throwError } from 'rxjs';
 import { rxComputed } from './rx-computed';
@@ -18,8 +18,8 @@ describe(rxComputed.name, () => {
 
     const signal = rxComputed(() => NEVER, { initialValue: null });
 
-    expect(signal()).toBeNull()
-  })
+    expect(signal()).toBeNull();
+  });
 
   it('should return emitted sync value', () => {
     const { rxComputed } = setUp();
@@ -49,26 +49,47 @@ describe(rxComputed.name, () => {
     expect(() => signal()).toThrow('💥 Oups!');
   });
 
-  it.todo('should unsubscribe when dependency changes');
+  it('should unsubscribe when dependency changes', () => {
+    const { rxComputed, flushEffects } = setUp();
+    const unsubscribe = jest.fn();
+
+    const value = signal(0);
+
+    rxComputed(() =>
+      new Observable((observer) => {
+        observer.next(value() * 2);
+        return unsubscribe;
+      }));
+
+    /* Update dependency and flush effects... */
+    value.set(1);
+    flushEffects();
+
+    /* ... and make sure that observable tear down is called. */
+    expect(unsubscribe).toBeCalled();
+  });
 
   function setUp() {
     const injector = TestBed.inject(Injector);
 
     @Component({
       template: '',
-      standalone: true,
+      standalone: true
     })
     class MyComponent {
     }
 
     const fixture = TestBed.createComponent(MyComponent);
 
+    /* Inspiration: https://github.com/angular/angular/blob/06b498f67f2ad16bb465ef378bdb16da84e41a1c/packages/core/rxjs-interop/test/to_observable_spec.ts#LL30C25-L30C25 */
+    const flushEffects = () => fixture.detectChanges();
+
     return {
+      flushEffects,
       rxComputed<T>(...args: Parameters<typeof rxComputed<T>>) {
         const signal = runInInjectionContext(injector, () => rxComputed(...args));
 
-        /* Inspiration: https://github.com/angular/angular/blob/06b498f67f2ad16bb465ef378bdb16da84e41a1c/packages/core/rxjs-interop/test/to_observable_spec.ts#LL30C25-L30C25 */
-        fixture.detectChanges();
+        flushEffects();
 
         return signal;
       }
