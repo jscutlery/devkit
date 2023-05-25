@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.2.0](https://github.com/jscutlery/devkit/compare/rx-computed-0.1.1...rx-computed-0.2.0) (2023-05-25)
+
+
+### Features
+
+* **rx-computed:** allow rxComputed to accept a custom Injector ([6f3228a](https://github.com/jscutlery/devkit/commit/6f3228a0413070c3f4fd0178420b204a2e825f04))
+
+
+
 ## [0.1.1](https://github.com/jscutlery/devkit/compare/rx-computed-0.1.0...rx-computed-0.1.1) (2023-05-25)
 
 
