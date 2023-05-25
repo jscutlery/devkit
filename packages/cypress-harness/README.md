@@ -43,8 +43,8 @@ import { getPreprocessorConfig } from '@jscutlery/cypress-harness/preprocessor-c
 export default defineConfig({
   e2e: {
     // ... other existing settings if any (like nxE2EPreset() if using Nx).
-    ...getPreprocessorConfig()
-  }
+    ...getPreprocessorConfig(),
+  },
 });
 ```
 
@@ -74,7 +74,7 @@ describe('datepicker', () => {
     cy.visit('/'); // or cy.mount(MyComponent); for component testing.
     datepicker.setValue('1/1/2010');
     datepicker.openCalendar();
-    datepicker.getCalendar().invoke('next'); // next method is already used
+    datepicker.getCalendar().then((harness) => harness.next()); // next method is already used
     datepicker.getCalendar().selectCell({ text: '10' });
     datepicker.getValue().should('equal', '2/10/2010');
     calendars.should('be.empty');
