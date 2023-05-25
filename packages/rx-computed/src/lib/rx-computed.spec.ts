@@ -31,8 +31,9 @@ describe(rxComputed.name, () => {
 
   it.todo('should return emitted async value');
 
+  it.todo('should throw error when observable throws error');
 
-  it.todo('should throw unsubscribe when dependency changes');
+  it.todo('should unsubscribe when dependency changes');
 
   function setUp() {
     const injector = TestBed.inject(Injector);
