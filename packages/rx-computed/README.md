@@ -13,6 +13,7 @@ npm install @jscutlery/rx-computed
 # `rxComputed`
 
 ## Usage
+
 ```typescript
 import { rxComputed } from '@jscutlery/rx-computed';
 
@@ -32,9 +33,25 @@ class MyCmp {
 }
 ```
 
+### Custom Injector
+
+{::comment}TODO: Link Injection Context documentation when it is live. https://github.com/angular/angular/pull/49782 {:/comment}
+`rxComputed` utilizes `effect()` underneath so it is **required** to be invoked within an Injection Context. However, a custom `Injector`
+can be passed in and `rxComputed` will invoke within that Injector context.
+
+```ts
+class MyCmp {
+  injector = inject(Injector);
+
+  ngOnInit() {
+    const value = rxComputed(() => of(16), { injector: this.injector });
+  }
+}
+```
+
 ## Motivation
 
-Synchronously computed signals in Angular are relatively straight forward.  However, when dealing with an asynchronous source of data like an `Observable`, there is no primitive to derive a signal from it.
+Synchronously computed signals in Angular are relatively straight forward. However, when dealing with an asynchronous source of data like an `Observable`, there is no primitive to derive a signal from it.
 
 There are two common ways of dealing with this:
 

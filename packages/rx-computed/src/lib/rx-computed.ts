@@ -1,11 +1,25 @@
-import { computed, effect, signal, Signal } from '@angular/core';
+import {
+  assertInInjectionContext,
+  computed,
+  effect,
+  inject,
+  Injector,
+  signal,
+  Signal,
+} from '@angular/core';
 import { pending, Suspense, suspensify } from '@jscutlery/operators';
 import { Observable } from 'rxjs';
 
 export function rxComputed<T, INITIAL_VALUE = T | null | undefined>(
   fn: () => Observable<T>,
-  { initialValue }: { initialValue?: INITIAL_VALUE } = {}
+  {
+    initialValue,
+    injector,
+  }: { initialValue?: INITIAL_VALUE; injector?: Injector } = {}
 ): Signal<T | INITIAL_VALUE> {
+  if (!injector) assertInInjectionContext(rxComputed);
+  injector ??= inject(Injector);
+
   const sig = signal<Suspense<T | INITIAL_VALUE>>(pending);
 
   effect(
@@ -15,7 +29,7 @@ export function rxComputed<T, INITIAL_VALUE = T | null | undefined>(
         .subscribe((value) => sig.set(value));
       onCleanup(() => sub.unsubscribe());
     },
-    { allowSignalWrites: true }
+    { allowSignalWrites: true, injector }
   );
 
   return computed(() => {

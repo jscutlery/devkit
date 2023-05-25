@@ -1,10 +1,15 @@
-import { Component, Injector, runInInjectionContext, signal } from '@angular/core';
+import {
+  Component,
+  EnvironmentInjector,
+  Injector,
+  runInInjectionContext,
+  signal,
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { NEVER, Observable, of, Subject, throwError } from 'rxjs';
 import { rxComputed } from './rx-computed';
 
 describe(rxComputed.name, () => {
-
   it('should return undefined as default initial value', () => {
     const { rxComputed } = setUp();
 
@@ -55,11 +60,13 @@ describe(rxComputed.name, () => {
 
     const value = signal(0);
 
-    rxComputed(() =>
-      new Observable((observer) => {
-        observer.next(value() * 2);
-        return unsubscribe;
-      }));
+    rxComputed(
+      () =>
+        new Observable((observer) => {
+          observer.next(value() * 2);
+          return unsubscribe;
+        })
+    );
 
     /* Update dependency and flush effects... */
     value.set(1);
@@ -69,15 +76,34 @@ describe(rxComputed.name, () => {
     expect(unsubscribe).toBeCalled();
   });
 
+  describe('injector', () => {
+    it('should throw when invoked without injector', () => {
+      const { rxComputedNoInjector } = setUp();
+      expect(() => rxComputedNoInjector(() => NEVER)).toThrow(
+        /rxComputed\(\) can only be used within an injection context/
+      );
+    });
+
+    it('should be able to use a custom Injector', () => {
+      const { rxComputedNoInjector } = setUp();
+
+      const envInjector = TestBed.inject(EnvironmentInjector);
+
+      const signal = rxComputedNoInjector(() => of(42), {
+        injector: envInjector,
+      });
+      expect(signal()).toEqual(42);
+    });
+  });
+
   function setUp() {
     const injector = TestBed.inject(Injector);
 
     @Component({
       template: '',
-      standalone: true
+      standalone: true,
     })
-    class MyComponent {
-    }
+    class MyComponent {}
 
     const fixture = TestBed.createComponent(MyComponent);
 
@@ -87,13 +113,21 @@ describe(rxComputed.name, () => {
     return {
       flushEffects,
       rxComputed<T>(...args: Parameters<typeof rxComputed<T>>) {
-        const signal = runInInjectionContext(injector, () => rxComputed(...args));
+        const signal = runInInjectionContext(injector, () =>
+          rxComputed(...args)
+        );
 
         flushEffects();
 
         return signal;
-      }
+      },
+      rxComputedNoInjector<T>(...args: Parameters<typeof rxComputed<T>>) {
+        const signal = rxComputed(...args);
+
+        flushEffects();
+
+        return signal;
+      },
     };
   }
-
 });
