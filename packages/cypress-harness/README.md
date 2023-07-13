@@ -38,7 +38,7 @@ then update the `cypress.config.ts` file as follows:
 
 ```ts
 import { defineConfig } from 'cypress';
-import { getPreprocessorConfig } from '@jscutlery/cypress-harness/preprocessor-config';
+import { getPreprocessorConfig } from '@jscutlery/cypress-harness/src/preprocessor-config';
 
 export default defineConfig({
   e2e: {
