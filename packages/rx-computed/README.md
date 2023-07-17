@@ -35,8 +35,7 @@ class MyCmp {
 
 ### Custom Injector
 
-{::comment}TODO: Link Injection Context documentation when it is live. https://github.com/angular/angular/pull/49782 {:/comment}
-`rxComputed` utilizes `effect()` underneath so it is **required** to be invoked within an Injection Context. However, a custom `Injector`
+`rxComputed` utilizes `effect()` underneath so it is **required** to be invoked within an [Injection Context](https://angular.io/guide/dependency-injection-context). However, a custom `Injector`
 can be passed in and `rxComputed` will invoke within that Injector context.
 
 ```ts
@@ -51,7 +50,7 @@ class MyCmp {
 
 ## Motivation
 
-Synchronously computed signals in Angular are relatively straight forward. However, when dealing with an asynchronous source of data like an `Observable`, there is no primitive to derive a signal from it.
+Synchronously computed signals in Angular are relatively straightforward. However, when dealing with an asynchronous source of data like an `Observable`, there is no primitive to derive a signal from it.
 
 There are two common ways of dealing with this:
 
@@ -74,7 +73,7 @@ const recipes$ = combineLatest({
 const recipes = toSignal(recipes$, []);
 ```
 
-2. Using `effet` explicitly _(which is not the recommended way of using it, cf. https://angular.io/guide/signals#when-not-to-use-effects)_:
+2. Using `effect` explicitly _(which is not the recommended way of using it, cf. https://angular.io/guide/signals#when-not-to-use-effects)_:
 
 ```typescript
 const keywords = signal(...);
