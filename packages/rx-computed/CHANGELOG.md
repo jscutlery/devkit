@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.3](https://github.com/jscutlery/devkit/compare/rx-computed-0.2.2...rx-computed-0.2.3) (2023-07-17)
+
+
+
 ## [0.2.2](https://github.com/jscutlery/devkit/compare/rx-computed-0.2.1...rx-computed-0.2.2) (2023-06-02)
 
 
