@@ -27,7 +27,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["tests/cypress-harness-wide/**/*.{js,ts}"]
       },
