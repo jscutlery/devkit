@@ -4781,7 +4781,7 @@ __metadata:
     jest-preset-angular: 13.1.0
     mock-fs: ^5.1.1
     ng-packagr: ~16.0.0
-    ngx-deploy-npm: ^4.0.0
+    ngx-deploy-npm: 7.0.1
     nx: 17.0.1
     postcss: ^8.4.5
     postcss-import: 14.1.0
@@ -5812,20 +5812,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nrwl/devkit@npm:14.7.17":
-  version: 14.7.17
-  resolution: "@nrwl/devkit@npm:14.7.17"
-  dependencies:
-    "@phenomnomnominal/tsquery": 4.1.1
-    ejs: ^3.1.7
-    ignore: ^5.0.4
-    tslib: ^2.3.0
-  peerDependencies:
-    nx: ">= 13.10 <= 15"
-  checksum: efaaaa270ccf356670eba40d9a880f44803b49b3755a4bc22723ed6ccf2d9c51a3ce6ad0827ab30cf78edf6b2a1e88689e77e0fbd9f983d5279d96c1a7b1aa6c
-  languageName: node
-  linkType: hard
-
 "@nrwl/devkit@npm:17.0.1":
   version: 17.0.1
   resolution: "@nrwl/devkit@npm:17.0.1"
@@ -6330,17 +6316,6 @@ __metadata:
     node-gyp: latest
     node-gyp-build: ^4.3.0
   checksum: 890bdc69a52942791b276caa2cd65ef816576d6b5ada91aa28cf302b35d567c801dafe167f2525dcb313f5b420986ea11bd56228dd7ddde1116944d8f924a0a1
-  languageName: node
-  linkType: hard
-
-"@phenomnomnominal/tsquery@npm:4.1.1":
-  version: 4.1.1
-  resolution: "@phenomnomnominal/tsquery@npm:4.1.1"
-  dependencies:
-    esquery: ^1.0.1
-  peerDependencies:
-    typescript: ^3 || ^4
-  checksum: 64eb6d90aafa889f62fe73d128b7be2b3295dffde4d5dff63bad75d512b6bc1d8419d8fc784a1a60b45aba4cda2eaf6e233bf59797a1d91b26fac27d99dae047
   languageName: node
   linkType: hard
 
@@ -12214,7 +12189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esquery@npm:^1.0.1, esquery@npm:^1.4.0":
+"esquery@npm:^1.4.0":
   version: 1.4.0
   resolution: "esquery@npm:1.4.0"
   dependencies:
@@ -16792,12 +16767,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ngx-deploy-npm@npm:^4.0.0":
-  version: 4.2.5
-  resolution: "ngx-deploy-npm@npm:4.2.5"
-  dependencies:
-    "@nrwl/devkit": 14.7.17
-  checksum: 464557101062def25a850c70aa1a40ad8dc70c23a7a05f427f2a923ab7d46981b7b2803acc7f647a759d8278c4bf7a066f234da7a713306f0955360573fc350e
+"ngx-deploy-npm@npm:7.0.1":
+  version: 7.0.1
+  resolution: "ngx-deploy-npm@npm:7.0.1"
+  peerDependencies:
+    "@nx/devkit": ^16.0.0
+    tslib: ^2.3.0
+  checksum: ec5f9d930370f7c959a4cd3f9fe46fd16638178432f2645a0113815da64404becb89d5c5b5ff62d0321edff8efa9c59d89b25e1f6d169e0063c97ca0b0e90907
   languageName: node
   linkType: hard
 
