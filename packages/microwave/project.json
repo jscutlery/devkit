@@ -9,8 +9,7 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/packages/microwave"],
       "options": {
-        "project": "packages/microwave/ng-package.json",
-        "updateBuildableProjectDepsInPackageJson": false
+        "project": "packages/microwave/ng-package.json"
       },
       "configurations": {
         "production": {
@@ -31,7 +30,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "packages/microwave/src/**/*.ts",

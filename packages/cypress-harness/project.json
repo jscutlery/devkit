@@ -6,7 +6,7 @@
   "generators": {},
   "targets": {
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["packages/cypress-harness/**/*.ts"]
       },
@@ -27,7 +27,8 @@
         "tsConfig": "packages/cypress-harness/tsconfig.lib.json",
         "packageJson": "packages/cypress-harness/package.json",
         "main": "packages/cypress-harness/src/index.ts",
-        "assets": ["LICENSE", "packages/cypress-harness/*.md"]
+        "assets": ["LICENSE", "packages/cypress-harness/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       },
       "outputs": ["{options.outputPath}"]
     },

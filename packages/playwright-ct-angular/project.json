@@ -13,7 +13,7 @@
         "entryFile": "packages/playwright-ct-angular/src/index.ts",
         "tsConfig": "packages/playwright-ct-angular/tsconfig.lib.json",
         "main": "packages/playwright-ct-angular/src/index.ts",
-        "compiler": "babel",
+        "compiler": "tsc",
         "format": ["cjs", "esm"],
         "generateExportsField": true,
         "assets": [
@@ -36,7 +36,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/playwright-ct-angular/**/*.ts"]

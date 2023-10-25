@@ -73,7 +73,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "apps/game-of-life/src/**/*.ts",

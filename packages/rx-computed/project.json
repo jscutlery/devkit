@@ -37,7 +37,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
@@ -49,7 +49,11 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "postTargets": ["rx-computed:build", "rx-computed:npm", "rx-computed:github"],
+        "postTargets": [
+          "rx-computed:build",
+          "rx-computed:npm",
+          "rx-computed:github"
+        ],
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
         "noVerify": true,
         "push": true

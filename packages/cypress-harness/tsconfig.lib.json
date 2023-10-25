@@ -5,7 +5,7 @@
     "module": "commonjs",
     "outDir": "../../dist/out-tsc",
     "declaration": true,
-    "types": ["cypress", "cypress-pipe", "node"]
+    "types": ["node"]
   },
   "exclude": ["**/*.spec.ts", "**/*.test.ts", "jest.config.ts"],
   "include": ["**/*.ts"]
