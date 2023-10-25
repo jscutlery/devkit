@@ -22,6 +22,10 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 
 
 
+## [0.1.4](https://github.com/jscutlery/devkit/compare/playwright-ct-angular-0.1.3...playwright-ct-angular-0.1.4) (2023-10-25)
+
+
+
 ## [0.1.3](https://github.com/jscutlery/devkit/compare/playwright-ct-angular-0.1.2...playwright-ct-angular-0.1.3) (2023-05-22)
 
 
