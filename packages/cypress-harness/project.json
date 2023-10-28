@@ -40,7 +40,7 @@
           "cypress-harness:npm",
           "cypress-harness:github"
         ],
-        "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
+        "commitMessageFormat": "release({projectName}): 🎸 cut release to {version}",
         "noVerify": true,
         "push": true
       }
@@ -48,8 +48,8 @@
     "github": {
       "executor": "@jscutlery/semver:github",
       "options": {
-        "notes": "${notes}",
-        "tag": "${tag}"
+        "notes": "{notes}",
+        "tag": "{tag}"
       }
     },
     "npm": {
