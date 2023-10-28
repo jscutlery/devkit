@@ -27,8 +27,7 @@
         "tsConfig": "packages/cypress-harness/tsconfig.lib.json",
         "packageJson": "packages/cypress-harness/package.json",
         "main": "packages/cypress-harness/src/index.ts",
-        "assets": ["LICENSE", "packages/cypress-harness/*.md"],
-        "updateBuildableProjectDepsInPackageJson": true
+        "assets": ["LICENSE", "packages/cypress-harness/*.md"]
       },
       "outputs": ["{options.outputPath}"]
     },
