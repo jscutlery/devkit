@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.2.0](https://github.com/jscutlery/devkit/compare/playwright-ct-angular-0.1.3...playwright-ct-angular-0.2.0) (2023-10-31)
+
+
+### Features
+
+* **playwright-ct-angular:** ✨ upgrade to playwright 1.39 support ([#264](https://github.com/jscutlery/devkit/issues/264)) ([4354d3e](https://github.com/jscutlery/devkit/commit/4354d3e1fd076aebf524dfcc3e656d984820288c))
+
+
+
 ## [0.1.4](https://github.com/jscutlery/devkit/compare/playwright-ct-angular-0.1.3...playwright-ct-angular-0.1.4) (2023-10-28)
 
 
