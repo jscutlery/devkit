@@ -1,11 +1,11 @@
-import type { PlaywrightTestConfig } from '@jscutlery/playwright-ct-angular';
+import { defineConfig } from '@jscutlery/playwright-ct-angular';
 import { devices } from '@jscutlery/playwright-ct-angular';
 import { env } from 'process';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const config: PlaywrightTestConfig = {
+const config = defineConfig({
   testDir: 'src',
   testMatch: /pw\.tsx?/,
   snapshotDir: './__snapshots__',
@@ -30,9 +30,9 @@ const config: PlaywrightTestConfig = {
     ctViteConfig: {
       resolve: {
         /* @angular/material is using "style" as a Custom Conditional export to expose prebuilt styles etc... */
-        conditions: ['style']
-      }
-    }
+        conditions: ['style'],
+      },
+    },
   },
 
   /* Configure projects for major browsers */
@@ -40,22 +40,22 @@ const config: PlaywrightTestConfig = {
     {
       name: 'chromium',
       use: {
-        ...devices['Desktop Chrome']
-      }
+        ...devices['Desktop Chrome'],
+      },
     },
     {
       name: 'firefox',
       use: {
-        ...devices['Desktop Firefox']
-      }
+        ...devices['Desktop Firefox'],
+      },
     },
     {
       name: 'webkit',
       use: {
-        ...devices['Desktop Safari']
-      }
-    }
-  ]
-};
+        ...devices['Desktop Safari'],
+      },
+    },
+  ],
+});
 
 export default config;
