@@ -1,4 +1,8 @@
-import { ComponentFixtures, expect, test } from '@jscutlery/playwright-ct-angular';
+import {
+  ComponentFixtures,
+  expect,
+  test,
+} from '@jscutlery/playwright-ct-angular';
 import { RecipeSearchTestContainer } from './recipe-search.test-container';
 import { recipeMother } from './testing/recipe.mother';
 
@@ -9,31 +13,29 @@ test.describe('<wm-recipe-search>', () => {
 
     await expect(recipeTitleLocator).toHaveText(['Beer', 'Burger']);
 
-    await verifyScreenshot();
+    await verifyScreenshot('all recipes');
   });
 
   test('should search recipes using given filter', async ({ mount }) => {
-    const { recipeTitleLocator, updateFilter } = await renderSearchComponent(
-      { mount }
-    );
+    const { recipeTitleLocator, updateFilter } = await renderSearchComponent({
+      mount,
+    });
 
     await updateFilter({
-      keywords: 'Bur'
+      keywords: 'Bur',
     });
 
     await expect(recipeTitleLocator).toHaveText(['Burger']);
   });
 
-  async function renderSearchComponent({
-                                         mount
-                                       }: ComponentFixtures) {
+  async function renderSearchComponent({ mount }: ComponentFixtures) {
     const locator = await mount(RecipeSearchTestContainer, {
       inputs: {
         recipes: [
           recipeMother.withBasicInfo('Beer').build(),
-          recipeMother.withBasicInfo('Burger').build()
-        ]
-      }
+          recipeMother.withBasicInfo('Burger').build(),
+        ],
+      },
     });
 
     return {
@@ -41,14 +43,19 @@ test.describe('<wm-recipe-search>', () => {
       async updateFilter({ keywords }: { keywords: string }) {
         await locator.getByLabel('Keywords').type(keywords);
       },
-      async verifyScreenshot() {
+      async verifyScreenshot(name: string) {
         /* Wait for images to load. */
         await locator.page().waitForLoadState('networkidle');
-        /* Prefer using whole page screenshot for two reasons:
-         * 1. it's the same resolution and the Playwright reporter diff will show slider.
-         * 2. we make sure that there's no extra overlay in the DOM (e.g. dialog). */
-        await expect(locator.page()).toHaveScreenshot();
-      }
+
+        /* For some reason, Firefox reaches here while all images didn't load yet.
+         * Keep trying until it succeeds. */
+        await expect(async () => {
+          /* Prefer using whole page screenshot for two reasons:
+           * 1. it's the same resolution and the Playwright reporter diff will show slider.
+           * 2. we make sure that there's no extra overlay in the DOM (e.g. dialog). */
+          await expect(locator.page()).toHaveScreenshot(`${name}.png`);
+        }).toPass();
+      },
     };
   }
 });
