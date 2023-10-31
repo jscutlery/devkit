@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.1](https://github.com/jscutlery/devkit/compare/playwright-ct-angular-0.2.0...playwright-ct-angular-0.2.1) (2023-10-31)
+
+
+### Bug Fixes
+
+* **playwright-ct-angular:** 🐞 fix peer dependencies ([752a1b4](https://github.com/jscutlery/devkit/commit/752a1b4d095cdae97149b6c07f3b829d4767a1fa))
+
+
+
 # [0.2.0](https://github.com/jscutlery/devkit/compare/playwright-ct-angular-0.1.3...playwright-ct-angular-0.2.0) (2023-10-31)
 
 
