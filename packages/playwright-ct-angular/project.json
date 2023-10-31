@@ -16,10 +16,14 @@
         "compiler": "tsc",
         "format": ["cjs", "esm"],
         "generateExportsField": true,
+        "additionalEntryPoints": [
+          "packages/playwright-ct-angular/src/hooks.ts",
+          "packages/playwright-ct-angular/src/register.ts"
+        ],
         "assets": [
           {
             "glob": "register-source.mjs",
-            "input": "packages/playwright-ct-angular/src/lib",
+            "input": "packages/playwright-ct-angular/src",
             "output": "."
           },
           {

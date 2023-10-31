@@ -1,5 +1,5 @@
 import { Component, Injectable, Input, Output } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { delay, finalize, map } from 'rxjs';
 import { Microwave, watch } from './microwave';
 

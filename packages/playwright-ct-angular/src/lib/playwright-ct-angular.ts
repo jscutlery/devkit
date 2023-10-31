@@ -1,21 +1,9 @@
 import { Type } from '@angular/core';
+import { fixtures as mountFixtures } from '@playwright/experimental-ct-core/lib/mount';
 import * as playwright from '@playwright/test';
-import { fixtures as mountFixtures } from '@playwright/test/lib/mount';
 import { fn, MockedFunction } from 'jest-mock';
-import * as path from 'path';
 import type { Observable } from 'rxjs';
 import { InlineConfig } from 'vite';
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const noop = () => {
-};
-
-playwright['_addRunnerPlugin'](() => {
-  /* Only fetch upon request to avoid resolution in workers. */
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { createPlugin } = require('@playwright/test/lib/plugins/vitePlugin');
-  return createPlugin(path.join(__dirname, 'register-source.mjs'), noop);
-});
 
 const mountTest = playwright.test.extend(mountFixtures);
 export const test = mountTest.extend<{
@@ -46,7 +34,7 @@ export const test = mountTest.extend<{
         options.spyOutputs?.reduce((acc, key) => {
           return {
             ...acc,
-            [key]: fn()
+            [key]: fn(),
           };
         }, {}) ?? {};
 
@@ -55,8 +43,8 @@ export const test = mountTest.extend<{
         ...options,
         outputs: {
           ...options.outputs,
-          ...spies
-        }
+          ...spies,
+        },
       });
 
       /* Grab a locator to the TestBed's root element.
@@ -70,7 +58,7 @@ export const test = mountTest.extend<{
       /* Add spies to the returned locator. */
       return Object.assign(locator, { spies });
     });
-  }
+  },
 });
 
 export const expect = playwright.expect;
@@ -94,9 +82,9 @@ export type Outputs<COMPONENT> = Partial<{
   /* For each field or method... is this an observable? */
   [K in keyof COMPONENT]: COMPONENT[K] extends Observable<unknown>
     ? /* It's an observable, so let's change the return type. */
-    (value: Emitted<COMPONENT[K]>) => void
+      (value: Emitted<COMPONENT[K]>) => void
     : /* It's something else. */
-    COMPONENT[K];
+      COMPONENT[K];
 }>;
 
 export interface MountResult<COMPONENT, SPIED_OUTPUT extends keyof COMPONENT>
@@ -108,12 +96,15 @@ export type Spies<COMPONENT, SPIED_OUTPUT extends keyof COMPONENT> = Partial<{
   /* For each field or method... is this an observable? */
   [K in SPIED_OUTPUT]: COMPONENT[K] extends Observable<unknown>
     ? /* It's an observable, so let's change the return type. */
-    MockedFunction<(value: Emitted<COMPONENT[K]>) => void>
+      MockedFunction<(value: Emitted<COMPONENT[K]>) => void>
     : /* It's something else. */
-    COMPONENT[K];
+      COMPONENT[K];
 }>;
 
-export type PlaywrightTestConfig = Omit<playwright.PlaywrightTestConfig, 'use'> & {
+export type PlaywrightTestConfig = Omit<
+  playwright.PlaywrightTestConfig,
+  'use'
+> & {
   use?: playwright.PlaywrightTestConfig['use'] & {
     ctPort?: number;
     ctTemplateDir?: string;
@@ -130,10 +121,9 @@ type Emitted<OBSERVABLE> = OBSERVABLE extends Observable<infer EMITTED>
  * Fixing matchers typing to add Jest spy matchers.
  Cf. https://github.com/microsoft/playwright/tree/20957f820d34a53003ab0722fa149c80fedec846/packages/playwright-test/types */
 declare global {
-
   // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace PlaywrightTest {
-    export interface Matchers<R, T = unknown> {
+    export interface Matchers<R> {
       lastCalledWith(...args: Array<unknown>): R;
 
       lastReturnedWith(value: unknown): R;
