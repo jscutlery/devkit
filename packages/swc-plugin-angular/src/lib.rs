@@ -70,6 +70,15 @@ impl VisitMut for AngularTransformVisitor {
             _ => return
         };
 
+        if key.sym.eq("styleUrl") {
+            node.key = PropName::Ident(Ident {
+                sym: "styles".into(),
+                span: Default::default(),
+                optional: false,
+            });
+            node.value = Expr::Array(ArrayLit { span: Default::default(), elems: vec![] }).into();
+        }
+
         if key.sym.eq("styleUrls") {
             node.key = PropName::Ident(Ident {
                 sym: "styles".into(),
@@ -133,7 +142,7 @@ mod tests {
             ..Default::default()
         }),
         |_| as_folder(AngularTransformVisitor::new()),
-        replace_template_url,
+        replace_urls,
         // Input codes
         r#"
         @Component({
@@ -152,33 +161,29 @@ mod tests {
         class MyCmp {}"#
     );
 
-    /* SWC transforms decorators before running the plugin. */
     test_inline!(
         Syntax::Typescript(TsConfig {
             decorators: true,
             ..Default::default()
         }),
         |_| as_folder(AngularTransformVisitor::new()),
-        replace_template_url_with_ts_decorate,
+        replace_style_url,
         // Input codes
         r#"
-        function MyCmp () {}
-        MyCmp = _ts_decorate([
-            Component({
-                selector: 'app-hello',
-                styleUrls: ['./style.css'],
-                templateUrl: './hello.component.html'
-            })
-        ], MyCmp);"#,
+        @Component({
+            selector: 'app-hello',
+            styleUrl: './style.css',
+            templateUrl: './hello.component.html'
+        })
+        class MyCmp {}"#,
+        // Output codes after transformed with plugin
         r#"
-        function MyCmp () {}
-        MyCmp = _ts_decorate([
-            Component({
-                selector: 'app-hello',
-                styles: [],
-                template: require("./hello.component.html")
-            })
-        ], MyCmp);"#
+        @Component({
+            selector: 'app-hello',
+            styles: [],
+            template: require("./hello.component.html")
+        })
+        class MyCmp {}"#
     );
 
     test_inline!(
@@ -187,7 +192,7 @@ mod tests {
             ..Default::default()
         }),
         |_| as_folder(AngularTransformVisitor::new()),
-        replace_template_url_in_component_decorator_only,
+        replace_urls_in_component_decorator_only,
         // Input codes
         r#"
         const something = {templateUrl: './this-is-an-unrelated-template-url.html'};
@@ -214,4 +219,34 @@ mod tests {
         class MyCmp {}"#
     );
 
+    /* Actually, SWC transforms decorators before running the plugin.
+     * That is why we have to handle the case where decorators are already transformed
+     * to `_ts_decorate` function calls. */
+    test_inline!(
+        Syntax::Typescript(TsConfig {
+            decorators: true,
+            ..Default::default()
+        }),
+        |_| as_folder(AngularTransformVisitor::new()),
+        replace_urls_in_ts_decorate,
+        // Input codes
+        r#"
+        function MyCmp () {}
+        MyCmp = _ts_decorate([
+            Component({
+                selector: 'app-hello',
+                styleUrls: ['./style.css'],
+                templateUrl: './hello.component.html'
+            })
+        ], MyCmp);"#,
+        r#"
+        function MyCmp () {}
+        MyCmp = _ts_decorate([
+            Component({
+                selector: 'app-hello',
+                styles: [],
+                template: require("./hello.component.html")
+            })
+        ], MyCmp);"#
+    );
 }
