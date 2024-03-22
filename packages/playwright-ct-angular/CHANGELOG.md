@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.2](https://github.com/jscutlery/devkit/compare/playwright-ct-angular-0.2.1...playwright-ct-angular-0.2.2) (2024-03-22)
+
+
+
 ## [0.2.1](https://github.com/jscutlery/devkit/compare/playwright-ct-angular-0.2.0...playwright-ct-angular-0.2.1) (2023-10-31)
 
 
