@@ -102,7 +102,7 @@ impl VisitMut for AngularTransormVisitor {
 #[plugin_transform]
 pub fn process_transform(program: Program, _metadata: TransformPluginProgramMetadata) -> Program {
     let visitor = AngularTransormVisitor::new();
-    return program.fold_with(&mut as_folder(visitor));
+    program.fold_with(&mut as_folder(visitor))
 }
 
 #[cfg(test)]
