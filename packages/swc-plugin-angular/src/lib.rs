@@ -5,17 +5,24 @@ use swc_core::ecma::{
 use swc_core::plugin::{plugin_transform, proxies::TransformPluginProgramMetadata};
 use swc_ecma_utils::ExprFactory;
 
-pub struct AngularTransormVisitor {
+pub struct AngularTransformVisitor {
     is_in_component_call: bool,
     is_in_decorator: bool
 }
 
-impl AngularTransormVisitor {
+impl AngularTransformVisitor {
     pub fn new() -> Self {
-        AngularTransormVisitor { is_in_component_call: false, is_in_decorator: false }
+        AngularTransformVisitor { is_in_component_call: false, is_in_decorator: false }
     }
 }
-impl VisitMut for AngularTransormVisitor {
+
+impl Default for AngularTransformVisitor {
+    fn default() -> Self {
+        Self::new()
+    }
+ }
+
+impl VisitMut for AngularTransformVisitor {
 
     fn visit_mut_decorator(&mut self, node: &mut swc_core::ecma::ast::Decorator) {
         /* Locate `@Component()` decorator. */
@@ -101,7 +108,7 @@ impl VisitMut for AngularTransormVisitor {
 
 #[plugin_transform]
 pub fn process_transform(program: Program, _metadata: TransformPluginProgramMetadata) -> Program {
-    let visitor = AngularTransormVisitor::new();
+    let visitor = AngularTransformVisitor::new();
     program.fold_with(&mut as_folder(visitor))
 }
 
@@ -117,7 +124,7 @@ mod tests {
             decorators: true,
             ..Default::default()
         }),
-        |_| as_folder(AngularTransormVisitor::new()),
+        |_| as_folder(AngularTransformVisitor::new()),
         replace_template_url,
         // Input codes
         r#"
@@ -143,7 +150,7 @@ mod tests {
             decorators: true,
             ..Default::default()
         }),
-        |_| as_folder(AngularTransormVisitor::new()),
+        |_| as_folder(AngularTransformVisitor::new()),
         replace_template_url_with_ts_decorate,
         // Input codes
         r#"
@@ -171,7 +178,7 @@ mod tests {
             decorators: true,
             ..Default::default()
         }),
-        |_| as_folder(AngularTransormVisitor::new()),
+        |_| as_folder(AngularTransformVisitor::new()),
         replace_template_url_in_component_decorator_only,
         // Input codes
         r#"
