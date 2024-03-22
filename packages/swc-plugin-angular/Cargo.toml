@@ -1,0 +1,12 @@
+[package]
+name = "swc-plugin-angular"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = "1"
+swc_core = { version = "0.89.7", features = ["ecma_plugin_transform"] }
+swc_ecma_parser = { version = "0.142.1", features = ["typescript"] }
+swc_ecma_utils = "0.126.2"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
