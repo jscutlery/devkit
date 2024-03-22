@@ -5,17 +5,20 @@
   "sourceRoot": "packages/swc-plugin-angular/src",
   "targets": {
     "build": {
-      "executor": "@monodon/rust:check",
-      "outputs": ["{options.target-dir}"],
+      "executor": "nx:run-commands",
       "options": {
-        "target-dir": "dist/target/swc-plugin-angular"
+        "parallel": false,
+        "commands": [
+          "cargo build --target wasm32-wasi --release --target-dir dist/{projectRoot}",
+          "cp {projectRoot}/package.json dist/{projectRoot}"
+        ]
       }
     },
     "test": {
       "executor": "@monodon/rust:test",
       "outputs": ["{options.target-dir}"],
       "options": {
-        "target-dir": "dist/target/swc-plugin-angular"
+        "target-dir": "dist/packages/swc-plugin-angular"
       },
       "configurations": {
         "production": {
@@ -27,7 +30,7 @@
       "executor": "@monodon/rust:lint",
       "outputs": ["{options.target-dir}"],
       "options": {
-        "target-dir": "dist/target/swc-plugin-angular"
+        "target-dir": "dist/packages/swc-plugin-angular"
       }
     }
   },
