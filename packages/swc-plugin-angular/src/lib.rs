@@ -62,7 +62,15 @@ impl VisitMut for AngularTransformVisitor {
             return
         }
 
-        if node.key.as_ident().unwrap().sym.eq("styleUrls") {
+        /* Ignore non-string keys if people start getting crazy and adding
+         * numeric keys in `@Component` 😅. */
+        let key = node.key.clone();
+        let key = match key.as_ident() {
+            Some(key) => key,
+            _ => return
+        };
+
+        if key.sym.eq("styleUrls") {
             node.key = PropName::Ident(Ident {
                 sym: "styles".into(),
                 span: Default::default(),
@@ -71,7 +79,7 @@ impl VisitMut for AngularTransformVisitor {
             node.value = Expr::Array(ArrayLit { span: Default::default(), elems: vec![] }).into();
         }
 
-        if node.key.as_ident().unwrap().sym.eq("templateUrl") {
+        if key.sym.eq("templateUrl") {
             node.key = PropName::Ident(Ident {
                 sym: "template".into(),
                 span: Default::default(),
@@ -182,26 +190,26 @@ mod tests {
         replace_template_url_in_component_decorator_only,
         // Input codes
         r#"
-        const something = {templateUrl: './hello.component.html'};
+        const something = {templateUrl: './this-is-an-unrelated-template-url.html'};
         @Component({
             selector: 'app-hello',
             styleUrls: ['./style.css'],
-            templateUrl: './hello.component.html'
+            templateUrl: './hello.component.html',
         })
         @MyDecorator({
-            templateUrl: 'something'
+            templateUrl: './this-is-an-unrelated-template-url.html'
         })
         class MyCmp {}"#,
         // Output codes after transformed with plugin
         r#"
-        const something = {templateUrl: './hello.component.html'};
+        const something = {templateUrl: './this-is-an-unrelated-template-url.html'};
         @Component({
             selector: 'app-hello',
             styles: [],
             template: require("./hello.component.html")
         })
         @MyDecorator({
-            templateUrl: 'something'
+            templateUrl: './this-is-an-unrelated-template-url.html'
         })
         class MyCmp {}"#
     );
