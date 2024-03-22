@@ -1,0 +1,25 @@
+{
+  "name": "swc-angular-preset",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/swc-angular-preset/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/swc-angular-preset",
+        "main": "packages/swc-angular-preset/src/index.ts",
+        "tsConfig": "packages/swc-angular-preset/tsconfig.lib.json",
+        "assets": [],
+        "project": "packages/swc-angular-preset/package.json",
+        "compiler": "swc",
+        "format": ["cjs", "esm"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": []
+}
