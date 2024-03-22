@@ -29,7 +29,8 @@
     "publish:cypress-harness": "npm publish dist/packages/cypress-harness",
     "publish:cypress-mount": "npm publish dist/packages/cypress-mount",
     "contributors:add": "all-contributors add",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postinstall": "ln -snf ../../dist/packages/swc-plugin-angular node_modules/@jscutlery/swc-plugin-angular"
   },
   "private": true,
   "dependencies": {
@@ -78,7 +79,9 @@
     "@playwright/test": "^1.39.0",
     "@schematics/angular": "17.2.3",
     "@swc-node/register": "1.8.0",
-    "@swc/core": "^1.2.173",
+    "@swc/core": "^1.4.8",
+    "@swc/helpers": "~0.5.2",
+    "@swc/jest": "^0.2.36",
     "@types/jest": "29.4.4",
     "@types/node": "^18.16.9",
     "@typescript-eslint/eslint-plugin": "6.21.0",

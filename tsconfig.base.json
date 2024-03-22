@@ -32,7 +32,10 @@
       "@jscutlery/playwright-ct-angular": [
         "packages/playwright-ct-angular/src/index.ts"
       ],
-      "@jscutlery/rx-computed": ["packages/rx-computed/src/index.ts"]
+      "@jscutlery/rx-computed": ["packages/rx-computed/src/index.ts"],
+      "@jscutlery/swc-plugin-angular-wide": [
+        "tests/swc-plugin-angular-wide/src/index.ts"
+      ]
     },
     "strict": true
   },
