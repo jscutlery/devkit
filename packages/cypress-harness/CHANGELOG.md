@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.1](https://github.com/jscutlery/devkit/compare/cypress-harness-0.5.0...cypress-harness-0.5.1) (2023-12-05)
+
+
+### Bug Fixes
+
+* import of zone.js and zone.js/testing ([f14b091](https://github.com/jscutlery/devkit/commit/f14b091326ceb6aaf0cbf7ebcb00637aac1477fd))
+
+
+
 # [0.5.0](https://github.com/jscutlery/devkit/compare/cypress-harness-0.4.7...cypress-harness-0.5.0) (2023-10-31)
 
 
