@@ -25,18 +25,11 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/microwave"],
       "options": {
-        "jestConfig": "packages/microwave/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/microwave/jest.config.ts"
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "packages/microwave/src/**/*.ts",
-          "packages/microwave/src/**/*.html"
-        ]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "component-test-build": {
       "executor": "@angular-devkit/build-angular:browser",

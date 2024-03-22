@@ -58,10 +58,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "game-of-life:build:production"
+          "buildTarget": "game-of-life:build:production"
         },
         "development": {
-          "browserTarget": "game-of-life:build:development"
+          "buildTarget": "game-of-life:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -69,24 +69,17 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "game-of-life:build"
+        "buildTarget": "game-of-life:build"
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "apps/game-of-life/src/**/*.ts",
-          "apps/game-of-life/src/**/*.html"
-        ]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/game-of-life"],
       "options": {
-        "jestConfig": "apps/game-of-life/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/game-of-life/jest.config.ts"
       }
     }
   },

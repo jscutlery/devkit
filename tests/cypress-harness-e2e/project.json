@@ -14,9 +14,6 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["tests/cypress-harness-e2e/**/*.{js,ts}"]
-      },
       "outputs": ["{options.outputFile}"]
     }
   },
