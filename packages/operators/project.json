@@ -30,17 +30,13 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/operators/**/*.ts"]
-      }
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/operators"],
       "options": {
-        "jestConfig": "packages/operators/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/operators/jest.config.ts"
       }
     },
     "version": {
