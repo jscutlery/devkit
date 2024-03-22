@@ -20,7 +20,7 @@ impl Default for AngularTransformVisitor {
     fn default() -> Self {
         Self::new()
     }
- }
+}
 
 impl VisitMut for AngularTransformVisitor {
 
