@@ -1,4 +1,9 @@
 /* eslint-disable */
+
+/* @hack for some annoying reason, this file doesn't seem to be compiled
+ * using our tsconfigs, so it is not aware of the tsconfig.base.json paths. */
+import swcAngularPreset from '../../packages/swc-angular-preset/src/index';
+
 export default {
   displayName: 'demo',
   preset: '../../jest.preset.js',
@@ -7,23 +12,7 @@ export default {
   transform: {
     '^.+\\.(ts|mjs|js)$': [
       '@swc/jest',
-      {
-        jsc: {
-          parser: {
-            syntax: 'typescript',
-            decorators: true,
-            dynamicImport: true,
-          },
-          transform: {
-            legacyDecorator: true,
-            decoratorMetadata: true,
-          },
-          target: 'esnext',
-          experimental: {
-            plugins: [['@jscutlery/swc-plugin-angular', {}]],
-          },
-        },
-      },
+      swcAngularPreset
     ],
     '^.+\\.(html)$': [
       'jest-preset-angular',
