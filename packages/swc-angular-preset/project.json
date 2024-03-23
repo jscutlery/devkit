@@ -2,6 +2,7 @@
   "name": "swc-angular-preset",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/swc-angular-preset/src",
+  "implicitDependencies": ["swc-plugin-angular"],
   "projectType": "library",
   "targets": {
     "build": {

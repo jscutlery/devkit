@@ -12,5 +12,8 @@
   ],
   "main": "wasm32-wasi/release/swc_plugin_angular.wasm",
   "files": [],
-  "preferUnplugged": true
+  "preferUnplugged": true,
+  "peerDependencies": {
+    "@swc/core": "^1.4.0"
+  }
 }
