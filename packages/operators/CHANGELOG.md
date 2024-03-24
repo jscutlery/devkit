@@ -1,3 +1,16 @@
+## 2.1.4 (2024-03-24)
+
+
+### 🩹 Fixes
+
+- import of zone.js and zone.js/testing ([f14b091](https://github.com/jscutlery/devkit/commit/f14b091))
+
+
+### ❤️  Thank You
+
+- Adrian Baran
+- Younes Jaaidi
+
 ## [2.1.3](https://github.com/jscutlery/devkit/compare/operators-2.1.2...operators-2.1.3) (2024-03-22)
 
 ## [2.1.3](https://github.com/jscutlery/devkit/compare/operators-2.1.2...operators-2.1.3) (2023-10-31)

@@ -1,3 +1,16 @@
+## 0.2.5 (2024-03-24)
+
+
+### 🩹 Fixes
+
+- import of zone.js and zone.js/testing ([f14b091](https://github.com/jscutlery/devkit/commit/f14b091))
+
+
+### ❤️  Thank You
+
+- Adrian Baran
+- Younes Jaaidi
+
 ## [0.2.4](https://github.com/jscutlery/devkit/compare/rx-computed-0.2.3...rx-computed-0.2.4) (2023-10-25)
 
 ## [0.2.3](https://github.com/jscutlery/devkit/compare/rx-computed-0.2.2...rx-computed-0.2.3) (2023-07-17)
