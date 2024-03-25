@@ -1,6 +1,6 @@
 # @jscutlery/devkit
 
-This is the home of the following tools which are aiming to:
+This is the home of the following tools which aim to:
 
 🍰 Improve JavaScript & Angular Developer eXperience
 
@@ -16,31 +16,6 @@ This is the home of the following tools which are aiming to:
 | [@jscutlery/playwright-ct-angular](./packages/playwright-ct-angular) | Playwright Component Testing support for Angular.                     | <img src="https://badgen.net/npm/v/@jscutlery/playwright-ct-angular"> |
 | [@jscutlery/rx-computed](./packages/rx-computed)                     | `rxComputed()`, the async RxJS-based version of signals' `computed()` | <img src="https://badgen.net/npm/v/@jscutlery/rx-computed">                 |
 
-# Contributors
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification.
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tbody>
-    <tr>
-      <td align="center"><a href="https://marmicode.io/"><img src="https://avatars2.githubusercontent.com/u/2674658?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Younes Jaaidi</b></sub></a><br /><a href="https://github.com/jscutlery/devkit/issues?q=author%3Ayjaaidi" title="Bug reports">🐛</a> <a href="https://github.com/jscutlery/devkit/commits?author=yjaaidi" title="Code">💻</a> <a href="https://github.com/jscutlery/devkit/commits?author=yjaaidi" title="Documentation">📖</a> <a href="#example-yjaaidi" title="Examples">💡</a> <a href="#ideas-yjaaidi" title="Ideas, Planning, & Feedback">🤔</a></td>
-      <td align="center"><a href="https://www.codamit.dev/"><img src="https://avatars0.githubusercontent.com/u/8522558?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Edouard Bozon</b></sub></a><br /><a href="https://github.com/jscutlery/devkit/issues?q=author%3Aedbzn" title="Bug reports">🐛</a> <a href="https://github.com/jscutlery/devkit/commits?author=edbzn" title="Code">💻</a> <a href="https://github.com/jscutlery/devkit/commits?author=edbzn" title="Documentation">📖</a> <a href="#example-edbzn" title="Examples">💡</a> <a href="#ideas-edbzn" title="Ideas, Planning, & Feedback">🤔</a></td>
-      <td align="center"><a href="https://github.com/Timeout-Timo"><img src="https://avatars.githubusercontent.com/u/23127274?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Timeout</b></sub></a><br /><a href="https://github.com/jscutlery/devkit/commits?author=Timeout-Timo" title="Code">💻</a></td>
-      <td align="center"><a href="https://jefiozie.github.io/"><img src="https://avatars.githubusercontent.com/u/17835373?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jeffrey Bosch</b></sub></a><br /><a href="https://github.com/jscutlery/devkit/commits?author=Jefiozie" title="Code">💻</a></td>
-      <td align="center"><a href="https://github.com/srleecode"><img src="https://avatars.githubusercontent.com/u/13536934?v=4?s=100" width="100px;" alt=""/><br /><sub><b>srleecode</b></sub></a><br /><a href="https://github.com/jscutlery/devkit/issues?q=author%3Asrleecode" title="Bug reports">🐛</a> <a href="https://github.com/jscutlery/devkit/commits?author=srleecode" title="Code">💻</a></td>
-      <td align="center"><a href="https://github.com/sikado"><img src="https://avatars.githubusercontent.com/u/650717?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Julien Brun</b></sub></a><br /><a href="https://github.com/jscutlery/devkit/issues?q=author%3Asikado" title="Bug reports">🐛</a> <a href="https://github.com/jscutlery/devkit/commits?author=sikado" title="Code">💻</a></td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
 # License
 
-This project is MIT licensed.
+This project is MIT-licensed.

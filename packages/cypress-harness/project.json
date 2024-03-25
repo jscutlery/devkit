@@ -27,19 +27,6 @@
       },
       "outputs": ["{options.outputPath}"]
     },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "postTargets": [
-          "cypress-harness:build",
-          "cypress-harness:npm",
-          "cypress-harness:github"
-        ],
-        "commitMessageFormat": "release({projectName}): 🎸 cut release to {version}",
-        "noVerify": true,
-        "push": true
-      }
-    },
     "github": {
       "executor": "@jscutlery/semver:github",
       "options": {

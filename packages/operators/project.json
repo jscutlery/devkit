@@ -39,15 +39,6 @@
         "jestConfig": "packages/operators/jest.config.ts"
       }
     },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "postTargets": ["operators:build", "operators:npm", "operators:github"],
-        "commitMessageFormat": "release({projectName}): 🎸 cut release to {version}",
-        "noVerify": true,
-        "push": true
-      }
-    },
     "github": {
       "executor": "@jscutlery/semver:github",
       "options": {
