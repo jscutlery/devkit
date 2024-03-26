@@ -61,7 +61,7 @@ impl VisitMut for InputVisitor {
                     });
                 }
             }
-            _ => return,
+            _ => (),
         }
     }
 
