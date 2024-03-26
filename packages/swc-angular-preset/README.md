@@ -1,6 +1,6 @@
 # @jscutlery/swc-angular-preset
 
-SWC preset for testing Angular projects in conjunction with `@swc/jest`.
+SWC preset for testing Angular projects in conjunction with [`@jscutlery/swc-plugin-angular`](packages/swc-plugin-angular) and `@swc/jest`.
 
 ## Installation
 
@@ -9,6 +9,8 @@ Install this preset via npm:
 ```bash
 npm install @jscutlery/swc-angular-preset -D
 ```
+
+Please note that this package has dependencies on `@swc/core` and `@swc/jest`, which must also be installed in your project.
 
 ## Usage
 
