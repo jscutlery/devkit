@@ -49,19 +49,6 @@
       "options": {
         "jestConfig": "packages/playwright-ct-angular/jest.config.ts"
       }
-    },
-    "github": {
-      "executor": "@jscutlery/semver:github",
-      "options": {
-        "notes": "{notes}",
-        "tag": "{tag}"
-      }
-    },
-    "npm": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public"
-      }
     }
   },
   "tags": []

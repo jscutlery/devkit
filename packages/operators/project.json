@@ -38,19 +38,6 @@
       "options": {
         "jestConfig": "packages/operators/jest.config.ts"
       }
-    },
-    "github": {
-      "executor": "@jscutlery/semver:github",
-      "options": {
-        "notes": "{notes}",
-        "tag": "{tag}"
-      }
-    },
-    "npm": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public"
-      }
     }
   },
   "tags": []

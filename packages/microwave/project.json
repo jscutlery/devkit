@@ -49,19 +49,6 @@
         "skipServe": true,
         "devServerTarget": "microwave:component-test-build"
       }
-    },
-    "github": {
-      "executor": "@jscutlery/semver:github",
-      "options": {
-        "notes": "{notes}",
-        "tag": "{tag}"
-      }
-    },
-    "npm": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public"
-      }
     }
   },
   "tags": []
