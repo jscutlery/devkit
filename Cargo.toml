@@ -1,0 +1,9 @@
+
+[workspace]
+resolver = '2'
+members = [
+	'packages/swc-plugin-angular',
+]
+
+[profile.release]
+lto = true
