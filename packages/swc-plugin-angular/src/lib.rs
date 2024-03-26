@@ -5,21 +5,10 @@ use swc_core::ecma::{
 use swc_core::plugin::{plugin_transform, proxies::TransformPluginProgramMetadata};
 use swc_ecma_utils::ExprFactory;
 
+#[derive(Default)]
 pub struct AngularTransformVisitor {
     is_in_component_call: bool,
     is_in_decorator: bool
-}
-
-impl AngularTransformVisitor {
-    pub fn new() -> Self {
-        AngularTransformVisitor { is_in_component_call: false, is_in_decorator: false }
-    }
-}
-
-impl Default for AngularTransformVisitor {
-    fn default() -> Self {
-        Self::new()
-    }
 }
 
 impl VisitMut for AngularTransformVisitor {
@@ -122,10 +111,9 @@ impl VisitMut for AngularTransformVisitor {
     }
 }
 
-
 #[plugin_transform]
 pub fn process_transform(program: Program, _metadata: TransformPluginProgramMetadata) -> Program {
-    let visitor = AngularTransformVisitor::new();
+    let visitor = AngularTransformVisitor::default();
     program.fold_with(&mut as_folder(visitor))
 }
 
@@ -141,7 +129,7 @@ mod tests {
             decorators: true,
             ..Default::default()
         }),
-        |_| as_folder(AngularTransformVisitor::new()),
+        |_| as_folder(AngularTransformVisitor::default()),
         replace_urls,
         // Input codes
         r#"
@@ -166,7 +154,7 @@ mod tests {
             decorators: true,
             ..Default::default()
         }),
-        |_| as_folder(AngularTransformVisitor::new()),
+        |_| as_folder(AngularTransformVisitor::default()),
         replace_style_url,
         // Input codes
         r#"
@@ -191,7 +179,7 @@ mod tests {
             decorators: true,
             ..Default::default()
         }),
-        |_| as_folder(AngularTransformVisitor::new()),
+        |_| as_folder(AngularTransformVisitor::default()),
         replace_urls_in_component_decorator_only,
         // Input codes
         r#"
@@ -227,7 +215,7 @@ mod tests {
             decorators: true,
             ..Default::default()
         }),
-        |_| as_folder(AngularTransformVisitor::new()),
+        |_| as_folder(AngularTransformVisitor::default()),
         replace_urls_in_ts_decorate,
         // Input codes
         r#"
