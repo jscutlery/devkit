@@ -1,3 +1,15 @@
+## 0.3.0 (2024-03-26)
+
+
+### 🚀 Features
+
+- **swc-plugin-angular:** ✨ transform required signal-inputs ([83f4b3e](https://github.com/jscutlery/devkit/commit/83f4b3e))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.2.0 (2024-03-26)
 
 
