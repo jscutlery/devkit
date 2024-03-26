@@ -1,7 +1,11 @@
 use swc_core::{
     atoms::Atom,
-    ecma::visit::{VisitMut, VisitMutWith},
+    ecma::{
+        ast::Str,
+        visit::{VisitMut, VisitMutWith},
+    },
 };
+use swc_ecma_utils::{ExprExt, ExprFactory};
 
 #[derive(Default)]
 pub struct InputVisitor {
@@ -16,7 +20,6 @@ struct InputInfo {
 
 impl VisitMut for InputVisitor {
     fn visit_mut_class_decl(&mut self, node: &mut swc_core::ecma::ast::ClassDecl) {
-        println!("ClassDecl: {:?}", node.ident.sym);
         self.current_component = node.ident.sym.clone();
         node.visit_mut_children_with(self);
     }
@@ -26,7 +29,7 @@ impl VisitMut for InputVisitor {
             if let Some(ident) = node
                 .value
                 .as_ref()
-                .and_then(|v| v.as_call())
+                .and_then(|v| v.as_expr().as_call())
                 .and_then(|c| c.callee.as_expr())
                 .and_then(|e| e.as_ident())
             {
@@ -42,6 +45,26 @@ impl VisitMut for InputVisitor {
 
     fn visit_mut_module(&mut self, module: &mut swc_core::ecma::ast::Module) {
         module.visit_mut_children_with(self);
+
+        for input_info in &self.inputs {
+            let component = input_info.component.as_str();
+            let input_name = input_info.name.as_str();
+            let raw = Str {
+                span: Default::default(),
+                value: "".into(),
+                raw: Some(
+                    format!(
+                        r#"_ts_decorate([
+    require("@angular/core").Input({{
+        isSignal: true
+    }})
+], {component}.prototype, "{input_name}")"#
+                    )
+                    .into(),
+                ),
+            };
+            module.body.push(raw.into_stmt().into());
+        }
     }
 }
 
@@ -53,7 +76,6 @@ mod tests {
     use super::InputVisitor;
 
     test_inline!(
-        ignore,
         Syntax::Typescript(TsConfig::default()),
         |_| as_folder(InputVisitor::default()),
         decorate_input,
@@ -68,9 +90,7 @@ mod tests {
           myInput = input();
           anotherProperty = 'hello';
         }
-        _ts_decorate([
-          Input({isSignal: true})
-        ], MyCmp.prototype, "myInput");
+        _ts_decorate([require("@angular/core").Input({isSignal: true})], MyCmp.prototype, "myInput");
         "#
     );
 }
