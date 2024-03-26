@@ -1,11 +1,34 @@
-# swc-angular-preset
+# @jscutlery/swc-angular-preset
 
-This library was generated with [Nx](https://nx.dev).
+SWC preset for testing Angular projects in conjunction with `@swc/jest`.
 
-## Building
+## Installation
 
-Run `nx build swc-angular-preset` to build the library.
+Install this preset via npm:
 
-## Running unit tests
+```bash
+npm install @jscutlery/swc-angular-preset -D
+```
 
-Run `nx test swc-angular-preset` to execute the unit tests via [Vitest](https://vitest.dev/).
+## Usage
+
+In your Jest configuration file (e.g., `jest.config.js`), include `@swc/jest` and `@jscutlery/swc-angular-preset` in the list of transformers:
+
+```js
+import swcAngularPreset from '@jscutlery/swc-angular-preset';
+
+export default {
+  transform: {
+    '^.+\\.(ts|mjs|js)$': ['@swc/jest', swcAngularPreset],
+    '^.+\\.(html)$': [
+      'jest-preset-angular',
+      {
+        tsconfig: '<rootDir>/tsconfig.spec.json',
+        stringifyContentPathRegex: '\\.(html|svg)$',
+      },
+    ],
+  },
+};
+```
+
+For TypeScript, JavaScript, and MJS (ES module) files, `@swc/jest` is used for transformation which ensures efficient transformation of files in your Angular project.
