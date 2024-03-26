@@ -10,7 +10,17 @@ describe('swc-plugin-angular', () => {
   it('should pass inputs to children', () => {
     const fixture = TestBed.createComponent(TestInputsComponent);
     fixture.autoDetectChanges();
-    expect(fixture.nativeElement.textContent).toBe('Hello inputs!');
+
+    const body = fixture.nativeElement.querySelector('p');
+    expect(body.textContent).toBe('Hello body!');
+  });
+
+  it('should pass required inputs to children', () => {
+    const fixture = TestBed.createComponent(TestInputsComponent);
+    fixture.autoDetectChanges();
+
+    const title = fixture.nativeElement.querySelector('h1');
+    expect(title.textContent).toBe('Hello title!');
   });
 });
 
@@ -24,17 +34,22 @@ class TestComponent {}
 @Component({
   standalone: true,
   selector: 'lib-child',
-  template: `<h1>{{ title() }}</h1>`,
+  template: `
+    <h1>{{ title() }}</h1>
+    <p>{{ body() }}</p>
+  `,
 })
 class TitleComponent {
-  title = input<string>();
+  title = input.required<string>();
+  body = input<string>();
 }
 
 @Component({
   standalone: true,
   imports: [TitleComponent],
-  template: `<lib-child [title]="title" />`,
+  template: `<lib-child [title]="title" [body]="body" />`,
 })
 class TestInputsComponent {
-  title = 'Hello inputs!';
+  title = 'Hello title!';
+  body = 'Hello body!';
 }
