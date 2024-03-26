@@ -1,3 +1,5 @@
+import type { Config } from '@swc/core';
+
 export default {
   jsc: {
     parser: {
@@ -14,4 +16,4 @@ export default {
       plugins: [['@jscutlery/swc-plugin-angular', {}]],
     },
   },
-};
+} satisfies Config;
