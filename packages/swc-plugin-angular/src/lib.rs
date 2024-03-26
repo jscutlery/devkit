@@ -6,6 +6,7 @@ use swc_core::plugin::{plugin_transform, proxies::TransformPluginProgramMetadata
 use component_decorator_visitor::ComponentDecoratorVisitor;
 
 mod component_decorator_visitor;
+mod input_visitor;
 
 #[plugin_transform]
 pub fn process_transform(program: Program, _metadata: TransformPluginProgramMetadata) -> Program {
