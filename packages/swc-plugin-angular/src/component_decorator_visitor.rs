@@ -105,13 +105,10 @@ impl VisitMut for ComponentDecoratorVisitor {
 mod tests {
     use swc_core::ecma::{transforms::testing::test_inline, visit::as_folder};
     use swc_ecma_parser::{Syntax, TsConfig};
-    use crate::component_decorator_visitor::ComponentDecoratorVisitor;
+    use super::ComponentDecoratorVisitor;
 
     test_inline!(
-        Syntax::Typescript(TsConfig {
-            decorators: true,
-            ..Default::default()
-        }),
+        Syntax::Typescript(TsConfig::default()),
         |_| as_folder(ComponentDecoratorVisitor::default()),
         replace_urls,
         // Input codes
