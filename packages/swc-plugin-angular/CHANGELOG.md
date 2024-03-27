@@ -1,3 +1,15 @@
+## 0.3.1 (2024-03-27)
+
+
+### 🩹 Fixes
+
+- **swc-plugin-angular:** 🐞 handle `templateUrl` not starting with `./` ([9695f37](https://github.com/jscutlery/devkit/commit/9695f37))
+
+
+### ❤️  Thank You
+
+- Edouard Bozon @edbzn
+
 ## 0.3.0 (2024-03-26)
 
 
