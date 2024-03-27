@@ -1,16 +1,15 @@
 use swc_core::atoms::Atom;
-use swc_core::ecma::visit::{VisitMut, VisitMutWith};
 use swc_core::ecma::ast::{ArrayLit, CallExpr, Expr, ExprOrSpread, Ident, Lit, PropName, Str};
+use swc_core::ecma::visit::{VisitMut, VisitMutWith};
 use swc_ecma_utils::ExprFactory;
 
 #[derive(Default)]
 pub struct ComponentDecoratorVisitor {
     is_in_component_call: bool,
-    is_in_decorator: bool
+    is_in_decorator: bool,
 }
 
 impl VisitMut for ComponentDecoratorVisitor {
-
     fn visit_mut_call_expr(&mut self, node: &mut swc_core::ecma::ast::CallExpr) {
         /* Locate `_ts_decorate`. */
         if let Some(ident) = node.callee.as_expr().and_then(|e| e.as_ident()) {
@@ -18,7 +17,7 @@ impl VisitMut for ComponentDecoratorVisitor {
                 self.is_in_decorator = true;
                 node.visit_mut_children_with(self);
                 self.is_in_decorator = false;
-                return
+                return;
             }
         }
 
@@ -29,7 +28,7 @@ impl VisitMut for ComponentDecoratorVisitor {
                     self.is_in_component_call = true;
                     node.visit_mut_children_with(self);
                     self.is_in_component_call = false;
-                    return
+                    return;
                 }
             }
         }
@@ -39,7 +38,7 @@ impl VisitMut for ComponentDecoratorVisitor {
 
     fn visit_mut_key_value_prop(&mut self, node: &mut swc_core::ecma::ast::KeyValueProp) {
         if !self.is_in_component_call {
-            return
+            return;
         }
 
         /* Ignore non-string keys if people start getting crazy and adding
@@ -47,7 +46,7 @@ impl VisitMut for ComponentDecoratorVisitor {
         let key = node.key.clone();
         let key = match key.as_ident() {
             Some(key) => key,
-            _ => return
+            _ => return,
         };
 
         if key.sym.eq("styleUrl") {
@@ -56,7 +55,11 @@ impl VisitMut for ComponentDecoratorVisitor {
                 span: Default::default(),
                 optional: false,
             });
-            node.value = Expr::Array(ArrayLit { span: Default::default(), elems: vec![] }).into();
+            node.value = Expr::Array(ArrayLit {
+                span: Default::default(),
+                elems: vec![],
+            })
+            .into();
         }
 
         if key.sym.eq("styleUrls") {
@@ -65,7 +68,11 @@ impl VisitMut for ComponentDecoratorVisitor {
                 span: Default::default(),
                 optional: false,
             });
-            node.value = Expr::Array(ArrayLit { span: Default::default(), elems: vec![] }).into();
+            node.value = Expr::Array(ArrayLit {
+                span: Default::default(),
+                elems: vec![],
+            })
+            .into();
         }
 
         if key.sym.eq("templateUrl") {
@@ -77,7 +84,7 @@ impl VisitMut for ComponentDecoratorVisitor {
 
             let value = match &*node.value {
                 Expr::Lit(Lit::Str(s)) => s.value.as_ref(),
-                _ => panic!("templateUrl value is not a string")
+                _ => panic!("templateUrl value is not a string"),
             };
 
             node.value = Expr::Call(CallExpr {
@@ -86,7 +93,8 @@ impl VisitMut for ComponentDecoratorVisitor {
                     sym: "require".into(),
                     span: Default::default(),
                     optional: false,
-                }).as_callee(),
+                })
+                .as_callee(),
                 args: vec![ExprOrSpread {
                     spread: None,
                     expr: Lit::Str(Str {
@@ -94,25 +102,26 @@ impl VisitMut for ComponentDecoratorVisitor {
                         /* In some cases, the templateUrl value might not start with "./" causing the require call to fail,
                          * to be fully backward compatible we need to append "./" */
                         value: if value.starts_with("./") {
-                          value.into()
+                            value.into()
                         } else {
                             Atom::from(format!("./{}", value))
                         },
                         raw: None,
-                    }).into(),
+                    })
+                    .into(),
                 }],
                 type_args: None,
-            }).into();
-
+            })
+            .into();
         }
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use super::ComponentDecoratorVisitor;
     use swc_core::ecma::{transforms::testing::test_inline, visit::as_folder};
     use swc_ecma_parser::{Syntax, TsConfig};
-    use super::ComponentDecoratorVisitor;
 
     test_inline!(
         Syntax::Typescript(TsConfig::default()),
