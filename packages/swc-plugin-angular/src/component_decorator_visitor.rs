@@ -1,3 +1,4 @@
+use swc_core::atoms::Atom;
 use swc_core::ecma::visit::{VisitMut, VisitMutWith};
 use swc_core::ecma::ast::{ArrayLit, CallExpr, Expr, ExprOrSpread, Ident, Lit, PropName, Str};
 use swc_ecma_utils::ExprFactory;
@@ -90,7 +91,13 @@ impl VisitMut for ComponentDecoratorVisitor {
                     spread: None,
                     expr: Lit::Str(Str {
                         span: Default::default(),
-                        value: value.into(),
+                        /* In some cases, the templateUrl value might not start with "./" causing the require call to fail,
+                         * to be fully backward compatible we need to append "./" */
+                        value: if value.starts_with("./") {
+                          value.into()
+                        } else {
+                            Atom::from(format!("./{}", value))
+                        },
                         raw: None,
                     }).into(),
                 }],
@@ -222,6 +229,31 @@ mod tests {
             Component({
                 selector: 'app-hello',
                 styles: [],
+                template: require("./hello.component.html")
+            })
+        ], MyCmp);"#
+    );
+
+    test_inline!(
+        Syntax::Typescript(TsConfig {
+            decorators: true,
+            ..Default::default()
+        }),
+        |_| as_folder(ComponentDecoratorVisitor::default()),
+        append_relative_path_to_template_url,
+        r#"
+        class MyCmp {}
+        MyCmp = _ts_decorate([
+            Component({
+                selector: 'app-hello',
+                templateUrl: 'hello.component.html'
+            })
+        ], MyCmp);"#,
+        r#"
+        class MyCmp {}
+        MyCmp = _ts_decorate([
+            Component({
+                selector: 'app-hello',
                 template: require("./hello.component.html")
             })
         ], MyCmp);"#
