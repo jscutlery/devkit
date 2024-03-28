@@ -10,12 +10,48 @@ use swc_core::ecma::ast::Lit::Str as LitStr;
 use swc_core::ecma::ast::Prop;
 use swc_core::ecma::visit::{Visit, VisitWith};
 use swc_ecma_utils::{ExprExt, ExprFactory};
-use swc_ecma_utils::swc_ecma_ast::Expr;
+use swc_ecma_utils::swc_ecma_ast::{Expr, Stmt};
 
 #[derive(Default)]
 pub struct InputVisitor {
     inputs: Vec<InputInfo>,
     current_component: Atom,
+}
+
+impl InputVisitor {
+    fn flush_input_decorators(&mut self) -> Vec<Stmt> {
+        let mut statements: Vec<Stmt> = Vec::with_capacity(self.inputs.len());
+        for input_info in &self.inputs {
+            let alias = match &input_info.alias {
+                Some(alias) => format!(r#""{alias}""#),
+                None => "undefined".to_string(),
+            };
+
+            let raw = formatdoc! {
+                r#"_ts_decorate([
+                    require("@angular/core").Input({{
+                        isSignal: true,
+                        alias: {alias},
+                        required: {required}
+                    }})
+                ], {component}.prototype, "{name}")"#,
+                alias = alias,
+                component = input_info.component,
+                name = input_info.name,
+                required = input_info.required
+            };
+
+            statements.push(Str {
+                span: Default::default(),
+                value: "".into(),
+                raw: Some(raw.as_str().into()),
+            }.into_stmt());
+        }
+
+        self.inputs.clear();
+
+        statements
+    }
 }
 
 impl VisitMut for InputVisitor {
@@ -59,7 +95,7 @@ impl VisitMut for InputVisitor {
         /* Parse input options. */
         let mut input_options_visitor = InputOptionsVisitor::default();
 
-        /* Options are either the first or second parameter depending depending on whether
+        /* Options are either the first or second parameter depending on whether
          * the input is required.
          * e.g. input.required({alias: '...'}) or input(default, {alias: '...'}) */
         if let Some(options) = if required { call.args.first() } else { call.args.get(1) } {
@@ -77,31 +113,10 @@ impl VisitMut for InputVisitor {
     fn visit_mut_module(&mut self, module: &mut swc_core::ecma::ast::Module) {
         module.visit_mut_children_with(self);
 
-        for input_info in &self.inputs {
-            let alias = match &input_info.alias {
-                Some(alias) => format!(r#""{alias}""#),
-                None => "undefined".to_string(),
-            };
+        let statements = self.flush_input_decorators();
 
-            let raw = formatdoc! {
-                r#"_ts_decorate([
-                    require("@angular/core").Input({{
-                        isSignal: true,
-                        alias: {alias},
-                        required: {required}
-                    }})
-                ], {component}.prototype, "{name}")"#,
-                alias = alias,
-                component = input_info.component,
-                name = input_info.name,
-                required = input_info.required
-            };
-
-            module.body.push(Str {
-                span: Default::default(),
-                value: "".into(),
-                raw: Some(raw.as_str().into()),
-            }.into_stmt().into());
+        for statement in statements {
+            module.body.push(statement.into());
         }
     }
 }
