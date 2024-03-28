@@ -11,5 +11,6 @@ serde = "1"
 swc_core = { version = "0.90.24", features = ["ecma_plugin_transform"] }
 swc_ecma_parser = { version = "0.143.10", features = ["typescript"] }
 swc_ecma_utils = "0.127.14"
+indoc = "2.0.5"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

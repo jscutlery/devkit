@@ -1,3 +1,4 @@
+use indoc::formatdoc;
 use swc_core::{
     atoms::Atom,
     ecma::{
@@ -5,8 +6,8 @@ use swc_core::{
         visit::{VisitMut, VisitMutWith},
     },
 };
-use swc_ecma_utils::swc_ecma_ast::Expr;
 use swc_ecma_utils::{ExprExt, ExprFactory};
+use swc_ecma_utils::swc_ecma_ast::Expr;
 
 #[derive(Default)]
 pub struct InputVisitor {
@@ -71,27 +72,23 @@ impl VisitMut for InputVisitor {
         for input_info in &self.inputs {
             let component = input_info.component.as_str();
             let input_name = input_info.name.as_str();
-            let required_str = if input_info.required {
-                r#",
-        required: true"#
-            } else {
-                ""
+            let raw = formatdoc! {
+                r#"_ts_decorate([
+                    require("@angular/core").Input({{
+                        isSignal: true,
+                        required: {required}
+                    }})
+                ], {component}.prototype, "{input_name}")"#,
+                component = component,
+                input_name = input_name,
+                required = input_info.required
             };
-            let raw = Str {
+
+            module.body.push(Str {
                 span: Default::default(),
                 value: "".into(),
-                raw: Some(
-                    format!(
-                        r#"_ts_decorate([
-    require("@angular/core").Input({{
-        isSignal: true{required_str}
-    }})
-], {component}.prototype, "{input_name}")"#
-                    )
-                    .into(),
-                ),
-            };
-            module.body.push(raw.into_stmt().into());
+                raw: Some(raw.as_str().into())
+            }.into_stmt().into());
         }
     }
 }
@@ -118,7 +115,7 @@ mod tests {
           myInput = input();
           anotherProperty = 'hello';
         }
-        _ts_decorate([require("@angular/core").Input({isSignal: true})], MyCmp.prototype, "myInput");
+        _ts_decorate([require("@angular/core").Input({isSignal: true, required: false})], MyCmp.prototype, "myInput");
         "#
     );
 
