@@ -1159,11 +1159,13 @@ dependencies = [
 name = "swc-plugin-angular"
 version = "0.1.0"
 dependencies = [
+ "ansi_term",
  "indoc",
  "serde",
  "swc_core",
  "swc_ecma_parser",
  "swc_ecma_utils",
+ "testing",
 ]
 
 [[package]]

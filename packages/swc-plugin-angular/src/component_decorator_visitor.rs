@@ -119,152 +119,123 @@ impl VisitMut for ComponentDecoratorVisitor {
 
 #[cfg(test)]
 mod tests {
+    use indoc::indoc;
+
+    use crate::testing::test_visitor;
+
     use super::ComponentDecoratorVisitor;
-    use swc_core::ecma::{transforms::testing::test_inline, visit::as_folder};
-    use swc_ecma_parser::{Syntax, TsConfig};
 
-    test_inline!(
-        Syntax::Typescript(TsConfig::default()),
-        |_| as_folder(ComponentDecoratorVisitor::default()),
-        replace_urls,
-        // Input codes
-        r#"
-        class MyCmp {}
-        MyCmp = _ts_decorate([
-            Component({
-                selector: 'app-hello',
-                styleUrls: ['./style.css'],
-                templateUrl: './hello.component.html'
-            })
-        ], MyCmp);"#,
-        // Output codes after transformed with plugin
-        r#"
-        class MyCmp {}
-        MyCmp = _ts_decorate([
-            Component({
-                selector: 'app-hello',
-                styles: [],
-                template: require("./hello.component.html")
-            }),
-        ], MyCmp);"#
-    );
+    #[test]
+    fn test_replace_urls() {
+        test_visitor(
+            ComponentDecoratorVisitor::default(),
+            indoc! {
+            r#"class MyCmp {}
+            MyCmp = _ts_decorate([
+                Component({
+                    selector: 'app-hello',
+                    styleUrls: ['./style.css'],
+                    templateUrl: './hello.component.html'
+                })
+            ], MyCmp);"# },
+            indoc! {
+            r#"class MyCmp {
+            }
+            MyCmp = _ts_decorate([
+                Component({
+                    selector: 'app-hello',
+                    styles: [],
+                    template: require("./hello.component.html")
+                })
+            ], MyCmp);
+            "# });
+    }
 
-    test_inline!(
-        Syntax::Typescript(TsConfig {
-            decorators: true,
-            ..Default::default()
-        }),
-        |_| as_folder(ComponentDecoratorVisitor::default()),
-        replace_style_url,
-        // Input codes
-        r#"
-        class MyCmp {}
-        MyCmp = _ts_decorate([
-            Component({
-                selector: 'app-hello',
-                styleUrl: './style.css',
-                templateUrl: './hello.component.html'
-            })
-        ], MyCmp);"#,
-        // Output codes after transformed with plugin
-        r#"
-        class MyCmp {}
-        MyCmp = _ts_decorate([
-            Component({
-                selector: 'app-hello',
-                styles: [],
-                template: require("./hello.component.html")
-            })
-        ], MyCmp);"#
-    );
+    #[test]
+    fn test_replace_style_url() {
+        test_visitor(
+            ComponentDecoratorVisitor::default(),
+            indoc! {
+            r#"class MyCmp {}
+            MyCmp = _ts_decorate([
+                Component({
+                    selector: 'app-hello',
+                    styleUrl: './style.css',
+                    templateUrl: './hello.component.html'
+                })
+            ], MyCmp);"# },
+            indoc! {
+            r#"class MyCmp {
+            }
+            MyCmp = _ts_decorate([
+                Component({
+                    selector: 'app-hello',
+                    styles: [],
+                    template: require("./hello.component.html")
+                })
+            ], MyCmp);
+            "# });
+    }
 
-    test_inline!(
-        Syntax::Typescript(TsConfig {
-            decorators: true,
-            ..Default::default()
-        }),
-        |_| as_folder(ComponentDecoratorVisitor::default()),
-        replace_urls_in_component_decorator_only,
-        r#"
-        const something = {templateUrl: './this-is-an-unrelated-template-url.html'};
-        class MyCmp {}
-        MyCmp = _ts_decorate([
-            Component({
-                selector: 'app-hello',
-                styleUrls: ['./style.css'],
-                templateUrl: './hello.component.html'
-            }),
-            MyDecorator({
+    #[test]
+    fn test_replace_urls_in_component_decorator_only() {
+        test_visitor(
+            ComponentDecoratorVisitor::default(),
+            indoc! {
+            r#"const something = {
                 templateUrl: './this-is-an-unrelated-template-url.html'
-            })
-        ], MyCmp);"#,
-        r#"
-        const something = {templateUrl: './this-is-an-unrelated-template-url.html'};
-        class MyCmp {}
-        MyCmp = _ts_decorate([
-            Component({
-                selector: 'app-hello',
-                styles: [],
-                template: require("./hello.component.html")
-            }),
-            MyDecorator({
+            };
+            class MyCmp {}
+            MyCmp = _ts_decorate([
+                Component({
+                    selector: 'app-hello',
+                    styleUrls: ['./style.css'],
+                    templateUrl: './hello.component.html'
+                }),
+                MyDecorator({
+                    templateUrl: './this-is-an-unrelated-template-url.html'
+                })
+            ], MyCmp);"# },
+            indoc! {
+            r#"const something = {
                 templateUrl: './this-is-an-unrelated-template-url.html'
-            })
-        ], MyCmp);"#
-    );
+            };
+            class MyCmp {
+            }
+            MyCmp = _ts_decorate([
+                Component({
+                    selector: 'app-hello',
+                    styles: [],
+                    template: require("./hello.component.html")
+                }),
+                MyDecorator({
+                    templateUrl: './this-is-an-unrelated-template-url.html'
+                })
+            ], MyCmp);
+            "# });
+    }
 
-    /* Actually, SWC transforms decorators before running the plugin.
-     * That is why we have to handle the case where decorators are already transformed
-     * to `_ts_decorate` function calls. */
-    test_inline!(
-        Syntax::Typescript(TsConfig {
-            decorators: true,
-            ..Default::default()
-        }),
-        |_| as_folder(ComponentDecoratorVisitor::default()),
-        replace_urls_in_ts_decorate,
-        r#"
-        class MyCmp {}
-        MyCmp = _ts_decorate([
-            Component({
-                selector: 'app-hello',
-                styleUrls: ['./style.css'],
-                templateUrl: './hello.component.html'
-            })
-        ], MyCmp);"#,
-        r#"
-        class MyCmp {}
-        MyCmp = _ts_decorate([
-            Component({
-                selector: 'app-hello',
-                styles: [],
-                template: require("./hello.component.html")
-            })
-        ], MyCmp);"#
-    );
-
-    test_inline!(
-        Syntax::Typescript(TsConfig {
-            decorators: true,
-            ..Default::default()
-        }),
-        |_| as_folder(ComponentDecoratorVisitor::default()),
-        append_relative_path_to_template_url,
-        r#"
-        class MyCmp {}
-        MyCmp = _ts_decorate([
-            Component({
-                selector: 'app-hello',
-                templateUrl: 'hello.component.html'
-            })
-        ], MyCmp);"#,
-        r#"
-        class MyCmp {}
-        MyCmp = _ts_decorate([
-            Component({
-                selector: 'app-hello',
-                template: require("./hello.component.html")
-            })
-        ], MyCmp);"#
-    );
+    #[test]
+    fn test_append_relative_path_to_template_url() {
+        test_visitor(
+            ComponentDecoratorVisitor::default(),
+            indoc! {
+            r#"class MyCmp {}
+            MyCmp = _ts_decorate([
+                Component({
+                    selector: 'app-hello',
+                    templateUrl: 'hello.component.html'
+                })
+            ], MyCmp);"# },
+            indoc! {
+            r#"class MyCmp {
+            }
+            MyCmp = _ts_decorate([
+                Component({
+                    selector: 'app-hello',
+                    template: require("./hello.component.html")
+                })
+            ], MyCmp);
+            "# });
+    }
 }

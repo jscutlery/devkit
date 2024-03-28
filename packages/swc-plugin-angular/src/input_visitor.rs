@@ -135,96 +135,94 @@ impl Visit for InputOptionsVisitor {
 
 #[cfg(test)]
 mod tests {
-    use swc_core::ecma::{transforms::testing::test_inline, visit::as_folder};
-    use swc_ecma_parser::{Syntax, TsConfig};
+    use indoc::indoc;
+
+    use crate::testing::test_visitor;
 
     use super::InputVisitor;
 
-    test_inline!(
-        Syntax::Typescript(TsConfig::default()),
-        |_| as_folder(InputVisitor::default()),
-        decorate_input,
-        r#"
-        class MyCmp {
-          myInput = input();
-          anotherProperty = 'hello';
-        }
-        "#,
-        r#"
-        class MyCmp {
-          myInput = input();
-          anotherProperty = 'hello';
-        }
-        _ts_decorate([
-            require("@angular/core").Input({
-                isSignal: true,
-                alias: undefined,
-                required: false
-            })
-        ], MyCmp.prototype, "myInput");
-        "#
-    );
+    #[test]
+    fn test_input() {
+        test_visitor(
+            InputVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+              myInput = input();
+              anotherProperty = 'hello';
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                myInput = input();
+                anotherProperty = 'hello';
+            }
+            _ts_decorate([
+                require("@angular/core").Input({
+                    isSignal: true,
+                    alias: undefined,
+                    required: false
+                })
+            ], MyCmp.prototype, "myInput");
+            "# });
+    }
 
-    test_inline!(
-        Syntax::Typescript(TsConfig::default()),
-        |_| as_folder(InputVisitor::default()),
-        decorate_input_required,
-        r#"
-        class MyCmp {
-          myInput = input.required();
-          anotherProperty = 'hello';
-        }
-        "#,
-        r#"
-        class MyCmp {
-          myInput = input.required();
-          anotherProperty = 'hello';
-        }
-        _ts_decorate([
-            require("@angular/core").Input({
-                isSignal: true,
-                alias: undefined,
-                required: true
-            })
-        ], MyCmp.prototype, "myInput");
-        "#
-    );
+    #[test]
+    fn test_input_required() {
+        test_visitor(
+            InputVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                myInput = input.required();
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                myInput = input.required();
+            }
+            _ts_decorate([
+                require("@angular/core").Input({
+                    isSignal: true,
+                    alias: undefined,
+                    required: true
+                })
+            ], MyCmp.prototype, "myInput");
+            "# });
+    }
 
-    test_inline!(
-        Syntax::Typescript(TsConfig::default()),
-        |_| as_folder(InputVisitor::default()),
-        decorate_input_alias,
-        r#"
-        class MyCmp {
-          aliasedInput = input(undefined, {alias: 'myInputAlias'});
-          nonAliasedInput = input({
-            alias: 'this_is_a_default_value_not_an_alias'
-          });
-          anotherProperty = 'hello';
-        }
-        "#,
-        r#"
-        class MyCmp {
-          aliasedInput = input(undefined, {alias: 'myInputAlias'});
-          nonAliasedInput = input({
-            alias: 'this_is_a_default_value_not_an_alias'
-          });
-          anotherProperty = 'hello';
-        }
-        _ts_decorate([
-            require("@angular/core").Input({
-                isSignal: true,
-                alias: "myInputAlias",
-                required: false
-            })
-        ], MyCmp.prototype, "aliasedInput");
-        _ts_decorate([
-            require("@angular/core").Input({
-                isSignal: true,
-                alias: undefined,
-                required: false
-            })
-        ], MyCmp.prototype, "nonAliasedInput");
-        "#
-    );
+    #[test]
+    fn test_input_alias() {
+        test_visitor(
+            InputVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                aliasedInput = input(undefined, {
+                    alias: 'myInputAlias'
+                });
+                nonAliasedInput = input({
+                  alias: 'this_is_a_default_value_not_an_alias'
+                });
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                aliasedInput = input(undefined, {
+                    alias: 'myInputAlias'
+                });
+                nonAliasedInput = input({
+                    alias: 'this_is_a_default_value_not_an_alias'
+                });
+            }
+            _ts_decorate([
+                require("@angular/core").Input({
+                    isSignal: true,
+                    alias: "myInputAlias",
+                    required: false
+                })
+            ], MyCmp.prototype, "aliasedInput");
+            _ts_decorate([
+                require("@angular/core").Input({
+                    isSignal: true,
+                    alias: undefined,
+                    required: false
+                })
+            ], MyCmp.prototype, "nonAliasedInput");
+            "# });
+    }
 }
