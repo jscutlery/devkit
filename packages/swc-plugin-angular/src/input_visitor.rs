@@ -18,33 +18,6 @@ pub struct InputVisitor {
     current_component: Atom,
 }
 
-struct InputInfo {
-    component: Atom,
-    name: Atom,
-    alias: Option<String>,
-    required: bool,
-}
-
-#[derive(Default)]
-struct InputOptionsVisitor {
-    alias: Option<String>,
-}
-
-impl Visit for InputOptionsVisitor {
-    fn visit_prop(&mut self, prop: &Prop) {
-        let key_value = match prop.as_key_value() {
-            Some(key_value) => key_value,
-            None => return,
-        };
-
-        if let Some(true) = key_value.key.as_ident().map(|key| key.sym.eq("alias")) {
-            if let Some(LitStr(str)) = key_value.value.as_lit() {
-                self.alias = Some(str.value.as_str().to_string());
-            }
-        }
-    }
-}
-
 impl VisitMut for InputVisitor {
     fn visit_mut_class_decl(&mut self, node: &mut swc_core::ecma::ast::ClassDecl) {
         self.current_component = node.ident.sym.clone();
@@ -116,6 +89,33 @@ impl VisitMut for InputVisitor {
                 value: "".into(),
                 raw: Some(raw.as_str().into()),
             }.into_stmt().into());
+        }
+    }
+}
+
+struct InputInfo {
+    component: Atom,
+    name: Atom,
+    alias: Option<String>,
+    required: bool,
+}
+
+#[derive(Default)]
+struct InputOptionsVisitor {
+    alias: Option<String>,
+}
+
+impl Visit for InputOptionsVisitor {
+    fn visit_prop(&mut self, prop: &Prop) {
+        let key_value = match prop.as_key_value() {
+            Some(key_value) => key_value,
+            None => return,
+        };
+
+        if let Some(true) = key_value.key.as_ident().map(|key| key.sym.eq("alias")) {
+            if let Some(LitStr(str)) = key_value.value.as_lit() {
+                self.alias = Some(str.value.as_str().to_string());
+            }
         }
     }
 }
