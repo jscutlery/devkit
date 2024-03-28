@@ -43,7 +43,7 @@ impl VisitMut for InputVisitor {
             None => return,
         };
 
-        match *value_expr.clone() {
+        match value_expr.as_expr() {
             Expr::Ident(ident) if ident.sym.eq("input") => {
                 self.inputs.push(InputInfo {
                     component: self.current_component.clone(),
@@ -53,7 +53,7 @@ impl VisitMut for InputVisitor {
             }
             Expr::Member(member) => {
                 if member.obj.as_ident().map_or(false, |i| i.sym.eq("input"))
-                    && member.prop.ident().map_or(false, |i| i.sym.eq("required"))
+                    && member.prop.clone().ident().map_or(false, |i| i.sym.eq("required"))
                 {
                     self.inputs.push(InputInfo {
                         component: self.current_component.clone(),
