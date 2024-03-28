@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 describe('swc-plugin-angular', () => {
@@ -22,6 +22,25 @@ describe('swc-plugin-angular', () => {
     const title = fixture.nativeElement.querySelector('h1');
     expect(title.textContent).toBe('Hello title!');
   });
+
+  it.todo('should pass aliased inputs to children', () => {
+    const { title } = render(AliasContainerComponent);
+    expect(title).toBe('Hello alias!');
+  });
+
+  it.todo('should pass required aliases inputs to children', () => {
+    const { title } = render(AliasRequiredContainerComponent);
+    expect(title).toBe('Hello alias!');
+  });
+
+  function render(cmpType: Type<unknown>) {
+    const fixture = TestBed.createComponent(cmpType);
+    fixture.autoDetectChanges();
+
+    return {
+      title: fixture.nativeElement.querySelector('h1')?.textContent
+    }
+  }
 });
 
 @Component({
@@ -52,4 +71,40 @@ class TitleComponent {
 class TestInputsComponent {
   title = 'Hello title!';
   body = 'Hello body!';
+}
+
+@Component({
+  standalone: true,
+  selector: 'lib-title',
+  template: `<h1>Hello {{ myTitle() }}!</h1>`,
+})
+class AliasTitleComponent {
+  myTitle = input<string | undefined>(undefined, {alias: 'title'});
+}
+
+@Component({
+  standalone: true,
+  imports: [AliasTitleComponent],
+  template: '<lib-title [title]="title"/>',
+})
+class AliasContainerComponent {
+  title = 'alias';
+}
+
+@Component({
+  standalone: true,
+  selector: 'lib-title',
+  template: `<h1>Hello {{ myTitle() }}!</h1>`,
+})
+class AliasRequiredTitleComponent {
+  myTitle = input.required<string>( {alias: 'title'});
+}
+
+@Component({
+  standalone: true,
+  imports: [AliasRequiredTitleComponent],
+  template: '<lib-title [title]="title"/>',
+})
+class AliasRequiredContainerComponent {
+  title = 'alias';
 }
