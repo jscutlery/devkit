@@ -39,10 +39,6 @@ impl VisitMut for InputVisitor {
             None => return,
         };
 
-        /* Parse input options. */
-        let mut input_options_visitor = InputOptionsVisitor::default();
-        call.args.visit_children_with(&mut input_options_visitor);
-
         let callee = match call.callee.as_expr()
         {
             Some(value_expr) => value_expr,
@@ -60,6 +56,16 @@ impl VisitMut for InputVisitor {
             _ => return,
         };
 
+        /* Parse input options. */
+        let mut input_options_visitor = InputOptionsVisitor::default();
+
+        /* Options are either the first or second parameter depending depending on whether
+         * the input is required.
+         * e.g. input.required({alias: '...'}) or input(default, {alias: '...'}) */
+        if let Some(options) = if required { call.args.first() } else { call.args.get(1) } {
+            options.visit_children_with(&mut input_options_visitor);
+        }
+
         self.inputs.push(InputInfo {
             component: self.current_component.clone(),
             name: key_ident.sym.clone(),
@@ -72,13 +78,20 @@ impl VisitMut for InputVisitor {
         module.visit_mut_children_with(self);
 
         for input_info in &self.inputs {
+            let alias = match &input_info.alias {
+                Some(alias) => format!(r#""{alias}""#),
+                None => "undefined".to_string(),
+            };
+
             let raw = formatdoc! {
                 r#"_ts_decorate([
                     require("@angular/core").Input({{
                         isSignal: true,
+                        alias: {alias},
                         required: {required}
                     }})
                 ], {component}.prototype, "{name}")"#,
+                alias = alias,
                 component = input_info.component,
                 name = input_info.name,
                 required = input_info.required
@@ -142,7 +155,13 @@ mod tests {
           myInput = input();
           anotherProperty = 'hello';
         }
-        _ts_decorate([require("@angular/core").Input({isSignal: true, required: false})], MyCmp.prototype, "myInput");
+        _ts_decorate([
+            require("@angular/core").Input({
+                isSignal: true,
+                alias: undefined,
+                required: false
+            })
+        ], MyCmp.prototype, "myInput");
         "#
     );
 
@@ -162,28 +181,50 @@ mod tests {
           anotherProperty = 'hello';
         }
         _ts_decorate([
-            require("@angular/core").Input({isSignal: true, required: true})
+            require("@angular/core").Input({
+                isSignal: true,
+                alias: undefined,
+                required: true
+            })
         ], MyCmp.prototype, "myInput");
         "#
     );
 
     test_inline!(
-        ignore,
         Syntax::Typescript(TsConfig::default()),
         |_| as_folder(InputVisitor::default()),
         decorate_input_alias,
         r#"
         class MyCmp {
-          myInput = input({alias: 'myInputAlias'});
+          aliasedInput = input(undefined, {alias: 'myInputAlias'});
+          nonAliasedInput = input({
+            alias: 'this_is_a_default_value_not_an_alias'
+          });
           anotherProperty = 'hello';
         }
         "#,
         r#"
         class MyCmp {
-          myInput = input();
+          aliasedInput = input(undefined, {alias: 'myInputAlias'});
+          nonAliasedInput = input({
+            alias: 'this_is_a_default_value_not_an_alias'
+          });
           anotherProperty = 'hello';
         }
-        _ts_decorate([require("@angular/core").Input({alias: "myInputAlias", isSignal: true, required: false})], MyCmp.prototype, "myInput");
+        _ts_decorate([
+            require("@angular/core").Input({
+                isSignal: true,
+                alias: "myInputAlias",
+                required: false
+            })
+        ], MyCmp.prototype, "aliasedInput");
+        _ts_decorate([
+            require("@angular/core").Input({
+                isSignal: true,
+                alias: undefined,
+                required: false
+            })
+        ], MyCmp.prototype, "nonAliasedInput");
         "#
     );
 }

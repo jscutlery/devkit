@@ -23,12 +23,12 @@ describe('swc-plugin-angular', () => {
     expect(title.textContent).toBe('Hello title!');
   });
 
-  it.todo('should pass aliased inputs to children', () => {
+  it('should pass aliased inputs to children', () => {
     const { title } = render(AliasContainerComponent);
     expect(title).toBe('Hello alias!');
   });
 
-  it.todo('should pass required aliases inputs to children', () => {
+  it('should pass required aliases inputs to children', () => {
     const { title } = render(AliasRequiredContainerComponent);
     expect(title).toBe('Hello alias!');
   });
