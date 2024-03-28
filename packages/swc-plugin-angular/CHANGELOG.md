@@ -1,3 +1,15 @@
+## 0.4.0 (2024-03-28)
+
+
+### 🚀 Features
+
+- **swc-plugin-angular:** ✨ transform signal-inputs with alias ([77f7f1a](https://github.com/jscutlery/devkit/commit/77f7f1a))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.3.1 (2024-03-27)
 
 
