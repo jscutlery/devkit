@@ -1,3 +1,15 @@
+## 0.6.0 (2024-03-29)
+
+
+### 🚀 Features
+
+- **swc-plugin-angular:** ✨ transform model ([#292](https://github.com/jscutlery/devkit/pull/292))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.5.0 (2024-03-29)
 
 
