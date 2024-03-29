@@ -1,7 +1,7 @@
-use swc_core::ecma::ast::{CallExpr, ClassProp, Prop};
+use swc_core::ecma::ast::{ClassProp, Prop};
 use swc_core::ecma::visit::{Visit, VisitWith};
 
-use crate::utils::{get_prop_name_and_call, get_prop_value_as_string};
+use crate::utils::{get_angular_prop, get_prop_value_as_string};
 
 #[derive(Default)]
 pub struct OutputVisitor {
@@ -10,15 +10,18 @@ pub struct OutputVisitor {
 
 impl OutputVisitor {
     pub(crate) fn get_output_info(&mut self, class_prop: &ClassProp) -> Option<OutputInfo> {
-        let (input_name, call) = match get_prop_name_and_call(class_prop) {
+        let angular_prop = match get_angular_prop(class_prop, "output".into()) {
             Some(value) => value,
             None => return None,
         };
 
-        call.visit_with(self);
+        self.output_info = OutputInfo {
+            name: angular_prop.name,
+            ..Default::default()
+        }.into();
 
-        if let Some(output_info) = &mut self.output_info {
-            output_info.name = input_name;
+        if let Some(options) = angular_prop.args.first() {
+            options.visit_children_with(self);
         }
 
         self.output_info.take()
@@ -26,20 +29,6 @@ impl OutputVisitor {
 }
 
 impl Visit for OutputVisitor {
-    fn visit_call_expr(&mut self, call: &CallExpr) {
-        if !call.callee.as_expr()
-            .and_then(|expr| expr.as_ident())
-            .map_or(false, |ident| ident.sym.eq("output")) {
-            return;
-        }
-
-        self.output_info = Some(OutputInfo::default());
-
-        if let Some(options) = call.args.first() {
-            options.visit_children_with(self);
-        }
-    }
-
     fn visit_prop(&mut self, prop: &Prop) {
         let output_info = match &mut self.output_info {
             Some(output_info) => output_info,
