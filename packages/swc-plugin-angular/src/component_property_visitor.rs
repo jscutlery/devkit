@@ -10,10 +10,12 @@ use swc_ecma_utils::{ExprFactory, IsDirective};
 use swc_ecma_utils::swc_ecma_ast::Stmt;
 
 use crate::input_visitor::{InputInfo, InputVisitor};
+use crate::output_visitor::{OutputInfo, OutputVisitor};
 
 #[derive(Default)]
 pub struct ComponentPropertyVisitor {
     component_inputs: HashMap<Ident, Vec<InputInfo>>,
+    component_outputs: HashMap<Ident, Vec<OutputInfo>>,
     current_component: Option<Ident>,
 }
 
@@ -38,6 +40,13 @@ impl VisitMut for ComponentPropertyVisitor {
             self.component_inputs
                 .entry(current_component.clone())
                 .or_default().push(input_info);
+        }
+
+        /* Parse output. */
+        if let Some(output_info) = OutputVisitor::default().get_output_info(class_prop) {
+            self.component_outputs
+                .entry(current_component.clone())
+                .or_default().push(output_info);
         }
     }
 

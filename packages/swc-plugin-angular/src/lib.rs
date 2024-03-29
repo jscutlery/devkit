@@ -10,6 +10,7 @@ use crate::component_property_visitor::ComponentPropertyVisitor;
 mod component_decorator_visitor;
 mod component_property_visitor;
 mod input_visitor;
+mod output_visitor;
 
 #[cfg(test)]
 mod testing;
