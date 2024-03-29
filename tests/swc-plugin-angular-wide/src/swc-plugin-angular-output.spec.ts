@@ -3,7 +3,7 @@
 import { Component, output, signal, Type } from '@angular/core';
 import { createComponent } from './testing';
 
-describe('swc-plugin-angular: outputs', () => {
+describe('swc-plugin-angular: output', () => {
   it('should bind outputs', () => {
     @Component({
       standalone: true,
