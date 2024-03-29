@@ -1,22 +1,9 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 
 import { Component, input, Type } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { createComponent } from './testing';
 
-describe('swc-plugin-angular', () => {
-  it('should load component with templateUrl & styleUrl', () => {
-    @Component({
-      standalone: true,
-      templateUrl: './test.component.html',
-      styleUrl: './test.component.css'
-    })
-    class Container {
-    }
-
-    const { title } = render(Container);
-    expect(title).toBe('Hello templateUrl!');
-  });
-
+describe('swc-plugin-angular: inputs', () => {
   it('should bind inputs', () => {
     @Component({
       standalone: true,
@@ -42,8 +29,8 @@ describe('swc-plugin-angular', () => {
       title = 'input';
     }
 
-    const { title } = render(Container);
-    expect(title).toBe('Hello input!');
+    const { heading } = render(Container);
+    expect(heading).toBe('Hello input!');
   });
 
   it('should bind required inputs', () => {
@@ -71,8 +58,8 @@ describe('swc-plugin-angular', () => {
       title = 'required input';
     }
 
-    const { title } = render(Container);
-    expect(title).toBe('Hello required input!');
+    const { heading } = render(Container);
+    expect(heading).toBe('Hello required input!');
   });
 
   it('should bind aliased inputs', () => {
@@ -100,8 +87,8 @@ describe('swc-plugin-angular', () => {
       title = 'input alias';
     }
 
-    const { title } = render(Container);
-    expect(title).toBe('Hello input alias!');
+    const { heading } = render(Container);
+    expect(heading).toBe('Hello input alias!');
   });
 
   it('should bind required aliased inputs', () => {
@@ -123,16 +110,15 @@ describe('swc-plugin-angular', () => {
       title = 'required input alias';
     }
 
-    const { title } = render(Container);
-    expect(title).toBe('Hello required input alias!');
+    const { heading } = render(Container);
+    expect(heading).toBe('Hello required input alias!');
   });
 
-  function render(cmpType: Type<unknown>) {
-    const fixture = TestBed.createComponent(cmpType);
-    fixture.autoDetectChanges();
 
+  function render(cmpType: Type<unknown>) {
+    const { nativeElement } = createComponent(cmpType);
     return {
-      title: fixture.nativeElement.querySelector('h1')?.textContent
+      heading: nativeElement.querySelector('h1')?.textContent
     };
   }
 });
