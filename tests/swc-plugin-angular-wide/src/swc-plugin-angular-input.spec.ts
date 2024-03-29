@@ -3,7 +3,7 @@
 import { Component, input, Type } from '@angular/core';
 import { createComponent } from './testing';
 
-describe('swc-plugin-angular: inputs', () => {
+describe('swc-plugin-angular: input', () => {
   it('should bind inputs', () => {
     @Component({
       standalone: true,

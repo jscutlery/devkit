@@ -243,6 +243,32 @@ mod tests {
             ], MyCmp.prototype, "nonAliasedInput");
             "# });
     }
+    
+    #[test]
+    fn test_input_required_alias() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                myInput = input.required({
+                    alias: 'myInputAlias'
+                });
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                myInput = input.required({
+                    alias: 'myInputAlias'
+                });
+            }
+            _ts_decorate([
+                require("@angular/core").Input({
+                    isSignal: true,
+                    alias: "myInputAlias",
+                    required: true
+                })
+            ], MyCmp.prototype, "myInput");
+            "# });
+    }
 
 
     #[test]
@@ -336,6 +362,125 @@ mod tests {
             _ts_decorate([
                 require("@angular/core").Output("myOutputAlias")
             ], MyCmp.prototype, "myOutput");
+            "# });
+    }
+
+    #[ignore]
+    #[test]
+    fn test_model() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                myModel = model();
+                anotherProperty = 'hello';
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                myModel = model();
+                anotherProperty = 'hello';
+            }
+            _ts_decorate([
+                require("@angular/core").Input({
+                    isSignal: true,
+                    alias: undefined,
+                    required: false
+                })
+            ], MyCmp.prototype, "myModel");
+            _ts_decorate([
+                require("@angular/core").Output("myModelChange")
+            ], MyCmp.prototype, "myModel");
+            "# });
+    }
+
+    #[ignore]
+    #[test]
+    fn test_model_alias() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                myModel = model(null, {
+                    alias: 'myModelAlias'
+                });
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                myModel = model(null, {
+                    alias: 'myModelAlias'
+                });
+            }
+            _ts_decorate([
+                require("@angular/core").Input({
+                    isSignal: true,
+                    alias: "myModelAlias",
+                    required: false
+                })
+            ], MyCmp.prototype, "myModel");
+            _ts_decorate([
+                require("@angular/core").Output("myModelAliasChange")
+            ], MyCmp.prototype, "myModel");
+            "# });
+    }
+    #[ignore]
+    #[test]
+    fn test_model_required() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                myModel = model.required();
+                nonAliasedModel = model({
+                    alias: 'this_is_a_default_value_not_an_alias'
+                });
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                myModel = model.required();
+                nonAliasedModel = model({
+                    alias: 'this_is_a_default_value_not_an_alias'
+                });
+            }
+            _ts_decorate([
+                require("@angular/core").Input({
+                    isSignal: true,
+                    alias: undefined,
+                    required: true
+                })
+            ], MyCmp.prototype, "myModel");
+            _ts_decorate([
+                require("@angular/core").Output("myModelChange")
+            ], MyCmp.prototype, "myModel");
+            "# });
+    }
+    
+    #[ignore]
+    #[test]
+    fn test_model_required_alias() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                myModel = model.required({
+                    alias: 'myModelAlias'
+                });
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                myModel = model.required({
+                    alias: 'myModelAlias'
+                });
+            }
+            _ts_decorate([
+                require("@angular/core").Input({
+                    isSignal: true,
+                    alias: "myModelAlias",
+                    required: true
+                })
+            ], MyCmp.prototype, "myModel");
+            _ts_decorate([
+                require("@angular/core").Output("myModelAliasChange")
+            ], MyCmp.prototype, "myModel");
             "# });
     }
 }
