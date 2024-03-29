@@ -1,7 +1,7 @@
 use swc_core::ecma::ast::{ClassProp, Prop};
-use swc_core::ecma::visit::{Visit, VisitWith};
+use swc_core::ecma::visit::Visit;
 
-use crate::utils::{get_angular_prop, get_prop_value_as_string};
+use crate::utils::{get_angular_prop, get_prop_value_as_string, visit_input_or_model_options};
 
 #[derive(Default)]
 pub struct InputVisitor {
@@ -21,12 +21,7 @@ impl InputVisitor {
             ..Default::default()
         }.into();
 
-        /* Options are either the first or second parameter depending on whether
-         * the input is required.
-         * e.g. input.required({alias: '...'}) or input(initialValue, {alias: '...'}) */
-        if let Some(options) = if angular_prop.required { angular_prop.args.first() } else { angular_prop.args.get(1) } {
-            options.visit_children_with(self);
-        }
+        visit_input_or_model_options(self, angular_prop.required, angular_prop.args);
 
         self.input_info.take()
     }

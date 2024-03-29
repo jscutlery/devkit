@@ -1,5 +1,6 @@
 use swc_core::ecma::ast::{ClassProp, Expr, ExprOrSpread, Prop};
 use swc_core::ecma::ast::Lit::Str;
+use swc_core::ecma::visit::{Visit, VisitWith};
 use swc_ecma_utils::ExprExt;
 use swc_ecma_utils::swc_ecma_ast::Lit;
 
@@ -74,4 +75,17 @@ pub fn get_prop_value(prop: &Prop, key: String) -> Option<&Lit> {
     }
 
     None
+}
+
+/**
+ * Options are either the first or second parameter depending on whether
+ * the input (or model) is required.
+ * e.g. `input.required({alias: '...'})` or `input(initialValue, {alias: '...'})`
+ */
+pub fn visit_input_or_model_options(visitor: &mut dyn Visit, required: bool, args: &[ExprOrSpread]) {
+    let options = if required { args.first() } else { args.get(1) };
+
+    if let Some(options) = options {
+        options.visit_children_with(visitor);
+    }
 }
