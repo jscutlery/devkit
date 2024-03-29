@@ -1,3 +1,15 @@
+## 0.5.0 (2024-03-29)
+
+
+### 🚀 Features
+
+- **swc-plugin-angular:** ✨ decorate inline components ([#286](https://github.com/jscutlery/devkit/pull/286))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.4.0 (2024-03-28)
 
 
