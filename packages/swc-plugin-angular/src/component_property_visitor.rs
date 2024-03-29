@@ -345,4 +345,44 @@ mod tests {
             }
             "# });
     }
+
+    #[ignore]
+    #[test]
+    fn test_output() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                myOutput = output();
+                anotherProperty = 'hello';
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                myOutput = output();
+                anotherProperty = 'hello';
+            }
+            _ts_decorate([
+                require("@angular/core").Output("myOutput")
+            ], MyCmp.prototype, "myOutput");
+            "# });
+    }
+
+    #[ignore]
+    #[test]
+    fn test_output_alias() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                myOutput = output({alias: 'myOutputAlias'});
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                myOutput = output({alias: 'myOutputAlias'});
+            }
+            _ts_decorate([
+                require("@angular/core").Output("myOutputAlias")
+            ], MyCmp.prototype, "myOutput");
+            "# });
+    }
 }
