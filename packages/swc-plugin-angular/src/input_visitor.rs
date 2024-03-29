@@ -38,9 +38,8 @@ impl Visit for InputVisitor {
             /* false if `input()`. */
             Expr::Ident(ident) if ident.sym.eq("input") => false,
             /* true if `input.required(). */
-            Expr::Member(member) => {
-                member.obj.as_ident().map_or(false, |i| i.sym.eq("input"))
-                    && member.prop.clone().ident().map_or(false, |i| i.sym.eq("required"))
+            Expr::Member(member) if member.obj.as_ident().map_or(false, |i| i.sym.eq("input")) => {
+                member.prop.clone().ident().map_or(false, |i| i.sym.eq("required"))
             }
             _ => return,
         };

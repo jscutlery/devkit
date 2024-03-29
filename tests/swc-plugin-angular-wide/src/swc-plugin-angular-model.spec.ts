@@ -4,7 +4,7 @@ import { Component, model, signal, Type } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { createComponent } from './testing';
 
-xdescribe('🚧 swc-plugin-angular: model', () => {
+describe('swc-plugin-angular: model', () => {
   describe('basic', () => {
     @Component({
       standalone: true,
@@ -47,7 +47,7 @@ xdescribe('🚧 swc-plugin-angular: model', () => {
 
   });
 
-  describe('with alias', () => {
+  describe.skip('🚧 with alias', () => {
     @Component({
       standalone: true,
       selector: 'jsc-form',

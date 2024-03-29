@@ -38,9 +38,8 @@ impl Visit for ModelVisitor {
             /* false if `model()`. */
             Expr::Ident(ident) if ident.sym.eq("model") => false,
             /* true if `model.required(). */
-            Expr::Member(member) => {
-                member.obj.as_ident().map_or(false, |i| i.sym.eq("model"))
-                    && member.prop.clone().ident().map_or(false, |i| i.sym.eq("required"))
+            Expr::Member(member) if member.obj.as_ident().map_or(false, |i| i.sym.eq("model")) => {
+                member.prop.clone().ident().map_or(false, |i| i.sym.eq("required"))
             }
             _ => return,
         };
@@ -48,20 +47,20 @@ impl Visit for ModelVisitor {
         self.model_info = Some(ModelInfo { required, ..Default::default() });
 
         /* Options are either the first or second parameter depending on whether
-         * the input is required.
-         * e.g. input.required({alias: '...'}) or input(default, {alias: '...'}) */
+         * the model is required.
+         * e.g. model.required({alias: '...'}) or model(default, {alias: '...'}) */
         if let Some(options) = if required { call.args.first() } else { call.args.get(1) } {
             options.visit_children_with(self);
         }
     }
 
     fn visit_prop(&mut self, prop: &Prop) {
-        let input_info = match &mut self.model_info {
-            Some(input_info) => input_info,
+        let model_info = match &mut self.model_info {
+            Some(model_info) => model_info,
             None => return,
         };
 
-        input_info.alias = get_prop_value_as_string(prop, "alias".to_string());
+        model_info.alias = get_prop_value_as_string(prop, "alias".to_string());
     }
 }
 

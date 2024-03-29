@@ -10,13 +10,12 @@ use swc_ecma_utils::{ExprFactory, IsDirective};
 use swc_ecma_utils::swc_ecma_ast::Stmt;
 
 use crate::input_visitor::{InputInfo, InputVisitor};
-use crate::model_visitor::{ModelInfo, ModelVisitor};
+use crate::model_visitor::{ModelVisitor};
 use crate::output_visitor::{OutputInfo, OutputVisitor};
 
 #[derive(Default)]
 pub struct ComponentPropertyVisitor {
     component_inputs: HashMap<Ident, Vec<InputInfo>>,
-    component_models: HashMap<Ident, Vec<ModelInfo>>,
     component_outputs: HashMap<Ident, Vec<OutputInfo>>,
     current_component: Option<Ident>,
 }
@@ -53,9 +52,20 @@ impl VisitMut for ComponentPropertyVisitor {
 
         /* Parse model. */
         if let Some(model_info) = ModelVisitor::default().get_model_info(class_prop) {
-            self.component_models
+            let output_name = format!("{}Change", model_info.name.clone());
+            self.component_inputs
                 .entry(current_component.clone())
-                .or_default().push(model_info);
+                .or_default().push(InputInfo {
+                name: model_info.name.clone(),
+                required: model_info.required,
+                alias: model_info.alias,
+            });
+            self.component_outputs
+                .entry(current_component.clone())
+                .or_default().push(OutputInfo {
+                name: model_info.name,
+                alias: Some(output_name)
+            });
         }
     }
 
@@ -290,9 +300,6 @@ mod tests {
                     aliasedInput = input(undefined, {
                         alias: 'myInputAlias'
                     });
-                    nonAliasedInput = input({
-                        alias: 'this_is_a_default_value_not_an_alias'
-                    });
                     someMethod() {
                         console.log('another statement');
                         class AnotherInlineClass {}
@@ -304,9 +311,6 @@ mod tests {
                 class MyCmp {
                     aliasedInput = input(undefined, {
                         alias: 'myInputAlias'
-                    });
-                    nonAliasedInput = input({
-                        alias: 'this_is_a_default_value_not_an_alias'
                     });
                     someMethod() {
                         console.log('another statement');
@@ -321,13 +325,6 @@ mod tests {
                     required: false
                 })
             ], MyCmp.prototype, "aliasedInput");
-                _ts_decorate([
-                require("@angular/core").Input({
-                    isSignal: true,
-                    alias: undefined,
-                    required: false
-                })
-            ], MyCmp.prototype, "nonAliasedInput");
             }
             "# });
     }
@@ -374,7 +371,6 @@ mod tests {
             "# });
     }
 
-    #[ignore]
     #[test]
     fn test_model() {
         test_visitor(
@@ -412,11 +408,17 @@ mod tests {
                 myModel = model(null, {
                     alias: 'myModelAlias'
                 });
+                nonAliasedModel = model({
+                    alias: 'this_is_a_default_value_not_an_alias'
+                });
             }"# },
             indoc! {
             r#"class MyCmp {
                 myModel = model(null, {
                     alias: 'myModelAlias'
+                });
+                nonAliasedModel = model({
+                    alias: 'this_is_a_default_value_not_an_alias'
                 });
             }
             _ts_decorate([
@@ -429,10 +431,19 @@ mod tests {
             _ts_decorate([
                 require("@angular/core").Output("myModelAliasChange")
             ], MyCmp.prototype, "myModel");
+            _ts_decorate([
+                require("@angular/core").Input({
+                    isSignal: true,
+                    alias: "nonAliasedModel",
+                    required: false
+                })
+            ], MyCmp.prototype, "nonAliasedModel");
+            _ts_decorate([
+                require("@angular/core").Output("nonAliasedModelChange")
+            ], MyCmp.prototype, "nonAliasedModel");
             "# });
     }
 
-    #[ignore]
     #[test]
     fn test_model_required() {
         test_visitor(
@@ -440,16 +451,10 @@ mod tests {
             indoc! {
             r#"class MyCmp {
                 myModel = model.required();
-                nonAliasedModel = model({
-                    alias: 'this_is_a_default_value_not_an_alias'
-                });
             }"# },
             indoc! {
             r#"class MyCmp {
                 myModel = model.required();
-                nonAliasedModel = model({
-                    alias: 'this_is_a_default_value_not_an_alias'
-                });
             }
             _ts_decorate([
                 require("@angular/core").Input({
