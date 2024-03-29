@@ -60,7 +60,7 @@ impl VisitMut for ComponentPropertyVisitor {
             let class_ident = self.try_get_class_ident(item.as_ref());
             item.visit_mut_with(self);
             new_items.push(item);
-            for statement in self.try_flush_input_decorators(class_ident) {
+            for statement in self.drain_component_decorators(class_ident) {
                 new_items.push(statement.into());
             }
         }
@@ -77,25 +77,23 @@ impl VisitMut for ComponentPropertyVisitor {
             let class_ident = self.try_get_class_ident(Some(&stmt));
             stmt.visit_mut_with(self);
             new_stmts.push(stmt);
-            new_stmts.extend(self.try_flush_input_decorators(class_ident));
+            new_stmts.extend(self.drain_component_decorators(class_ident));
         }
         *stmts = new_stmts;
     }
 }
 
 impl ComponentPropertyVisitor {
-    fn try_flush_input_decorators(&mut self, class_ident: Option<Ident>) -> Vec<Stmt> {
+    fn drain_component_decorators(&mut self, class_ident: Option<Ident>) -> Vec<Stmt> {
         let component = match class_ident {
             Some(class_ident) => class_ident,
             None => return vec![],
         };
 
-        let mut input_infos = match self.component_inputs.remove(&component) {
-            Some(input_infos) => input_infos,
-            None => return vec![],
-        };
+        let mut input_infos = self.component_inputs.remove(&component).unwrap_or_default();
+        let mut output_infos = self.component_outputs.remove(&component).unwrap_or_default();
 
-        let mut stmts: Vec<Stmt> = Vec::with_capacity(input_infos.len());
+        let mut stmts: Vec<Stmt> = Vec::with_capacity(input_infos.len() + output_infos.len());
         for input_info in input_infos.drain(..) {
             let alias = match &input_info.alias {
                 Some(alias) => format!(r#""{alias}""#),
@@ -114,6 +112,28 @@ impl ComponentPropertyVisitor {
                 component = component.sym.to_string(),
                 name = input_info.name,
                 required = input_info.required
+            };
+
+            stmts.push(Str {
+                span: Default::default(),
+                value: "".into(),
+                raw: Some(raw.as_str().into()),
+            }.into_stmt());
+        }
+
+        for output_info in output_infos.drain(..) {
+            let alias = match &output_info.alias {
+                Some(alias) => format!(r#""{alias}""#),
+                None => "".into(),
+            };
+
+            let raw = formatdoc! {
+                r#"_ts_decorate([
+                    require("@angular/core").Output({alias})
+                ], {component}.prototype, "{name}")"#,
+                alias = alias,
+                component = component.sym.to_string(),
+                name = output_info.name,
             };
 
             stmts.push(Str {
@@ -277,7 +297,6 @@ mod tests {
             "# });
     }
 
-    #[ignore]
     #[test]
     fn test_output() {
         test_visitor(
@@ -293,23 +312,26 @@ mod tests {
                 anotherProperty = 'hello';
             }
             _ts_decorate([
-                require("@angular/core").Output("myOutput")
+                require("@angular/core").Output()
             ], MyCmp.prototype, "myOutput");
             "# });
     }
 
-    #[ignore]
     #[test]
     fn test_output_alias() {
         test_visitor(
             ComponentPropertyVisitor::default(),
             indoc! {
             r#"class MyCmp {
-                myOutput = output({alias: 'myOutputAlias'});
+                myOutput = output({
+                    alias: 'myOutputAlias'
+                });
             }"# },
             indoc! {
             r#"class MyCmp {
-                myOutput = output({alias: 'myOutputAlias'});
+                myOutput = output({
+                    alias: 'myOutputAlias'
+                });
             }
             _ts_decorate([
                 require("@angular/core").Output("myOutputAlias")
