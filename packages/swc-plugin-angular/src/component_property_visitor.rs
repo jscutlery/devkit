@@ -14,7 +14,6 @@ use swc_ecma_utils::swc_ecma_ast::{Expr, Stmt};
 #[derive(Default)]
 pub struct ComponentPropertyVisitor {
     component_inputs: HashMap<Ident, Vec<InputInfo>>,
-    component_outputs: HashMap<Ident, Vec<OutputInfo>>,
     current_component: Option<Ident>,
 }
 
@@ -22,11 +21,6 @@ struct InputInfo {
     name: String,
     alias: Option<String>,
     required: bool,
-}
-
-struct OutputInfo {
-    name: String,
-    alias: Option<String>,
 }
 
 impl VisitMut for ComponentPropertyVisitor {
@@ -156,7 +150,7 @@ impl ComponentPropertyVisitor {
 #[derive(Default)]
 struct InputVisitor {
     alias: Option<String>,
-    required: bool
+    required: bool,
 }
 
 impl Visit for InputVisitor {
