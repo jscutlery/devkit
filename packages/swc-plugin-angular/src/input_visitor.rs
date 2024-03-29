@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use indoc::formatdoc;
 use swc_core::{
     atoms::Atom,
@@ -6,58 +8,26 @@ use swc_core::{
         visit::{VisitMut, VisitMutWith},
     },
 };
+use swc_core::ecma::ast::{Ident, Prop};
 use swc_core::ecma::ast::Lit::Str as LitStr;
-use swc_core::ecma::ast::Prop;
 use swc_core::ecma::visit::{Visit, VisitWith};
-use swc_ecma_utils::{ExprExt, ExprFactory};
+use swc_ecma_utils::{ExprExt, ExprFactory, IsDirective};
 use swc_ecma_utils::swc_ecma_ast::{Expr, Stmt};
 
 #[derive(Default)]
 pub struct InputVisitor {
-    inputs: Vec<InputInfo>,
-    current_component: Atom,
-}
-
-impl InputVisitor {
-    fn flush_input_decorators(&mut self) -> Vec<Stmt> {
-        let mut statements: Vec<Stmt> = Vec::with_capacity(self.inputs.len());
-        for input_info in &self.inputs {
-            let alias = match &input_info.alias {
-                Some(alias) => format!(r#""{alias}""#),
-                None => "undefined".to_string(),
-            };
-
-            let raw = formatdoc! {
-                r#"_ts_decorate([
-                    require("@angular/core").Input({{
-                        isSignal: true,
-                        alias: {alias},
-                        required: {required}
-                    }})
-                ], {component}.prototype, "{name}")"#,
-                alias = alias,
-                component = input_info.component,
-                name = input_info.name,
-                required = input_info.required
-            };
-
-            statements.push(Str {
-                span: Default::default(),
-                value: "".into(),
-                raw: Some(raw.as_str().into()),
-            }.into_stmt());
-        }
-
-        self.inputs.clear();
-
-        statements
-    }
+    component_inputs: HashMap<Ident, Vec<InputInfo>>,
+    current_component: Option<Ident>,
 }
 
 impl VisitMut for InputVisitor {
     fn visit_mut_class_decl(&mut self, node: &mut swc_core::ecma::ast::ClassDecl) {
-        self.current_component = node.ident.sym.clone();
+        /* This is not ideal as we are overwriting the `current_component` when
+         * we meet another one, but it's fine as long as we don't want to handle nested
+         * Angular components (i.e. a component declared in another component's methods.). */
+        self.current_component = Some(node.ident.clone());
         node.visit_mut_children_with(self);
+        self.current_component = None;
     }
 
     fn visit_mut_class_prop(&mut self, node: &mut swc_core::ecma::ast::ClassProp) {
@@ -102,27 +72,100 @@ impl VisitMut for InputVisitor {
             options.visit_children_with(&mut input_options_visitor);
         }
 
-        self.inputs.push(InputInfo {
-            component: self.current_component.clone(),
-            name: key_ident.sym.clone(),
-            alias: input_options_visitor.alias,
-            required,
-        });
+        if let Some(current_component) = &self.current_component {
+            self.component_inputs
+                .entry(current_component.clone())
+                .or_default()
+                .push(InputInfo {
+                    name: key_ident.sym.clone(),
+                    alias: input_options_visitor.alias,
+                    required,
+                });
+        }
     }
 
-    fn visit_mut_module(&mut self, module: &mut swc_core::ecma::ast::Module) {
-        module.visit_mut_children_with(self);
-
-        let statements = self.flush_input_decorators();
-
-        for statement in statements {
-            module.body.push(statement.into());
+    /**
+     * Visit module items and flush input decorators after class declaration.
+     * `class MyCmp {}` -> `class MyCmp {} _ts_decorate(...);`
+     */
+    fn visit_mut_module_items(&mut self, items: &mut Vec<swc_core::ecma::ast::ModuleItem>) {
+        let mut new_items = Vec::with_capacity(items.len());
+        for mut item in items.drain(..) {
+            let class_ident = self.try_get_class_ident(item.as_ref());
+            item.visit_mut_with(self);
+            new_items.push(item);
+            for statement in self.try_flush_input_decorators(class_ident) {
+                new_items.push(statement.into());
+            }
         }
+        *items = new_items;
+    }
+
+    /**
+     * Visit statements and flush input decorators after inline class declaration.
+     * `function f() { class MyCmp {} }` -> `function f() { class MyCmp {} _ts_decorate(...); }`
+     */
+    fn visit_mut_stmts(&mut self, stmts: &mut Vec<Stmt>) {
+        let mut new_stmts = Vec::with_capacity(stmts.len());
+        for mut stmt in stmts.drain(..) {
+            let class_ident = self.try_get_class_ident(Some(&stmt));
+            stmt.visit_mut_with(self);
+            new_stmts.push(stmt);
+            new_stmts.extend(self.try_flush_input_decorators(class_ident));
+        }
+        *stmts = new_stmts;
+    }
+}
+
+impl InputVisitor {
+    fn try_flush_input_decorators(&mut self, class_ident: Option<Ident>) -> Vec<Stmt> {
+        let component = match class_ident {
+            Some(class_ident) => class_ident,
+            None => return vec![],
+        };
+
+        let mut input_infos = match self.component_inputs.remove(&component) {
+            Some(input_infos) => input_infos,
+            None => return vec![],
+        };
+
+        let mut stmts: Vec<Stmt> = Vec::with_capacity(input_infos.len());
+        for input_info in input_infos.drain(..) {
+            let alias = match &input_info.alias {
+                Some(alias) => format!(r#""{alias}""#),
+                None => "undefined".to_string(),
+            };
+
+            let raw = formatdoc! {
+                r#"_ts_decorate([
+                    require("@angular/core").Input({{
+                        isSignal: true,
+                        alias: {alias},
+                        required: {required}
+                    }})
+                ], {component}.prototype, "{name}")"#,
+                alias = alias,
+                component = component.sym.to_string(),
+                name = input_info.name,
+                required = input_info.required
+            };
+
+            stmts.push(Str {
+                span: Default::default(),
+                value: "".into(),
+                raw: Some(raw.as_str().into()),
+            }.into_stmt());
+        }
+
+        stmts
+    }
+
+    fn try_get_class_ident(&self, stmt: Option<&Stmt>) -> Option<Ident> {
+        return stmt.and_then(|stmt| stmt.as_decl()).and_then(|decl| decl.as_class()).map(|class| class.ident.clone());
     }
 }
 
 struct InputInfo {
-    component: Atom,
     name: Atom,
     alias: Option<String>,
     required: bool,
@@ -212,7 +255,7 @@ mod tests {
                     alias: 'myInputAlias'
                 });
                 nonAliasedInput = input({
-                  alias: 'this_is_a_default_value_not_an_alias'
+                    alias: 'this_is_a_default_value_not_an_alias'
                 });
             }"# },
             indoc! {
@@ -238,6 +281,59 @@ mod tests {
                     required: false
                 })
             ], MyCmp.prototype, "nonAliasedInput");
+            "# });
+    }
+
+
+    #[test]
+    fn test_input_inline() {
+        test_visitor(
+            InputVisitor::default(),
+            indoc! {
+            r#"function f() {
+                class MyCmp {
+                    aliasedInput = input(undefined, {
+                        alias: 'myInputAlias'
+                    });
+                    nonAliasedInput = input({
+                        alias: 'this_is_a_default_value_not_an_alias'
+                    });
+                    someMethod() {
+                        console.log('another statement');
+                        class AnotherInlineClass {}
+                    }
+                }
+            }"# },
+            indoc! {
+            r#"function f() {
+                class MyCmp {
+                    aliasedInput = input(undefined, {
+                        alias: 'myInputAlias'
+                    });
+                    nonAliasedInput = input({
+                        alias: 'this_is_a_default_value_not_an_alias'
+                    });
+                    someMethod() {
+                        console.log('another statement');
+                        class AnotherInlineClass {
+                        }
+                    }
+                }
+                _ts_decorate([
+                require("@angular/core").Input({
+                    isSignal: true,
+                    alias: "myInputAlias",
+                    required: false
+                })
+            ], MyCmp.prototype, "aliasedInput");
+                _ts_decorate([
+                require("@angular/core").Input({
+                    isSignal: true,
+                    alias: undefined,
+                    required: false
+                })
+            ], MyCmp.prototype, "nonAliasedInput");
+            }
             "# });
     }
 }
