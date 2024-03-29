@@ -47,7 +47,7 @@ describe('swc-plugin-angular: model', () => {
 
   });
 
-  describe.skip('🚧 with alias', () => {
+  describe('with alias', () => {
     @Component({
       standalone: true,
       selector: 'jsc-form',

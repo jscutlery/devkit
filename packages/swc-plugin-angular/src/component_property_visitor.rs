@@ -52,19 +52,20 @@ impl VisitMut for ComponentPropertyVisitor {
 
         /* Parse model. */
         if let Some(model_info) = ModelVisitor::default().get_model_info(class_prop) {
-            let output_name = format!("{}Change", model_info.name.clone());
             self.component_inputs
                 .entry(current_component.clone())
                 .or_default().push(InputInfo {
                 name: model_info.name.clone(),
                 required: model_info.required,
-                alias: model_info.alias,
+                alias: model_info.alias.clone(),
             });
+            let output_alias = if let Some(alias) = model_info.alias { alias } else { model_info.name.clone() };
+            let output_alias = format!("{}Change", output_alias);
             self.component_outputs
                 .entry(current_component.clone())
                 .or_default().push(OutputInfo {
                 name: model_info.name,
-                alias: Some(output_name)
+                alias: Some(output_alias)
             });
         }
     }
@@ -398,7 +399,6 @@ mod tests {
             "# });
     }
 
-    #[ignore]
     #[test]
     fn test_model_alias() {
         test_visitor(
@@ -429,15 +429,15 @@ mod tests {
                 })
             ], MyCmp.prototype, "myModel");
             _ts_decorate([
-                require("@angular/core").Output("myModelAliasChange")
-            ], MyCmp.prototype, "myModel");
-            _ts_decorate([
                 require("@angular/core").Input({
                     isSignal: true,
-                    alias: "nonAliasedModel",
+                    alias: undefined,
                     required: false
                 })
             ], MyCmp.prototype, "nonAliasedModel");
+            _ts_decorate([
+                require("@angular/core").Output("myModelAliasChange")
+            ], MyCmp.prototype, "myModel");
             _ts_decorate([
                 require("@angular/core").Output("nonAliasedModelChange")
             ], MyCmp.prototype, "nonAliasedModel");
@@ -469,7 +469,6 @@ mod tests {
             "# });
     }
 
-    #[ignore]
     #[test]
     fn test_model_required_alias() {
         test_visitor(
