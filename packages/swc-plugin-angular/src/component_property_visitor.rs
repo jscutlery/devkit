@@ -1,26 +1,35 @@
 use std::collections::HashMap;
 
 use indoc::formatdoc;
-use swc_core::{
-    atoms::Atom,
-    ecma::{
-        ast::Str,
-        visit::{VisitMut, VisitMutWith},
-    },
+use swc_core::ecma::{
+    ast::Str,
+    visit::{VisitMut, VisitMutWith},
 };
-use swc_core::ecma::ast::{Ident, Prop};
+use swc_core::ecma::ast::{CallExpr, Ident, Prop};
 use swc_core::ecma::ast::Lit::Str as LitStr;
 use swc_core::ecma::visit::{Visit, VisitWith};
 use swc_ecma_utils::{ExprExt, ExprFactory, IsDirective};
 use swc_ecma_utils::swc_ecma_ast::{Expr, Stmt};
 
 #[derive(Default)]
-pub struct InputVisitor {
+pub struct ComponentPropertyVisitor {
     component_inputs: HashMap<Ident, Vec<InputInfo>>,
+    component_outputs: HashMap<Ident, Vec<OutputInfo>>,
     current_component: Option<Ident>,
 }
 
-impl VisitMut for InputVisitor {
+struct InputInfo {
+    name: String,
+    alias: Option<String>,
+    required: bool,
+}
+
+struct OutputInfo {
+    name: String,
+    alias: Option<String>,
+}
+
+impl VisitMut for ComponentPropertyVisitor {
     fn visit_mut_class_decl(&mut self, node: &mut swc_core::ecma::ast::ClassDecl) {
         /* This is not ideal as we are overwriting the `current_component` when
          * we meet another one, but it's fine as long as we don't want to handle nested
@@ -31,6 +40,11 @@ impl VisitMut for InputVisitor {
     }
 
     fn visit_mut_class_prop(&mut self, node: &mut swc_core::ecma::ast::ClassProp) {
+        let current_component = match &self.current_component {
+            Some(current_component) => current_component,
+            None => return,
+        };
+
         let key_ident = match node.key.as_ident() {
             Some(key_ident) => key_ident,
             None => return,
@@ -45,43 +59,17 @@ impl VisitMut for InputVisitor {
             None => return,
         };
 
-        let callee = match call.callee.as_expr()
-        {
-            Some(value_expr) => value_expr,
-            None => return,
-        };
-
-        let required = match callee.as_expr() {
-            /* false if `input()`. */
-            Expr::Ident(ident) if ident.sym.eq("input") => false,
-            /* true if `input.required(). */
-            Expr::Member(member) => {
-                member.obj.as_ident().map_or(false, |i| i.sym.eq("input"))
-                    && member.prop.clone().ident().map_or(false, |i| i.sym.eq("required"))
-            }
-            _ => return,
-        };
-
-        /* Parse input options. */
-        let mut input_options_visitor = InputOptionsVisitor::default();
-
-        /* Options are either the first or second parameter depending on whether
-         * the input is required.
-         * e.g. input.required({alias: '...'}) or input(default, {alias: '...'}) */
-        if let Some(options) = if required { call.args.first() } else { call.args.get(1) } {
-            options.visit_children_with(&mut input_options_visitor);
-        }
-
-        if let Some(current_component) = &self.current_component {
-            self.component_inputs
-                .entry(current_component.clone())
-                .or_default()
-                .push(InputInfo {
-                    name: key_ident.sym.clone(),
-                    alias: input_options_visitor.alias,
-                    required,
-                });
-        }
+        /* Parse input. */
+        let mut input_visitor = InputVisitor::default();
+        call.visit_with(&mut input_visitor);
+        self.component_inputs
+            .entry(current_component.clone())
+            .or_default()
+            .push(InputInfo {
+                name: key_ident.sym.to_string(),
+                alias: input_visitor.alias,
+                required: input_visitor.required,
+            });
     }
 
     /**
@@ -117,7 +105,7 @@ impl VisitMut for InputVisitor {
     }
 }
 
-impl InputVisitor {
+impl ComponentPropertyVisitor {
     fn try_flush_input_decorators(&mut self, class_ident: Option<Ident>) -> Vec<Stmt> {
         let component = match class_ident {
             Some(class_ident) => class_ident,
@@ -165,18 +153,39 @@ impl InputVisitor {
     }
 }
 
-struct InputInfo {
-    name: Atom,
-    alias: Option<String>,
-    required: bool,
-}
-
 #[derive(Default)]
-struct InputOptionsVisitor {
+struct InputVisitor {
     alias: Option<String>,
+    required: bool
 }
 
-impl Visit for InputOptionsVisitor {
+impl Visit for InputVisitor {
+    fn visit_call_expr(&mut self, call: &CallExpr) {
+        let callee = match call.callee.as_expr()
+        {
+            Some(value_expr) => value_expr,
+            None => return,
+        };
+
+        self.required = match callee.as_expr() {
+            /* false if `input()`. */
+            Expr::Ident(ident) if ident.sym.eq("input") => false,
+            /* true if `input.required(). */
+            Expr::Member(member) => {
+                member.obj.as_ident().map_or(false, |i| i.sym.eq("input"))
+                    && member.prop.clone().ident().map_or(false, |i| i.sym.eq("required"))
+            }
+            _ => return,
+        };
+
+        /* Options are either the first or second parameter depending on whether
+         * the input is required.
+         * e.g. input.required({alias: '...'}) or input(default, {alias: '...'}) */
+        if let Some(options) = if self.required { call.args.first() } else { call.args.get(1) } {
+            options.visit_children_with(self);
+        }
+    }
+
     fn visit_prop(&mut self, prop: &Prop) {
         let key_value = match prop.as_key_value() {
             Some(key_value) => key_value,
@@ -197,12 +206,12 @@ mod tests {
 
     use crate::testing::test_visitor;
 
-    use super::InputVisitor;
+    use super::ComponentPropertyVisitor;
 
     #[test]
     fn test_input() {
         test_visitor(
-            InputVisitor::default(),
+            ComponentPropertyVisitor::default(),
             indoc! {
             r#"class MyCmp {
               myInput = input();
@@ -226,7 +235,7 @@ mod tests {
     #[test]
     fn test_input_required() {
         test_visitor(
-            InputVisitor::default(),
+            ComponentPropertyVisitor::default(),
             indoc! {
             r#"class MyCmp {
                 myInput = input.required();
@@ -248,7 +257,7 @@ mod tests {
     #[test]
     fn test_input_alias() {
         test_visitor(
-            InputVisitor::default(),
+            ComponentPropertyVisitor::default(),
             indoc! {
             r#"class MyCmp {
                 aliasedInput = input(undefined, {
@@ -288,7 +297,7 @@ mod tests {
     #[test]
     fn test_input_inline() {
         test_visitor(
-            InputVisitor::default(),
+            ComponentPropertyVisitor::default(),
             indoc! {
             r#"function f() {
                 class MyCmp {

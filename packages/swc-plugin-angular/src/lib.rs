@@ -4,11 +4,11 @@ use swc_core::ecma::{
 };
 use swc_core::plugin::{plugin_transform, proxies::TransformPluginProgramMetadata};
 
-use component_decorator_visitor::ComponentDecoratorVisitor;
-use input_visitor::InputVisitor;
+use crate::component_decorator_visitor::ComponentDecoratorVisitor;
+use crate::component_property_visitor::ComponentPropertyVisitor;
 
 mod component_decorator_visitor;
-mod input_visitor;
+mod component_property_visitor;
 
 #[cfg(test)]
 mod testing;
@@ -17,5 +17,5 @@ mod testing;
 pub fn process_transform(program: Program, _metadata: TransformPluginProgramMetadata) -> Program {
     program
         .fold_with(&mut as_folder(ComponentDecoratorVisitor::default()))
-        .fold_with(&mut as_folder(InputVisitor::default()))
+        .fold_with(&mut as_folder(ComponentPropertyVisitor::default()))
 }
