@@ -1,8 +1,7 @@
 use swc_core::ecma::ast::{CallExpr, ClassProp, Prop};
-use swc_core::ecma::ast::Lit::Str as LitStr;
 use swc_core::ecma::visit::{Visit, VisitWith};
 
-use crate::utils::get_prop_name_and_call;
+use crate::utils::{get_prop_name_and_call, get_prop_value_as_string};
 
 #[derive(Default)]
 pub struct OutputVisitor {
@@ -47,16 +46,7 @@ impl Visit for OutputVisitor {
             None => return,
         };
 
-        let key_value = match prop.as_key_value() {
-            Some(key_value) => key_value,
-            None => return,
-        };
-
-        if let Some(true) = key_value.key.as_ident().map(|key| key.sym.eq("alias")) {
-            if let Some(LitStr(str)) = key_value.value.as_lit() {
-                output_info.alias = Some(str.value.as_str().to_string());
-            }
-        }
+        output_info.alias = get_prop_value_as_string(prop, "alias".to_string());
     }
 }
 
