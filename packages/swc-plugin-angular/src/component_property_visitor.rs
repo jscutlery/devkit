@@ -10,11 +10,13 @@ use swc_ecma_utils::{ExprFactory, IsDirective};
 use swc_ecma_utils::swc_ecma_ast::Stmt;
 
 use crate::input_visitor::{InputInfo, InputVisitor};
+use crate::model_visitor::{ModelInfo, ModelVisitor};
 use crate::output_visitor::{OutputInfo, OutputVisitor};
 
 #[derive(Default)]
 pub struct ComponentPropertyVisitor {
     component_inputs: HashMap<Ident, Vec<InputInfo>>,
+    component_models: HashMap<Ident, Vec<ModelInfo>>,
     component_outputs: HashMap<Ident, Vec<OutputInfo>>,
     current_component: Option<Ident>,
 }
@@ -47,6 +49,13 @@ impl VisitMut for ComponentPropertyVisitor {
             self.component_outputs
                 .entry(current_component.clone())
                 .or_default().push(output_info);
+        }
+
+        /* Parse model. */
+        if let Some(model_info) = ModelVisitor::default().get_model_info(class_prop) {
+            self.component_models
+                .entry(current_component.clone())
+                .or_default().push(model_info);
         }
     }
 
@@ -243,7 +252,7 @@ mod tests {
             ], MyCmp.prototype, "nonAliasedInput");
             "# });
     }
-    
+
     #[test]
     fn test_input_required_alias() {
         test_visitor(
@@ -422,6 +431,7 @@ mod tests {
             ], MyCmp.prototype, "myModel");
             "# });
     }
+
     #[ignore]
     #[test]
     fn test_model_required() {
@@ -453,7 +463,7 @@ mod tests {
             ], MyCmp.prototype, "myModel");
             "# });
     }
-    
+
     #[ignore]
     #[test]
     fn test_model_required_alias() {
