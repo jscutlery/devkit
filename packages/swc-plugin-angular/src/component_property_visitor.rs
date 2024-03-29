@@ -5,22 +5,16 @@ use swc_core::ecma::{
     ast::Str,
     visit::{VisitMut, VisitMutWith},
 };
-use swc_core::ecma::ast::{CallExpr, Ident, Prop};
-use swc_core::ecma::ast::Lit::Str as LitStr;
-use swc_core::ecma::visit::{Visit, VisitWith};
-use swc_ecma_utils::{ExprExt, ExprFactory, IsDirective};
-use swc_ecma_utils::swc_ecma_ast::{Expr, Stmt};
+use swc_core::ecma::ast::Ident;
+use swc_ecma_utils::{ExprFactory, IsDirective};
+use swc_ecma_utils::swc_ecma_ast::Stmt;
+
+use crate::input_visitor::{InputInfo, InputVisitor};
 
 #[derive(Default)]
 pub struct ComponentPropertyVisitor {
     component_inputs: HashMap<Ident, Vec<InputInfo>>,
     current_component: Option<Ident>,
-}
-
-struct InputInfo {
-    name: String,
-    alias: Option<String>,
-    required: bool,
 }
 
 impl VisitMut for ComponentPropertyVisitor {
@@ -33,37 +27,18 @@ impl VisitMut for ComponentPropertyVisitor {
         self.current_component = None;
     }
 
-    fn visit_mut_class_prop(&mut self, node: &mut swc_core::ecma::ast::ClassProp) {
+    fn visit_mut_class_prop(&mut self, class_prop: &mut swc_core::ecma::ast::ClassProp) {
         let current_component = match &self.current_component {
             Some(current_component) => current_component,
             None => return,
         };
 
-        let key_ident = match node.key.as_ident() {
-            Some(key_ident) => key_ident,
-            None => return,
-        };
-
-        let call = match node
-            .value
-            .as_mut()
-            .and_then(|v| v.as_expr().as_call())
-        {
-            Some(call) => call,
-            None => return,
-        };
-
         /* Parse input. */
-        let mut input_visitor = InputVisitor::default();
-        call.visit_with(&mut input_visitor);
-        self.component_inputs
-            .entry(current_component.clone())
-            .or_default()
-            .push(InputInfo {
-                name: key_ident.sym.to_string(),
-                alias: input_visitor.alias,
-                required: input_visitor.required,
-            });
+        if let Some(input_info) = InputVisitor::default().get_input_info(class_prop) {
+            self.component_inputs
+                .entry(current_component.clone())
+                .or_default().push(input_info);
+        }
     }
 
     /**
@@ -144,53 +119,6 @@ impl ComponentPropertyVisitor {
 
     fn try_get_class_ident(&self, stmt: Option<&Stmt>) -> Option<Ident> {
         return stmt.and_then(|stmt| stmt.as_decl()).and_then(|decl| decl.as_class()).map(|class| class.ident.clone());
-    }
-}
-
-#[derive(Default)]
-struct InputVisitor {
-    alias: Option<String>,
-    required: bool,
-}
-
-impl Visit for InputVisitor {
-    fn visit_call_expr(&mut self, call: &CallExpr) {
-        let callee = match call.callee.as_expr()
-        {
-            Some(value_expr) => value_expr,
-            None => return,
-        };
-
-        self.required = match callee.as_expr() {
-            /* false if `input()`. */
-            Expr::Ident(ident) if ident.sym.eq("input") => false,
-            /* true if `input.required(). */
-            Expr::Member(member) => {
-                member.obj.as_ident().map_or(false, |i| i.sym.eq("input"))
-                    && member.prop.clone().ident().map_or(false, |i| i.sym.eq("required"))
-            }
-            _ => return,
-        };
-
-        /* Options are either the first or second parameter depending on whether
-         * the input is required.
-         * e.g. input.required({alias: '...'}) or input(default, {alias: '...'}) */
-        if let Some(options) = if self.required { call.args.first() } else { call.args.get(1) } {
-            options.visit_children_with(self);
-        }
-    }
-
-    fn visit_prop(&mut self, prop: &Prop) {
-        let key_value = match prop.as_key_value() {
-            Some(key_value) => key_value,
-            None => return,
-        };
-
-        if let Some(true) = key_value.key.as_ident().map(|key| key.sym.eq("alias")) {
-            if let Some(LitStr(str)) = key_value.value.as_lit() {
-                self.alias = Some(str.value.as_str().to_string());
-            }
-        }
     }
 }
 
