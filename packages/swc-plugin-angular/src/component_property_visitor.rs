@@ -5,22 +5,18 @@ use swc_core::ecma::{
     ast::Str,
     visit::{VisitMut, VisitMutWith},
 };
-use swc_core::ecma::ast::{CallExpr, Ident, Prop};
-use swc_core::ecma::ast::Lit::Str as LitStr;
-use swc_core::ecma::visit::{Visit, VisitWith};
-use swc_ecma_utils::{ExprExt, ExprFactory, IsDirective};
-use swc_ecma_utils::swc_ecma_ast::{Expr, Stmt};
+use swc_core::ecma::ast::Ident;
+use swc_ecma_utils::{ExprFactory, IsDirective};
+use swc_ecma_utils::swc_ecma_ast::Stmt;
+
+use crate::input_visitor::{InputInfo, InputVisitor};
+use crate::output_visitor::{OutputInfo, OutputVisitor};
 
 #[derive(Default)]
 pub struct ComponentPropertyVisitor {
     component_inputs: HashMap<Ident, Vec<InputInfo>>,
+    component_outputs: HashMap<Ident, Vec<OutputInfo>>,
     current_component: Option<Ident>,
-}
-
-struct InputInfo {
-    name: String,
-    alias: Option<String>,
-    required: bool,
 }
 
 impl VisitMut for ComponentPropertyVisitor {
@@ -33,37 +29,25 @@ impl VisitMut for ComponentPropertyVisitor {
         self.current_component = None;
     }
 
-    fn visit_mut_class_prop(&mut self, node: &mut swc_core::ecma::ast::ClassProp) {
+    fn visit_mut_class_prop(&mut self, class_prop: &mut swc_core::ecma::ast::ClassProp) {
         let current_component = match &self.current_component {
             Some(current_component) => current_component,
             None => return,
         };
 
-        let key_ident = match node.key.as_ident() {
-            Some(key_ident) => key_ident,
-            None => return,
-        };
-
-        let call = match node
-            .value
-            .as_mut()
-            .and_then(|v| v.as_expr().as_call())
-        {
-            Some(call) => call,
-            None => return,
-        };
-
         /* Parse input. */
-        let mut input_visitor = InputVisitor::default();
-        call.visit_with(&mut input_visitor);
-        self.component_inputs
-            .entry(current_component.clone())
-            .or_default()
-            .push(InputInfo {
-                name: key_ident.sym.to_string(),
-                alias: input_visitor.alias,
-                required: input_visitor.required,
-            });
+        if let Some(input_info) = InputVisitor::default().get_input_info(class_prop) {
+            self.component_inputs
+                .entry(current_component.clone())
+                .or_default().push(input_info);
+        }
+
+        /* Parse output. */
+        if let Some(output_info) = OutputVisitor::default().get_output_info(class_prop) {
+            self.component_outputs
+                .entry(current_component.clone())
+                .or_default().push(output_info);
+        }
     }
 
     /**
@@ -76,7 +60,7 @@ impl VisitMut for ComponentPropertyVisitor {
             let class_ident = self.try_get_class_ident(item.as_ref());
             item.visit_mut_with(self);
             new_items.push(item);
-            for statement in self.try_flush_input_decorators(class_ident) {
+            for statement in self.drain_component_decorators(class_ident) {
                 new_items.push(statement.into());
             }
         }
@@ -93,25 +77,23 @@ impl VisitMut for ComponentPropertyVisitor {
             let class_ident = self.try_get_class_ident(Some(&stmt));
             stmt.visit_mut_with(self);
             new_stmts.push(stmt);
-            new_stmts.extend(self.try_flush_input_decorators(class_ident));
+            new_stmts.extend(self.drain_component_decorators(class_ident));
         }
         *stmts = new_stmts;
     }
 }
 
 impl ComponentPropertyVisitor {
-    fn try_flush_input_decorators(&mut self, class_ident: Option<Ident>) -> Vec<Stmt> {
+    fn drain_component_decorators(&mut self, class_ident: Option<Ident>) -> Vec<Stmt> {
         let component = match class_ident {
             Some(class_ident) => class_ident,
             None => return vec![],
         };
 
-        let mut input_infos = match self.component_inputs.remove(&component) {
-            Some(input_infos) => input_infos,
-            None => return vec![],
-        };
+        let mut input_infos = self.component_inputs.remove(&component).unwrap_or_default();
+        let mut output_infos = self.component_outputs.remove(&component).unwrap_or_default();
 
-        let mut stmts: Vec<Stmt> = Vec::with_capacity(input_infos.len());
+        let mut stmts: Vec<Stmt> = Vec::with_capacity(input_infos.len() + output_infos.len());
         for input_info in input_infos.drain(..) {
             let alias = match &input_info.alias {
                 Some(alias) => format!(r#""{alias}""#),
@@ -139,58 +121,33 @@ impl ComponentPropertyVisitor {
             }.into_stmt());
         }
 
+        for output_info in output_infos.drain(..) {
+            let alias = match &output_info.alias {
+                Some(alias) => format!(r#""{alias}""#),
+                None => "".into(),
+            };
+
+            let raw = formatdoc! {
+                r#"_ts_decorate([
+                    require("@angular/core").Output({alias})
+                ], {component}.prototype, "{name}")"#,
+                alias = alias,
+                component = component.sym.to_string(),
+                name = output_info.name,
+            };
+
+            stmts.push(Str {
+                span: Default::default(),
+                value: "".into(),
+                raw: Some(raw.as_str().into()),
+            }.into_stmt());
+        }
+
         stmts
     }
 
     fn try_get_class_ident(&self, stmt: Option<&Stmt>) -> Option<Ident> {
         return stmt.and_then(|stmt| stmt.as_decl()).and_then(|decl| decl.as_class()).map(|class| class.ident.clone());
-    }
-}
-
-#[derive(Default)]
-struct InputVisitor {
-    alias: Option<String>,
-    required: bool,
-}
-
-impl Visit for InputVisitor {
-    fn visit_call_expr(&mut self, call: &CallExpr) {
-        let callee = match call.callee.as_expr()
-        {
-            Some(value_expr) => value_expr,
-            None => return,
-        };
-
-        self.required = match callee.as_expr() {
-            /* false if `input()`. */
-            Expr::Ident(ident) if ident.sym.eq("input") => false,
-            /* true if `input.required(). */
-            Expr::Member(member) => {
-                member.obj.as_ident().map_or(false, |i| i.sym.eq("input"))
-                    && member.prop.clone().ident().map_or(false, |i| i.sym.eq("required"))
-            }
-            _ => return,
-        };
-
-        /* Options are either the first or second parameter depending on whether
-         * the input is required.
-         * e.g. input.required({alias: '...'}) or input(default, {alias: '...'}) */
-        if let Some(options) = if self.required { call.args.first() } else { call.args.get(1) } {
-            options.visit_children_with(self);
-        }
-    }
-
-    fn visit_prop(&mut self, prop: &Prop) {
-        let key_value = match prop.as_key_value() {
-            Some(key_value) => key_value,
-            None => return,
-        };
-
-        if let Some(true) = key_value.key.as_ident().map(|key| key.sym.eq("alias")) {
-            if let Some(LitStr(str)) = key_value.value.as_lit() {
-                self.alias = Some(str.value.as_str().to_string());
-            }
-        }
     }
 }
 
@@ -337,6 +294,48 @@ mod tests {
                 })
             ], MyCmp.prototype, "nonAliasedInput");
             }
+            "# });
+    }
+
+    #[test]
+    fn test_output() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                myOutput = output();
+                anotherProperty = 'hello';
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                myOutput = output();
+                anotherProperty = 'hello';
+            }
+            _ts_decorate([
+                require("@angular/core").Output()
+            ], MyCmp.prototype, "myOutput");
+            "# });
+    }
+
+    #[test]
+    fn test_output_alias() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                myOutput = output({
+                    alias: 'myOutputAlias'
+                });
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                myOutput = output({
+                    alias: 'myOutputAlias'
+                });
+            }
+            _ts_decorate([
+                require("@angular/core").Output("myOutputAlias")
+            ], MyCmp.prototype, "myOutput");
             "# });
     }
 }
