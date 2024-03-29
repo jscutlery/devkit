@@ -3,6 +3,8 @@ use swc_core::ecma::ast::Lit::Str as LitStr;
 use swc_core::ecma::visit::{Visit, VisitWith};
 use swc_ecma_utils::ExprExt;
 
+use crate::utils::get_prop_name_and_call;
+
 #[derive(Default)]
 pub struct InputVisitor {
     input_info: Option<InputInfo>,
@@ -10,18 +12,8 @@ pub struct InputVisitor {
 
 impl InputVisitor {
     pub(crate) fn get_input_info(&mut self, class_prop: &ClassProp) -> Option<InputInfo> {
-        let key_ident = match class_prop.key.as_ident() {
-            Some(key_ident) => key_ident,
-            None => return None,
-        };
-        let input_name = key_ident.sym.to_string();
-
-        let call = match class_prop
-            .value
-            .as_ref()
-            .and_then(|v| v.as_expr().as_call())
-        {
-            Some(call) => call,
+        let (input_name, call) = match get_prop_name_and_call(class_prop) {
+            Some(value) => value,
             None => return None,
         };
 

@@ -13,6 +13,7 @@ mod input_visitor;
 
 #[cfg(test)]
 mod testing;
+mod utils;
 
 #[plugin_transform]
 pub fn process_transform(program: Program, _metadata: TransformPluginProgramMetadata) -> Program {
