@@ -10,7 +10,7 @@ pub struct ModelVisitor {
 
 impl ModelVisitor {
     pub(crate) fn get_model_info(&mut self, class_prop: &ClassProp) -> Option<ModelInfo> {
-        let angular_prop = match get_angular_prop(class_prop, "model".into()) {
+        let angular_prop = match get_angular_prop(class_prop, "model") {
             Some(value) => value,
             None => return None,
         };
@@ -34,7 +34,7 @@ impl Visit for ModelVisitor {
             None => return,
         };
 
-        model_info.alias = get_prop_value_as_string(prop, "alias".to_string());
+        model_info.alias = get_prop_value_as_string(prop, "alias");
     }
 }
 

@@ -10,7 +10,7 @@ pub struct InputVisitor {
 
 impl InputVisitor {
     pub(crate) fn get_input_info(&mut self, class_prop: &ClassProp) -> Option<InputInfo> {
-        let angular_prop = match get_angular_prop(class_prop, "input".into()) {
+        let angular_prop = match get_angular_prop(class_prop, "input") {
             Some(value) => value,
             None => return None,
         };
@@ -34,7 +34,7 @@ impl Visit for InputVisitor {
             None => return,
         };
 
-        input_info.alias = get_prop_value_as_string(prop, "alias".to_string());
+        input_info.alias = get_prop_value_as_string(prop, "alias");
     }
 }
 

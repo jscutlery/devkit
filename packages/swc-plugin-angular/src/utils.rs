@@ -8,7 +8,7 @@ use swc_ecma_utils::swc_ecma_ast::Lit;
  * Return the property name and the function call expression or None
  * if the property is not a function call.
  */
-pub fn get_angular_prop(class_prop: &ClassProp, function_name: String) -> Option<AngularProp> {
+pub fn get_angular_prop<'prop>(class_prop: &'prop ClassProp, function_name: &str) -> Option<AngularProp<'prop>> {
     let key_ident = match class_prop.key.as_ident() {
         Some(key_ident) => key_ident,
         None => return None,
@@ -55,22 +55,22 @@ pub struct AngularProp<'lifetime> {
     pub args: &'lifetime Vec<ExprOrSpread>,
 }
 
-pub fn get_prop_value_as_string(prop: &Prop, key: String) -> Option<String> {
+pub fn get_prop_value_as_string(prop: &Prop, key: &str) -> Option<String> {
     if let Some(Str(value)) = get_prop_value(prop, key) {
-        return Some(value.value.as_str().to_string());
+        return Some(value.value.as_str().into());
     }
 
     None
 }
 
-pub fn get_prop_value(prop: &Prop, key: String) -> Option<&Lit> {
+pub fn get_prop_value<'prop>(prop: &'prop Prop, key: &str) -> Option<&'prop Lit> {
     let key_value = match prop.as_key_value() {
         Some(key_value) => key_value,
         None => return None,
     };
 
     if key_value.key.as_ident()
-        .map_or(false, |key_ident| key_ident.sym.eq(key.as_str())) {
+        .map_or(false, |key_ident| key_ident.sym.eq(key)) {
         return key_value.value.as_lit();
     }
 
