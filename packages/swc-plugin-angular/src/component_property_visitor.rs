@@ -65,7 +65,7 @@ impl VisitMut for ComponentPropertyVisitor {
                 .entry(current_component.clone())
                 .or_default().push(OutputInfo {
                 name: model_info.name,
-                alias: Some(output_alias)
+                alias: Some(output_alias),
             });
         }
     }
@@ -77,10 +77,12 @@ impl VisitMut for ComponentPropertyVisitor {
     fn visit_mut_module_items(&mut self, items: &mut Vec<swc_core::ecma::ast::ModuleItem>) {
         let mut new_items = Vec::with_capacity(items.len());
         for mut item in items.drain(..) {
-            let class_ident = self.try_get_class_ident(item.as_ref());
             item.visit_mut_with(self);
+
+            let decorators = self.drain_component_decorators(item.as_ref());
+
             new_items.push(item);
-            for statement in self.drain_component_decorators(class_ident) {
+            for statement in decorators {
                 new_items.push(statement.into());
             }
         }
@@ -94,24 +96,26 @@ impl VisitMut for ComponentPropertyVisitor {
     fn visit_mut_stmts(&mut self, stmts: &mut Vec<Stmt>) {
         let mut new_stmts = Vec::with_capacity(stmts.len());
         for mut stmt in stmts.drain(..) {
-            let class_ident = self.try_get_class_ident(Some(&stmt));
             stmt.visit_mut_with(self);
+
+            let decorators = self.drain_component_decorators(Some(&stmt));
+
             new_stmts.push(stmt);
-            new_stmts.extend(self.drain_component_decorators(class_ident));
+            new_stmts.extend(decorators);
         }
         *stmts = new_stmts;
     }
 }
 
 impl ComponentPropertyVisitor {
-    fn drain_component_decorators(&mut self, class_ident: Option<Ident>) -> Vec<Stmt> {
-        let component = match class_ident {
+    fn drain_component_decorators(&mut self, statement: Option<&Stmt>) -> Vec<Stmt> {
+        let component = match self.try_get_class_ident(statement) {
             Some(class_ident) => class_ident,
             None => return vec![],
         };
 
-        let mut input_infos = self.component_inputs.remove(&component).unwrap_or_default();
-        let mut output_infos = self.component_outputs.remove(&component).unwrap_or_default();
+        let mut input_infos = self.component_inputs.remove(component).unwrap_or_default();
+        let mut output_infos = self.component_outputs.remove(component).unwrap_or_default();
 
         let mut stmts: Vec<Stmt> = Vec::with_capacity(input_infos.len() + output_infos.len());
         for input_info in input_infos.drain(..) {
@@ -166,8 +170,9 @@ impl ComponentPropertyVisitor {
         stmts
     }
 
-    fn try_get_class_ident(&self, stmt: Option<&Stmt>) -> Option<Ident> {
-        return stmt.and_then(|stmt| stmt.as_decl()).and_then(|decl| decl.as_class()).map(|class| class.ident.clone());
+    fn try_get_class_ident<'statement>(&self, stmt: Option<&'statement Stmt>) -> Option<&'statement Ident> {
+        return stmt.and_then(|stmt| stmt.as_decl())
+            .and_then(|decl| decl.as_class()).map(|class| &class.ident);
     }
 }
 

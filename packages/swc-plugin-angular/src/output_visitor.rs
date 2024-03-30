@@ -10,7 +10,7 @@ pub struct OutputVisitor {
 
 impl OutputVisitor {
     pub(crate) fn get_output_info(&mut self, class_prop: &ClassProp) -> Option<OutputInfo> {
-        let angular_prop = match get_angular_prop(class_prop, "output".into()) {
+        let angular_prop = match get_angular_prop(class_prop, "output") {
             Some(value) => value,
             None => return None,
         };
@@ -35,7 +35,7 @@ impl Visit for OutputVisitor {
             None => return,
         };
 
-        output_info.alias = get_prop_value_as_string(prop, "alias".to_string());
+        output_info.alias = get_prop_value_as_string(prop, "alias");
     }
 }
 
