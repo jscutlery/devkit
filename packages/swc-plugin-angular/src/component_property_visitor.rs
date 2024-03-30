@@ -502,4 +502,80 @@ mod tests {
             ], MyCmp.prototype, "myModel");
             "# });
     }
+
+    #[ignore]
+    #[test]
+    fn test_view_child() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild('title');
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild('title');
+            }
+            _ts_decorate([
+                require("@angular/core").ViewChild("title", {isSignal: true})
+            ], MyCmp.prototype, "titleEl");
+            "# });
+    }
+    
+    #[ignore]
+    #[test]
+    fn test_view_child_with_options() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild('title', {read: ElementRef});
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild('title', {read: ElementRef});
+            }
+            _ts_decorate([
+                require("@angular/core").ViewChild("title", {isSignal: true, read: ElementRef})
+            ], MyCmp.prototype, "titleEl");
+            "# });
+    }
+
+    #[ignore]
+    #[test]
+    fn test_view_child_required() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild.required('title');
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild.required('title');
+            }
+            _ts_decorate([
+                require("@angular/core").ViewChild("title", {isSignal: true, required: true})
+            ], MyCmp.prototype, "titleEl");
+            "# });
+    }
+
+    #[ignore]
+    #[test]
+    fn test_view_child_required_with_options() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild.required('title', {read: ElementRef});
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild.required('title', {read: ElementRef});
+            }
+            _ts_decorate([
+                require("@angular/core").ViewChild("title", {isSignal: true, read: ElementRef, required: true})
+            ], MyCmp.prototype, "titleEl");
+            "# });
+    }
 }
