@@ -1,7 +1,7 @@
 use swc_core::ecma::ast::{ClassProp, Prop};
 use swc_core::ecma::visit::Visit;
 
-use crate::utils::{get_angular_prop, get_prop_value_as_string, visit_input_or_model_options};
+use crate::utils::{get_angular_prop, get_prop_value_as_string, visit_functional_api_options};
 
 #[derive(Default)]
 pub struct ModelVisitor {
@@ -21,7 +21,7 @@ impl ModelVisitor {
             ..Default::default()
         }.into();
 
-        visit_input_or_model_options(self, angular_prop.required, angular_prop.args);
+        visit_functional_api_options(self, angular_prop.required, angular_prop.args);
 
         self.model_info.take()
     }

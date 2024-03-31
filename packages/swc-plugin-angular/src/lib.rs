@@ -12,6 +12,7 @@ mod component_property_visitor;
 mod input_visitor;
 mod model_visitor;
 mod output_visitor;
+mod view_child_visitor;
 
 #[cfg(test)]
 mod testing;

@@ -79,10 +79,10 @@ pub fn get_prop_value<'prop>(prop: &'prop Prop, key: &str) -> Option<&'prop Lit>
 
 /**
  * Options are either the first or second parameter depending on whether
- * the input (or model) is required.
+ * the input (or model or view_child) is required.
  * e.g. `input.required({alias: '...'})` or `input(initialValue, {alias: '...'})`
  */
-pub fn visit_input_or_model_options(visitor: &mut dyn Visit, required: bool, args: &[ExprOrSpread]) {
+pub fn visit_functional_api_options(visitor: &mut dyn Visit, required: bool, args: &[ExprOrSpread]) {
     let options = if required { args.first() } else { args.get(1) };
 
     if let Some(options) = options {
