@@ -142,7 +142,7 @@ impl ComponentPropertyVisitor {
             .remove(component)
             .unwrap_or_default();
 
-        let mut stmts: Vec<Stmt> = Vec::with_capacity(input_infos.len() + output_infos.len());
+        let mut stmts: Vec<Stmt> = Vec::with_capacity(input_infos.len() + output_infos.len() + view_child_infos.len());
         for input_info in input_infos.drain(..) {
             let alias = match &input_info.alias {
                 Some(alias) => format!(r#""{alias}""#),
@@ -201,14 +201,35 @@ impl ComponentPropertyVisitor {
         for view_child_info in view_child_infos.drain(..) {
             let view_child_locator = view_child_info.locator;
             let locator = format!(r#""{view_child_locator}""#);
-
-            let raw = formatdoc! {
-                r#"_ts_decorate([
-                    require("@angular/core").ViewChild({locator}, {{isSignal: true}})
-                ], {component}.prototype, "{name}")"#,
-                locator = locator,
-                component = component.sym.to_string(),
-                name = view_child_info.name,
+              // TODO: not working, view_child_info.read is always None.
+            let raw = if let Some(read) = view_child_info.read.as_ref() {
+                formatdoc! {
+                    r#"_ts_decorate([
+                        require("@angular/core").ViewChild({locator}, {{
+                            isSignal: true,
+                            read: {read},
+                            required: {required},
+                        }})
+                    ], {component}.prototype, "{name}")"#,
+                    locator = locator,
+                    component = component.sym.to_string(),
+                    name = view_child_info.name,
+                    read = read,
+                    required = view_child_info.required,
+                }
+            } else {
+                formatdoc! {
+                    r#"_ts_decorate([
+                        require("@angular/core").ViewChild({locator}, {{
+                            isSignal: true,
+                            required: {required},
+                        }})
+                    ], {component}.prototype, "{name}")"#,
+                    locator = locator,
+                    component = component.sym.to_string(),
+                    name = view_child_info.name,
+                    required = view_child_info.required,
+                }
             };
 
             stmts.push(
@@ -585,13 +606,15 @@ mod tests {
                 titleEl = viewChild('title');
             }
             _ts_decorate([
-                require("@angular/core").ViewChild("title", {isSignal: true})
+                require("@angular/core").ViewChild("title", {
+                    isSignal: true,
+                    required: false,
+                })
             ], MyCmp.prototype, "titleEl");
             "# },
         );
     }
 
-    #[ignore]
     #[test]
     fn test_view_child_with_options() {
         test_visitor(
@@ -602,10 +625,16 @@ mod tests {
             }"# },
             indoc! {
             r#"class MyCmp {
-                titleEl = viewChild('title', {read: ElementRef});
+                titleEl = viewChild('title', {
+                    read: ElementRef
+                });
             }
             _ts_decorate([
-                require("@angular/core").ViewChild("title", {isSignal: true, read: ElementRef})
+                require("@angular/core").ViewChild("title", {
+                    isSignal: true,
+                    read: ElementRef,
+                    required: false,
+                })
             ], MyCmp.prototype, "titleEl");
             "# },
         );
