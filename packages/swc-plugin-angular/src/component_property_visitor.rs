@@ -199,9 +199,8 @@ impl ComponentPropertyVisitor {
         }
 
         for view_child_info in view_child_infos.drain(..) {
-          let _view_child_locator = view_child_info.locator;
-            // TODO: should be taken from view_child_info.locator
-            let locator = format!(r#""title""#);
+            let view_child_locator = view_child_info.locator;
+            let locator = format!(r#""{view_child_locator}""#);
 
             let raw = formatdoc! {
                 r#"_ts_decorate([
