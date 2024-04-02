@@ -1,13 +1,9 @@
 use std::collections::HashMap;
 
-use indoc::formatdoc;
 use swc_core::ecma::ast::{Expr, Ident, Lit, ObjectLit, Prop, PropName, PropOrSpread};
-use swc_core::ecma::{
-    ast::Str,
-    visit::{VisitMut, VisitMutWith},
-};
+use swc_core::ecma::visit::{VisitMut, VisitMutWith};
 use swc_ecma_utils::swc_ecma_ast::{KeyValueProp, Stmt};
-use swc_ecma_utils::{ExprFactory, IsDirective};
+use swc_ecma_utils::IsDirective;
 
 use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
 use crate::component_property_visitor::input_prop_parser::{InputProp, InputPropParser};
@@ -52,21 +48,18 @@ impl VisitMut for ComponentPropertyVisitor {
         }
 
         /* Parse output. */
-        if let Some(output_info) = OutputPropParser::default().get_output_info(class_prop) {
+        if let Some(output_prop) =
+            OutputPropParser::default().parse_prop(current_component, class_prop)
+        {
             self.component_outputs
                 .entry(current_component.clone())
                 .or_default()
-                .push(output_info);
+                .push(output_prop);
         }
 
         /* Parse model. */
         if let Some(model_info) = ModelPropParser::default().get_model_info(class_prop) {
-            let alias = match model_info.alias.clone() {
-                Some(alias) => alias,
-                None => model_info.name.clone(),
-            };
-
-            let option_props = match model_info.alias {
+            let option_props = match model_info.alias.clone() {
                 Some(alias) => vec![PropOrSpread::Prop(
                     Prop::KeyValue(KeyValueProp {
                         key: PropName::Ident(Ident::new("alias".into(), Default::default())),
@@ -85,17 +78,36 @@ impl VisitMut for ComponentPropertyVisitor {
                     name: model_info.name.clone(),
                     required: model_info.required,
                     options: Some(ObjectLit {
-                        props: option_props,
+                        props: option_props.clone(),
                         span: Default::default(),
                     }),
                 });
-            let output_alias = format!("{}Change", alias);
+
+            let output_name = match model_info.alias {
+                Some(alias) => alias,
+                None => model_info.name.clone(),
+            };
+
             self.component_outputs
                 .entry(current_component.clone())
                 .or_default()
                 .push(OutputProp {
+                    class: current_component.clone(),
                     name: model_info.name,
-                    alias: Some(output_alias),
+                    options: Some(ObjectLit {
+                        props: vec![PropOrSpread::Prop(
+                            Prop::KeyValue(KeyValueProp {
+                                key: PropName::Ident(Ident::new(
+                                    "alias".into(),
+                                    Default::default(),
+                                )),
+                                value: Expr::Lit(Lit::Str(format!("{}Change", output_name).into()))
+                                    .into(),
+                            })
+                            .into(),
+                        )],
+                        span: Default::default(),
+                    }),
                 });
         }
 
@@ -155,43 +167,24 @@ impl ComponentPropertyVisitor {
         };
 
         let mut input_props = self.component_inputs.remove(component).unwrap_or_default();
-        let mut output_infos = self.component_outputs.remove(component).unwrap_or_default();
+        let mut output_props = self.component_outputs.remove(component).unwrap_or_default();
         let mut view_child_props = self
             .component_view_child
             .remove(component)
             .unwrap_or_default();
 
         let mut stmts: Vec<Stmt> =
-            Vec::with_capacity(input_props.len() + output_infos.len() + view_child_props.len());
+            Vec::with_capacity(input_props.len() + output_props.len() + view_child_props.len());
         for input_prop in input_props.drain(..) {
             for decorator in input_prop.to_decorators() {
                 stmts.push(decorator.into());
             }
         }
 
-        for output_info in output_infos.drain(..) {
-            let alias = match &output_info.alias {
-                Some(alias) => format!(r#""{alias}""#),
-                None => "".into(),
-            };
-
-            let raw = formatdoc! {
-                r#"_ts_decorate([
-                    require("@angular/core").Output({alias})
-                ], {component}.prototype, "{name}")"#,
-                alias = alias,
-                component = component.sym.to_string(),
-                name = output_info.name,
-            };
-
-            stmts.push(
-                Str {
-                    span: Default::default(),
-                    value: "".into(),
-                    raw: Some(raw.as_str().into()),
-                }
-                .into_stmt(),
-            );
+        for output_prop in output_props.drain(..) {
+            for decorator in output_prop.to_decorators() {
+                stmts.push(decorator.into());
+            }
         }
 
         for view_child_prop in view_child_props.drain(..) {
@@ -408,7 +401,7 @@ mod tests {
                 });
             }
             _ts_decorate([
-                require("@angular/core").Output("myOutputAlias")
+                require("@angular/core").Output('myOutputAlias')
             ], MyCmp.prototype, "myOutput");
             "# },
         );
