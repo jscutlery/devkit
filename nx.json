@@ -62,6 +62,12 @@
     "@nx/vite:test": {
       "cache": true,
       "inputs": ["default", "^production"]
+    },
+    "@nx/js:release-publish": {
+      "dependsOn": ["build"],
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
     }
   },
   "namedInputs": {
@@ -103,8 +109,7 @@
     "version": {
       "conventionalCommits": true,
       "generatorOptions": {
-        "fallbackCurrentVersionResolver": "disk",
-        "packageRoot": "dist/{projectRoot}"
+        "fallbackCurrentVersionResolver": "disk"
       }
     },
     "git": {
