@@ -5,7 +5,7 @@ use swc_core::ecma::ast::{
 use swc_ecma_utils::swc_ecma_ast::Stmt;
 
 use crate::component_property_visitor::angular_prop_decorator::AngularPropDecorator;
-use crate::component_property_visitor::ast_parsing::get_angular_prop;
+use crate::component_property_visitor::ast_parsing::parse_angular_prop;
 
 #[derive(Default)]
 pub struct ViewChildPropParser {}
@@ -16,18 +16,18 @@ impl ViewChildPropParser {
         class: &Ident,
         class_prop: &ClassProp,
     ) -> Option<ViewChildProp> {
-        let angular_prop = match get_angular_prop(class_prop, "viewChild") {
+        let angular_prop_info = match parse_angular_prop(class_prop, "viewChild") {
             Some(value) => value,
             None => return None,
         };
 
         /* Locator is mandatory so the property is invalid if it's missing. */
-        let locator = match angular_prop.args.first() {
+        let locator = match angular_prop_info.args.first() {
             Some(locator) => locator.clone(),
             None => return None,
         };
 
-        let options = angular_prop
+        let options = angular_prop_info
             .args
             .get(1)
             .and_then(|arg| arg.expr.as_object())
@@ -38,8 +38,8 @@ impl ViewChildPropParser {
 
         Some(ViewChildProp {
             class: class.clone(),
-            name: angular_prop.name,
-            required: angular_prop.required,
+            name: angular_prop_info.name,
+            required: angular_prop_info.required,
             locator,
             options,
         })

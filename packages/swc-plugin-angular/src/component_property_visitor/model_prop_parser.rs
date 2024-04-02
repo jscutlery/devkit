@@ -2,7 +2,7 @@ use swc_core::ecma::ast::{ClassProp, Prop};
 use swc_core::ecma::visit::Visit;
 
 use crate::component_property_visitor::ast_parsing::{
-    get_angular_prop, get_prop_value_as_string, visit_functional_api_options,
+    get_prop_value_as_string, parse_angular_prop, visit_functional_api_options,
 };
 
 #[derive(Default)]
@@ -12,7 +12,7 @@ pub struct ModelPropParser {
 
 impl ModelPropParser {
     pub(crate) fn get_model_info(&mut self, class_prop: &ClassProp) -> Option<ModelInfo> {
-        let angular_prop = match get_angular_prop(class_prop, "model") {
+        let angular_prop = match parse_angular_prop(class_prop, "model") {
             Some(value) => value,
             None => return None,
         };

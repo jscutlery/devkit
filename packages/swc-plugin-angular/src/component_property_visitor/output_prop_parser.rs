@@ -1,7 +1,9 @@
 use swc_core::ecma::ast::{ClassProp, Prop};
 use swc_core::ecma::visit::{Visit, VisitWith};
 
-use crate::component_property_visitor::ast_parsing::{get_angular_prop, get_prop_value_as_string};
+use crate::component_property_visitor::ast_parsing::{
+    get_prop_value_as_string, parse_angular_prop,
+};
 
 #[derive(Default)]
 pub struct OutputPropParser {
@@ -10,7 +12,7 @@ pub struct OutputPropParser {
 
 impl OutputPropParser {
     pub(crate) fn get_output_info(&mut self, class_prop: &ClassProp) -> Option<OutputProp> {
-        let angular_prop = match get_angular_prop(class_prop, "output") {
+        let angular_prop = match parse_angular_prop(class_prop, "output") {
             Some(value) => value,
             None => return None,
         };

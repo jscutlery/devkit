@@ -6,10 +6,10 @@ use swc_ecma_utils::ExprExt;
  * Return the property name and the function call expression or None
  * if the property is not a function call.
  */
-pub fn get_angular_prop<'prop>(
+pub fn parse_angular_prop<'prop>(
     class_prop: &'prop ClassProp,
     function_name: &str,
-) -> Option<AngularProp<'prop>> {
+) -> Option<AngularPropInfo<'prop>> {
     let key_ident = match class_prop.key.as_ident() {
         Some(key_ident) => key_ident,
         None => return None,
@@ -49,7 +49,7 @@ pub fn get_angular_prop<'prop>(
         _ => return None,
     };
 
-    let angular_prop = AngularProp {
+    let angular_prop = AngularPropInfo {
         name: key_ident.sym.to_string(),
         required,
         args: &call.args,
@@ -58,7 +58,7 @@ pub fn get_angular_prop<'prop>(
     Some(angular_prop)
 }
 
-pub struct AngularProp<'lifetime> {
+pub struct AngularPropInfo<'lifetime> {
     pub name: String,
     pub required: bool,
     pub args: &'lifetime Vec<ExprOrSpread>,
