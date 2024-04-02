@@ -9,15 +9,15 @@ use swc_core::ecma::{
 use swc_ecma_utils::swc_ecma_ast::Stmt;
 use swc_ecma_utils::{ExprFactory, IsDirective};
 
-use crate::input_visitor::{InputInfo, InputVisitor};
-use crate::model_visitor::ModelVisitor;
-use crate::output_visitor::{OutputInfo, OutputVisitor};
+use crate::input_prop_parser::{InputProp, InputPropParser};
+use crate::model_prop_parser::ModelPropParser;
+use crate::output_prop_parser::{OutputProp, OutputPropParser};
 use crate::view_child_prop_parser::{ViewChildProp, ViewChildPropParser};
 
 #[derive(Default)]
 pub struct ComponentPropertyVisitor {
-    component_inputs: HashMap<Ident, Vec<InputInfo>>,
-    component_outputs: HashMap<Ident, Vec<OutputInfo>>,
+    component_inputs: HashMap<Ident, Vec<InputProp>>,
+    component_outputs: HashMap<Ident, Vec<OutputProp>>,
     component_view_child: HashMap<Ident, Vec<ViewChildProp>>, // Naming? I don't want to name it view_children as it refers to another thing.
     current_component: Option<Ident>,
 }
@@ -39,7 +39,7 @@ impl VisitMut for ComponentPropertyVisitor {
         };
 
         /* Parse input. */
-        if let Some(input_info) = InputVisitor::default().get_input_info(class_prop) {
+        if let Some(input_info) = InputPropParser::default().get_input_info(class_prop) {
             self.component_inputs
                 .entry(current_component.clone())
                 .or_default()
@@ -47,7 +47,7 @@ impl VisitMut for ComponentPropertyVisitor {
         }
 
         /* Parse output. */
-        if let Some(output_info) = OutputVisitor::default().get_output_info(class_prop) {
+        if let Some(output_info) = OutputPropParser::default().get_output_info(class_prop) {
             self.component_outputs
                 .entry(current_component.clone())
                 .or_default()
@@ -55,11 +55,11 @@ impl VisitMut for ComponentPropertyVisitor {
         }
 
         /* Parse model. */
-        if let Some(model_info) = ModelVisitor::default().get_model_info(class_prop) {
+        if let Some(model_info) = ModelPropParser::default().get_model_info(class_prop) {
             self.component_inputs
                 .entry(current_component.clone())
                 .or_default()
-                .push(InputInfo {
+                .push(InputProp {
                     name: model_info.name.clone(),
                     required: model_info.required,
                     alias: model_info.alias.clone(),
@@ -73,7 +73,7 @@ impl VisitMut for ComponentPropertyVisitor {
             self.component_outputs
                 .entry(current_component.clone())
                 .or_default()
-                .push(OutputInfo {
+                .push(OutputProp {
                     name: model_info.name,
                     alias: Some(output_alias),
                 });

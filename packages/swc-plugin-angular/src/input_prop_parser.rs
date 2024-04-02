@@ -4,22 +4,23 @@ use swc_core::ecma::visit::Visit;
 use crate::utils::{get_angular_prop, get_prop_value_as_string, visit_functional_api_options};
 
 #[derive(Default)]
-pub struct InputVisitor {
-    input_info: Option<InputInfo>,
+pub struct InputPropParser {
+    input_info: Option<InputProp>,
 }
 
-impl InputVisitor {
-    pub(crate) fn get_input_info(&mut self, class_prop: &ClassProp) -> Option<InputInfo> {
+impl InputPropParser {
+    pub(crate) fn get_input_info(&mut self, class_prop: &ClassProp) -> Option<InputProp> {
         let angular_prop = match get_angular_prop(class_prop, "input") {
             Some(value) => value,
             None => return None,
         };
 
-        self.input_info = InputInfo {
+        self.input_info = InputProp {
             name: angular_prop.name,
             required: angular_prop.required,
             ..Default::default()
-        }.into();
+        }
+        .into();
 
         visit_functional_api_options(self, angular_prop.required, angular_prop.args);
 
@@ -27,7 +28,7 @@ impl InputVisitor {
     }
 }
 
-impl Visit for InputVisitor {
+impl Visit for InputPropParser {
     fn visit_prop(&mut self, prop: &Prop) {
         let input_info = match &mut self.input_info {
             Some(input_info) => input_info,
@@ -39,7 +40,7 @@ impl Visit for InputVisitor {
 }
 
 #[derive(Default)]
-pub struct InputInfo {
+pub struct InputProp {
     pub name: String,
     pub alias: Option<String>,
     pub required: bool,

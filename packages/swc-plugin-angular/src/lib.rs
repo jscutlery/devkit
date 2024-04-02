@@ -9,9 +9,9 @@ use crate::component_property_visitor::ComponentPropertyVisitor;
 
 mod component_decorator_visitor;
 mod component_property_visitor;
-mod input_visitor;
-mod model_visitor;
-mod output_visitor;
+mod input_prop_parser;
+mod model_prop_parser;
+mod output_prop_parser;
 mod utils;
 mod view_child_prop_parser;
 
