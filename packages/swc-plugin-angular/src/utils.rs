@@ -1,5 +1,4 @@
 use swc_core::ecma::ast::{ClassProp, Expr, ExprOrSpread, Prop};
-use swc_core::ecma::ast::Lit::Str;
 use swc_core::ecma::visit::{Visit, VisitWith};
 use swc_ecma_utils::ExprExt;
 use swc_ecma_utils::swc_ecma_ast::Lit;
@@ -56,14 +55,14 @@ pub struct AngularProp<'lifetime> {
 }
 
 pub fn get_prop_value_as_string(prop: &Prop, key: &str) -> Option<String> {
-    if let Some(Str(value)) = get_prop_value(prop, key) {
-        return Some(value.value.as_str().into());
+    match get_prop_value(prop, key) {
+        Some(Expr::Ident(ident)) => Some(ident.sym.to_string()),
+        Some(Expr::Lit(Lit::Str(str))) => Some(str.value.to_string()),
+        _ => None,
     }
-
-    None
 }
 
-pub fn get_prop_value<'prop>(prop: &'prop Prop, key: &str) -> Option<&'prop Lit> {
+fn get_prop_value<'prop>(prop: &'prop Prop, key: &str) -> Option<&'prop Expr> {
     let key_value = match prop.as_key_value() {
         Some(key_value) => key_value,
         None => return None,
@@ -71,7 +70,7 @@ pub fn get_prop_value<'prop>(prop: &'prop Prop, key: &str) -> Option<&'prop Lit>
 
     if key_value.key.as_ident()
         .map_or(false, |key_ident| key_ident.sym.eq(key)) {
-        return key_value.value.as_lit();
+        return Some(key_value.value.as_expr());
     }
 
     None
