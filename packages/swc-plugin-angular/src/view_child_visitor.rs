@@ -4,7 +4,7 @@ use swc_core::ecma::{
 };
 use swc_core::ecma::visit::VisitWith;
 
-use crate::utils::{get_angular_prop, get_prop_value_as_string};
+use crate::utils::{get_angular_prop, get_prop_value_as_symbol};
 
 #[derive(Default)]
 pub struct ViewChildVisitor {
@@ -55,7 +55,7 @@ impl Visit for ViewChildVisitor {
             None => return,
         };
 
-        view_child_info.read = get_prop_value_as_string(prop, "read");
+        view_child_info.read = get_prop_value_as_symbol(prop, "read");
     }
 }
 
