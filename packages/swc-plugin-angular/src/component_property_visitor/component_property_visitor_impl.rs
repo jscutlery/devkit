@@ -9,10 +9,12 @@ use swc_core::ecma::{
 use swc_ecma_utils::swc_ecma_ast::Stmt;
 use swc_ecma_utils::{ExprFactory, IsDirective};
 
-use crate::input_prop_parser::{InputProp, InputPropParser};
-use crate::model_prop_parser::ModelPropParser;
-use crate::output_prop_parser::{OutputProp, OutputPropParser};
-use crate::view_child_prop_parser::{ViewChildProp, ViewChildPropParser};
+use crate::component_property_visitor::input_prop_parser::{InputProp, InputPropParser};
+use crate::component_property_visitor::model_prop_parser::ModelPropParser;
+use crate::component_property_visitor::output_prop_parser::{OutputProp, OutputPropParser};
+use crate::component_property_visitor::view_child_prop_parser::{
+    ViewChildProp, ViewChildPropParser,
+};
 
 #[derive(Default)]
 pub struct ComponentPropertyVisitor {
