@@ -1,3 +1,10 @@
+## 0.1.2 (2024-04-02)
+
+### 🩹 Fixes
+
+- **swc-angular-preset:** 🐞 publish dist artefact
+
+
 ## 0.1.1 (2024-03-29)
 
 
