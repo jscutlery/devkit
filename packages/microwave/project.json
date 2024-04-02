@@ -4,6 +4,7 @@
   "projectType": "library",
   "sourceRoot": "packages/microwave/src",
   "prefix": "jscutlery",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -49,7 +50,10 @@
         "skipServe": true,
         "devServerTarget": "microwave:component-test-build"
       }
+    },
+    "nx-release-publish": {
+      "executor": "@nx/js:release-publish",
+      "dependsOn": ["^nx-release-publish", "build"]
     }
-  },
-  "tags": []
+  }
 }

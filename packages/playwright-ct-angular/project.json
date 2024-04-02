@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/playwright-ct-angular/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/rollup:rollup",
@@ -49,7 +50,10 @@
       "options": {
         "jestConfig": "packages/playwright-ct-angular/jest.config.ts"
       }
+    },
+    "nx-release-publish": {
+      "executor": "@nx/js:release-publish",
+      "dependsOn": ["^nx-release-publish", "build"]
     }
-  },
-  "tags": []
+  }
 }

@@ -32,6 +32,10 @@
       "options": {
         "target-dir": "dist/packages/swc-plugin-angular"
       }
+    },
+    "nx-release-publish": {
+      "executor": "@nx/js:release-publish",
+      "dependsOn": ["^nx-release-publish", "build"]
     }
   },
   "tags": []

@@ -4,6 +4,7 @@
   "sourceRoot": "packages/swc-angular-preset/src",
   "implicitDependencies": ["swc-plugin-angular"],
   "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/rollup:rollup",
@@ -21,6 +22,5 @@
     "lint": {
       "executor": "@nx/eslint:lint"
     }
-  },
-  "tags": []
+  }
 }

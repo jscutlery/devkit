@@ -4,6 +4,7 @@
   "sourceRoot": "packages/cypress-harness/src",
   "projectType": "library",
   "generators": {},
+  "tags": [],
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -26,7 +27,10 @@
         "assets": ["LICENSE", "packages/cypress-harness/*.md"]
       },
       "outputs": ["{options.outputPath}"]
+    },
+    "nx-release-publish": {
+      "executor": "@nx/js:release-publish",
+      "dependsOn": ["^nx-release-publish", "build"]
     }
-  },
-  "tags": []
+  }
 }
