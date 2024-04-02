@@ -1,30 +1,24 @@
 use std::collections::HashMap;
 
 use indoc::formatdoc;
-use swc_core::ecma::ast::{
-    Expr, ExprOrSpread, Ident, KeyValueProp, Lit, Prop, PropName, PropOrSpread,
-};
+use swc_core::ecma::ast::Ident;
 use swc_core::ecma::{
     ast::Str,
     visit::{VisitMut, VisitMutWith},
 };
-use swc_ecma_utils::swc_ecma_ast::{ObjectLit, Stmt};
+use swc_ecma_utils::swc_ecma_ast::Stmt;
 use swc_ecma_utils::{ExprFactory, IsDirective};
 
+use crate::input_visitor::{InputInfo, InputVisitor};
 use crate::model_visitor::ModelVisitor;
 use crate::output_visitor::{OutputInfo, OutputVisitor};
-use crate::utils::{create_decorate_expr, DecoratorInfo};
-use crate::view_child_visitor::ViewChildVisitor;
-use crate::{
-    input_visitor::{InputInfo, InputVisitor},
-    view_child_visitor::ViewChildInfo,
-};
+use crate::view_child_prop_parser::{ViewChildProp, ViewChildPropParser};
 
 #[derive(Default)]
 pub struct ComponentPropertyVisitor {
     component_inputs: HashMap<Ident, Vec<InputInfo>>,
     component_outputs: HashMap<Ident, Vec<OutputInfo>>,
-    component_view_child: HashMap<Ident, Vec<ViewChildInfo>>, // Naming? I don't want to name it view_children as it refers to another thing.
+    component_view_child: HashMap<Ident, Vec<ViewChildProp>>, // Naming? I don't want to name it view_children as it refers to another thing.
     current_component: Option<Ident>,
 }
 
@@ -86,7 +80,9 @@ impl VisitMut for ComponentPropertyVisitor {
         }
 
         /* Parse viewChild. */
-        if let Some(view_child_info) = ViewChildVisitor::default().get_view_child_info(class_prop) {
+        if let Some(view_child_info) =
+            ViewChildPropParser::default().parse_prop(current_component, class_prop)
+        {
             self.component_view_child
                 .entry(current_component.clone())
                 .or_default()
@@ -140,13 +136,13 @@ impl ComponentPropertyVisitor {
 
         let mut input_infos = self.component_inputs.remove(component).unwrap_or_default();
         let mut output_infos = self.component_outputs.remove(component).unwrap_or_default();
-        let mut view_child_infos = self
+        let mut view_child_props = self
             .component_view_child
             .remove(component)
             .unwrap_or_default();
 
         let mut stmts: Vec<Stmt> =
-            Vec::with_capacity(input_infos.len() + output_infos.len() + view_child_infos.len());
+            Vec::with_capacity(input_infos.len() + output_infos.len() + view_child_props.len());
         for input_info in input_infos.drain(..) {
             let alias = match &input_info.alias {
                 Some(alias) => format!(r#""{alias}""#),
@@ -202,49 +198,8 @@ impl ComponentPropertyVisitor {
             );
         }
 
-        for view_child_info in view_child_infos.drain(..) {
-            let mut args = view_child_info.args;
-
-            /* Add options object if missing. */
-            if args.len() == 1 {
-                args.push(ExprOrSpread {
-                    expr: ObjectLit {
-                        span: Default::default(),
-                        props: vec![],
-                    }
-                    .into(),
-                    spread: Default::default(),
-                });
-            }
-
-            let options = match args.get_mut(1).and_then(|arg| arg.expr.as_mut_object()) {
-                Some(options) => options,
-                None => continue,
-            };
-
-            options.props.push(PropOrSpread::Prop(
-                Prop::KeyValue(KeyValueProp {
-                    key: PropName::Ident(Ident::new("isSignal".into(), Default::default())),
-                    value: Expr::Lit(Lit::Bool(true.into())).into(),
-                })
-                .into(),
-            ));
-
-            if view_child_info.required {
-                options
-                    .props
-                    .push(PropOrSpread::Prop(Box::new(Prop::KeyValue(KeyValueProp {
-                        key: PropName::Ident(Ident::new("required".into(), Default::default())),
-                        value: Expr::Lit(Lit::Bool(true.into())).into(),
-                    }))))
-            }
-
-            stmts.push(create_decorate_expr(DecoratorInfo {
-                class_ident: component.clone(),
-                decorator_name: "ViewChild".to_string(),
-                decorator_args: args,
-                property_name: view_child_info.name,
-            }));
+        for view_child_prop in view_child_props.drain(..) {
+            stmts.push(view_child_prop.into());
         }
 
         stmts

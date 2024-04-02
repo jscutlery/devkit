@@ -12,8 +12,8 @@ mod component_property_visitor;
 mod input_visitor;
 mod model_visitor;
 mod output_visitor;
-mod view_child_visitor;
 mod utils;
+mod view_child_prop_parser;
 
 #[cfg(test)]
 mod testing;
