@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
       - name: Build
@@ -17,7 +17,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
       - name: Lint
@@ -29,7 +29,7 @@ jobs:
       matrix:
         node_version: [ 20 ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
         with:
@@ -40,7 +40,7 @@ jobs:
   component-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
       - name: Install Playwright Browsers
@@ -57,7 +57,7 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
       - name: E2E
@@ -76,7 +76,7 @@ jobs:
       - e2e
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
         with:
