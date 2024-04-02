@@ -201,8 +201,7 @@ impl ComponentPropertyVisitor {
         for view_child_info in view_child_infos.drain(..) {
             let view_child_locator = view_child_info.locator;
             let locator = format!(r#""{view_child_locator}""#);
-              // TODO: not working, view_child_info.read is always None.
-            let raw = if let Some(read) = view_child_info.read.as_ref() {
+            let raw = if let Some(read) = &view_child_info.read {
                 formatdoc! {
                     r#"_ts_decorate([
                         require("@angular/core").ViewChild({locator}, {{
@@ -640,7 +639,6 @@ mod tests {
         );
     }
 
-    #[ignore]
     #[test]
     fn test_view_child_required() {
         test_visitor(
@@ -654,7 +652,10 @@ mod tests {
                 titleEl = viewChild.required('title');
             }
             _ts_decorate([
-                require("@angular/core").ViewChild("title", {isSignal: true, required: true})
+                require("@angular/core").ViewChild("title", {
+                    isSignal: true,
+                    required: true,
+                })
             ], MyCmp.prototype, "titleEl");
             "# },
         );
@@ -667,14 +668,22 @@ mod tests {
             ComponentPropertyVisitor::default(),
             indoc! {
             r#"class MyCmp {
-                titleEl = viewChild.required('title', {read: ElementRef});
+                titleEl = viewChild.required('title', {
+                    read: ElementRef
+                });
             }"# },
             indoc! {
             r#"class MyCmp {
-                titleEl = viewChild.required('title', {read: ElementRef});
+                titleEl = viewChild.required('title', {
+                    read: ElementRef
+                });
             }
             _ts_decorate([
-                require("@angular/core").ViewChild("title", {isSignal: true, read: ElementRef, required: true})
+                require("@angular/core").ViewChild("title", {
+                    isSignal: true,
+                    read: ElementRef,
+                    required: true
+                })
             ], MyCmp.prototype, "titleEl");
             "# },
         );
