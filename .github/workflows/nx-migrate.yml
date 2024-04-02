@@ -48,11 +48,8 @@ jobs:
         if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
         continue-on-error: true
         run: |
-          yarn nx affected --base=last-release --target=build
-          yarn nx affected --base=last-release --target=lint
-          yarn nx affected --base=last-release --target=test
-          yarn nx affected --base=last-release --target=component-test --parallel=1
-          yarn nx affected --base=last-release --target=e2e --parallel=1
+          yarn nx affected --target=build,lint,test
+          yarn nx affected --target=component-test,e2e --parallel=1
 
       - name: Commit changes
         if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'

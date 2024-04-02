@@ -26,10 +26,6 @@ runs:
       shell: bash
       run: npx nx release --yes
 
-    - name: Tag last-release
-      shell: bash
-      run: git tag -f last-release
-
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:

@@ -41,6 +41,9 @@ runs:
         # and sets the NPM_CONFIG_USERCONFIG environment variable.
         registry-url: https://registry.npmjs.org
 
+    - name: Set nx base & head commit hashes in env vars
+      uses: nrwl/nx-set-shas@v4
+
     - name: yarn install
       shell: bash
       run: yarn install --immutable
