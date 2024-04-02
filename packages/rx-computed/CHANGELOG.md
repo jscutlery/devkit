@@ -1,3 +1,16 @@
+## 0.3.0 (2024-04-02)
+
+
+### 🚀 Features
+
+- ✨ add swc-angular-preset and swc-plugin-angular ([#273](https://github.com/jscutlery/test-utils/pull/273))
+
+
+### ❤️  Thank You
+
+- Edouard Bozon @edbzn
+- Younes Jaaidi
+
 ## 0.2.5 (2024-03-24)
 
 

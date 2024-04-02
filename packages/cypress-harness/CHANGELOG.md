@@ -1,3 +1,16 @@
+## 0.6.0 (2024-04-02)
+
+
+### 🚀 Features
+
+- ✨ add swc-angular-preset and swc-plugin-angular ([#273](https://github.com/jscutlery/test-utils/pull/273))
+
+
+### ❤️  Thank You
+
+- Edouard Bozon @edbzn
+- Younes Jaaidi
+
 ## [0.5.2](https://github.com/jscutlery/devkit/compare/cypress-harness-0.5.1...cypress-harness-0.5.2) (2024-03-22)
 
 ## [0.5.1](https://github.com/jscutlery/devkit/compare/cypress-harness-0.5.0...cypress-harness-0.5.1) (2023-12-05)
