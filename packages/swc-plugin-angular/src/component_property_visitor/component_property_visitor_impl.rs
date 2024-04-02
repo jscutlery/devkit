@@ -1,15 +1,15 @@
 use std::collections::HashMap;
 
-use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
 use indoc::formatdoc;
-use swc_core::ecma::ast::Ident;
+use swc_core::ecma::ast::{Expr, Ident, Lit, ObjectLit, Prop, PropName, PropOrSpread};
 use swc_core::ecma::{
     ast::Str,
     visit::{VisitMut, VisitMutWith},
 };
-use swc_ecma_utils::swc_ecma_ast::Stmt;
+use swc_ecma_utils::swc_ecma_ast::{KeyValueProp, Stmt};
 use swc_ecma_utils::{ExprFactory, IsDirective};
 
+use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
 use crate::component_property_visitor::input_prop_parser::{InputProp, InputPropParser};
 use crate::component_property_visitor::model_prop_parser::ModelPropParser;
 use crate::component_property_visitor::output_prop_parser::{OutputProp, OutputPropParser};
@@ -42,11 +42,13 @@ impl VisitMut for ComponentPropertyVisitor {
         };
 
         /* Parse input. */
-        if let Some(input_info) = InputPropParser::default().get_input_info(class_prop) {
+        if let Some(input_prop) =
+            InputPropParser::default().parse_prop(current_component, class_prop)
+        {
             self.component_inputs
                 .entry(current_component.clone())
                 .or_default()
-                .push(input_info);
+                .push(input_prop);
         }
 
         /* Parse output. */
@@ -59,20 +61,35 @@ impl VisitMut for ComponentPropertyVisitor {
 
         /* Parse model. */
         if let Some(model_info) = ModelPropParser::default().get_model_info(class_prop) {
+            let alias = match model_info.alias.clone() {
+                Some(alias) => alias,
+                None => model_info.name.clone(),
+            };
+
+            let option_props = match model_info.alias {
+                Some(alias) => vec![PropOrSpread::Prop(
+                    Prop::KeyValue(KeyValueProp {
+                        key: PropName::Ident(Ident::new("alias".into(), Default::default())),
+                        value: Expr::Lit(Lit::Str(alias.into())).into(),
+                    })
+                    .into(),
+                )],
+                None => vec![],
+            };
+
             self.component_inputs
                 .entry(current_component.clone())
                 .or_default()
                 .push(InputProp {
+                    class: current_component.clone(),
                     name: model_info.name.clone(),
                     required: model_info.required,
-                    alias: model_info.alias.clone(),
+                    options: Some(ObjectLit {
+                        props: option_props,
+                        span: Default::default(),
+                    }),
                 });
-            let output_alias = if let Some(alias) = model_info.alias {
-                alias
-            } else {
-                model_info.name.clone()
-            };
-            let output_alias = format!("{}Change", output_alias);
+            let output_alias = format!("{}Change", alias);
             self.component_outputs
                 .entry(current_component.clone())
                 .or_default()
@@ -137,7 +154,7 @@ impl ComponentPropertyVisitor {
             None => return vec![],
         };
 
-        let mut input_infos = self.component_inputs.remove(component).unwrap_or_default();
+        let mut input_props = self.component_inputs.remove(component).unwrap_or_default();
         let mut output_infos = self.component_outputs.remove(component).unwrap_or_default();
         let mut view_child_props = self
             .component_view_child
@@ -145,35 +162,11 @@ impl ComponentPropertyVisitor {
             .unwrap_or_default();
 
         let mut stmts: Vec<Stmt> =
-            Vec::with_capacity(input_infos.len() + output_infos.len() + view_child_props.len());
-        for input_info in input_infos.drain(..) {
-            let alias = match &input_info.alias {
-                Some(alias) => format!(r#""{alias}""#),
-                None => "undefined".to_string(),
-            };
-
-            let raw = formatdoc! {
-                r#"_ts_decorate([
-                    require("@angular/core").Input({{
-                        isSignal: true,
-                        alias: {alias},
-                        required: {required}
-                    }})
-                ], {component}.prototype, "{name}")"#,
-                alias = alias,
-                component = component.sym.to_string(),
-                name = input_info.name,
-                required = input_info.required
-            };
-
-            stmts.push(
-                Str {
-                    span: Default::default(),
-                    value: "".into(),
-                    raw: Some(raw.as_str().into()),
-                }
-                .into_stmt(),
-            );
+            Vec::with_capacity(input_props.len() + output_infos.len() + view_child_props.len());
+        for input_prop in input_props.drain(..) {
+            for decorator in input_prop.to_decorators() {
+                stmts.push(decorator.into());
+            }
         }
 
         for output_info in output_infos.drain(..) {
@@ -245,9 +238,7 @@ mod tests {
             }
             _ts_decorate([
                 require("@angular/core").Input({
-                    isSignal: true,
-                    alias: undefined,
-                    required: false
+                    isSignal: true
                 })
             ], MyCmp.prototype, "myInput");
             "# },
@@ -269,7 +260,6 @@ mod tests {
             _ts_decorate([
                 require("@angular/core").Input({
                     isSignal: true,
-                    alias: undefined,
                     required: true
                 })
             ], MyCmp.prototype, "myInput");
@@ -301,16 +291,13 @@ mod tests {
             }
             _ts_decorate([
                 require("@angular/core").Input({
-                    isSignal: true,
-                    alias: "myInputAlias",
-                    required: false
+                    alias: 'myInputAlias',
+                    isSignal: true
                 })
             ], MyCmp.prototype, "aliasedInput");
             _ts_decorate([
                 require("@angular/core").Input({
-                    isSignal: true,
-                    alias: undefined,
-                    required: false
+                    isSignal: true
                 })
             ], MyCmp.prototype, "nonAliasedInput");
             "# },
@@ -335,8 +322,8 @@ mod tests {
             }
             _ts_decorate([
                 require("@angular/core").Input({
+                    alias: 'myInputAlias',
                     isSignal: true,
-                    alias: "myInputAlias",
                     required: true
                 })
             ], MyCmp.prototype, "myInput");
@@ -373,12 +360,11 @@ mod tests {
                     }
                 }
                 _ts_decorate([
-                require("@angular/core").Input({
-                    isSignal: true,
-                    alias: "myInputAlias",
-                    required: false
-                })
-            ], MyCmp.prototype, "aliasedInput");
+                    require("@angular/core").Input({
+                        alias: 'myInputAlias',
+                        isSignal: true
+                    })
+                ], MyCmp.prototype, "aliasedInput");
             }
             "# },
         );
@@ -444,9 +430,7 @@ mod tests {
             }
             _ts_decorate([
                 require("@angular/core").Input({
-                    isSignal: true,
-                    alias: undefined,
-                    required: false
+                    isSignal: true
                 })
             ], MyCmp.prototype, "myModel");
             _ts_decorate([
@@ -480,16 +464,13 @@ mod tests {
             }
             _ts_decorate([
                 require("@angular/core").Input({
-                    isSignal: true,
                     alias: "myModelAlias",
-                    required: false
+                    isSignal: true
                 })
             ], MyCmp.prototype, "myModel");
             _ts_decorate([
                 require("@angular/core").Input({
-                    isSignal: true,
-                    alias: undefined,
-                    required: false
+                    isSignal: true
                 })
             ], MyCmp.prototype, "nonAliasedModel");
             _ts_decorate([
@@ -517,7 +498,6 @@ mod tests {
             _ts_decorate([
                 require("@angular/core").Input({
                     isSignal: true,
-                    alias: undefined,
                     required: true
                 })
             ], MyCmp.prototype, "myModel");
@@ -546,8 +526,8 @@ mod tests {
             }
             _ts_decorate([
                 require("@angular/core").Input({
-                    isSignal: true,
                     alias: "myModelAlias",
+                    isSignal: true,
                     required: true
                 })
             ], MyCmp.prototype, "myModel");

@@ -78,7 +78,7 @@ impl AngularProp for ViewChildProp {
         vec![AngularPropDecorator {
             class_ident: self.class.clone(),
             decorator_name: "ViewChild".to_string(),
-            decorator_args: vec![self.locator, Expr::Object(options.clone()).into()],
+            decorator_args: vec![self.locator, Expr::Object(options).into()],
             property_name: self.name,
         }]
     }
