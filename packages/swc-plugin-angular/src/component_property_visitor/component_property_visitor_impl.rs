@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+use crate::component_property_visitor::angular_prop::AngularProp;
 use indoc::formatdoc;
 use swc_core::ecma::ast::Ident;
 use swc_core::ecma::{
@@ -201,7 +202,9 @@ impl ComponentPropertyVisitor {
         }
 
         for view_child_prop in view_child_props.drain(..) {
-            stmts.push(view_child_prop.into());
+            for decorator in view_child_prop.to_decorators() {
+                stmts.push(decorator.into());
+            }
         }
 
         stmts

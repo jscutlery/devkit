@@ -2,8 +2,8 @@ use swc_core::ecma::ast::{
     ClassProp, Expr, ExprOrSpread, Ident, KeyValueProp, Lit, ObjectLit, Prop, PropName,
     PropOrSpread,
 };
-use swc_ecma_utils::swc_ecma_ast::Stmt;
 
+use crate::component_property_visitor::angular_prop::AngularProp;
 use crate::component_property_visitor::angular_prop_decorator::AngularPropDecorator;
 use crate::component_property_visitor::ast_parsing::parse_angular_prop;
 
@@ -54,10 +54,10 @@ pub(crate) struct ViewChildProp {
     options: Option<ObjectLit>,
 }
 
-impl From<ViewChildProp> for Stmt {
-    fn from(prop: ViewChildProp) -> Self {
+impl AngularProp for ViewChildProp {
+    fn to_decorators(self) -> Vec<AngularPropDecorator> {
         /* Add options object if missing. */
-        let mut options = prop.options.unwrap_or_else(|| ObjectLit {
+        let mut options = self.options.unwrap_or_else(|| ObjectLit {
             span: Default::default(),
             props: vec![],
         });
@@ -70,7 +70,7 @@ impl From<ViewChildProp> for Stmt {
             .into(),
         ));
 
-        if prop.required {
+        if self.required {
             options
                 .props
                 .push(PropOrSpread::Prop(Box::new(Prop::KeyValue(KeyValueProp {
@@ -79,12 +79,11 @@ impl From<ViewChildProp> for Stmt {
                 }))))
         }
 
-        AngularPropDecorator {
-            class_ident: prop.class.clone(),
+        return vec![AngularPropDecorator {
+            class_ident: self.class.clone(),
             decorator_name: "ViewChild".to_string(),
-            decorator_args: vec![prop.locator, Expr::Object(options.clone()).into()],
-            property_name: prop.name,
-        }
-        .into()
+            decorator_args: vec![self.locator, Expr::Object(options.clone()).into()],
+            property_name: self.name,
+        }];
     }
 }

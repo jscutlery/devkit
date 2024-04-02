@@ -1,5 +1,6 @@
 pub use component_property_visitor_impl::ComponentPropertyVisitor;
 
+mod angular_prop;
 mod angular_prop_decorator;
 mod ast_parsing;
 mod component_property_visitor_impl;
