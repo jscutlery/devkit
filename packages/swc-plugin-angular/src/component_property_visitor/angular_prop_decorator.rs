@@ -10,83 +10,85 @@ pub struct AngularPropDecorator {
     pub property_name: String,
 }
 
-/**
- * Create the AST for an Angular prop decorator call using `_ts_decorate`.
- */
-pub fn create_decorate_expr(decorator_info: AngularPropDecorator) -> Stmt {
-    /* `require("@angular/core")` */
-    let angular_core = Expr::Call(CallExpr {
-        callee: create_callee("require"),
-        args: vec![ExprOrSpread {
-            spread: None,
-            expr: Expr::Lit(Lit::Str(Str {
-                value: "@angular/core".into(),
-                raw: Default::default(),
-                span: Default::default(),
-            }))
-            .into(),
-        }],
-        span: Default::default(),
-        type_args: Default::default(),
-    });
-
-    /* `require("@angular/core").{decorator_name}({decorator_args})` */
-    let decorator_call = Expr::Call(CallExpr {
-        callee: Callee::Expr(
-            Expr::Member(MemberExpr {
-                obj: angular_core.into(),
-                prop: MemberProp::Ident(create_ident(&decorator_info.decorator_name)),
-                span: Default::default(),
-            })
-            .into(),
-        ),
-        args: decorator_info.decorator_args,
-        span: Default::default(),
-        type_args: Default::default(),
-    });
-
-    /* `_ts_decorate(decorator, {class_ident}.prototype, "{property_name}")` */
-    let decorate_call = Expr::Call(CallExpr {
-        callee: create_callee("_ts_decorate"),
-        args: vec![
-            ExprOrSpread {
-                expr: Expr::Array(ArrayLit {
-                    elems: vec![Some(ExprOrSpread {
-                        expr: decorator_call.into(),
-                        spread: Default::default(),
-                    })],
-                    span: Default::default(),
-                })
-                .into(),
-                spread: Default::default(),
-            },
-            ExprOrSpread {
-                expr: Expr::Member(MemberExpr {
-                    obj: Expr::Ident(decorator_info.class_ident).into(),
-                    prop: MemberProp::Ident(create_ident("prototype")),
-                    span: Default::default(),
-                })
-                .into(),
-                spread: Default::default(),
-            },
-            ExprOrSpread {
+impl From<AngularPropDecorator> for Stmt {
+    /**
+     * Create the AST for an Angular prop decorator call using `_ts_decorate`.
+     */
+    fn from(decorator_info: AngularPropDecorator) -> Self {
+        /* `require("@angular/core")` */
+        let angular_core = Expr::Call(CallExpr {
+            callee: create_callee("require"),
+            args: vec![ExprOrSpread {
+                spread: None,
                 expr: Expr::Lit(Lit::Str(Str {
-                    value: decorator_info.property_name.into(),
-                    span: Default::default(),
+                    value: "@angular/core".into(),
                     raw: Default::default(),
+                    span: Default::default(),
                 }))
                 .into(),
-                spread: Default::default(),
-            },
-        ],
-        span: Default::default(),
-        type_args: Default::default(),
-    });
+            }],
+            span: Default::default(),
+            type_args: Default::default(),
+        });
 
-    Stmt::Expr(ExprStmt {
-        expr: decorate_call.into(),
-        span: Default::default(),
-    })
+        /* `require("@angular/core").{decorator_name}({decorator_args})` */
+        let decorator_call = Expr::Call(CallExpr {
+            callee: Callee::Expr(
+                Expr::Member(MemberExpr {
+                    obj: angular_core.into(),
+                    prop: MemberProp::Ident(create_ident(&decorator_info.decorator_name)),
+                    span: Default::default(),
+                })
+                .into(),
+            ),
+            args: decorator_info.decorator_args,
+            span: Default::default(),
+            type_args: Default::default(),
+        });
+
+        /* `_ts_decorate(decorator, {class_ident}.prototype, "{property_name}")` */
+        let decorate_call = Expr::Call(CallExpr {
+            callee: create_callee("_ts_decorate"),
+            args: vec![
+                ExprOrSpread {
+                    expr: Expr::Array(ArrayLit {
+                        elems: vec![Some(ExprOrSpread {
+                            expr: decorator_call.into(),
+                            spread: Default::default(),
+                        })],
+                        span: Default::default(),
+                    })
+                    .into(),
+                    spread: Default::default(),
+                },
+                ExprOrSpread {
+                    expr: Expr::Member(MemberExpr {
+                        obj: Expr::Ident(decorator_info.class_ident).into(),
+                        prop: MemberProp::Ident(create_ident("prototype")),
+                        span: Default::default(),
+                    })
+                    .into(),
+                    spread: Default::default(),
+                },
+                ExprOrSpread {
+                    expr: Expr::Lit(Lit::Str(Str {
+                        value: decorator_info.property_name.into(),
+                        span: Default::default(),
+                        raw: Default::default(),
+                    }))
+                    .into(),
+                    spread: Default::default(),
+                },
+            ],
+            span: Default::default(),
+            type_args: Default::default(),
+        });
+
+        Stmt::Expr(ExprStmt {
+            expr: decorate_call.into(),
+            span: Default::default(),
+        })
+    }
 }
 
 fn create_callee(ident: &str) -> Callee {
