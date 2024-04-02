@@ -1,3 +1,8 @@
+## 0.7.0 (2024-04-02)
+
+- **swc-plugin-angular:** ✨ transform viewChild query ([#292](https://github.com/jscutlery/devkit/pull/296))
+
+
 ## 0.6.0 (2024-03-29)
 
 
