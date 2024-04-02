@@ -1,16 +1,19 @@
 use std::collections::HashMap;
 
 use indoc::formatdoc;
-use swc_core::ecma::ast::Ident;
+use swc_core::ecma::ast::{
+    Expr, ExprOrSpread, Ident, KeyValueProp, Lit, Prop, PropName, PropOrSpread,
+};
 use swc_core::ecma::{
     ast::Str,
     visit::{VisitMut, VisitMutWith},
 };
-use swc_ecma_utils::swc_ecma_ast::Stmt;
+use swc_ecma_utils::swc_ecma_ast::{ObjectLit, Stmt};
 use swc_ecma_utils::{ExprFactory, IsDirective};
 
 use crate::model_visitor::ModelVisitor;
 use crate::output_visitor::{OutputInfo, OutputVisitor};
+use crate::utils::{create_decorate_expr, DecoratorInfo};
 use crate::view_child_visitor::ViewChildVisitor;
 use crate::{
     input_visitor::{InputInfo, InputVisitor},
@@ -142,7 +145,8 @@ impl ComponentPropertyVisitor {
             .remove(component)
             .unwrap_or_default();
 
-        let mut stmts: Vec<Stmt> = Vec::with_capacity(input_infos.len() + output_infos.len() + view_child_infos.len());
+        let mut stmts: Vec<Stmt> =
+            Vec::with_capacity(input_infos.len() + output_infos.len() + view_child_infos.len());
         for input_info in input_infos.drain(..) {
             let alias = match &input_info.alias {
                 Some(alias) => format!(r#""{alias}""#),
@@ -199,46 +203,48 @@ impl ComponentPropertyVisitor {
         }
 
         for view_child_info in view_child_infos.drain(..) {
-            let view_child_locator = view_child_info.locator;
-            let locator = format!(r#""{view_child_locator}""#);
-            let raw = if let Some(read) = &view_child_info.read {
-                formatdoc! {
-                    r#"_ts_decorate([
-                        require("@angular/core").ViewChild({locator}, {{
-                            isSignal: true,
-                            read: {read},
-                            required: {required},
-                        }})
-                    ], {component}.prototype, "{name}")"#,
-                    locator = locator,
-                    component = component.sym.to_string(),
-                    name = view_child_info.name,
-                    read = read,
-                    required = view_child_info.required,
-                }
-            } else {
-                formatdoc! {
-                    r#"_ts_decorate([
-                        require("@angular/core").ViewChild({locator}, {{
-                            isSignal: true,
-                            required: {required},
-                        }})
-                    ], {component}.prototype, "{name}")"#,
-                    locator = locator,
-                    component = component.sym.to_string(),
-                    name = view_child_info.name,
-                    required = view_child_info.required,
-                }
+            let mut args = view_child_info.args;
+
+            /* Add options object if missing. */
+            if args.len() == 1 {
+                args.push(ExprOrSpread {
+                    expr: ObjectLit {
+                        span: Default::default(),
+                        props: vec![],
+                    }
+                    .into(),
+                    spread: Default::default(),
+                });
+            }
+
+            let options = match args.get_mut(1).and_then(|arg| arg.expr.as_mut_object()) {
+                Some(options) => options,
+                None => continue,
             };
 
-            stmts.push(
-                Str {
-                    span: Default::default(),
-                    value: "".into(),
-                    raw: Some(raw.as_str().into()),
-                }
-                .into_stmt(),
-            );
+            options.props.push(PropOrSpread::Prop(
+                Prop::KeyValue(KeyValueProp {
+                    key: PropName::Ident(Ident::new("isSignal".into(), Default::default())),
+                    value: Expr::Lit(Lit::Bool(true.into())).into(),
+                })
+                .into(),
+            ));
+
+            if view_child_info.required {
+                options
+                    .props
+                    .push(PropOrSpread::Prop(Box::new(Prop::KeyValue(KeyValueProp {
+                        key: PropName::Ident(Ident::new("required".into(), Default::default())),
+                        value: Expr::Lit(Lit::Bool(true.into())).into(),
+                    }))))
+            }
+
+            stmts.push(create_decorate_expr(DecoratorInfo {
+                class_ident: component.clone(),
+                decorator_name: "ViewChild".to_string(),
+                decorator_args: args,
+                property_name: view_child_info.name,
+            }));
         }
 
         stmts
@@ -605,9 +611,8 @@ mod tests {
                 titleEl = viewChild('title');
             }
             _ts_decorate([
-                require("@angular/core").ViewChild("title", {
-                    isSignal: true,
-                    required: false,
+                require("@angular/core").ViewChild('title', {
+                    isSignal: true
                 })
             ], MyCmp.prototype, "titleEl");
             "# },
@@ -629,10 +634,9 @@ mod tests {
                 });
             }
             _ts_decorate([
-                require("@angular/core").ViewChild("title", {
-                    isSignal: true,
+                require("@angular/core").ViewChild('title', {
                     read: ElementRef,
-                    required: false,
+                    isSignal: true
                 })
             ], MyCmp.prototype, "titleEl");
             "# },
@@ -652,9 +656,9 @@ mod tests {
                 titleEl = viewChild.required('title');
             }
             _ts_decorate([
-                require("@angular/core").ViewChild("title", {
+                require("@angular/core").ViewChild('title', {
                     isSignal: true,
-                    required: true,
+                    required: true
                 })
             ], MyCmp.prototype, "titleEl");
             "# },
@@ -678,10 +682,10 @@ mod tests {
                 });
             }
             _ts_decorate([
-                require("@angular/core").ViewChild("title", {
-                    isSignal: true,
+                require("@angular/core").ViewChild('title', {
                     read: ElementRef,
-                    required: true,
+                    isSignal: true,
+                    required: true
                 })
             ], MyCmp.prototype, "titleEl");
             "# },

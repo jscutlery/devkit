@@ -71,13 +71,6 @@ pub fn get_prop_value_as_string(prop: &Prop, key: &str) -> Option<String> {
     }
 }
 
-pub fn get_prop_value_as_symbol(prop: &Prop, key: &str) -> Option<String> {
-    match get_prop_value(prop, key) {
-        Some(Expr::Ident(ident)) => Some(ident.sym.to_string()),
-        _ => None,
-    }
-}
-
 /**
  * Options are either the first or second parameter depending on whether
  * the input (or model or view_child) is required.

@@ -3,7 +3,7 @@
 import { Component, ElementRef, Type, viewChild } from '@angular/core';
 import { createComponent } from './testing';
 
-describe.skip('swc-plugin-angular: view child', () => {
+describe('swc-plugin-angular: view child', () => {
   it('should match view child', () => {
 
     @Component({
@@ -14,7 +14,7 @@ describe.skip('swc-plugin-angular: view child', () => {
       `
     })
     class Container {
-      titleEl = viewChild('title', {read: ElementRef});
+      titleEl = viewChild('title', { read: ElementRef });
       paragraph = () => this.titleEl()?.nativeElement.textContent;
     }
 

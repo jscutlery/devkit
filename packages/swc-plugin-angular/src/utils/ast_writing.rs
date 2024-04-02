@@ -1,19 +1,19 @@
 use swc_core::ecma::ast::{
-    Callee, CallExpr, Expr, ExprOrSpread, ExprStmt, Ident, MemberExpr, MemberProp, Str,
+    CallExpr, Callee, Expr, ExprOrSpread, ExprStmt, Ident, MemberExpr, MemberProp, Str,
 };
-use swc_ecma_utils::swc_ecma_ast::{Lit, Stmt};
+use swc_ecma_utils::swc_ecma_ast::{ArrayLit, Lit, Stmt};
 
 pub struct DecoratorInfo {
     pub class_ident: Ident,
     pub decorator_name: String,
+    pub decorator_args: Vec<ExprOrSpread>,
     pub property_name: String,
 }
 
 /**
  * Create the AST for a decorator call using `_ts_decorate`.
  */
-#[deprecated(note="🚧 work in progress")]
-pub fn create_decorate_expr(decorator_info: &DecoratorInfo) -> Stmt {
+pub fn create_decorate_expr(decorator_info: DecoratorInfo) -> Stmt {
     /* `require("@angular/core")` */
     let angular_core = Expr::Call(CallExpr {
         callee: create_callee("require"),
@@ -30,7 +30,7 @@ pub fn create_decorate_expr(decorator_info: &DecoratorInfo) -> Stmt {
         type_args: Default::default(),
     });
 
-    /* `require("@angular/core").{decorator_name}()` */
+    /* `require("@angular/core").{decorator_name}({decorator_args})` */
     let decorator_call = Expr::Call(CallExpr {
         callee: Callee::Expr(
             Expr::Member(MemberExpr {
@@ -40,7 +40,7 @@ pub fn create_decorate_expr(decorator_info: &DecoratorInfo) -> Stmt {
             })
             .into(),
         ),
-        args: vec![],
+        args: decorator_info.decorator_args,
         span: Default::default(),
         type_args: Default::default(),
     });
@@ -50,12 +50,19 @@ pub fn create_decorate_expr(decorator_info: &DecoratorInfo) -> Stmt {
         callee: create_callee("_ts_decorate"),
         args: vec![
             ExprOrSpread {
-                expr: decorator_call.into(),
+                expr: Expr::Array(ArrayLit {
+                    elems: vec![Some(ExprOrSpread {
+                        expr: decorator_call.into(),
+                        spread: Default::default(),
+                    })],
+                    span: Default::default(),
+                })
+                .into(),
                 spread: Default::default(),
             },
             ExprOrSpread {
                 expr: Expr::Member(MemberExpr {
-                    obj: Expr::Ident(decorator_info.class_ident.clone()).into(),
+                    obj: Expr::Ident(decorator_info.class_ident).into(),
                     prop: MemberProp::Ident(create_ident("prototype")),
                     span: Default::default(),
                 })
@@ -64,7 +71,7 @@ pub fn create_decorate_expr(decorator_info: &DecoratorInfo) -> Stmt {
             },
             ExprOrSpread {
                 expr: Expr::Lit(Lit::Str(Str {
-                    value: decorator_info.property_name.clone().into(),
+                    value: decorator_info.property_name.into(),
                     span: Default::default(),
                     raw: Default::default(),
                 }))
