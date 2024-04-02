@@ -1,10 +1,8 @@
-use std::ops::Deref;
-
-use swc_core::ecma::ast::{ClassProp, Expr, Ident, ObjectLit};
+use swc_core::ecma::ast::{ClassProp, Ident, ObjectLit};
 
 use crate::component_property_visitor::angular_prop_decorator::AngularPropDecorator;
 use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
-use crate::component_property_visitor::ast_parsing::parse_angular_prop;
+use crate::component_property_visitor::ast_parsing::{get_prop_value, parse_angular_prop};
 
 #[derive(Default)]
 pub struct OutputPropParser {}
@@ -58,19 +56,4 @@ impl AngularProp for OutputProp {
             property_name: self.name,
         }]
     }
-}
-
-fn get_prop_value(options: &ObjectLit, key: &str) -> Option<Expr> {
-    for prop in &options.props {
-        let key_value = match prop.as_prop().and_then(|prop| prop.as_key_value()) {
-            Some(key_value) => key_value,
-            None => return None,
-        };
-
-        if let Some(true) = key_value.key.as_ident().map(|k| k.sym.eq(key)) {
-            return Some(key_value.value.deref().clone());
-        }
-    }
-
-    None
 }

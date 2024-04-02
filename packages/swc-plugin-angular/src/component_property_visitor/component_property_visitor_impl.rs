@@ -1,13 +1,13 @@
 use std::collections::HashMap;
 
-use swc_core::ecma::ast::{Expr, Ident, Lit, ObjectLit, Prop, PropName, PropOrSpread};
+use swc_core::ecma::ast::Ident;
 use swc_core::ecma::visit::{VisitMut, VisitMutWith};
-use swc_ecma_utils::swc_ecma_ast::{KeyValueProp, Stmt};
+use swc_ecma_utils::swc_ecma_ast::Stmt;
 use swc_ecma_utils::IsDirective;
 
 use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
 use crate::component_property_visitor::input_prop_parser::{InputProp, InputPropParser};
-use crate::component_property_visitor::model_prop_parser::ModelPropParser;
+use crate::component_property_visitor::model_prop_parser::{ModelProp, ModelPropParser};
 use crate::component_property_visitor::output_prop_parser::{OutputProp, OutputPropParser};
 use crate::component_property_visitor::view_child_prop_parser::{
     ViewChildProp, ViewChildPropParser,
@@ -16,6 +16,7 @@ use crate::component_property_visitor::view_child_prop_parser::{
 #[derive(Default)]
 pub struct ComponentPropertyVisitor {
     component_inputs: HashMap<Ident, Vec<InputProp>>,
+    component_models: HashMap<Ident, Vec<ModelProp>>,
     component_outputs: HashMap<Ident, Vec<OutputProp>>,
     component_view_child: HashMap<Ident, Vec<ViewChildProp>>, // Naming? I don't want to name it view_children as it refers to another thing.
     current_component: Option<Ident>,
@@ -58,57 +59,13 @@ impl VisitMut for ComponentPropertyVisitor {
         }
 
         /* Parse model. */
-        if let Some(model_info) = ModelPropParser::default().get_model_info(class_prop) {
-            let option_props = match model_info.alias.clone() {
-                Some(alias) => vec![PropOrSpread::Prop(
-                    Prop::KeyValue(KeyValueProp {
-                        key: PropName::Ident(Ident::new("alias".into(), Default::default())),
-                        value: Expr::Lit(Lit::Str(alias.into())).into(),
-                    })
-                    .into(),
-                )],
-                None => vec![],
-            };
-
-            self.component_inputs
+        if let Some(model_prop) =
+            ModelPropParser::default().parse_prop(current_component, class_prop)
+        {
+            self.component_models
                 .entry(current_component.clone())
                 .or_default()
-                .push(InputProp {
-                    class: current_component.clone(),
-                    name: model_info.name.clone(),
-                    required: model_info.required,
-                    options: Some(ObjectLit {
-                        props: option_props.clone(),
-                        span: Default::default(),
-                    }),
-                });
-
-            let output_name = match model_info.alias {
-                Some(alias) => alias,
-                None => model_info.name.clone(),
-            };
-
-            self.component_outputs
-                .entry(current_component.clone())
-                .or_default()
-                .push(OutputProp {
-                    class: current_component.clone(),
-                    name: model_info.name,
-                    options: Some(ObjectLit {
-                        props: vec![PropOrSpread::Prop(
-                            Prop::KeyValue(KeyValueProp {
-                                key: PropName::Ident(Ident::new(
-                                    "alias".into(),
-                                    Default::default(),
-                                )),
-                                value: Expr::Lit(Lit::Str(format!("{}Change", output_name).into()))
-                                    .into(),
-                            })
-                            .into(),
-                        )],
-                        span: Default::default(),
-                    }),
-                });
+                .push(model_prop);
         }
 
         /* Parse viewChild. */
@@ -167,16 +124,24 @@ impl ComponentPropertyVisitor {
         };
 
         let mut input_props = self.component_inputs.remove(component).unwrap_or_default();
+        let mut model_props = self.component_models.remove(component).unwrap_or_default();
         let mut output_props = self.component_outputs.remove(component).unwrap_or_default();
         let mut view_child_props = self
             .component_view_child
             .remove(component)
             .unwrap_or_default();
 
-        let mut stmts: Vec<Stmt> =
-            Vec::with_capacity(input_props.len() + output_props.len() + view_child_props.len());
+        let mut stmts: Vec<Stmt> = Vec::with_capacity(
+            input_props.len() + model_props.len() + output_props.len() + view_child_props.len(),
+        );
         for input_prop in input_props.drain(..) {
             for decorator in input_prop.to_decorators() {
+                stmts.push(decorator.into());
+            }
+        }
+
+        for model_prop in model_props.drain(..) {
+            for decorator in model_prop.to_decorators() {
                 stmts.push(decorator.into());
             }
         }
@@ -457,18 +422,18 @@ mod tests {
             }
             _ts_decorate([
                 require("@angular/core").Input({
-                    alias: "myModelAlias",
+                    alias: 'myModelAlias',
                     isSignal: true
                 })
+            ], MyCmp.prototype, "myModel");
+            _ts_decorate([
+                require("@angular/core").Output("myModelAliasChange")
             ], MyCmp.prototype, "myModel");
             _ts_decorate([
                 require("@angular/core").Input({
                     isSignal: true
                 })
             ], MyCmp.prototype, "nonAliasedModel");
-            _ts_decorate([
-                require("@angular/core").Output("myModelAliasChange")
-            ], MyCmp.prototype, "myModel");
             _ts_decorate([
                 require("@angular/core").Output("nonAliasedModelChange")
             ], MyCmp.prototype, "nonAliasedModel");
@@ -519,7 +484,7 @@ mod tests {
             }
             _ts_decorate([
                 require("@angular/core").Input({
-                    alias: "myModelAlias",
+                    alias: 'myModelAlias',
                     isSignal: true,
                     required: true
                 })

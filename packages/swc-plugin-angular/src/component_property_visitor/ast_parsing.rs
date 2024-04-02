@@ -1,5 +1,6 @@
-use swc_core::ecma::ast::{ClassProp, Expr, ExprOrSpread, Lit, Prop};
-use swc_core::ecma::visit::{Visit, VisitWith};
+use std::ops::Deref;
+
+use swc_core::ecma::ast::{ClassProp, Expr, ExprOrSpread, ObjectLit};
 use swc_ecma_utils::ExprExt;
 
 /**
@@ -64,42 +65,16 @@ pub struct AngularPropInfo<'lifetime> {
     pub args: &'lifetime Vec<ExprOrSpread>,
 }
 
-pub fn get_prop_value_as_string(prop: &Prop, key: &str) -> Option<String> {
-    match get_prop_value(prop, key) {
-        Some(Expr::Lit(Lit::Str(str))) => Some(str.value.to_string()),
-        _ => None,
-    }
-}
+pub fn get_prop_value(options: &ObjectLit, key: &str) -> Option<Expr> {
+    for prop in &options.props {
+        let key_value = match prop.as_prop().and_then(|prop| prop.as_key_value()) {
+            Some(key_value) => key_value,
+            None => return None,
+        };
 
-/**
- * Options are either the first or second parameter depending on whether
- * the input (or model or view_child) is required.
- * e.g. `input.required({alias: '...'})` or `input(initialValue, {alias: '...'})`
- */
-pub fn visit_functional_api_options(
-    visitor: &mut dyn Visit,
-    required: bool,
-    args: &[ExprOrSpread],
-) {
-    let options = if required { args.first() } else { args.get(1) };
-
-    if let Some(options) = options {
-        options.visit_children_with(visitor);
-    }
-}
-
-fn get_prop_value<'prop>(prop: &'prop Prop, key: &str) -> Option<&'prop Expr> {
-    let key_value = match prop.as_key_value() {
-        Some(key_value) => key_value,
-        None => return None,
-    };
-
-    if key_value
-        .key
-        .as_ident()
-        .map_or(false, |key_ident| key_ident.sym.eq(key))
-    {
-        return Some(key_value.value.as_expr());
+        if let Some(true) = key_value.key.as_ident().map(|k| k.sym.eq(key)) {
+            return Some(key_value.value.deref().clone());
+        }
     }
 
     None
