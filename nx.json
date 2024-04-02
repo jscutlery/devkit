@@ -103,7 +103,8 @@
     "version": {
       "conventionalCommits": true,
       "generatorOptions": {
-        "fallbackCurrentVersionResolver": "disk"
+        "fallbackCurrentVersionResolver": "disk",
+        "packageRoot": "dist/{projectRoot}"
       }
     },
     "git": {
