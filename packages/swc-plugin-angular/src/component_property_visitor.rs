@@ -1,22 +1,30 @@
 use std::collections::HashMap;
 
 use indoc::formatdoc;
+use swc_core::ecma::ast::{
+    Expr, ExprOrSpread, Ident, KeyValueProp, Lit, Prop, PropName, PropOrSpread,
+};
 use swc_core::ecma::{
     ast::Str,
     visit::{VisitMut, VisitMutWith},
 };
-use swc_core::ecma::ast::Ident;
+use swc_ecma_utils::swc_ecma_ast::{ObjectLit, Stmt};
 use swc_ecma_utils::{ExprFactory, IsDirective};
-use swc_ecma_utils::swc_ecma_ast::Stmt;
 
-use crate::input_visitor::{InputInfo, InputVisitor};
-use crate::model_visitor::{ModelVisitor};
+use crate::model_visitor::ModelVisitor;
 use crate::output_visitor::{OutputInfo, OutputVisitor};
+use crate::utils::{create_decorate_expr, DecoratorInfo};
+use crate::view_child_visitor::ViewChildVisitor;
+use crate::{
+    input_visitor::{InputInfo, InputVisitor},
+    view_child_visitor::ViewChildInfo,
+};
 
 #[derive(Default)]
 pub struct ComponentPropertyVisitor {
     component_inputs: HashMap<Ident, Vec<InputInfo>>,
     component_outputs: HashMap<Ident, Vec<OutputInfo>>,
+    component_view_child: HashMap<Ident, Vec<ViewChildInfo>>, // Naming? I don't want to name it view_children as it refers to another thing.
     current_component: Option<Ident>,
 }
 
@@ -40,33 +48,49 @@ impl VisitMut for ComponentPropertyVisitor {
         if let Some(input_info) = InputVisitor::default().get_input_info(class_prop) {
             self.component_inputs
                 .entry(current_component.clone())
-                .or_default().push(input_info);
+                .or_default()
+                .push(input_info);
         }
 
         /* Parse output. */
         if let Some(output_info) = OutputVisitor::default().get_output_info(class_prop) {
             self.component_outputs
                 .entry(current_component.clone())
-                .or_default().push(output_info);
+                .or_default()
+                .push(output_info);
         }
 
         /* Parse model. */
         if let Some(model_info) = ModelVisitor::default().get_model_info(class_prop) {
             self.component_inputs
                 .entry(current_component.clone())
-                .or_default().push(InputInfo {
-                name: model_info.name.clone(),
-                required: model_info.required,
-                alias: model_info.alias.clone(),
-            });
-            let output_alias = if let Some(alias) = model_info.alias { alias } else { model_info.name.clone() };
+                .or_default()
+                .push(InputInfo {
+                    name: model_info.name.clone(),
+                    required: model_info.required,
+                    alias: model_info.alias.clone(),
+                });
+            let output_alias = if let Some(alias) = model_info.alias {
+                alias
+            } else {
+                model_info.name.clone()
+            };
             let output_alias = format!("{}Change", output_alias);
             self.component_outputs
                 .entry(current_component.clone())
-                .or_default().push(OutputInfo {
-                name: model_info.name,
-                alias: Some(output_alias),
-            });
+                .or_default()
+                .push(OutputInfo {
+                    name: model_info.name,
+                    alias: Some(output_alias),
+                });
+        }
+
+        /* Parse viewChild. */
+        if let Some(view_child_info) = ViewChildVisitor::default().get_view_child_info(class_prop) {
+            self.component_view_child
+                .entry(current_component.clone())
+                .or_default()
+                .push(view_child_info);
         }
     }
 
@@ -116,8 +140,13 @@ impl ComponentPropertyVisitor {
 
         let mut input_infos = self.component_inputs.remove(component).unwrap_or_default();
         let mut output_infos = self.component_outputs.remove(component).unwrap_or_default();
+        let mut view_child_infos = self
+            .component_view_child
+            .remove(component)
+            .unwrap_or_default();
 
-        let mut stmts: Vec<Stmt> = Vec::with_capacity(input_infos.len() + output_infos.len());
+        let mut stmts: Vec<Stmt> =
+            Vec::with_capacity(input_infos.len() + output_infos.len() + view_child_infos.len());
         for input_info in input_infos.drain(..) {
             let alias = match &input_info.alias {
                 Some(alias) => format!(r#""{alias}""#),
@@ -138,11 +167,14 @@ impl ComponentPropertyVisitor {
                 required = input_info.required
             };
 
-            stmts.push(Str {
-                span: Default::default(),
-                value: "".into(),
-                raw: Some(raw.as_str().into()),
-            }.into_stmt());
+            stmts.push(
+                Str {
+                    span: Default::default(),
+                    value: "".into(),
+                    raw: Some(raw.as_str().into()),
+                }
+                .into_stmt(),
+            );
         }
 
         for output_info in output_infos.drain(..) {
@@ -160,19 +192,72 @@ impl ComponentPropertyVisitor {
                 name = output_info.name,
             };
 
-            stmts.push(Str {
-                span: Default::default(),
-                value: "".into(),
-                raw: Some(raw.as_str().into()),
-            }.into_stmt());
+            stmts.push(
+                Str {
+                    span: Default::default(),
+                    value: "".into(),
+                    raw: Some(raw.as_str().into()),
+                }
+                .into_stmt(),
+            );
+        }
+
+        for view_child_info in view_child_infos.drain(..) {
+            let mut args = view_child_info.args;
+
+            /* Add options object if missing. */
+            if args.len() == 1 {
+                args.push(ExprOrSpread {
+                    expr: ObjectLit {
+                        span: Default::default(),
+                        props: vec![],
+                    }
+                    .into(),
+                    spread: Default::default(),
+                });
+            }
+
+            let options = match args.get_mut(1).and_then(|arg| arg.expr.as_mut_object()) {
+                Some(options) => options,
+                None => continue,
+            };
+
+            options.props.push(PropOrSpread::Prop(
+                Prop::KeyValue(KeyValueProp {
+                    key: PropName::Ident(Ident::new("isSignal".into(), Default::default())),
+                    value: Expr::Lit(Lit::Bool(true.into())).into(),
+                })
+                .into(),
+            ));
+
+            if view_child_info.required {
+                options
+                    .props
+                    .push(PropOrSpread::Prop(Box::new(Prop::KeyValue(KeyValueProp {
+                        key: PropName::Ident(Ident::new("required".into(), Default::default())),
+                        value: Expr::Lit(Lit::Bool(true.into())).into(),
+                    }))))
+            }
+
+            stmts.push(create_decorate_expr(DecoratorInfo {
+                class_ident: component.clone(),
+                decorator_name: "ViewChild".to_string(),
+                decorator_args: args,
+                property_name: view_child_info.name,
+            }));
         }
 
         stmts
     }
 
-    fn try_get_class_ident<'statement>(&self, stmt: Option<&'statement Stmt>) -> Option<&'statement Ident> {
-        return stmt.and_then(|stmt| stmt.as_decl())
-            .and_then(|decl| decl.as_class()).map(|class| &class.ident);
+    fn try_get_class_ident<'statement>(
+        &self,
+        stmt: Option<&'statement Stmt>,
+    ) -> Option<&'statement Ident> {
+        return stmt
+            .and_then(|stmt| stmt.as_decl())
+            .and_then(|decl| decl.as_class())
+            .map(|class| &class.ident);
     }
 }
 
@@ -205,7 +290,8 @@ mod tests {
                     required: false
                 })
             ], MyCmp.prototype, "myInput");
-            "# });
+            "# },
+        );
     }
 
     #[test]
@@ -227,7 +313,8 @@ mod tests {
                     required: true
                 })
             ], MyCmp.prototype, "myInput");
-            "# });
+            "# },
+        );
     }
 
     #[test]
@@ -266,7 +353,8 @@ mod tests {
                     required: false
                 })
             ], MyCmp.prototype, "nonAliasedInput");
-            "# });
+            "# },
+        );
     }
 
     #[test]
@@ -292,9 +380,9 @@ mod tests {
                     required: true
                 })
             ], MyCmp.prototype, "myInput");
-            "# });
+            "# },
+        );
     }
-
 
     #[test]
     fn test_input_inline() {
@@ -332,7 +420,8 @@ mod tests {
                 })
             ], MyCmp.prototype, "aliasedInput");
             }
-            "# });
+            "# },
+        );
     }
 
     #[test]
@@ -352,7 +441,8 @@ mod tests {
             _ts_decorate([
                 require("@angular/core").Output()
             ], MyCmp.prototype, "myOutput");
-            "# });
+            "# },
+        );
     }
 
     #[test]
@@ -374,7 +464,8 @@ mod tests {
             _ts_decorate([
                 require("@angular/core").Output("myOutputAlias")
             ], MyCmp.prototype, "myOutput");
-            "# });
+            "# },
+        );
     }
 
     #[test]
@@ -401,7 +492,8 @@ mod tests {
             _ts_decorate([
                 require("@angular/core").Output("myModelChange")
             ], MyCmp.prototype, "myModel");
-            "# });
+            "# },
+        );
     }
 
     #[test]
@@ -446,7 +538,8 @@ mod tests {
             _ts_decorate([
                 require("@angular/core").Output("nonAliasedModelChange")
             ], MyCmp.prototype, "nonAliasedModel");
-            "# });
+            "# },
+        );
     }
 
     #[test]
@@ -471,7 +564,8 @@ mod tests {
             _ts_decorate([
                 require("@angular/core").Output("myModelChange")
             ], MyCmp.prototype, "myModel");
-            "# });
+            "# },
+        );
     }
 
     #[test]
@@ -500,6 +594,101 @@ mod tests {
             _ts_decorate([
                 require("@angular/core").Output("myModelAliasChange")
             ], MyCmp.prototype, "myModel");
-            "# });
+            "# },
+        );
+    }
+
+    #[test]
+    fn test_view_child() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild('title');
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild('title');
+            }
+            _ts_decorate([
+                require("@angular/core").ViewChild('title', {
+                    isSignal: true
+                })
+            ], MyCmp.prototype, "titleEl");
+            "# },
+        );
+    }
+
+    #[test]
+    fn test_view_child_with_options() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild('title', {read: ElementRef});
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild('title', {
+                    read: ElementRef
+                });
+            }
+            _ts_decorate([
+                require("@angular/core").ViewChild('title', {
+                    read: ElementRef,
+                    isSignal: true
+                })
+            ], MyCmp.prototype, "titleEl");
+            "# },
+        );
+    }
+
+    #[test]
+    fn test_view_child_required() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild.required('title');
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild.required('title');
+            }
+            _ts_decorate([
+                require("@angular/core").ViewChild('title', {
+                    isSignal: true,
+                    required: true
+                })
+            ], MyCmp.prototype, "titleEl");
+            "# },
+        );
+    }
+
+    #[test]
+    fn test_view_child_required_with_options() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild.required('title', {
+                    read: ElementRef
+                });
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                titleEl = viewChild.required('title', {
+                    read: ElementRef
+                });
+            }
+            _ts_decorate([
+                require("@angular/core").ViewChild('title', {
+                    read: ElementRef,
+                    isSignal: true,
+                    required: true
+                })
+            ], MyCmp.prototype, "titleEl");
+            "# },
+        );
     }
 }
