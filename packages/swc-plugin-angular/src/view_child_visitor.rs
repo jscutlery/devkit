@@ -1,6 +1,10 @@
-use swc_core::ecma::{ast::{ClassProp, Expr, ExprOrSpread, Lit, Prop}, visit::Visit};
+use swc_core::ecma::{
+    ast::{ClassProp, Expr, ExprOrSpread, Lit, Prop},
+    visit::Visit,
+};
+use swc_core::ecma::visit::VisitWith;
 
-use crate::utils::{get_angular_prop, get_prop_value_as_string, visit_functional_api_options};
+use crate::utils::{get_angular_prop, get_prop_value_as_string};
 
 #[derive(Default)]
 pub struct ViewChildVisitor {
@@ -34,23 +38,25 @@ impl ViewChildVisitor {
         }
         .into();
 
-        visit_functional_api_options(self, angular_prop.required, angular_prop.args);
+        /* `viewChild` options are always the second param.
+         * e.g. `viewChild('title', {alias: ...})` or `viewChild.required('title', {alias: ...})`*/
+        if let Some(options) = angular_prop.args.get(1) {
+            options.visit_children_with(self);
+        }
 
         self.view_child_info.take()
     }
 }
 
 impl Visit for ViewChildVisitor {
-  fn visit_prop(&mut self, prop: &Prop) {
-      let view_child_info = match &mut self.view_child_info {
-          Some(view_child_info) => view_child_info,
-          None => return,
-      };
+    fn visit_prop(&mut self, prop: &Prop) {
+        let view_child_info = match &mut self.view_child_info {
+            Some(view_child_info) => view_child_info,
+            None => return,
+        };
 
-
-      // TODO: not working, view_child_info.read is always None.
-      view_child_info.read = get_prop_value_as_string(prop, "read");
-  }
+        view_child_info.read = get_prop_value_as_string(prop, "read");
+    }
 }
 
 #[derive(Default)]

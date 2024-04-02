@@ -661,7 +661,6 @@ mod tests {
         );
     }
 
-    #[ignore]
     #[test]
     fn test_view_child_required_with_options() {
         test_visitor(
@@ -682,7 +681,7 @@ mod tests {
                 require("@angular/core").ViewChild("title", {
                     isSignal: true,
                     read: ElementRef,
-                    required: true
+                    required: true,
                 })
             ], MyCmp.prototype, "titleEl");
             "# },
