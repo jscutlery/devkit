@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::component_property_visitor::angular_prop::AngularProp;
+use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
 use indoc::formatdoc;
 use swc_core::ecma::ast::Ident;
 use swc_core::ecma::{

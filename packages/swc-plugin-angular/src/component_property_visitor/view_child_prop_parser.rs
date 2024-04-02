@@ -3,19 +3,15 @@ use swc_core::ecma::ast::{
     PropOrSpread,
 };
 
-use crate::component_property_visitor::angular_prop::AngularProp;
 use crate::component_property_visitor::angular_prop_decorator::AngularPropDecorator;
+use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
 use crate::component_property_visitor::ast_parsing::parse_angular_prop;
 
 #[derive(Default)]
 pub struct ViewChildPropParser {}
 
-impl ViewChildPropParser {
-    pub(crate) fn parse_prop(
-        &mut self,
-        class: &Ident,
-        class_prop: &ClassProp,
-    ) -> Option<ViewChildProp> {
+impl AngularPropParser for ViewChildPropParser {
+    fn parse_prop(&self, class: &Ident, class_prop: &ClassProp) -> Option<ViewChildProp> {
         let angular_prop_info = match parse_angular_prop(class_prop, "viewChild") {
             Some(value) => value,
             None => return None,
@@ -79,11 +75,11 @@ impl AngularProp for ViewChildProp {
                 }))))
         }
 
-        return vec![AngularPropDecorator {
+        vec![AngularPropDecorator {
             class_ident: self.class.clone(),
             decorator_name: "ViewChild".to_string(),
             decorator_args: vec![self.locator, Expr::Object(options.clone()).into()],
             property_name: self.name,
-        }];
+        }]
     }
 }
