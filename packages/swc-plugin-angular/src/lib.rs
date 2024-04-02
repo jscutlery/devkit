@@ -13,10 +13,10 @@ mod input_visitor;
 mod model_visitor;
 mod output_visitor;
 mod view_child_visitor;
+mod utils;
 
 #[cfg(test)]
 mod testing;
-mod utils;
 
 #[plugin_transform]
 pub fn process_transform(program: Program, _metadata: TransformPluginProgramMetadata) -> Program {
