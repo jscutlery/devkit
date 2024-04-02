@@ -3,7 +3,7 @@ use swc_core::ecma::ast::{
 };
 use swc_ecma_utils::swc_ecma_ast::{ArrayLit, Lit, Stmt};
 
-pub struct DecoratorInfo {
+pub struct AngularPropDecorator {
     pub class_ident: Ident,
     pub decorator_name: String,
     pub decorator_args: Vec<ExprOrSpread>,
@@ -11,9 +11,9 @@ pub struct DecoratorInfo {
 }
 
 /**
- * Create the AST for a decorator call using `_ts_decorate`.
+ * Create the AST for an Angular prop decorator call using `_ts_decorate`.
  */
-pub fn create_decorate_expr(decorator_info: DecoratorInfo) -> Stmt {
+pub fn create_decorate_expr(decorator_info: AngularPropDecorator) -> Stmt {
     /* `require("@angular/core")` */
     let angular_core = Expr::Call(CallExpr {
         callee: create_callee("require"),

@@ -9,7 +9,6 @@ use crate::component_property_visitor::ComponentPropertyVisitor;
 
 mod component_decorator_visitor;
 mod component_property_visitor;
-mod utils;
 
 #[cfg(test)]
 mod testing;

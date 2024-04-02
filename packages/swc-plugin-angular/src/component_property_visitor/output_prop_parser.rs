@@ -1,7 +1,7 @@
 use swc_core::ecma::ast::{ClassProp, Prop};
 use swc_core::ecma::visit::{Visit, VisitWith};
 
-use crate::utils::{get_angular_prop, get_prop_value_as_string};
+use crate::component_property_visitor::ast_parsing::{get_angular_prop, get_prop_value_as_string};
 
 #[derive(Default)]
 pub struct OutputPropParser {

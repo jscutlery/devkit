@@ -4,7 +4,10 @@ use swc_core::ecma::ast::{
 };
 use swc_ecma_utils::swc_ecma_ast::Stmt;
 
-use crate::utils::{create_decorate_expr, get_angular_prop, DecoratorInfo};
+use crate::component_property_visitor::angular_prop_decorator::{
+    create_decorate_expr, AngularPropDecorator,
+};
+use crate::component_property_visitor::ast_parsing::get_angular_prop;
 
 #[derive(Default)]
 pub struct ViewChildPropParser {}
@@ -78,7 +81,7 @@ impl From<ViewChildProp> for Stmt {
                 }))))
         }
 
-        create_decorate_expr(DecoratorInfo {
+        create_decorate_expr(AngularPropDecorator {
             class_ident: prop.class.clone(),
             decorator_name: "ViewChild".to_string(),
             decorator_args: vec![prop.locator, Expr::Object(options.clone()).into()],
