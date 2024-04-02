@@ -84,5 +84,6 @@ jobs:
       - name: Release
         uses: ./.github/actions/release
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
           npm_token: ${{ secrets.NPM_TOKEN }}
