@@ -6,7 +6,7 @@
   "prefix": "jc",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:browser-esbuild",
       "options": {
         "outputPath": "dist/apps/sandbox",
         "index": "apps/sandbox/src/index.html",

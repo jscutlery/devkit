@@ -5,7 +5,7 @@
   "projectType": "application",
   "targets": {
     "component-test-build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:browser-esbuild",
       "options": {
         "outputPath": "dist/tests/cypress-harness-wide",
         "index": "tests/cypress-harness-wide/does-not-exist/index.html",

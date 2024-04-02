@@ -33,7 +33,7 @@
       "executor": "@nx/eslint:lint"
     },
     "component-test-build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:browser-esbuild",
       "options": {
         "outputPath": "dist/packages/microwave",
         "index": "packages/microwave/does-not-exist/index.html",
