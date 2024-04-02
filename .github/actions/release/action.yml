@@ -3,8 +3,8 @@ name: Release
 description: Release packages
 
 inputs:
-  github_token:
-    description: GitHub token
+  git_bot_token:
+    description: Git bot token
     required: true
   npm_token:
     description: NPM token
@@ -30,7 +30,7 @@ runs:
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ inputs.github_token }}
+        git_bot_token: ${{ inputs.github_token }}
         branch: ${{ github.ref }}
         force: true
         tags: true
