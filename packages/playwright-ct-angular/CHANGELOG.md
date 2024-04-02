@@ -1,16 +1,3 @@
-## 0.3.0 (2024-04-02)
-
-
-### 🚀 Features
-
-- ✨ add swc-angular-preset and swc-plugin-angular ([#273](https://github.com/jscutlery/test-utils/pull/273))
-
-
-### ❤️  Thank You
-
-- Edouard Bozon @edbzn
-- Younes Jaaidi
-
 ## [0.2.2](https://github.com/jscutlery/devkit/compare/playwright-ct-angular-0.2.1...playwright-ct-angular-0.2.2) (2024-03-22)
 
 ## [0.2.1](https://github.com/jscutlery/devkit/compare/playwright-ct-angular-0.2.0...playwright-ct-angular-0.2.1) (2023-10-31)
