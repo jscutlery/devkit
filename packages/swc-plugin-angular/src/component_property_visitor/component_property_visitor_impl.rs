@@ -54,7 +54,6 @@ impl VisitMut for ComponentPropertyVisitor {
                     .component_props
                     .entry(current_component.clone())
                     .or_default();
-
                 component_props.push(prop);
             }
         }
@@ -72,8 +71,11 @@ impl VisitMut for ComponentPropertyVisitor {
             let decorators = self.drain_component_decorators(item.as_ref());
 
             new_items.push(item);
-            for statement in decorators {
-                new_items.push(statement.into());
+
+            if let Some(decorators) = decorators {
+                for statement in decorators {
+                    new_items.push(statement.into());
+                }
             }
         }
         *items = new_items;
@@ -91,20 +93,25 @@ impl VisitMut for ComponentPropertyVisitor {
             let decorators = self.drain_component_decorators(Some(&stmt));
 
             new_stmts.push(stmt);
-            new_stmts.extend(decorators);
+            if let Some(decorators) = decorators {
+                new_stmts.extend(decorators);
+            }
         }
         *stmts = new_stmts;
     }
 }
 
 impl ComponentPropertyVisitor {
-    fn drain_component_decorators(&mut self, statement: Option<&Stmt>) -> Vec<Stmt> {
+    fn drain_component_decorators(&mut self, statement: Option<&Stmt>) -> Option<Vec<Stmt>> {
         let component = match self.try_get_class_ident(statement) {
             Some(class_ident) => class_ident,
-            None => return vec![],
+            None => return None,
         };
 
-        let mut props = self.component_props.remove(component).unwrap_or_default();
+        let mut props = match self.component_props.remove(component) {
+            Some(props) => props,
+            None => return None,
+        };
 
         let mut stmts: Vec<Stmt> = Vec::with_capacity(props.len());
         for prop in props.drain(..) {
@@ -113,7 +120,7 @@ impl ComponentPropertyVisitor {
             }
         }
 
-        stmts
+        Some(stmts)
     }
 
     fn try_get_class_ident<'statement>(
