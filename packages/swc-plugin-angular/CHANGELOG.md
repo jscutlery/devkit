@@ -1,3 +1,15 @@
+## 0.8.0 (2024-04-03)
+
+
+### 🚀 Features
+
+- **swc-plugin-angular:** ✨ transform contentChild query ([#298](https://github.com/jscutlery/devkit/pull/298))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.7.0 (2024-04-02)
 
 - **swc-plugin-angular:** ✨ transform viewChild query ([#292](https://github.com/jscutlery/devkit/pull/296))
