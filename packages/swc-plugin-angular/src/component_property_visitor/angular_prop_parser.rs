@@ -9,5 +9,5 @@ pub(crate) trait AngularPropParser {
 pub(crate) trait AngularProp {
     /* Some props like `model()` require multiple decorators: `Input()` + `Output()`.
      * That is why we need a vector. */
-    fn to_decorators(self) -> Vec<AngularPropDecorator>;
+    fn to_decorators(&self) -> Vec<AngularPropDecorator>;
 }

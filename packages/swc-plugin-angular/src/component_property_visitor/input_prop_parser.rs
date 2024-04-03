@@ -41,8 +41,8 @@ pub struct InputProp {
 }
 
 impl AngularProp for InputProp {
-    fn to_decorators(self) -> Vec<AngularPropDecorator> {
-        let mut decorator_options = self.options.unwrap_or_else(|| ObjectLit {
+    fn to_decorators(&self) -> Vec<AngularPropDecorator> {
+        let mut decorator_options = self.options.clone().unwrap_or_else(|| ObjectLit {
             span: Default::default(),
             props: vec![],
         });
@@ -65,10 +65,10 @@ impl AngularProp for InputProp {
         }
 
         vec![AngularPropDecorator {
-            class_ident: self.class,
+            class_ident: self.class.clone(),
             decorator_name: "Input".into(),
             decorator_args: vec![Expr::Object(decorator_options).into()],
-            property_name: self.name,
+            property_name: self.name.clone(),
         }]
     }
 }

@@ -6,19 +6,14 @@ use swc_ecma_utils::swc_ecma_ast::Stmt;
 use swc_ecma_utils::IsDirective;
 
 use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
-use crate::component_property_visitor::input_prop_parser::{InputProp, InputPropParser};
-use crate::component_property_visitor::model_prop_parser::{ModelProp, ModelPropParser};
-use crate::component_property_visitor::output_prop_parser::{OutputProp, OutputPropParser};
-use crate::component_property_visitor::view_child_prop_parser::{
-    ViewChildProp, ViewChildPropParser,
-};
+use crate::component_property_visitor::input_prop_parser::InputPropParser;
+use crate::component_property_visitor::model_prop_parser::ModelPropParser;
+use crate::component_property_visitor::output_prop_parser::OutputPropParser;
+use crate::component_property_visitor::view_child_prop_parser::ViewChildPropParser;
 
 #[derive(Default)]
 pub struct ComponentPropertyVisitor {
-    component_inputs: HashMap<Ident, Vec<InputProp>>,
-    component_models: HashMap<Ident, Vec<ModelProp>>,
-    component_outputs: HashMap<Ident, Vec<OutputProp>>,
-    component_view_child: HashMap<Ident, Vec<ViewChildProp>>, // Naming? I don't want to name it view_children as it refers to another thing.
+    component_props: HashMap<Ident, Vec<Box<dyn AngularProp>>>,
     current_component: Option<Ident>,
 }
 
@@ -37,45 +32,30 @@ impl VisitMut for ComponentPropertyVisitor {
             Some(current_component) => current_component,
             None => return,
         };
+        let component_props = self
+            .component_props
+            .entry(current_component.clone())
+            .or_default();
 
         /* Parse input. */
-        if let Some(input_prop) =
-            InputPropParser::default().parse_prop(current_component, class_prop)
-        {
-            self.component_inputs
-                .entry(current_component.clone())
-                .or_default()
-                .push(input_prop);
+        if let Some(prop) = InputPropParser::default().parse_prop(current_component, class_prop) {
+            component_props.push(Box::new(prop));
         }
 
         /* Parse output. */
-        if let Some(output_prop) =
-            OutputPropParser::default().parse_prop(current_component, class_prop)
-        {
-            self.component_outputs
-                .entry(current_component.clone())
-                .or_default()
-                .push(output_prop);
+        if let Some(prop) = OutputPropParser::default().parse_prop(current_component, class_prop) {
+            component_props.push(Box::new(prop));
         }
 
         /* Parse model. */
-        if let Some(model_prop) =
-            ModelPropParser::default().parse_prop(current_component, class_prop)
-        {
-            self.component_models
-                .entry(current_component.clone())
-                .or_default()
-                .push(model_prop);
+        if let Some(prop) = ModelPropParser::default().parse_prop(current_component, class_prop) {
+            component_props.push(Box::new(prop));
         }
 
         /* Parse viewChild. */
-        if let Some(view_child_info) =
-            ViewChildPropParser::default().parse_prop(current_component, class_prop)
+        if let Some(prop) = ViewChildPropParser::default().parse_prop(current_component, class_prop)
         {
-            self.component_view_child
-                .entry(current_component.clone())
-                .or_default()
-                .push(view_child_info);
+            component_props.push(Box::new(prop));
         }
     }
 
@@ -123,37 +103,11 @@ impl ComponentPropertyVisitor {
             None => return vec![],
         };
 
-        let mut input_props = self.component_inputs.remove(component).unwrap_or_default();
-        let mut model_props = self.component_models.remove(component).unwrap_or_default();
-        let mut output_props = self.component_outputs.remove(component).unwrap_or_default();
-        let mut view_child_props = self
-            .component_view_child
-            .remove(component)
-            .unwrap_or_default();
+        let mut props = self.component_props.remove(component).unwrap_or_default();
 
-        let mut stmts: Vec<Stmt> = Vec::with_capacity(
-            input_props.len() + model_props.len() + output_props.len() + view_child_props.len(),
-        );
-        for input_prop in input_props.drain(..) {
-            for decorator in input_prop.to_decorators() {
-                stmts.push(decorator.into());
-            }
-        }
-
-        for model_prop in model_props.drain(..) {
-            for decorator in model_prop.to_decorators() {
-                stmts.push(decorator.into());
-            }
-        }
-
-        for output_prop in output_props.drain(..) {
-            for decorator in output_prop.to_decorators() {
-                stmts.push(decorator.into());
-            }
-        }
-
-        for view_child_prop in view_child_props.drain(..) {
-            for decorator in view_child_prop.to_decorators() {
+        let mut stmts: Vec<Stmt> = Vec::with_capacity(props.len());
+        for prop in props.drain(..) {
+            for decorator in prop.to_decorators() {
                 stmts.push(decorator.into());
             }
         }

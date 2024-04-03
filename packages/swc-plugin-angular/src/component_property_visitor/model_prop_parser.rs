@@ -39,7 +39,7 @@ pub struct ModelProp {
 }
 
 impl AngularProp for ModelProp {
-    fn to_decorators(self) -> Vec<AngularPropDecorator> {
+    fn to_decorators(&self) -> Vec<AngularPropDecorator> {
         let input_prop = InputProp {
             class: self.class.clone(),
             name: self.name.clone(),
@@ -59,10 +59,10 @@ impl AngularProp for ModelProp {
         let output_name = format!("{}Change", output_name);
 
         let output_decorator = AngularPropDecorator {
-            class_ident: self.class,
+            class_ident: self.class.clone(),
             decorator_name: "Output".into(),
             decorator_args: vec![Expr::Lit(Lit::Str(output_name.into())).into()],
-            property_name: self.name,
+            property_name: self.name.clone(),
         };
 
         let mut decorators = input_prop.to_decorators();

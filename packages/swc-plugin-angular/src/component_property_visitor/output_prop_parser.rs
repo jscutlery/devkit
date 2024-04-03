@@ -38,9 +38,10 @@ pub struct OutputProp {
 }
 
 impl AngularProp for OutputProp {
-    fn to_decorators(self) -> Vec<AngularPropDecorator> {
+    fn to_decorators(&self) -> Vec<AngularPropDecorator> {
         let alias = self
             .options
+            .clone()
             .and_then(|options| get_prop_value(&options, "alias"));
 
         /* Add alias to decorator if alias exists: e.g. `@Output(alias)`. */
@@ -50,10 +51,10 @@ impl AngularProp for OutputProp {
         };
 
         vec![AngularPropDecorator {
-            class_ident: self.class,
+            class_ident: self.class.clone(),
             decorator_name: "Output".into(),
             decorator_args,
-            property_name: self.name,
+            property_name: self.name.clone(),
         }]
     }
 }

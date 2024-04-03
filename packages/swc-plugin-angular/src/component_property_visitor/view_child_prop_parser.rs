@@ -51,9 +51,9 @@ pub(crate) struct ViewChildProp {
 }
 
 impl AngularProp for ViewChildProp {
-    fn to_decorators(self) -> Vec<AngularPropDecorator> {
+    fn to_decorators(&self) -> Vec<AngularPropDecorator> {
         /* Add options object if missing. */
-        let mut options = self.options.unwrap_or_else(|| ObjectLit {
+        let mut options = self.options.clone().unwrap_or_else(|| ObjectLit {
             span: Default::default(),
             props: vec![],
         });
@@ -78,8 +78,8 @@ impl AngularProp for ViewChildProp {
         vec![AngularPropDecorator {
             class_ident: self.class.clone(),
             decorator_name: "ViewChild".to_string(),
-            decorator_args: vec![self.locator, Expr::Object(options).into()],
-            property_name: self.name,
+            decorator_args: vec![self.locator.clone(), Expr::Object(options).into()],
+            property_name: self.name.clone(),
         }]
     }
 }
