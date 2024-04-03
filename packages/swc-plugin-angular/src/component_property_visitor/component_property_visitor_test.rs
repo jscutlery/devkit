@@ -195,6 +195,48 @@ fn test_output_alias() {
 }
 
 #[test]
+fn test_output_from_observable() {
+    test_visitor(
+        ComponentPropertyVisitor::default(),
+        indoc! {
+        r#"class MyCmp {
+                myOutput = outputFromObservable(source$);
+            }"# },
+        indoc! {
+        r#"class MyCmp {
+                myOutput = outputFromObservable(source$);
+            }
+            _ts_decorate([
+                require("@angular/core").Output()
+            ], MyCmp.prototype, "myOutput");
+            "# },
+    );
+}
+
+#[test]
+fn test_output_from_observable_with_alias() {
+    test_visitor(
+        ComponentPropertyVisitor::default(),
+        indoc! {
+        r#"class MyCmp {
+                myOutput = outputFromObservable(source$, {
+                    alias: 'myOutputAlias'
+                });
+            }"# },
+        indoc! {
+        r#"class MyCmp {
+                myOutput = outputFromObservable(source$, {
+                    alias: 'myOutputAlias'
+                });
+            }
+            _ts_decorate([
+                require("@angular/core").Output('myOutputAlias')
+            ], MyCmp.prototype, "myOutput");
+            "# },
+    );
+}
+
+#[test]
 fn test_model() {
     test_visitor(
         ComponentPropertyVisitor::default(),
