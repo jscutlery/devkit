@@ -1,3 +1,15 @@
+## 0.10.1 (2024-04-03)
+
+
+### 🩹 Fixes
+
+- **swc-plugin-angular:** 🐞 handle exported classes ([d3cfdeb](https://github.com/jscutlery/devkit/commit/d3cfdeb))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.10.0 (2024-04-03)
 
 
