@@ -1,3 +1,15 @@
+## 0.10.0 (2024-04-03)
+
+
+### 🚀 Features
+
+- **swc-plugin-angular:** ✨ transform outputFromObservable ([#301](https://github.com/jscutlery/devkit/pull/301))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.9.0 (2024-04-03)
 
 
