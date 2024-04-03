@@ -9,25 +9,47 @@ pub struct OutputPropParser {}
 
 impl AngularPropParser for OutputPropParser {
     fn parse_prop(&self, class: &Ident, class_prop: &ClassProp) -> Option<Box<dyn AngularProp>> {
-        let angular_prop_info = match parse_angular_prop(class_prop, "output") {
-            Some(value) => value,
+        let (name, options) = match Self::parse_output_prop_info(class_prop) {
+            Some(result) => result,
             None => return None,
         };
 
-        let options = angular_prop_info
-            .args
-            .first()
-            .and_then(|arg| arg.expr.as_object())
-            /* We have to clone the options anyway so let's do it here.
-             * That's because they have to be kept in memory by the parent visitor until
-             * the end of the visit in order to add the decorator statement. */
-            .cloned();
-
         Some(Box::new(OutputProp {
             class: class.clone(),
-            name: angular_prop_info.name,
+            name,
             options,
         }))
+    }
+}
+
+impl OutputPropParser {
+    fn parse_output_prop_info(class_prop: &ClassProp) -> Option<(String, Option<ObjectLit>)> {
+        if let Some(angular_prop_info) = parse_angular_prop(class_prop, "output") {
+            return Some((
+                angular_prop_info.name,
+                angular_prop_info
+                    .args
+                    .first()
+                    .and_then(|arg| arg.expr.as_object())
+                    /* We have to clone the options anyway so let's do it here.
+                     * That's because they have to be kept in memory by the parent visitor until
+                     * the end of the visit in order to add the decorator statement. */
+                    .cloned(),
+            ));
+        }
+
+        if let Some(angular_prop_info) = parse_angular_prop(class_prop, "outputFromObservable") {
+            return Some((
+                angular_prop_info.name,
+                angular_prop_info
+                    .args
+                    .get(1)
+                    .and_then(|arg| arg.expr.as_object())
+                    .cloned(),
+            ));
+        }
+
+        None
     }
 }
 
