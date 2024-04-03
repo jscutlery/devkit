@@ -2,15 +2,15 @@ use swc_core::ecma::ast::{ClassProp, Expr, ExprOrSpread, Ident, ObjectLit};
 
 use crate::component_property_visitor::angular_prop_decorator::AngularPropDecorator;
 use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
-use crate::component_property_visitor::utils::{parse_angular_prop, set_option};
+use crate::component_property_visitor::utils::{parse_angular_prop, set_option, AngularPropInfo};
 
 #[derive(Default)]
-pub struct ViewChildPropParser {}
+pub struct QueryPropParser {}
 
-impl AngularPropParser for ViewChildPropParser {
+impl AngularPropParser for QueryPropParser {
     fn parse_prop(&self, class: &Ident, class_prop: &ClassProp) -> Option<Box<dyn AngularProp>> {
-        let angular_prop_info = match parse_angular_prop(class_prop, "viewChild") {
-            Some(value) => value,
+        let (query_type, angular_prop_info) = match Self::parse_query_prop_info(class_prop) {
+            Some(result) => result,
             None => return None,
         };
 
@@ -29,7 +29,8 @@ impl AngularPropParser for ViewChildPropParser {
              * the end of the visit in order to add the decorator statement. */
             .cloned();
 
-        Some(Box::new(ViewChildProp {
+        Some(Box::new(QueryChildProp {
+            query_type,
             class: class.clone(),
             name: angular_prop_info.name,
             required: angular_prop_info.required,
@@ -39,7 +40,27 @@ impl AngularPropParser for ViewChildPropParser {
     }
 }
 
-pub(crate) struct ViewChildProp {
+impl QueryPropParser {
+    fn parse_query_prop_info(class_prop: &ClassProp) -> Option<(QueryType, AngularPropInfo)> {
+        if let Some(prop_info) = parse_angular_prop(class_prop, "viewChild") {
+            return Some((QueryType::ViewChild, prop_info));
+        }
+
+        if let Some(prop_info) = parse_angular_prop(class_prop, "contentChild") {
+            return Some((QueryType::ContentChild, prop_info));
+        }
+
+        None
+    }
+}
+
+enum QueryType {
+    ContentChild,
+    ViewChild,
+}
+
+pub(crate) struct QueryChildProp {
+    query_type: QueryType,
     class: Ident,
     name: String,
     required: bool,
@@ -47,7 +68,7 @@ pub(crate) struct ViewChildProp {
     options: Option<ObjectLit>,
 }
 
-impl AngularProp for ViewChildProp {
+impl AngularProp for QueryChildProp {
     fn to_decorators(&self) -> Vec<AngularPropDecorator> {
         /* Add options object if missing. */
         let mut options = self.options.clone().unwrap_or_else(|| ObjectLit {
@@ -61,9 +82,14 @@ impl AngularProp for ViewChildProp {
             set_option(&mut options, "required", true);
         }
 
+        let decorator_name = match self.query_type {
+            QueryType::ContentChild => "ContentChild",
+            QueryType::ViewChild => "ViewChild",
+        };
+
         vec![AngularPropDecorator {
             class_ident: self.class.clone(),
-            decorator_name: "ViewChild".to_string(),
+            decorator_name: decorator_name.into(),
             decorator_args: vec![self.locator.clone(), Expr::Object(options).into()],
             property_name: self.name.clone(),
         }]

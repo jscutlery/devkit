@@ -9,7 +9,7 @@ use crate::component_property_visitor::angular_prop_parser::{AngularProp, Angula
 use crate::component_property_visitor::input_prop_parser::InputPropParser;
 use crate::component_property_visitor::model_prop_parser::ModelPropParser;
 use crate::component_property_visitor::output_prop_parser::OutputPropParser;
-use crate::component_property_visitor::view_child_prop_parser::ViewChildPropParser;
+use crate::component_property_visitor::query_prop_parser::QueryPropParser;
 
 pub struct ComponentPropertyVisitor {
     prop_parsers: Vec<Box<dyn AngularPropParser>>,
@@ -26,7 +26,7 @@ impl Default for ComponentPropertyVisitor {
                 Box::<InputPropParser>::default(),
                 Box::<OutputPropParser>::default(),
                 Box::<ModelPropParser>::default(),
-                Box::<ViewChildPropParser>::default(),
+                Box::<QueryPropParser>::default(),
             ],
         }
     }
@@ -536,6 +536,36 @@ mod tests {
             }
             _ts_decorate([
                 require("@angular/core").ViewChild('title', {
+                    read: ElementRef,
+                    isSignal: true,
+                    required: true
+                })
+            ], MyCmp.prototype, "titleEl");
+            "# },
+        );
+    }
+
+    #[test]
+    fn test_content_child_required_with_options() {
+        test_visitor(
+            ComponentPropertyVisitor::default(),
+            indoc! {
+            r#"class MyCmp {
+                titleEl = contentChild.required('title', {
+                    descendants: true,
+                    read: ElementRef
+                });
+            }"# },
+            indoc! {
+            r#"class MyCmp {
+                titleEl = contentChild.required('title', {
+                    descendants: true,
+                    read: ElementRef
+                });
+            }
+            _ts_decorate([
+                require("@angular/core").ContentChild('title', {
+                    descendants: true,
                     read: ElementRef,
                     isSignal: true,
                     required: true
