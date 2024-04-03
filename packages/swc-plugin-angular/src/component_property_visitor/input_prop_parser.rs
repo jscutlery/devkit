@@ -10,7 +10,7 @@ use crate::component_property_visitor::ast_parsing::parse_angular_prop;
 pub struct InputPropParser {}
 
 impl AngularPropParser for InputPropParser {
-    fn parse_prop(&self, class: &Ident, class_prop: &ClassProp) -> Option<InputProp> {
+    fn parse_prop(&self, class: &Ident, class_prop: &ClassProp) -> Option<Box<dyn AngularProp>> {
         let angular_prop_info = match parse_angular_prop(class_prop, "input") {
             Some(value) => value,
             None => return None,
@@ -24,12 +24,12 @@ impl AngularPropParser for InputPropParser {
 
         let options = options_arg.and_then(|arg| arg.expr.as_object()).cloned();
 
-        Some(InputProp {
+        Some(Box::new(InputProp {
             class: class.clone(),
             name: angular_prop_info.name,
             required: angular_prop_info.required,
             options,
-        })
+        }))
     }
 }
 

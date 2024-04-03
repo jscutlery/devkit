@@ -11,7 +11,7 @@ use crate::component_property_visitor::ast_parsing::parse_angular_prop;
 pub struct ViewChildPropParser {}
 
 impl AngularPropParser for ViewChildPropParser {
-    fn parse_prop(&self, class: &Ident, class_prop: &ClassProp) -> Option<ViewChildProp> {
+    fn parse_prop(&self, class: &Ident, class_prop: &ClassProp) -> Option<Box<dyn AngularProp>> {
         let angular_prop_info = match parse_angular_prop(class_prop, "viewChild") {
             Some(value) => value,
             None => return None,
@@ -32,13 +32,13 @@ impl AngularPropParser for ViewChildPropParser {
              * the end of the visit in order to add the decorator statement. */
             .cloned();
 
-        Some(ViewChildProp {
+        Some(Box::new(ViewChildProp {
             class: class.clone(),
             name: angular_prop_info.name,
             required: angular_prop_info.required,
             locator,
             options,
-        })
+        }))
     }
 }
 

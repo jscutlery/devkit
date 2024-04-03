@@ -8,7 +8,7 @@ use crate::component_property_visitor::ast_parsing::{get_prop_value, parse_angul
 pub struct OutputPropParser {}
 
 impl AngularPropParser for OutputPropParser {
-    fn parse_prop(&self, class: &Ident, class_prop: &ClassProp) -> Option<OutputProp> {
+    fn parse_prop(&self, class: &Ident, class_prop: &ClassProp) -> Option<Box<dyn AngularProp>> {
         let angular_prop_info = match parse_angular_prop(class_prop, "output") {
             Some(value) => value,
             None => return None,
@@ -23,11 +23,11 @@ impl AngularPropParser for OutputPropParser {
              * the end of the visit in order to add the decorator statement. */
             .cloned();
 
-        Some(OutputProp {
+        Some(Box::new(OutputProp {
             class: class.clone(),
             name: angular_prop_info.name,
             options,
-        })
+        }))
     }
 }
 

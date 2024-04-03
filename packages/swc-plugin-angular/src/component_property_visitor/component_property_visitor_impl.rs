@@ -11,10 +11,25 @@ use crate::component_property_visitor::model_prop_parser::ModelPropParser;
 use crate::component_property_visitor::output_prop_parser::OutputPropParser;
 use crate::component_property_visitor::view_child_prop_parser::ViewChildPropParser;
 
-#[derive(Default)]
 pub struct ComponentPropertyVisitor {
+    prop_parsers: Vec<Box<dyn AngularPropParser>>,
     component_props: HashMap<Ident, Vec<Box<dyn AngularProp>>>,
     current_component: Option<Ident>,
+}
+
+impl Default for ComponentPropertyVisitor {
+    fn default() -> Self {
+        Self {
+            component_props: HashMap::new(),
+            current_component: None,
+            prop_parsers: vec![
+                Box::<InputPropParser>::default(),
+                Box::<OutputPropParser>::default(),
+                Box::<ModelPropParser>::default(),
+                Box::<ViewChildPropParser>::default(),
+            ],
+        }
+    }
 }
 
 impl VisitMut for ComponentPropertyVisitor {
@@ -37,25 +52,10 @@ impl VisitMut for ComponentPropertyVisitor {
             .entry(current_component.clone())
             .or_default();
 
-        /* Parse input. */
-        if let Some(prop) = InputPropParser::default().parse_prop(current_component, class_prop) {
-            component_props.push(Box::new(prop));
-        }
-
-        /* Parse output. */
-        if let Some(prop) = OutputPropParser::default().parse_prop(current_component, class_prop) {
-            component_props.push(Box::new(prop));
-        }
-
-        /* Parse model. */
-        if let Some(prop) = ModelPropParser::default().parse_prop(current_component, class_prop) {
-            component_props.push(Box::new(prop));
-        }
-
-        /* Parse viewChild. */
-        if let Some(prop) = ViewChildPropParser::default().parse_prop(current_component, class_prop)
-        {
-            component_props.push(Box::new(prop));
+        for prop_parser in self.prop_parsers.iter() {
+            if let Some(prop) = prop_parser.parse_prop(current_component, class_prop) {
+                component_props.push(prop);
+            }
         }
     }
 
