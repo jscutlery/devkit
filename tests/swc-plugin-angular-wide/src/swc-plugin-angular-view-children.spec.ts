@@ -3,7 +3,7 @@
 import { Component, ElementRef, Type, viewChildren } from '@angular/core';
 import { createComponent } from './testing';
 
-describe.skip('swc-plugin-angular: view children', () => {
+describe('swc-plugin-angular: view children', () => {
   it('should match view children', () => {
     @Component({
       standalone: true,

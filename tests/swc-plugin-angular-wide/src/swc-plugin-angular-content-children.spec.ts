@@ -3,7 +3,7 @@
 import { Component, contentChildren, ElementRef, Type } from '@angular/core';
 import { createComponent } from './testing';
 
-describe.skip('swc-plugin-angular: content children', () => {
+describe('swc-plugin-angular: content children', () => {
   it('should match required content children', () => {
 
     @Component({

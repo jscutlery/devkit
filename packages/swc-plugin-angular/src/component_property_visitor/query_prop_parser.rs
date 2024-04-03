@@ -42,12 +42,22 @@ impl AngularPropParser for QueryPropParser {
 
 impl QueryPropParser {
     fn parse_query_prop_info(class_prop: &ClassProp) -> Option<(QueryType, AngularPropInfo)> {
+        /* `viewChild` & `viewChildren` are probably more frequently used so let's
+         * try to parse them first. */
         if let Some(prop_info) = parse_angular_prop(class_prop, "viewChild") {
             return Some((QueryType::ViewChild, prop_info));
         }
 
+        if let Some(prop_info) = parse_angular_prop(class_prop, "viewChildren") {
+            return Some((QueryType::ViewChildren, prop_info));
+        }
+
         if let Some(prop_info) = parse_angular_prop(class_prop, "contentChild") {
             return Some((QueryType::ContentChild, prop_info));
+        }
+
+        if let Some(prop_info) = parse_angular_prop(class_prop, "contentChildren") {
+            return Some((QueryType::ContentChildren, prop_info));
         }
 
         None
@@ -56,7 +66,9 @@ impl QueryPropParser {
 
 enum QueryType {
     ContentChild,
+    ContentChildren,
     ViewChild,
+    ViewChildren,
 }
 
 pub(crate) struct QueryChildProp {
@@ -84,7 +96,9 @@ impl AngularProp for QueryChildProp {
 
         let decorator_name = match self.query_type {
             QueryType::ContentChild => "ContentChild",
+            QueryType::ContentChildren => "ContentChildren",
             QueryType::ViewChild => "ViewChild",
+            QueryType::ViewChildren => "ViewChildren",
         };
 
         vec![AngularPropDecorator {

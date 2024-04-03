@@ -411,7 +411,6 @@ fn test_view_child_required_with_options() {
             "# },
     );
 }
-#[ignore]
 #[test]
 fn test_view_children_with_options() {
     test_visitor(
@@ -468,7 +467,6 @@ fn test_content_child_required_with_options() {
     );
 }
 
-#[ignore]
 #[test]
 fn test_content_children_with_options() {
     test_visitor(
@@ -486,9 +484,9 @@ fn test_content_children_with_options() {
             });
         }
         _ts_decorate([
-            require("@angular/core").ViewChildren('item', {
-                isSignal: true,
-                read: ElementRef
+            require("@angular/core").ContentChildren('item', {
+                read: ElementRef,
+                isSignal: true
             })
         ], MyCmp.prototype, "itemEls");
         "# },
