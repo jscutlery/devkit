@@ -441,3 +441,30 @@ fn test_content_child_required_with_options() {
             "# },
     );
 }
+
+#[ignore]
+#[test]
+fn test_view_children_with_options() {
+    test_visitor(
+        ComponentPropertyVisitor::default(),
+        indoc! {
+        r#"class MyCmp {
+                titleEls = viewChildren('title', {
+                    read: ElementRef
+                });
+            }"# },
+        indoc! {
+        r#"class MyCmp {
+                titleEls = viewChildren('title', {
+                    read: ElementRef
+                });
+            }
+            _ts_decorate([
+                require("@angular/core").ViewChildren('title', {
+                    read: ElementRef,
+                    isSignal: true
+                })
+            ], MyCmp.prototype, "titleEls");
+            "# },
+    );
+}
