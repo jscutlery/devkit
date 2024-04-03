@@ -2,13 +2,17 @@
   "name": "swc-angular-preset",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/swc-angular-preset/src",
-  "implicitDependencies": ["swc-plugin-angular"],
+  "implicitDependencies": [
+    "swc-plugin-angular"
+  ],
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/swc-angular-preset",
         "main": "packages/swc-angular-preset/src/index.ts",
@@ -16,11 +20,21 @@
         "assets": [],
         "project": "packages/swc-angular-preset/package.json",
         "compiler": "swc",
-        "format": ["cjs", "esm"]
+        "format": [
+          "cjs",
+          "esm"
+        ]
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint"
+    },
+    "nx-release-publish": {
+      "executor": "@nx/js:release-publish",
+      "dependsOn": [
+        "^nx-release-publish",
+        "build"
+      ]
     }
   }
 }
