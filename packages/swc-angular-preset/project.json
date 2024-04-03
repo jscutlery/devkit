@@ -17,7 +17,18 @@
         "outputPath": "dist/packages/swc-angular-preset",
         "main": "packages/swc-angular-preset/src/index.ts",
         "tsConfig": "packages/swc-angular-preset/tsconfig.lib.json",
-        "assets": [],
+        "assets": [
+          {
+            "glob": "LICENSE",
+            "input": ".",
+            "output": "."
+          },
+          {
+            "glob": "*.md",
+            "input": "packages/swc-angular-preset",
+            "output": "."
+          }
+        ],
         "project": "packages/swc-angular-preset/package.json",
         "compiler": "swc",
         "format": [

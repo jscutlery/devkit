@@ -10,13 +10,16 @@
         "parallel": false,
         "commands": [
           "cargo build --target wasm32-wasi --release --target-dir dist/{projectRoot}",
-          "cp {projectRoot}/package.json dist/{projectRoot}"
+          "cp {projectRoot}/package.json dist/{projectRoot}",
+          "cp {projectRoot}/*.md dist/{projectRoot}"
         ]
       }
     },
     "test": {
       "executor": "@monodon/rust:test",
-      "outputs": ["{options.target-dir}"],
+      "outputs": [
+        "{options.target-dir}"
+      ],
       "options": {
         "target-dir": "dist/packages/swc-plugin-angular"
       },
@@ -28,14 +31,19 @@
     },
     "lint": {
       "executor": "@monodon/rust:lint",
-      "outputs": ["{options.target-dir}"],
+      "outputs": [
+        "{options.target-dir}"
+      ],
       "options": {
         "target-dir": "dist/packages/swc-plugin-angular"
       }
     },
     "nx-release-publish": {
       "executor": "@nx/js:release-publish",
-      "dependsOn": ["^nx-release-publish", "build"]
+      "dependsOn": [
+        "^nx-release-publish",
+        "build"
+      ]
     }
   },
   "tags": []
