@@ -1,3 +1,15 @@
+## 0.9.0 (2024-04-03)
+
+
+### 🚀 Features
+
+- **swc-plugin-angular:** ✨ transform query children ([#300](https://github.com/jscutlery/devkit/pull/300))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.8.0 (2024-04-03)
 
 
