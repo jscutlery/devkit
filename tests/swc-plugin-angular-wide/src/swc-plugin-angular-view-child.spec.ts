@@ -94,8 +94,6 @@ describe('swc-plugin-angular: view child', () => {
     expect(paragraph).toBe('Hello view child with provider!');
   });
 
-  it.todo('should match view children');
-
   function render(cmpType: Type<unknown>) {
     const { nativeElement } = createComponent(cmpType);
     return {

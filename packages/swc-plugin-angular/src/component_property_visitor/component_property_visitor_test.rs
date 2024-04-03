@@ -411,6 +411,31 @@ fn test_view_child_required_with_options() {
             "# },
     );
 }
+#[test]
+fn test_view_children_with_options() {
+    test_visitor(
+        ComponentPropertyVisitor::default(),
+        indoc! {
+        r#"class MyCmp {
+                itemEls = viewChildren('item', {
+                    read: ElementRef
+                });
+            }"# },
+        indoc! {
+        r#"class MyCmp {
+                itemEls = viewChildren('item', {
+                    read: ElementRef
+                });
+            }
+            _ts_decorate([
+                require("@angular/core").ViewChildren('item', {
+                    read: ElementRef,
+                    isSignal: true
+                })
+            ], MyCmp.prototype, "itemEls");
+            "# },
+    );
+}
 
 #[test]
 fn test_content_child_required_with_options() {
@@ -418,26 +443,52 @@ fn test_content_child_required_with_options() {
         ComponentPropertyVisitor::default(),
         indoc! {
         r#"class MyCmp {
-                titleEl = contentChild.required('title', {
-                    descendants: true,
-                    read: ElementRef
-                });
-            }"# },
+            titleEl = contentChild.required('title', {
+                descendants: true,
+                read: ElementRef
+            });
+        }"# },
         indoc! {
         r#"class MyCmp {
-                titleEl = contentChild.required('title', {
-                    descendants: true,
-                    read: ElementRef
-                });
-            }
-            _ts_decorate([
-                require("@angular/core").ContentChild('title', {
-                    descendants: true,
-                    read: ElementRef,
-                    isSignal: true,
-                    required: true
-                })
-            ], MyCmp.prototype, "titleEl");
-            "# },
+            titleEl = contentChild.required('title', {
+                descendants: true,
+                read: ElementRef
+            });
+        }
+        _ts_decorate([
+            require("@angular/core").ContentChild('title', {
+                descendants: true,
+                read: ElementRef,
+                isSignal: true,
+                required: true
+            })
+        ], MyCmp.prototype, "titleEl");
+        "# },
+    );
+}
+
+#[test]
+fn test_content_children_with_options() {
+    test_visitor(
+        ComponentPropertyVisitor::default(),
+        indoc! {
+        r#"class MyCmp {
+            itemEls = contentChildren('item', {
+                read: ElementRef
+            });
+        }"# },
+        indoc! {
+        r#"class MyCmp {
+            itemEls = contentChildren('item', {
+                read: ElementRef
+            });
+        }
+        _ts_decorate([
+            require("@angular/core").ContentChildren('item', {
+                read: ElementRef,
+                isSignal: true
+            })
+        ], MyCmp.prototype, "itemEls");
+        "# },
     );
 }
