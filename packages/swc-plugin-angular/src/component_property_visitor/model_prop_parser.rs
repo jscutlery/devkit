@@ -49,8 +49,8 @@ impl AngularProp for ModelProp {
 
         let alias_expr = self
             .options
-            .clone()
-            .and_then(|options| get_prop_value(&options, "alias"));
+            .as_ref()
+            .and_then(|options| get_prop_value(options, "alias"));
 
         let output_name = match alias_expr {
             Some(Expr::Lit(Lit::Str(alias))) => alias.value.to_string(),

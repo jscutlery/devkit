@@ -47,13 +47,14 @@ impl VisitMut for ComponentPropertyVisitor {
             Some(current_component) => current_component,
             None => return,
         };
-        let component_props = self
-            .component_props
-            .entry(current_component.clone())
-            .or_default();
 
         for prop_parser in self.prop_parsers.iter() {
             if let Some(prop) = prop_parser.parse_prop(current_component, class_prop) {
+                let component_props = self
+                    .component_props
+                    .entry(current_component.clone())
+                    .or_default();
+
                 component_props.push(prop);
             }
         }

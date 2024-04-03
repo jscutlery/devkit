@@ -41,8 +41,8 @@ impl AngularProp for OutputProp {
     fn to_decorators(&self) -> Vec<AngularPropDecorator> {
         let alias = self
             .options
-            .clone()
-            .and_then(|options| get_prop_value(&options, "alias"));
+            .as_ref()
+            .and_then(|options| get_prop_value(options, "alias"));
 
         /* Add alias to decorator if alias exists: e.g. `@Output(alias)`. */
         let decorator_args = match alias {
