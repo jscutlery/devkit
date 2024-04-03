@@ -34,6 +34,7 @@ Install this preset and its dependencies via npm:
 
 ```bash
 npm install @jscutlery/swc-angular-preset @jscutlery/swc-plugin-angular @swc/core @swc/jest -D
+grep .swc .gitignore || echo .swc >> .gitignore
 ```
 
 ### 2. Configure
