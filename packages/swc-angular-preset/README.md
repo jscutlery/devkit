@@ -1,13 +1,13 @@
 # ⚡️ Speed Up Jest Angular Testing with SWC 🦀
 
-## What is this?
+## 👀 What is this?
 
 This is Angular preset for [SWC's (Speedy Web Compiler)](https://swc.rs/) Jest
 transformer [`@swc/jest`](https://swc.rs/docs/usage/jest).
 
-**Switching to SWC can speed up your Jest tests by 2x to 5x (compared to ts-jest).**
+**Switching to SWC can speed up your Jest tests by 2x to 5x (compared to jest-preset-angular/ts-jest).**
 
-## Context
+## 🤔 Context
 
 Surprisingly, in most cases, the bottleneck in Jest tests is not the test execution time nor the Angular JIT
 (Just-In-Time) compiler but the TypeScript transformer _(i.e. `ts-jest`)_.
@@ -17,6 +17,14 @@ fast.
 
 This preset enables you to use SWC with Angular projects by setting the right configuration for SWC and using
 our Angular plugin for SWC [`@jscutlery/swc-plugin-angular`](../swc-plugin-angular)
+
+## 🥇 Benchmark
+
+| ts-jest | @swc/jest           |
+|---------|---------------------|
+| 85s     | 35s _(2.4x faster)_ |
+
+💻 try it yourself: https://github.com/yjaaidi/experiments/tree/angular-jest-swc-benchmark
 
 ## 🛠 Setup
 
