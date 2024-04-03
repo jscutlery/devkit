@@ -1,9 +1,8 @@
 use std::collections::HashMap;
 
-use swc_core::ecma::ast::Ident;
+use swc_core::ecma::ast::{Ident, ModuleItem};
 use swc_core::ecma::visit::{VisitMut, VisitMutWith};
 use swc_ecma_utils::swc_ecma_ast::Stmt;
-use swc_ecma_utils::IsDirective;
 
 use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
 use crate::component_property_visitor::input_prop_parser::InputPropParser;
@@ -68,7 +67,20 @@ impl VisitMut for ComponentPropertyVisitor {
         for mut item in items.drain(..) {
             item.visit_mut_with(self);
 
-            let decorators = self.drain_component_decorators(item.as_ref());
+            let class = match &item {
+                /* Match `class MyCmp`. */
+                ModuleItem::Stmt(stmt) => stmt
+                    .as_decl()
+                    .and_then(|decl| decl.as_class())
+                    .map(|class| &class.ident),
+                /* Match `export class MyCmp`. */
+                ModuleItem::ModuleDecl(decl) => decl
+                    .as_export_decl()
+                    .and_then(|class| class.decl.as_class())
+                    .map(|class| &class.ident),
+            };
+
+            let decorators = class.and_then(|class| self.drain_component_decorators(class));
 
             new_items.push(item);
 
@@ -90,7 +102,10 @@ impl VisitMut for ComponentPropertyVisitor {
         for mut stmt in stmts.drain(..) {
             stmt.visit_mut_with(self);
 
-            let decorators = self.drain_component_decorators(Some(&stmt));
+            let decorators = stmt
+                .as_decl()
+                .and_then(|decl| decl.as_class())
+                .and_then(|class| self.drain_component_decorators(&class.ident));
 
             new_stmts.push(stmt);
             if let Some(decorators) = decorators {
@@ -102,13 +117,8 @@ impl VisitMut for ComponentPropertyVisitor {
 }
 
 impl ComponentPropertyVisitor {
-    fn drain_component_decorators(&mut self, statement: Option<&Stmt>) -> Option<Vec<Stmt>> {
-        let component = match self.try_get_class_ident(statement) {
-            Some(class_ident) => class_ident,
-            None => return None,
-        };
-
-        let mut props = match self.component_props.remove(component) {
+    fn drain_component_decorators(&mut self, class: &Ident) -> Option<Vec<Stmt>> {
+        let mut props = match self.component_props.remove(class) {
             Some(props) => props,
             None => return None,
         };
@@ -121,15 +131,5 @@ impl ComponentPropertyVisitor {
         }
 
         Some(stmts)
-    }
-
-    fn try_get_class_ident<'statement>(
-        &self,
-        stmt: Option<&'statement Stmt>,
-    ) -> Option<&'statement Ident> {
-        return stmt
-            .and_then(|stmt| stmt.as_decl())
-            .and_then(|decl| decl.as_class())
-            .map(|class| &class.ident);
     }
 }

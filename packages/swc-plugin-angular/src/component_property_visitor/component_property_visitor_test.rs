@@ -534,3 +534,24 @@ fn test_content_children_with_options() {
         "# },
     );
 }
+
+#[test]
+fn test_exported_class() {
+    test_visitor(
+        ComponentPropertyVisitor::default(),
+        indoc! {
+        r#"export class MyCmp {
+            myInput = input();
+        }"# },
+        indoc! {
+        r#"export class MyCmp {
+            myInput = input();
+        }
+        _ts_decorate([
+            require("@angular/core").Input({
+                isSignal: true
+            })
+        ], MyCmp.prototype, "myInput");
+        "# },
+    );
+}
