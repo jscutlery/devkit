@@ -11,6 +11,8 @@ mod component_decorator_visitor;
 mod component_property_visitor;
 
 #[cfg(test)]
+mod component_decorator_visitor_test;
+#[cfg(test)]
 mod testing;
 
 #[plugin_transform]

@@ -8,3 +8,6 @@ mod model_prop_parser;
 mod output_prop_parser;
 mod query_prop_parser;
 mod utils;
+
+#[cfg(test)]
+mod component_property_visitor_test;
