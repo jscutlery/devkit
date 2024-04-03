@@ -1,10 +1,8 @@
-use swc_core::ecma::ast::{
-    ClassProp, Expr, Ident, KeyValueProp, Lit, ObjectLit, Prop, PropName, PropOrSpread,
-};
+use swc_core::ecma::ast::{ClassProp, Expr, Ident, ObjectLit};
 
 use crate::component_property_visitor::angular_prop_decorator::AngularPropDecorator;
 use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
-use crate::component_property_visitor::ast_parsing::parse_angular_prop;
+use crate::component_property_visitor::utils::{parse_angular_prop, set_option};
 
 #[derive(Default)]
 pub struct InputPropParser {}
@@ -42,32 +40,21 @@ pub struct InputProp {
 
 impl AngularProp for InputProp {
     fn to_decorators(&self) -> Vec<AngularPropDecorator> {
-        let mut decorator_options = self.options.clone().unwrap_or_else(|| ObjectLit {
+        let mut options = self.options.clone().unwrap_or_else(|| ObjectLit {
             span: Default::default(),
             props: vec![],
         });
 
-        decorator_options.props.push(PropOrSpread::Prop(
-            Prop::KeyValue(KeyValueProp {
-                key: PropName::Ident(Ident::new("isSignal".into(), Default::default())),
-                value: Expr::Lit(Lit::Bool(true.into())).into(),
-            })
-            .into(),
-        ));
+        set_option(&mut options, "isSignal", true);
 
         if self.required {
-            decorator_options
-                .props
-                .push(PropOrSpread::Prop(Box::new(Prop::KeyValue(KeyValueProp {
-                    key: PropName::Ident(Ident::new("required".into(), Default::default())),
-                    value: Expr::Lit(Lit::Bool(true.into())).into(),
-                }))));
+            set_option(&mut options, "required", true);
         }
 
         vec![AngularPropDecorator {
             class_ident: self.class.clone(),
             decorator_name: "Input".into(),
-            decorator_args: vec![Expr::Object(decorator_options).into()],
+            decorator_args: vec![Expr::Object(options).into()],
             property_name: self.name.clone(),
         }]
     }

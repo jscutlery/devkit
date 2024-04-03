@@ -1,11 +1,8 @@
-use swc_core::ecma::ast::{
-    ClassProp, Expr, ExprOrSpread, Ident, KeyValueProp, Lit, ObjectLit, Prop, PropName,
-    PropOrSpread,
-};
+use swc_core::ecma::ast::{ClassProp, Expr, ExprOrSpread, Ident, ObjectLit};
 
 use crate::component_property_visitor::angular_prop_decorator::AngularPropDecorator;
 use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
-use crate::component_property_visitor::ast_parsing::parse_angular_prop;
+use crate::component_property_visitor::utils::{parse_angular_prop, set_option};
 
 #[derive(Default)]
 pub struct ViewChildPropParser {}
@@ -58,21 +55,10 @@ impl AngularProp for ViewChildProp {
             props: vec![],
         });
 
-        options.props.push(PropOrSpread::Prop(
-            Prop::KeyValue(KeyValueProp {
-                key: PropName::Ident(Ident::new("isSignal".into(), Default::default())),
-                value: Expr::Lit(Lit::Bool(true.into())).into(),
-            })
-            .into(),
-        ));
+        set_option(&mut options, "isSignal", true);
 
         if self.required {
-            options
-                .props
-                .push(PropOrSpread::Prop(Box::new(Prop::KeyValue(KeyValueProp {
-                    key: PropName::Ident(Ident::new("required".into(), Default::default())),
-                    value: Expr::Lit(Lit::Bool(true.into())).into(),
-                }))))
+            set_option(&mut options, "required", true);
         }
 
         vec![AngularPropDecorator {

@@ -1,6 +1,9 @@
 use std::ops::Deref;
 
-use swc_core::ecma::ast::{ClassProp, Expr, ExprOrSpread, ObjectLit};
+use swc_core::ecma::ast::{
+    ClassProp, Expr, ExprOrSpread, Ident, KeyValueProp, Lit, ObjectLit, Prop, PropName,
+    PropOrSpread,
+};
 use swc_ecma_utils::ExprExt;
 
 /**
@@ -78,4 +81,14 @@ pub fn get_prop_value(options: &ObjectLit, key: &str) -> Option<Expr> {
     }
 
     None
+}
+
+pub fn set_option(options: &mut ObjectLit, key: &str, value: bool) {
+    options.props.push(PropOrSpread::Prop(
+        Prop::KeyValue(KeyValueProp {
+            key: PropName::Ident(Ident::new(key.into(), Default::default())),
+            value: Expr::Lit(Lit::Bool(value.into())).into(),
+        })
+        .into(),
+    ));
 }

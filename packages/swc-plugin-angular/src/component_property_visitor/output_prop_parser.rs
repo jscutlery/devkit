@@ -2,7 +2,7 @@ use swc_core::ecma::ast::{ClassProp, Ident, ObjectLit};
 
 use crate::component_property_visitor::angular_prop_decorator::AngularPropDecorator;
 use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
-use crate::component_property_visitor::ast_parsing::{get_prop_value, parse_angular_prop};
+use crate::component_property_visitor::utils::{get_prop_value, parse_angular_prop};
 
 #[derive(Default)]
 pub struct OutputPropParser {}
