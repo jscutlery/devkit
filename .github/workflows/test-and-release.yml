@@ -25,15 +25,12 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node_version: [ 20 ]
     steps:
       - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
         with:
-          node_version: ${{ matrix.node_version }}
+          node_version: 20
       - name: Test
         run: yarn nx affected --target=test
 
