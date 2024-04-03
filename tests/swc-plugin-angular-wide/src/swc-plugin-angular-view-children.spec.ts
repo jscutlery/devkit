@@ -16,8 +16,8 @@ describe.skip('swc-plugin-angular: view children', () => {
       `
     })
     class Container {
-      titleEls = viewChildren('item', { read: ElementRef<HTMLElement> });
-      paragraph = () => this.titleEls().map(el => el.nativeElement.textContent).join(',');
+      itemEls = viewChildren('item', { read: ElementRef<HTMLElement> });
+      paragraph = () => this.itemEls().map(el => el.nativeElement.textContent).join(',');
     }
 
     const { paragraph } = render(Container);
