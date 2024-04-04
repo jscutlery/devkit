@@ -6,15 +6,24 @@
   "tags": [],
   "projectType": "library",
   "targets": {
+    "debug": {
+      "command": "nx watch --all -- 'rm -Rf node_modules/.vite node_modules/.vitest && yarn jest --clearCache && nx test swc-plugin-angular-wide --skip-nx-cache'"
+    },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "nx:run-commands",
       "options": {
-        "jestConfig": "tests/swc-plugin-angular-wide/jest.config.ts"
+        "parallel": false,
+        "cwd": "{projectRoot}",
+        "commands": [
+          "jest",
+          "echo TODO: \uD83D\uDEA7 vitest --watch false"
+        ]
       },
       "dependsOn": [
         {
-          "projects": ["swc-plugin-angular"],
+          "projects": [
+            "swc-plugin-angular"
+          ],
           "target": "build"
         }
       ]
