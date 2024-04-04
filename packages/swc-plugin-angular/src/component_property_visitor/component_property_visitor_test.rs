@@ -453,6 +453,52 @@ fn test_view_child_required_with_options() {
             "# },
     );
 }
+
+#[test]
+fn test_view_child_component_ref() {
+    test_visitor(
+        ComponentPropertyVisitor::default(),
+        indoc! {
+        r#"class MyCmp {
+                myComp = viewChild(MyComponent);
+            }"# },
+        indoc! {
+        r#"class MyCmp {
+                myComp = viewChild(MyComponent);
+            }
+            _ts_decorate([
+                require("@angular/core").ViewChild(MyComponent, {
+                    isSignal: true
+                })
+            ], MyCmp.prototype, "myComp");
+            "# },
+    );
+}
+
+#[test]
+fn test_view_child_component_ref_with_read() {
+    test_visitor(
+        ComponentPropertyVisitor::default(),
+        indoc! {
+        r#"class MyCmp {
+                myComp = viewChild(MyComponent, { read: MyComponent });
+            }"# },
+        indoc! {
+        r#"class MyCmp {
+                myComp = viewChild(MyComponent, {
+                    read: MyComponent
+                });
+            }
+            _ts_decorate([
+                require("@angular/core").ViewChild(MyComponent, {
+                    read: MyComponent,
+                    isSignal: true
+                })
+            ], MyCmp.prototype, "myComp");
+            "# },
+    );
+}
+
 #[test]
 fn test_view_children_with_options() {
     test_visitor(
