@@ -1,3 +1,15 @@
+## 0.2.0 (2024-04-04)
+
+
+### 🚀 Features
+
+- **swc-angular-preset:** ✨ add vite support ([#307](https://github.com/jscutlery/devkit/pull/307))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.1.2 (2024-04-02)
 
 ### 🩹 Fixes
