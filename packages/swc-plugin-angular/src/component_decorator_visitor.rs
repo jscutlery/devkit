@@ -96,7 +96,7 @@ impl VisitMut for ComponentDecoratorVisitor {
             let template_path = if template_path.starts_with("./") {
                 template_path.to_string()
             } else {
-                format!("./{}", template_path)
+                format!("./{template_path}")
             };
 
             let template_var_name = self.generate_var_name("template");
