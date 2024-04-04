@@ -1,3 +1,5 @@
+/* eslint-disable @angular-eslint/component-class-suffix */
+
 import { Component, OnInit, signal } from '@angular/core';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { createComponent } from './testing';
