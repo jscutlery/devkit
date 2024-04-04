@@ -169,7 +169,6 @@ fn test_append_relative_path_to_template_url() {
     );
 }
 
-#[ignore]
 #[test]
 fn test_add_raw_query_to_template_import() {
     test_visitor(
