@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 
-use swc_core::ecma::ast::{Ident, ImportDecl, ModuleDecl, ModuleItem, Str};
+use swc_core::ecma::ast::{Ident, ModuleItem};
 use swc_core::ecma::visit::{VisitMut, VisitMutWith};
-use swc_ecma_utils::swc_ecma_ast::{ImportStarAsSpecifier, Stmt};
+use swc_ecma_utils::swc_ecma_ast::Stmt;
 
 use crate::component_property_visitor::angular_prop_decorator::ANGULAR_CORE_SYMBOL;
 use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
@@ -10,6 +10,7 @@ use crate::component_property_visitor::input_prop_parser::InputPropParser;
 use crate::component_property_visitor::model_prop_parser::ModelPropParser;
 use crate::component_property_visitor::output_prop_parser::OutputPropParser;
 use crate::component_property_visitor::query_prop_parser::QueryPropParser;
+use crate::import_declaration::{ImportDeclaration, ImportDeclarationSpecifier};
 
 pub struct ComponentPropertyVisitor {
     prop_parsers: Vec<Box<dyn AngularPropParser>>,
@@ -101,27 +102,11 @@ impl VisitMut for ComponentPropertyVisitor {
         if self.should_import_angular_core {
             new_items.insert(
                 0,
-                ModuleItem::ModuleDecl(ModuleDecl::Import(ImportDecl {
-                    span: Default::default(),
-                    specifiers: vec![ImportStarAsSpecifier {
-                        span: Default::default(),
-                        local: Ident {
-                            span: Default::default(),
-                            sym: ANGULAR_CORE_SYMBOL.into(),
-                            optional: false,
-                        },
-                    }
-                    .into()],
-                    src: Str {
-                        value: "@angular/core".into(),
-                        span: Default::default(),
-                        raw: Default::default(),
-                    }
-                    .into(),
-                    type_only: Default::default(),
-                    with: Default::default(),
-                    phase: Default::default(),
-                })),
+                ImportDeclaration {
+                    specifier: ImportDeclarationSpecifier::StarAs(ANGULAR_CORE_SYMBOL.into()),
+                    source: "@angular/core".into(),
+                }
+                .into(),
             );
         }
 

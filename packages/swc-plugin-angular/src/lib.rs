@@ -12,6 +12,7 @@ mod component_property_visitor;
 
 #[cfg(test)]
 mod component_decorator_visitor_test;
+mod import_declaration;
 #[cfg(test)]
 mod testing;
 

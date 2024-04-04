@@ -3,7 +3,7 @@ use swc_core::ecma::ast::{
 };
 use swc_ecma_utils::swc_ecma_ast::{ArrayLit, Lit, Stmt};
 
-pub(crate) const ANGULAR_CORE_SYMBOL: &str = "_jsc_angular_core";
+pub const ANGULAR_CORE_SYMBOL: &str = "_jsc_angular_core";
 
 pub struct AngularPropDecorator {
     pub class_ident: Ident,

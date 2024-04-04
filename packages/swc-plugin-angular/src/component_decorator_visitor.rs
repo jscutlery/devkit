@@ -1,22 +1,16 @@
 use std::ops::Deref;
 
-use swc_core::ecma::ast::{
-    ArrayLit, Expr, Ident, ImportDefaultSpecifier, Lit, ModuleDecl, ModuleItem, PropName, Str,
-};
+use swc_core::ecma::ast::{ArrayLit, Expr, Ident, Lit, ModuleItem, PropName};
 use swc_core::ecma::visit::{VisitMut, VisitMutWith};
-use swc_ecma_utils::swc_ecma_ast::ImportDecl;
+
+use crate::import_declaration::{ImportDeclaration, ImportDeclarationSpecifier};
 
 #[derive(Default)]
 pub struct ComponentDecoratorVisitor {
     is_in_component_call: bool,
     is_in_decorator: bool,
-    imports: Vec<ImportInfo>,
+    imports: Vec<ImportDeclaration>,
     unique_id: i32,
-}
-
-struct ImportInfo {
-    specifier: String,
-    source: String,
 }
 
 impl VisitMut for ComponentDecoratorVisitor {
@@ -107,8 +101,8 @@ impl VisitMut for ComponentDecoratorVisitor {
 
             let template_var_name = self.generate_var_name("template");
 
-            self.imports.push(ImportInfo {
-                specifier: template_var_name.clone(),
+            self.imports.push(ImportDeclaration {
+                specifier: ImportDeclarationSpecifier::Default(template_var_name.clone()),
                 source: template_path.clone(),
             });
 
@@ -142,31 +136,5 @@ impl ComponentDecoratorVisitor {
         let unique_id = self.unique_id;
         self.unique_id += 1;
         format!("_jsc_{name}_{unique_id}")
-    }
-}
-
-impl From<ImportInfo> for ModuleItem {
-    fn from(import: ImportInfo) -> Self {
-        ModuleItem::ModuleDecl(ModuleDecl::Import(ImportDecl {
-            span: Default::default(),
-            specifiers: vec![ImportDefaultSpecifier {
-                span: Default::default(),
-                local: Ident {
-                    span: Default::default(),
-                    sym: import.specifier.into(),
-                    optional: false,
-                },
-            }
-            .into()],
-            src: Str {
-                value: import.source.into(),
-                span: Default::default(),
-                raw: Default::default(),
-            }
-            .into(),
-            type_only: Default::default(),
-            with: Default::default(),
-            phase: Default::default(),
-        }))
     }
 }

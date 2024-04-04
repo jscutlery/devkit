@@ -71,7 +71,7 @@ enum QueryType {
     ViewChildren,
 }
 
-pub(crate) struct QueryChildProp {
+pub struct QueryChildProp {
     query_type: QueryType,
     class: Ident,
     name: String,
