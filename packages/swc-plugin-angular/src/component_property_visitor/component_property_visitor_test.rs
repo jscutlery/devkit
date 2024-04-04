@@ -12,16 +12,17 @@ fn test_input() {
               anotherProperty = 'hello';
             }"# },
         indoc! {
-        r#"class MyCmp {
-                myInput = input();
-                anotherProperty = 'hello';
-            }
-            _ts_decorate([
-                require("@angular/core").Input({
-                    isSignal: true
-                })
-            ], MyCmp.prototype, "myInput");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            myInput = input();
+            anotherProperty = 'hello';
+        }
+        _ts_decorate([
+            _jsc_angular_core.Input({
+                isSignal: true
+            })
+        ], MyCmp.prototype, "myInput");
+        "# },
     );
 }
 
@@ -34,16 +35,17 @@ fn test_input_required() {
                 myInput = input.required();
             }"# },
         indoc! {
-        r#"class MyCmp {
-                myInput = input.required();
-            }
-            _ts_decorate([
-                require("@angular/core").Input({
-                    isSignal: true,
-                    required: true
-                })
-            ], MyCmp.prototype, "myInput");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            myInput = input.required();
+        }
+        _ts_decorate([
+            _jsc_angular_core.Input({
+                isSignal: true,
+                required: true
+            })
+        ], MyCmp.prototype, "myInput");
+        "# },
     );
 }
 
@@ -61,26 +63,27 @@ fn test_input_alias() {
                 });
             }"# },
         indoc! {
-        r#"class MyCmp {
-                aliasedInput = input(undefined, {
-                    alias: 'myInputAlias'
-                });
-                nonAliasedInput = input({
-                    alias: 'this_is_a_default_value_not_an_alias'
-                });
-            }
-            _ts_decorate([
-                require("@angular/core").Input({
-                    alias: 'myInputAlias',
-                    isSignal: true
-                })
-            ], MyCmp.prototype, "aliasedInput");
-            _ts_decorate([
-                require("@angular/core").Input({
-                    isSignal: true
-                })
-            ], MyCmp.prototype, "nonAliasedInput");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            aliasedInput = input(undefined, {
+                alias: 'myInputAlias'
+            });
+            nonAliasedInput = input({
+                alias: 'this_is_a_default_value_not_an_alias'
+            });
+        }
+        _ts_decorate([
+            _jsc_angular_core.Input({
+                alias: 'myInputAlias',
+                isSignal: true
+            })
+        ], MyCmp.prototype, "aliasedInput");
+        _ts_decorate([
+            _jsc_angular_core.Input({
+                isSignal: true
+            })
+        ], MyCmp.prototype, "nonAliasedInput");
+        "# },
     );
 }
 
@@ -95,19 +98,20 @@ fn test_input_required_alias() {
                 });
             }"# },
         indoc! {
-        r#"class MyCmp {
-                myInput = input.required({
-                    alias: 'myInputAlias'
-                });
-            }
-            _ts_decorate([
-                require("@angular/core").Input({
-                    alias: 'myInputAlias',
-                    isSignal: true,
-                    required: true
-                })
-            ], MyCmp.prototype, "myInput");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            myInput = input.required({
+                alias: 'myInputAlias'
+            });
+        }
+        _ts_decorate([
+            _jsc_angular_core.Input({
+                alias: 'myInputAlias',
+                isSignal: true,
+                required: true
+            })
+        ], MyCmp.prototype, "myInput");
+        "# },
     );
 }
 
@@ -117,36 +121,37 @@ fn test_input_inline() {
         ComponentPropertyVisitor::default(),
         indoc! {
         r#"function f() {
-                class MyCmp {
-                    aliasedInput = input(undefined, {
-                        alias: 'myInputAlias'
-                    });
-                    someMethod() {
-                        console.log('another statement');
-                        class AnotherInlineClass {}
-                    }
+            class MyCmp {
+                aliasedInput = input(undefined, {
+                    alias: 'myInputAlias'
+                });
+                someMethod() {
+                    console.log('another statement');
+                    class AnotherInlineClass {}
                 }
-            }"# },
-        indoc! {
-        r#"function f() {
-                class MyCmp {
-                    aliasedInput = input(undefined, {
-                        alias: 'myInputAlias'
-                    });
-                    someMethod() {
-                        console.log('another statement');
-                        class AnotherInlineClass {
-                        }
-                    }
-                }
-                _ts_decorate([
-                    require("@angular/core").Input({
-                        alias: 'myInputAlias',
-                        isSignal: true
-                    })
-                ], MyCmp.prototype, "aliasedInput");
             }
-            "# },
+        }"# },
+        indoc! {
+        r#"import * as _jsc_angular_core from "@angular/core";
+        function f() {
+            class MyCmp {
+                aliasedInput = input(undefined, {
+                    alias: 'myInputAlias'
+                });
+                someMethod() {
+                    console.log('another statement');
+                    class AnotherInlineClass {
+                    }
+                }
+            }
+            _ts_decorate([
+                _jsc_angular_core.Input({
+                    alias: 'myInputAlias',
+                    isSignal: true
+                })
+            ], MyCmp.prototype, "aliasedInput");
+        }
+        "# },
     );
 }
 
@@ -160,14 +165,15 @@ fn test_output() {
                 anotherProperty = 'hello';
             }"# },
         indoc! {
-        r#"class MyCmp {
-                myOutput = output();
-                anotherProperty = 'hello';
-            }
-            _ts_decorate([
-                require("@angular/core").Output()
-            ], MyCmp.prototype, "myOutput");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            myOutput = output();
+            anotherProperty = 'hello';
+        }
+        _ts_decorate([
+            _jsc_angular_core.Output()
+        ], MyCmp.prototype, "myOutput");
+        "# },
     );
 }
 
@@ -182,15 +188,16 @@ fn test_output_alias() {
                 });
             }"# },
         indoc! {
-        r#"class MyCmp {
-                myOutput = output({
-                    alias: 'myOutputAlias'
-                });
-            }
-            _ts_decorate([
-                require("@angular/core").Output('myOutputAlias')
-            ], MyCmp.prototype, "myOutput");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            myOutput = output({
+                alias: 'myOutputAlias'
+            });
+        }
+        _ts_decorate([
+            _jsc_angular_core.Output('myOutputAlias')
+        ], MyCmp.prototype, "myOutput");
+        "# },
     );
 }
 
@@ -203,13 +210,14 @@ fn test_output_from_observable() {
                 myOutput = outputFromObservable(source$);
             }"# },
         indoc! {
-        r#"class MyCmp {
-                myOutput = outputFromObservable(source$);
-            }
-            _ts_decorate([
-                require("@angular/core").Output()
-            ], MyCmp.prototype, "myOutput");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            myOutput = outputFromObservable(source$);
+        }
+        _ts_decorate([
+            _jsc_angular_core.Output()
+        ], MyCmp.prototype, "myOutput");
+        "# },
     );
 }
 
@@ -224,15 +232,16 @@ fn test_output_from_observable_with_alias() {
                 });
             }"# },
         indoc! {
-        r#"class MyCmp {
-                myOutput = outputFromObservable(source$, {
-                    alias: 'myOutputAlias'
-                });
-            }
-            _ts_decorate([
-                require("@angular/core").Output('myOutputAlias')
-            ], MyCmp.prototype, "myOutput");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            myOutput = outputFromObservable(source$, {
+                alias: 'myOutputAlias'
+            });
+        }
+        _ts_decorate([
+            _jsc_angular_core.Output('myOutputAlias')
+        ], MyCmp.prototype, "myOutput");
+        "# },
     );
 }
 
@@ -242,23 +251,24 @@ fn test_model() {
         ComponentPropertyVisitor::default(),
         indoc! {
         r#"class MyCmp {
-                myModel = model();
-                anotherProperty = 'hello';
-            }"# },
+            myModel = model();
+            anotherProperty = 'hello';
+        }"# },
         indoc! {
-        r#"class MyCmp {
-                myModel = model();
-                anotherProperty = 'hello';
-            }
-            _ts_decorate([
-                require("@angular/core").Input({
-                    isSignal: true
-                })
-            ], MyCmp.prototype, "myModel");
-            _ts_decorate([
-                require("@angular/core").Output("myModelChange")
-            ], MyCmp.prototype, "myModel");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            myModel = model();
+            anotherProperty = 'hello';
+        }
+        _ts_decorate([
+            _jsc_angular_core.Input({
+                isSignal: true
+            })
+        ], MyCmp.prototype, "myModel");
+        _ts_decorate([
+            _jsc_angular_core.Output("myModelChange")
+        ], MyCmp.prototype, "myModel");
+        "# },
     );
 }
 
@@ -276,32 +286,33 @@ fn test_model_alias() {
                 });
             }"# },
         indoc! {
-        r#"class MyCmp {
-                myModel = model(null, {
-                    alias: 'myModelAlias'
-                });
-                nonAliasedModel = model({
-                    alias: 'this_is_a_default_value_not_an_alias'
-                });
-            }
-            _ts_decorate([
-                require("@angular/core").Input({
-                    alias: 'myModelAlias',
-                    isSignal: true
-                })
-            ], MyCmp.prototype, "myModel");
-            _ts_decorate([
-                require("@angular/core").Output("myModelAliasChange")
-            ], MyCmp.prototype, "myModel");
-            _ts_decorate([
-                require("@angular/core").Input({
-                    isSignal: true
-                })
-            ], MyCmp.prototype, "nonAliasedModel");
-            _ts_decorate([
-                require("@angular/core").Output("nonAliasedModelChange")
-            ], MyCmp.prototype, "nonAliasedModel");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            myModel = model(null, {
+                alias: 'myModelAlias'
+            });
+            nonAliasedModel = model({
+                alias: 'this_is_a_default_value_not_an_alias'
+            });
+        }
+        _ts_decorate([
+            _jsc_angular_core.Input({
+                alias: 'myModelAlias',
+                isSignal: true
+            })
+        ], MyCmp.prototype, "myModel");
+        _ts_decorate([
+            _jsc_angular_core.Output("myModelAliasChange")
+        ], MyCmp.prototype, "myModel");
+        _ts_decorate([
+            _jsc_angular_core.Input({
+                isSignal: true
+            })
+        ], MyCmp.prototype, "nonAliasedModel");
+        _ts_decorate([
+            _jsc_angular_core.Output("nonAliasedModelChange")
+        ], MyCmp.prototype, "nonAliasedModel");
+        "# },
     );
 }
 
@@ -314,19 +325,20 @@ fn test_model_required() {
                 myModel = model.required();
             }"# },
         indoc! {
-        r#"class MyCmp {
-                myModel = model.required();
-            }
-            _ts_decorate([
-                require("@angular/core").Input({
-                    isSignal: true,
-                    required: true
-                })
-            ], MyCmp.prototype, "myModel");
-            _ts_decorate([
-                require("@angular/core").Output("myModelChange")
-            ], MyCmp.prototype, "myModel");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            myModel = model.required();
+        }
+        _ts_decorate([
+            _jsc_angular_core.Input({
+                isSignal: true,
+                required: true
+            })
+        ], MyCmp.prototype, "myModel");
+        _ts_decorate([
+            _jsc_angular_core.Output("myModelChange")
+        ], MyCmp.prototype, "myModel");
+        "# },
     );
 }
 
@@ -336,27 +348,28 @@ fn test_model_required_alias() {
         ComponentPropertyVisitor::default(),
         indoc! {
         r#"class MyCmp {
-                myModel = model.required({
-                    alias: 'myModelAlias'
-                });
-            }"# },
+            myModel = model.required({
+                alias: 'myModelAlias'
+            });
+        }"# },
         indoc! {
-        r#"class MyCmp {
-                myModel = model.required({
-                    alias: 'myModelAlias'
-                });
-            }
-            _ts_decorate([
-                require("@angular/core").Input({
-                    alias: 'myModelAlias',
-                    isSignal: true,
-                    required: true
-                })
-            ], MyCmp.prototype, "myModel");
-            _ts_decorate([
-                require("@angular/core").Output("myModelAliasChange")
-            ], MyCmp.prototype, "myModel");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            myModel = model.required({
+                alias: 'myModelAlias'
+            });
+        }
+        _ts_decorate([
+            _jsc_angular_core.Input({
+                alias: 'myModelAlias',
+                isSignal: true,
+                required: true
+            })
+        ], MyCmp.prototype, "myModel");
+        _ts_decorate([
+            _jsc_angular_core.Output("myModelAliasChange")
+        ], MyCmp.prototype, "myModel");
+        "# },
     );
 }
 
@@ -366,18 +379,19 @@ fn test_view_child() {
         ComponentPropertyVisitor::default(),
         indoc! {
         r#"class MyCmp {
-                titleEl = viewChild('title');
-            }"# },
+            titleEl = viewChild('title');
+        }"# },
         indoc! {
-        r#"class MyCmp {
-                titleEl = viewChild('title');
-            }
-            _ts_decorate([
-                require("@angular/core").ViewChild('title', {
-                    isSignal: true
-                })
-            ], MyCmp.prototype, "titleEl");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            titleEl = viewChild('title');
+        }
+        _ts_decorate([
+            _jsc_angular_core.ViewChild('title', {
+                isSignal: true
+            })
+        ], MyCmp.prototype, "titleEl");
+        "# },
     );
 }
 
@@ -387,21 +401,22 @@ fn test_view_child_with_options() {
         ComponentPropertyVisitor::default(),
         indoc! {
         r#"class MyCmp {
-                titleEl = viewChild('title', {read: ElementRef});
-            }"# },
+            titleEl = viewChild('title', {read: ElementRef});
+        }"# },
         indoc! {
-        r#"class MyCmp {
-                titleEl = viewChild('title', {
-                    read: ElementRef
-                });
-            }
-            _ts_decorate([
-                require("@angular/core").ViewChild('title', {
-                    read: ElementRef,
-                    isSignal: true
-                })
-            ], MyCmp.prototype, "titleEl");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            titleEl = viewChild('title', {
+                read: ElementRef
+            });
+        }
+        _ts_decorate([
+            _jsc_angular_core.ViewChild('title', {
+                read: ElementRef,
+                isSignal: true
+            })
+        ], MyCmp.prototype, "titleEl");
+        "# },
     );
 }
 
@@ -411,19 +426,20 @@ fn test_view_child_required() {
         ComponentPropertyVisitor::default(),
         indoc! {
         r#"class MyCmp {
-                titleEl = viewChild.required('title');
-            }"# },
+            titleEl = viewChild.required('title');
+        }"# },
         indoc! {
-        r#"class MyCmp {
-                titleEl = viewChild.required('title');
-            }
-            _ts_decorate([
-                require("@angular/core").ViewChild('title', {
-                    isSignal: true,
-                    required: true
-                })
-            ], MyCmp.prototype, "titleEl");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            titleEl = viewChild.required('title');
+        }
+        _ts_decorate([
+            _jsc_angular_core.ViewChild('title', {
+                isSignal: true,
+                required: true
+            })
+        ], MyCmp.prototype, "titleEl");
+        "# },
     );
 }
 
@@ -433,24 +449,25 @@ fn test_view_child_required_with_options() {
         ComponentPropertyVisitor::default(),
         indoc! {
         r#"class MyCmp {
-                titleEl = viewChild.required('title', {
-                    read: ElementRef
-                });
-            }"# },
+            titleEl = viewChild.required('title', {
+                read: ElementRef
+            });
+        }"# },
         indoc! {
-        r#"class MyCmp {
-                titleEl = viewChild.required('title', {
-                    read: ElementRef
-                });
-            }
-            _ts_decorate([
-                require("@angular/core").ViewChild('title', {
-                    read: ElementRef,
-                    isSignal: true,
-                    required: true
-                })
-            ], MyCmp.prototype, "titleEl");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            titleEl = viewChild.required('title', {
+                read: ElementRef
+            });
+        }
+        _ts_decorate([
+            _jsc_angular_core.ViewChild('title', {
+                read: ElementRef,
+                isSignal: true,
+                required: true
+            })
+        ], MyCmp.prototype, "titleEl");
+        "# },
     );
 }
 
@@ -460,18 +477,19 @@ fn test_view_child_component_ref() {
         ComponentPropertyVisitor::default(),
         indoc! {
         r#"class MyCmp {
-                myComp = viewChild(MyComponent);
-            }"# },
+            myComp = viewChild(MyComponent);
+        }"# },
         indoc! {
-        r#"class MyCmp {
-                myComp = viewChild(MyComponent);
-            }
-            _ts_decorate([
-                require("@angular/core").ViewChild(MyComponent, {
-                    isSignal: true
-                })
-            ], MyCmp.prototype, "myComp");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            myComp = viewChild(MyComponent);
+        }
+        _ts_decorate([
+            _jsc_angular_core.ViewChild(MyComponent, {
+                isSignal: true
+            })
+        ], MyCmp.prototype, "myComp");
+        "# },
     );
 }
 
@@ -481,21 +499,22 @@ fn test_view_child_component_ref_with_read() {
         ComponentPropertyVisitor::default(),
         indoc! {
         r#"class MyCmp {
-                myComp = viewChild(MyComponent, { read: MyComponent });
-            }"# },
+            myComp = viewChild(MyComponent, { read: MyComponent });
+        }"# },
         indoc! {
-        r#"class MyCmp {
-                myComp = viewChild(MyComponent, {
-                    read: MyComponent
-                });
-            }
-            _ts_decorate([
-                require("@angular/core").ViewChild(MyComponent, {
-                    read: MyComponent,
-                    isSignal: true
-                })
-            ], MyCmp.prototype, "myComp");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            myComp = viewChild(MyComponent, {
+                read: MyComponent
+            });
+        }
+        _ts_decorate([
+            _jsc_angular_core.ViewChild(MyComponent, {
+                read: MyComponent,
+                isSignal: true
+            })
+        ], MyCmp.prototype, "myComp");
+        "# },
     );
 }
 
@@ -505,23 +524,24 @@ fn test_view_children_with_options() {
         ComponentPropertyVisitor::default(),
         indoc! {
         r#"class MyCmp {
-                itemEls = viewChildren('item', {
-                    read: ElementRef
-                });
-            }"# },
+            itemEls = viewChildren('item', {
+                read: ElementRef
+            });
+        }"# },
         indoc! {
-        r#"class MyCmp {
-                itemEls = viewChildren('item', {
-                    read: ElementRef
-                });
-            }
-            _ts_decorate([
-                require("@angular/core").ViewChildren('item', {
-                    read: ElementRef,
-                    isSignal: true
-                })
-            ], MyCmp.prototype, "itemEls");
-            "# },
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            itemEls = viewChildren('item', {
+                read: ElementRef
+            });
+        }
+        _ts_decorate([
+            _jsc_angular_core.ViewChildren('item', {
+                read: ElementRef,
+                isSignal: true
+            })
+        ], MyCmp.prototype, "itemEls");
+        "# },
     );
 }
 
@@ -537,14 +557,15 @@ fn test_content_child_required_with_options() {
             });
         }"# },
         indoc! {
-        r#"class MyCmp {
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
             titleEl = contentChild.required('title', {
                 descendants: true,
                 read: ElementRef
             });
         }
         _ts_decorate([
-            require("@angular/core").ContentChild('title', {
+            _jsc_angular_core.ContentChild('title', {
                 descendants: true,
                 read: ElementRef,
                 isSignal: true,
@@ -566,13 +587,14 @@ fn test_content_children_with_options() {
             });
         }"# },
         indoc! {
-        r#"class MyCmp {
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
             itemEls = contentChildren('item', {
                 read: ElementRef
             });
         }
         _ts_decorate([
-            require("@angular/core").ContentChildren('item', {
+            _jsc_angular_core.ContentChildren('item', {
                 read: ElementRef,
                 isSignal: true
             })
@@ -590,14 +612,30 @@ fn test_exported_class() {
             myInput = input();
         }"# },
         indoc! {
-        r#"export class MyCmp {
+        r#"import * as _jsc_angular_core from "@angular/core";
+        export class MyCmp {
             myInput = input();
         }
         _ts_decorate([
-            require("@angular/core").Input({
+            _jsc_angular_core.Input({
                 isSignal: true
             })
         ], MyCmp.prototype, "myInput");
+        "# },
+    );
+}
+
+#[test]
+fn test_do_not_add_angular_core_if_not_necessary() {
+    test_visitor(
+        ComponentPropertyVisitor::default(),
+        indoc! {
+        r#"export class MyCmp {
+        }
+        "# },
+        indoc! {
+        r#"export class MyCmp {
+        }
         "# },
     );
 }

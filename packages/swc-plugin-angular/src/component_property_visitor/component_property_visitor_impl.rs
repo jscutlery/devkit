@@ -1,9 +1,10 @@
 use std::collections::HashMap;
 
-use swc_core::ecma::ast::{Ident, ModuleItem};
+use swc_core::ecma::ast::{Ident, ImportDecl, ModuleDecl, ModuleItem, Str};
 use swc_core::ecma::visit::{VisitMut, VisitMutWith};
-use swc_ecma_utils::swc_ecma_ast::Stmt;
+use swc_ecma_utils::swc_ecma_ast::{ImportStarAsSpecifier, Stmt};
 
+use crate::component_property_visitor::angular_prop_decorator::ANGULAR_CORE_SYMBOL;
 use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};
 use crate::component_property_visitor::input_prop_parser::InputPropParser;
 use crate::component_property_visitor::model_prop_parser::ModelPropParser;
@@ -14,6 +15,7 @@ pub struct ComponentPropertyVisitor {
     prop_parsers: Vec<Box<dyn AngularPropParser>>,
     component_props: HashMap<Ident, Vec<Box<dyn AngularProp>>>,
     current_component: Option<Ident>,
+    should_import_angular_core: bool,
 }
 
 impl Default for ComponentPropertyVisitor {
@@ -27,6 +29,7 @@ impl Default for ComponentPropertyVisitor {
                 Box::<ModelPropParser>::default(),
                 Box::<QueryPropParser>::default(),
             ],
+            should_import_angular_core: false,
         }
     }
 }
@@ -54,6 +57,7 @@ impl VisitMut for ComponentPropertyVisitor {
                     .entry(current_component.clone())
                     .or_default();
                 component_props.push(prop);
+                self.should_import_angular_core = true;
             }
         }
     }
@@ -62,8 +66,11 @@ impl VisitMut for ComponentPropertyVisitor {
      * Visit module items and flush input decorators after class declaration.
      * `class MyCmp {}` -> `class MyCmp {} _ts_decorate(...);`
      */
-    fn visit_mut_module_items(&mut self, items: &mut Vec<swc_core::ecma::ast::ModuleItem>) {
-        let mut new_items = Vec::with_capacity(items.len());
+    fn visit_mut_module_items(&mut self, items: &mut Vec<ModuleItem>) {
+        let mut new_items = Vec::with_capacity(
+            /* +1 In case there are decorators, and we have to add an @angular/core import statement. */
+            items.len() + 1,
+        );
         for mut item in items.drain(..) {
             item.visit_mut_with(self);
 
@@ -90,6 +97,34 @@ impl VisitMut for ComponentPropertyVisitor {
                 }
             }
         }
+
+        if self.should_import_angular_core {
+            new_items.insert(
+                0,
+                ModuleItem::ModuleDecl(ModuleDecl::Import(ImportDecl {
+                    span: Default::default(),
+                    specifiers: vec![ImportStarAsSpecifier {
+                        span: Default::default(),
+                        local: Ident {
+                            span: Default::default(),
+                            sym: ANGULAR_CORE_SYMBOL.into(),
+                            optional: false,
+                        },
+                    }
+                    .into()],
+                    src: Str {
+                        value: "@angular/core".into(),
+                        span: Default::default(),
+                        raw: Default::default(),
+                    }
+                    .into(),
+                    type_only: Default::default(),
+                    with: Default::default(),
+                    phase: Default::default(),
+                })),
+            );
+        }
+
         *items = new_items;
     }
 

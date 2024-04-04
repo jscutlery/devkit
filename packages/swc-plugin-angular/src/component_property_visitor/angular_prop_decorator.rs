@@ -3,6 +3,8 @@ use swc_core::ecma::ast::{
 };
 use swc_ecma_utils::swc_ecma_ast::{ArrayLit, Lit, Stmt};
 
+pub(crate) const ANGULAR_CORE_SYMBOL: &str = "_jsc_angular_core";
+
 pub struct AngularPropDecorator {
     pub class_ident: Ident,
     pub decorator_name: String,
@@ -15,27 +17,16 @@ impl From<AngularPropDecorator> for Stmt {
      * Create the AST for an Angular prop decorator call using `_ts_decorate`.
      */
     fn from(decorator_info: AngularPropDecorator) -> Self {
-        /* `require("@angular/core")` */
-        let angular_core = Expr::Call(CallExpr {
-            callee: create_callee("require"),
-            args: vec![ExprOrSpread {
-                spread: None,
-                expr: Expr::Lit(Lit::Str(Str {
-                    value: "@angular/core".into(),
-                    raw: Default::default(),
-                    span: Default::default(),
-                }))
-                .into(),
-            }],
-            span: Default::default(),
-            type_args: Default::default(),
-        });
-
         /* `require("@angular/core").{decorator_name}({decorator_args})` */
         let decorator_call = Expr::Call(CallExpr {
             callee: Callee::Expr(
                 Expr::Member(MemberExpr {
-                    obj: angular_core.into(),
+                    obj: Expr::Ident(Ident {
+                        sym: ANGULAR_CORE_SYMBOL.into(),
+                        span: Default::default(),
+                        optional: Default::default(),
+                    })
+                    .into(),
                     prop: MemberProp::Ident(create_ident(&decorator_info.decorator_name)),
                     span: Default::default(),
                 })
