@@ -11,6 +11,22 @@ pub struct ComponentDecoratorVisitor {
     is_in_decorator: bool,
     imports: Vec<ImportDeclaration>,
     unique_id: i32,
+    options: ComponentDecoratorVisitorOptions,
+}
+
+impl ComponentDecoratorVisitor {
+    pub fn new(options: ComponentDecoratorVisitorOptions) -> Self {
+        Self {
+            options,
+            ..Default::default()
+        }
+    }
+}
+
+#[derive(Default)]
+pub struct ComponentDecoratorVisitorOptions {
+    #[deprecated(note = "🚧 work in progress")]
+    pub template_raw_suffix: bool,
 }
 
 impl VisitMut for ComponentDecoratorVisitor {
