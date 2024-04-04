@@ -1,12 +1,22 @@
-use swc_core::atoms::Atom;
-use swc_core::ecma::ast::{ArrayLit, CallExpr, Expr, ExprOrSpread, Ident, Lit, PropName, Str};
+use std::ops::Deref;
+
+use swc_core::ecma::ast::{
+    ArrayLit, Expr, Ident, ImportDefaultSpecifier, Lit, ModuleDecl, ModuleItem, PropName, Str,
+};
 use swc_core::ecma::visit::{VisitMut, VisitMutWith};
-use swc_ecma_utils::ExprFactory;
+use swc_ecma_utils::swc_ecma_ast::ImportDecl;
 
 #[derive(Default)]
 pub struct ComponentDecoratorVisitor {
     is_in_component_call: bool,
     is_in_decorator: bool,
+    imports: Vec<ImportInfo>,
+    unique_id: i32,
+}
+
+struct ImportInfo {
+    specifier: String,
+    source: String,
 }
 
 impl VisitMut for ComponentDecoratorVisitor {
@@ -82,37 +92,84 @@ impl VisitMut for ComponentDecoratorVisitor {
                 optional: false,
             });
 
-            let value = match &*node.value {
-                Expr::Lit(Lit::Str(s)) => s.value.as_ref(),
-                _ => panic!("templateUrl value is not a string"),
+            let template_path = match &node.value.deref() {
+                Expr::Lit(Lit::Str(str)) => str.value.to_string(),
+                _ => return,
             };
 
-            node.value = Expr::Call(CallExpr {
+            /* In some cases, the templateUrl value might not start with "./" causing the
+             * import/require call to fail, to be fully backward compatible we need to append "./"*/
+            let template_path = if template_path.starts_with("./") {
+                template_path.to_string()
+            } else {
+                format!("./{}", template_path)
+            };
+
+            let template_var_name = self.generate_var_name("template");
+
+            self.imports.push(ImportInfo {
+                specifier: template_var_name.clone(),
+                source: template_path.clone(),
+            });
+
+            node.value = Expr::Ident(Ident {
+                sym: template_var_name.into(),
                 span: Default::default(),
-                callee: Expr::Ident(Ident {
-                    sym: "require".into(),
-                    span: Default::default(),
-                    optional: false,
-                })
-                .as_callee(),
-                args: vec![ExprOrSpread {
-                    spread: None,
-                    expr: Lit::Str(Str {
-                        span: Default::default(),
-                        /* In some cases, the templateUrl value might not start with "./" causing the require call to fail,
-                         * to be fully backward compatible we need to append "./" */
-                        value: if value.starts_with("./") {
-                            value.into()
-                        } else {
-                            Atom::from(format!("./{}", value))
-                        },
-                        raw: None,
-                    })
-                    .into(),
-                }],
-                type_args: None,
+                optional: Default::default(),
             })
             .into();
         }
+    }
+
+    fn visit_mut_module_items(&mut self, items: &mut Vec<ModuleItem>) {
+        let mut modified_items = Vec::with_capacity(items.len());
+
+        /* Parse and modify all items. */
+        for mut item in items.drain(..) {
+            item.visit_mut_with(self);
+            modified_items.push(item);
+        }
+
+        let mut new_items = Vec::with_capacity(items.len() + self.imports.len());
+        for import in self.imports.drain(..) {
+            new_items.push(import.into());
+        }
+        new_items.append(&mut modified_items);
+
+        *items = new_items;
+    }
+}
+
+impl ComponentDecoratorVisitor {
+    fn generate_var_name(&mut self, name: &str) -> String {
+        let unique_id = self.unique_id;
+        self.unique_id += 1;
+        format!("_jsc_{name}_{unique_id}")
+    }
+}
+
+impl From<ImportInfo> for ModuleItem {
+    fn from(import: ImportInfo) -> Self {
+        ModuleItem::ModuleDecl(ModuleDecl::Import(ImportDecl {
+            span: Default::default(),
+            specifiers: vec![ImportDefaultSpecifier {
+                span: Default::default(),
+                local: Ident {
+                    span: Default::default(),
+                    sym: import.specifier.into(),
+                    optional: false,
+                },
+            }
+            .into()],
+            src: Str {
+                value: import.source.into(),
+                span: Default::default(),
+                raw: Default::default(),
+            }
+            .into(),
+            type_only: Default::default(),
+            with: Default::default(),
+            phase: Default::default(),
+        }))
     }
 }
