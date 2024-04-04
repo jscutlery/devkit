@@ -11,6 +11,21 @@ pub struct ComponentDecoratorVisitor {
     is_in_decorator: bool,
     imports: Vec<ImportDeclaration>,
     unique_id: i32,
+    options: ComponentDecoratorVisitorOptions,
+}
+
+impl ComponentDecoratorVisitor {
+    pub fn new(options: ComponentDecoratorVisitorOptions) -> Self {
+        Self {
+            options,
+            ..Default::default()
+        }
+    }
+}
+
+#[derive(Default)]
+pub struct ComponentDecoratorVisitorOptions {
+    pub template_raw_suffix: bool,
 }
 
 impl VisitMut for ComponentDecoratorVisitor {
@@ -86,18 +101,21 @@ impl VisitMut for ComponentDecoratorVisitor {
                 optional: false,
             });
 
-            let template_path = match &node.value.deref() {
+            let mut template_path = match &node.value.deref() {
                 Expr::Lit(Lit::Str(str)) => str.value.to_string(),
                 _ => return,
             };
 
             /* In some cases, the templateUrl value might not start with "./" causing the
              * import/require call to fail, to be fully backward compatible we need to append "./"*/
-            let template_path = if template_path.starts_with("./") {
-                template_path.to_string()
-            } else {
-                format!("./{template_path}")
+            if !template_path.starts_with("./") {
+                template_path = format!("./{template_path}");
             };
+
+            /* Add ?raw suffix for vite support when option is enabled. */
+            if self.options.template_raw_suffix {
+                template_path = format!("{template_path}?raw");
+            }
 
             let template_var_name = self.generate_var_name("template");
 

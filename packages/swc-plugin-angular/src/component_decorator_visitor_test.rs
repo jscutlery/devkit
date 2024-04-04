@@ -1,3 +1,4 @@
+use crate::component_decorator_visitor::ComponentDecoratorVisitorOptions;
 use indoc::indoc;
 
 use crate::testing::test_visitor;
@@ -161,6 +162,36 @@ fn test_append_relative_path_to_template_url() {
         MyCmp = _ts_decorate([
             Component({
                 selector: 'app-hello',
+                template: _jsc_template_0
+            })
+        ], MyCmp);
+        "# },
+    );
+}
+
+#[test]
+fn test_add_raw_query_to_template_import() {
+    test_visitor(
+        ComponentDecoratorVisitor::new(ComponentDecoratorVisitorOptions {
+            template_raw_suffix: true,
+        }),
+        indoc! {
+        r#"class MyCmp {}
+        MyCmp = _ts_decorate([
+            Component({
+                selector: 'app-hello',
+                styleUrls: ['./style.css'],
+                templateUrl: './hello.component.html'
+            })
+        ], MyCmp);"# },
+        indoc! {
+        r#"import _jsc_template_0 from "./hello.component.html?raw";
+        class MyCmp {
+        }
+        MyCmp = _ts_decorate([
+            Component({
+                selector: 'app-hello',
+                styles: [],
                 template: _jsc_template_0
             })
         ], MyCmp);
