@@ -122,19 +122,16 @@ impl VisitMut for ComponentDecoratorVisitor {
     }
 
     fn visit_mut_module_items(&mut self, items: &mut Vec<ModuleItem>) {
-        let mut modified_items = Vec::with_capacity(items.len());
+        let mut new_items = Vec::with_capacity(items.len());
 
         /* Parse and modify all items. */
         for mut item in items.drain(..) {
             item.visit_mut_with(self);
-            modified_items.push(item);
+            new_items.push(item);
         }
 
-        let mut new_items = Vec::with_capacity(items.len() + self.imports.len());
-        for import in self.imports.drain(..) {
-            new_items.push(import.into());
-        }
-        new_items.append(&mut modified_items);
+        /* Prepend all imports. */
+        new_items.splice(0..0, self.imports.drain(..).map(Into::into));
 
         *items = new_items;
     }
