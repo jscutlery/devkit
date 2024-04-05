@@ -4,11 +4,18 @@
     "outDir": "../../dist/out-tsc",
     "module": "commonjs",
     "target": "es2016",
-    "types": ["jest", "node"]
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "../../node_modules/vitest/globals"
+    ]
   },
-  "files": ["src/test-setup.ts"],
+  "files": [
+    "src/test-setup-vitest.ts",
+    "test-globals.d.ts"
+  ],
   "include": [
-    "jest.config.ts",
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
     "src/**/*.d.ts"

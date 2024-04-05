@@ -1,13 +1,17 @@
 import '@analogjs/vite-plugin-angular/setup-vitest';
-import 'reflect-metadata';
+import { getTestBed } from '@angular/core/testing';
 
 import {
   BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting
+  platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
-import { getTestBed } from '@angular/core/testing';
+import { it } from 'vitest';
+
+import 'reflect-metadata';
+
+(globalThis as any).it.fails = it.fails;
 
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting()
+  platformBrowserDynamicTesting(),
 );

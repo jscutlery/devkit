@@ -97,30 +97,33 @@ describe('swc-plugin-angular: input', () => {
   });
 
   /* Cf. https://github.com/jscutlery/devkit/issues/304 */
-  it.skip('🐞 should bind inputs even when property is assigned using constructor injection', () => {
-    @Component({
-      standalone: true,
-      selector: 'jsc-title',
-      template: ` <h1>Hello {{ title() }}!</h1> `,
-    })
-    class Title {
-      title = input<string>();
+  it.fails(
+    '🐞 should bind inputs even when property is assigned using constructor injection',
+    () => {
+      @Component({
+        standalone: true,
+        selector: 'jsc-title',
+        template: ` <h1>Hello {{ title() }}!</h1> `,
+      })
+      class Title {
+        title = input<string>();
 
-      constructor(private _service: Service) {}
-    }
+        constructor(private _service: Service) {}
+      }
 
-    @Component({
-      standalone: true,
-      imports: [Title],
-      template: ` <jsc-title [title]="title" /> `,
-    })
-    class Container {
-      title = 'input';
-    }
+      @Component({
+        standalone: true,
+        imports: [Title],
+        template: ` <jsc-title [title]="title" /> `,
+      })
+      class Container {
+        title = 'input';
+      }
 
-    const { heading } = render(Container);
-    expect(heading).toBe('Hello input!');
-  });
+      const { heading } = render(Container);
+      expect(heading).toBe('Hello input!');
+    },
+  );
 
   function render(cmpType: Type<unknown>) {
     const { nativeElement } = createComponent(cmpType);
