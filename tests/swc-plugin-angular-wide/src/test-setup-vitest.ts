@@ -1,4 +1,5 @@
 import '@analogjs/vite-plugin-angular/setup-vitest';
+import 'reflect-metadata';
 
 import {
   BrowserDynamicTestingModule,

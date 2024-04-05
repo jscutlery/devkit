@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 
-import { Injectable, Component, inject, Type } from '@angular/core';
+import { Component, inject, Injectable, Type } from '@angular/core';
 import { createComponent } from './testing';
 
 describe('swc-plugin-angular: root service', () => {
@@ -40,10 +40,8 @@ describe('swc-plugin-angular: root service', () => {
       constructor(public rootService: RootService) {}
     }
 
-    // TODO: Fix this test
-    // const { heading } = render(Container, [RootService]);
-    // expect(heading).toBe('root service');
-    expect(() => render(Container)).toThrow('NG0202');
+    const { heading } = render(Container);
+    expect(heading).toBe('root service');
   });
 
   function render(cmpType: Type<unknown>, providers: any[] = []) {
