@@ -63,6 +63,15 @@ export default {
 };
 ```
 
+### 3. Add `reflect-metadata`
+
+In order for constructor injection to work, you need to import `reflect-metadata` in the setup file which is probably
+located at `src/test-setup.ts`.
+
+```ts
+import 'reflect-metadata';
+```
+
 ## ⚡️Setup with Vitest
 
 ### 1. Install
@@ -89,4 +98,13 @@ export default defineConfig({
   plugins: [swc.vite(swcAngularVitePreset())]
   // ...
 });
+```
+
+### 3. Add `reflect-metadata`
+
+In order for constructor injection to work, you need to import `reflect-metadata` in the setup file which is probably
+located at `src/test-setup.ts`.
+
+```ts
+import 'reflect-metadata';
 ```
