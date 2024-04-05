@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 
-import { Component, input, Type } from '@angular/core';
+import { Component, Injectable, input, Type } from '@angular/core';
 import { createComponent } from './testing';
 
 describe('swc-plugin-angular: input', () => {
@@ -8,9 +8,7 @@ describe('swc-plugin-angular: input', () => {
     @Component({
       standalone: true,
       selector: 'jsc-title',
-      template: `
-        <h1>Hello {{ title() }}!</h1>
-      `
+      template: ` <h1>Hello {{ title() }}!</h1> `,
     })
     class Title {
       title = input<string>();
@@ -18,12 +16,8 @@ describe('swc-plugin-angular: input', () => {
 
     @Component({
       standalone: true,
-      imports: [
-        Title
-      ],
-      template: `
-        <jsc-title [title]='title' />
-      `
+      imports: [Title],
+      template: ` <jsc-title [title]="title" /> `,
     })
     class Container {
       title = 'input';
@@ -37,9 +31,7 @@ describe('swc-plugin-angular: input', () => {
     @Component({
       standalone: true,
       selector: 'jsc-title',
-      template: `
-        <h1>Hello {{ title() }}!</h1>
-      `
+      template: ` <h1>Hello {{ title() }}!</h1> `,
     })
     class Title {
       title = input.required<string>();
@@ -47,12 +39,8 @@ describe('swc-plugin-angular: input', () => {
 
     @Component({
       standalone: true,
-      imports: [
-        Title
-      ],
-      template: `
-        <jsc-title [title]='title' />
-      `
+      imports: [Title],
+      template: ` <jsc-title [title]="title" /> `,
     })
     class Container {
       title = 'required input';
@@ -66,9 +54,7 @@ describe('swc-plugin-angular: input', () => {
     @Component({
       standalone: true,
       selector: 'jsc-title',
-      template: `
-        <h1>Hello {{ myTitle() }}!</h1>
-      `
+      template: ` <h1>Hello {{ myTitle() }}!</h1> `,
     })
     class Title {
       myTitle = input('', { alias: 'title' });
@@ -76,12 +62,8 @@ describe('swc-plugin-angular: input', () => {
 
     @Component({
       standalone: true,
-      imports: [
-        Title
-      ],
-      template: `
-        <jsc-title [title]='title' />
-      `
+      imports: [Title],
+      template: ` <jsc-title [title]="title" /> `,
     })
     class Container {
       title = 'input alias';
@@ -95,7 +77,7 @@ describe('swc-plugin-angular: input', () => {
     @Component({
       standalone: true,
       selector: 'jsc-title',
-      template: `<h1>Hello {{ myTitle() }}!</h1>`
+      template: `<h1>Hello {{ myTitle() }}!</h1>`,
     })
     class Title {
       myTitle = input.required<string>({ alias: 'title' });
@@ -104,7 +86,7 @@ describe('swc-plugin-angular: input', () => {
     @Component({
       standalone: true,
       imports: [Title],
-      template: '<jsc-title [title]="title"/>'
+      template: '<jsc-title [title]="title"/>',
     })
     class Container {
       title = 'required input alias';
@@ -114,11 +96,41 @@ describe('swc-plugin-angular: input', () => {
     expect(heading).toBe('Hello required input alias!');
   });
 
+  /* Cf. https://github.com/jscutlery/devkit/issues/304 */
+  it.skip('🐞 should bind inputs even when property is assigned using constructor injection', () => {
+    @Component({
+      standalone: true,
+      selector: 'jsc-title',
+      template: ` <h1>Hello {{ title() }}!</h1> `,
+    })
+    class Title {
+      title = input<string>();
+
+      constructor(private _service: Service) {}
+    }
+
+    @Component({
+      standalone: true,
+      imports: [Title],
+      template: ` <jsc-title [title]="title" /> `,
+    })
+    class Container {
+      title = 'input';
+    }
+
+    const { heading } = render(Container);
+    expect(heading).toBe('Hello input!');
+  });
 
   function render(cmpType: Type<unknown>) {
     const { nativeElement } = createComponent(cmpType);
     return {
-      heading: nativeElement.querySelector('h1')?.textContent
+      heading: nativeElement.querySelector('h1')?.textContent,
     };
   }
 });
+
+@Injectable({
+  providedIn: 'root',
+})
+class Service {}
