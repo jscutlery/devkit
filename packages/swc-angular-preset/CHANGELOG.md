@@ -1,3 +1,15 @@
+## 0.2.1 (2024-04-08)
+
+
+### 🩹 Fixes
+
+- **swc-plugin-angular:** 🐞 transform async/await ([#313](https://github.com/jscutlery/devkit/pull/313))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.2.0 (2024-04-04)
 
 
