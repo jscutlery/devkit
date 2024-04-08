@@ -1,5 +1,4 @@
 import type { Config } from '@swc/core';
-import type { Options as UnpluginOptions } from 'unplugin-swc';
 
 export interface AngularPresetOptions {
   templateRawSuffix?: boolean;
@@ -44,7 +43,9 @@ export function swcAngularVitePreset() {
   });
 }
 
-export function swcAngularUnpluginOptions(): UnpluginOptions {
+export function swcAngularUnpluginOptions(): Config & {
+  tsconfigFile?: boolean;
+} {
   return {
     ...swcAngularVitePreset(),
     /* Since we are using SWC's env option, we need to disable the tsconfigFile option.
