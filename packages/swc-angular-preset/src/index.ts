@@ -10,19 +10,24 @@ export function swcAngularPreset(options: AngularPresetOptions = {}): Config {
       parser: {
         syntax: 'typescript',
         decorators: true,
-        dynamicImport: true
+        dynamicImport: true,
       },
       transform: {
         legacyDecorator: true,
-        decoratorMetadata: true
+        decoratorMetadata: true,
       },
       target: 'esnext',
       experimental: {
-        plugins: [['@jscutlery/swc-plugin-angular', {
-          templateRawSuffix: options.templateRawSuffix
-        } as SwcPluginAngularOptions]]
-      }
-    }
+        plugins: [
+          [
+            '@jscutlery/swc-plugin-angular',
+            {
+              templateRawSuffix: options.templateRawSuffix,
+            } as SwcPluginAngularOptions,
+          ],
+        ],
+      },
+    },
   };
 }
 
@@ -32,7 +37,7 @@ export function swcAngularJestTransformer(): [string, Record<string, unknown>] {
 
 export function swcAngularVitePreset() {
   return swcAngularPreset({
-    templateRawSuffix: true
+    templateRawSuffix: true,
   });
 }
 
@@ -48,15 +53,17 @@ export default {
     parser: {
       syntax: 'typescript',
       decorators: true,
-      dynamicImport: true
+      dynamicImport: true,
     },
     transform: {
       legacyDecorator: true,
-      decoratorMetadata: true
+      decoratorMetadata: true,
     },
     target: 'esnext',
     experimental: {
-      plugins: [['@jscutlery/swc-plugin-angular', {} satisfies SwcPluginAngularOptions]]
-    }
-  }
+      plugins: [
+        ['@jscutlery/swc-plugin-angular', {} satisfies SwcPluginAngularOptions],
+      ],
+    },
+  },
 } satisfies Config;
