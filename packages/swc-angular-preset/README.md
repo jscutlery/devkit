@@ -89,13 +89,13 @@ In your vite configuration file (e.g., `vite.config.ts`), use the `unplugin-swc`
 preset: `swcAngularVitePreset`.
 
 ```js
-import { swcAngularVitePreset } from '@jscutlery/swc-angular-preset';
+import { swcAngularUnpluginOptions } from '@jscutlery/swc-angular-preset';
 import swc from 'unplugin-swc';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   // ...
-  plugins: [swc.vite(swcAngularVitePreset())]
+  plugins: [swc.vite(swcAngularUnpluginOptions())]
   // ...
 });
 ```

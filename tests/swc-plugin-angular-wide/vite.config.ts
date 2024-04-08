@@ -4,10 +4,10 @@ import { defineConfig } from 'vite';
 
 /* @hack for some annoying reason, this file doesn't seem to be compiled
  * using our tsconfigs, so it is not aware of the tsconfig.base.json paths. */
-import { swcAngularVitePreset } from '../../packages/swc-angular-preset/src/index';
+import { swcAngularUnpluginOptions } from '../../packages/swc-angular-preset/src/index';
 
 export default defineConfig({
   root: __dirname,
   cacheDir: '../../node_modules/.vite/tests/swc-plugin-angular-wide',
-  plugins: [swc.vite(swcAngularVitePreset())]
+  plugins: [swc.vite(swcAngularUnpluginOptions())],
 });
