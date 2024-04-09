@@ -122,5 +122,11 @@
       }
     }
   },
-  "plugins": ["@nx/vite/plugin"]
+  "plugins": [
+    {
+      "plugin": "@nx/vite/plugin",
+      "exclude": ["tests/swc-plugin-angular-wide/**/*"],
+      "include": []
+    }
+  ]
 }
