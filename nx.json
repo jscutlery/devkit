@@ -125,8 +125,9 @@
   "plugins": [
     {
       "plugin": "@nx/vite/plugin",
-      "exclude": ["tests/swc-plugin-angular-wide/**/*"],
-      "include": []
+      "_comment": "@todo: use exclude instead of include once this is fixed: https://github.com/nrwl/nx/issues/22737",
+      "_exclude": ["tests/swc-plugin-angular-wide/**/*"],
+      "include": ["packages/*"]
     }
   ]
 }
