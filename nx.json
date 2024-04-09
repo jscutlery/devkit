@@ -121,5 +121,12 @@
         "createRelease": "github"
       }
     }
-  }
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/vite/plugin",
+      "exclude": ["tests/swc-plugin-angular-wide/**/*"],
+      "include": []
+    }
+  ]
 }

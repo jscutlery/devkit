@@ -21,8 +21,14 @@
         "@nx/dependency-checks": [
           "error",
           {
-            "ignoredFiles": ["{projectRoot}/vite.config.{js,ts,mjs,mts}"],
-            "ignoredDependencies": ["@jscutlery/swc-plugin-angular", "@swc/core"]
+            "ignoredFiles": [
+              "{projectRoot}/**/*.spec-d.ts",
+              "{projectRoot}/{vite,vitest}.config.{js,ts,mjs,mts}"
+            ],
+            "ignoredDependencies": [
+              "@jscutlery/swc-plugin-angular",
+              "@swc/core"
+            ]
           }
         ]
       }

@@ -4,7 +4,7 @@ export interface AngularPresetOptions {
   templateRawSuffix?: boolean;
 }
 
-export function swcAngularPreset(options: AngularPresetOptions = {}): Config {
+export function swcAngularPreset(options: AngularPresetOptions = {}) {
   return {
     jsc: {
       parser: {
@@ -30,11 +30,11 @@ export function swcAngularPreset(options: AngularPresetOptions = {}): Config {
     env: {
       include: ['transform-async-to-generator'],
     },
-  };
+  } satisfies Config;
 }
 
 export function swcAngularJestTransformer(): [string, Record<string, unknown>] {
-  return ['@swc/jest', swcAngularPreset() as Record<string, unknown>];
+  return ['@swc/jest', swcAngularPreset()];
 }
 
 export function swcAngularVitePreset() {
