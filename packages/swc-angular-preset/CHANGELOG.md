@@ -1,3 +1,15 @@
+## 0.2.2 (2024-04-09)
+
+
+### 🩹 Fixes
+
+- **swc-angular-preset:** 🐞 fix jest preset typing ([9c6de1c](https://github.com/jscutlery/devkit/commit/9c6de1c))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.2.1 (2024-04-08)
 
 
