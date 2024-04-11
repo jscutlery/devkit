@@ -1,3 +1,15 @@
+## 0.3.0 (2024-04-11)
+
+
+### 🚀 Features
+
+- **swc-angular-preset:** ✨ fail gracefully if @swc/core is incompatible ([#322](https://github.com/jscutlery/devkit/pull/322))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.2.2 (2024-04-09)
 
 
