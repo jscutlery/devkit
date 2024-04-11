@@ -1,42 +1,63 @@
 cypress-angular:
-  - 'packages/cypress-angular/*'
-  - 'packages/cypress-angular/**/*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'packages/cypress-angular/**/*'
 
 cypress-angular-dev-server:
-  - 'packages/cypress-angular-dev-server/*'
-  - 'packages/cypress-angular-dev-server/**/*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'packages/cypress-angular-dev-server/**/*'
 
 cypress-harness:
-  - 'packages/cypress-harness/*'
-  - 'packages/cypress-harness/**/*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'packages/cypress-harness/**/*'
 
 cypress-mount:
-  - 'packages/cypress-mount/*'
-  - 'packages/cypress-mount/**/*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'packages/cypress-mount/**/*'
 
 microwave:
-  - 'packages/microwave/*'
-  - 'packages/microwave/**/*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'packages/microwave/**/*'
 
 operators:
-  - 'packages/operators/*'
-  - 'packages/operators/**/*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'packages/operators/**/*'
+
+playwright-ct-angular:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'packages/playwright-ct-angular/**/*'
+
+rx-computed:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'packages/rx-computed/**/*'
+
+swc-angular-preset:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'packages/swc-angular-preset/**/*'
+
+swc-plugin-angular:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'packages/swc-plugin-angular/**/*'
 
 test:
-  - 'packages/**/*.spec.ts'
-  - 'packages/**/*.cy-spec.ts'
-  - 'packages/cypress-sandbox/*'
-  - 'packages/cypress-sandbox/**/*'
-  - 'tests/cypress-mount-integration/*'
-  - 'tests/cypress-mount-integration/**/*'
-  - 'tests/cypress-harness-integration/*'
-  - 'tests/cypress-harness-integration/**/*'
-  - 'tests/cypress-harness-e2e/*'
-  - 'tests/cypress-harness-e2e/**/*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'packages/**/*.spec.ts'
+          - 'packages/**/*.spec-d.ts'
+          - 'packages/**/*.cy-spec.ts'
+          - 'tests/**/*'
 
 docs:
-  - 'README.md'
-  - 'packages/cypress-angular/README.md'
-  - 'packages/cypress-angular-dev-server/README.md'
-  - 'packages/cypress-harness/README.md'
-  - 'packages/cypress-mount/README.md'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'README.md'
+          - 'packages/**/README.md'
