@@ -1,4 +1,7 @@
 import type { Config } from '@swc/core';
+import { version as swcCoreVersion } from '@swc/core';
+
+assertCompatibleSwcCoreVersion();
 
 export interface AngularPresetOptions {
   templateRawSuffix?: boolean;
@@ -68,3 +71,14 @@ interface SwcPluginAngularOptions {
  * @deprecated Use {@link swcAngularVitePreset}, {@link swcAngularJestTransformer} or {@link swcAngularPreset} instead.
  */
 export default swcAngularPreset();
+
+function assertCompatibleSwcCoreVersion() {
+  if (!swcCoreVersion.startsWith('1.4.')) {
+    console.warn(`
+    @swc/core version ${swcCoreVersion} is incompatible with @jscutlery/swc-angular-preset.
+    Please use @swc/core version 1.4.x.
+    > npm add -D @swc/core@~1.4.0
+    `);
+    process.exit(1);
+  }
+}
