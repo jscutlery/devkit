@@ -28,16 +28,28 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"],
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ],
       "cache": true
     },
     "e2e": {
-      "inputs": ["default", "^production"],
+      "inputs": [
+        "default",
+        "^production"
+      ],
       "cache": true
     },
     "@nx/jest:jest": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/jest.preset.js"
+      ],
       "cache": true,
       "options": {
         "passWithNoTests": true
@@ -50,27 +62,43 @@
       }
     },
     "@nx/eslint:lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json"
+      ],
       "cache": true
     },
     "@nx/rollup:rollup": {
       "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ]
     },
     "@nx/vite:test": {
       "cache": true,
-      "inputs": ["default", "^production"]
+      "inputs": [
+        "default",
+        "^production"
+      ]
     },
     "@nx/js:release-publish": {
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "options": {
         "packageRoot": "dist/{projectRoot}"
       }
     }
   },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "sharedGlobals": [
       "{workspaceRoot}/workspace.json",
       "{workspaceRoot}/tsconfig.base.json",
@@ -94,17 +122,26 @@
   "useInferencePlugins": false,
   "defaultBase": "main",
   "release": {
+    "groups": {
+      "default": {
+        "projects": [
+          "cypress-harness",
+          "microwave",
+          "operators",
+          "playwright-ct-angular",
+          "rx-computed"
+        ],
+        "projectsRelationship": "independent"
+      },
+      "swc-angular": {
+        "projects": [
+          "swc-angular",
+          "swc-angular-plugin"
+        ],
+        "projectsRelationship": "fixed"
+      }
+    },
     "releaseTagPattern": "{projectName}-{version}",
-    "projects": [
-      "cypress-harness",
-      "microwave",
-      "operators",
-      "playwright-ct-angular",
-      "rx-computed",
-      "swc-plugin-angular",
-      "swc-angular-preset"
-    ],
-    "projectsRelationship": "independent",
     "version": {
       "conventionalCommits": true,
       "generatorOptions": {
@@ -126,8 +163,12 @@
     {
       "plugin": "@nx/vite/plugin",
       "_comment": "@todo: use exclude instead of include once this is fixed: https://github.com/nrwl/nx/issues/22737",
-      "_exclude": ["tests/swc-plugin-angular-wide/**/*"],
-      "include": ["packages/**/*"]
+      "_exclude": [
+        "tests/swc-angular-wide/**/*"
+      ],
+      "include": [
+        "packages/**/*"
+      ]
     }
   ]
 }

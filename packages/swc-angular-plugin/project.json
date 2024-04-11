@@ -1,0 +1,50 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "swc-angular-plugin",
+  "projectType": "library",
+  "sourceRoot": "packages/swc-angular-plugin/src",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "commands": [
+          "cargo build --target wasm32-wasi --release --target-dir dist/{projectRoot}",
+          "cp {projectRoot}/package.json dist/{projectRoot}",
+          "cp {projectRoot}/*.md dist/{projectRoot}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@monodon/rust:test",
+      "outputs": [
+        "{options.target-dir}"
+      ],
+      "options": {
+        "target-dir": "dist/packages/swc-angular-plugin"
+      },
+      "configurations": {
+        "production": {
+          "release": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@monodon/rust:lint",
+      "outputs": [
+        "{options.target-dir}"
+      ],
+      "options": {
+        "target-dir": "dist/packages/swc-angular-plugin"
+      }
+    },
+    "nx-release-publish": {
+      "executor": "@nx/js:release-publish",
+      "dependsOn": [
+        "^nx-release-publish",
+        "build"
+      ]
+    }
+  },
+  "tags": []
+}

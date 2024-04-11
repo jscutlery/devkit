@@ -1,0 +1,51 @@
+{
+  "name": "swc-angular",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/swc-angular/src",
+  "implicitDependencies": [
+    "swc-angular-plugin"
+  ],
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/swc-angular",
+        "main": "packages/swc-angular/src/index.ts",
+        "tsConfig": "packages/swc-angular/tsconfig.lib.json",
+        "assets": [
+          {
+            "glob": "LICENSE",
+            "input": ".",
+            "output": "."
+          },
+          {
+            "glob": "*.md",
+            "input": "packages/swc-angular",
+            "output": "."
+          }
+        ],
+        "project": "packages/swc-angular/package.json",
+        "compiler": "swc",
+        "format": [
+          "cjs",
+          "esm"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "nx-release-publish": {
+      "executor": "@nx/js:release-publish",
+      "dependsOn": [
+        "^nx-release-publish",
+        "build"
+      ]
+    }
+  }
+}
