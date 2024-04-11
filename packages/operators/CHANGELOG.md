@@ -1,3 +1,7 @@
+## 2.1.5 (2024-04-11)
+
+This was a version bump only for operators to align it with other projects, there were no code changes.
+
 ## 2.1.4 (2024-03-24)
 
 
