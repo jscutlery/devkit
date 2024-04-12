@@ -23,7 +23,7 @@ runs:
       shell: bash
       run: npx nx release --yes
 
-    - name: @hack remove 'swc-angular-{version}' tag until this is fixed https://github.com/nrwl/nx/issues/22798
+    - name: hack remove 'swc-angular-{version}' tag until this is fixed https://github.com/nrwl/nx/issues/22798
       shell: bash
       run: git tag -d 'swc-angular-{version}'
 
