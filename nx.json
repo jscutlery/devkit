@@ -131,17 +131,18 @@
           "playwright-ct-angular",
           "rx-computed"
         ],
-        "projectsRelationship": "independent"
+        "projectsRelationship": "independent",
+        "releaseTagPattern": "{projectName}-{version}"
       },
       "swc-angular": {
         "projects": [
           "swc-angular",
           "swc-angular-plugin"
         ],
-        "projectsRelationship": "fixed"
+        "projectsRelationship": "fixed",
+        "releaseTagPattern": "{projectName}-{version}"
       }
     },
-    "releaseTagPattern": "{projectName}-{version}",
     "version": {
       "conventionalCommits": true,
       "generatorOptions": {
