@@ -1,3 +1,15 @@
+## 0.12.0 (2024-04-12)
+
+
+### 🚀 Features
+
+- **swc-angular:** ✨ rename swc-angular packages ([#324](https://github.com/jscutlery/devkit/pull/324))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.11.0 (2024-04-04)
 
 

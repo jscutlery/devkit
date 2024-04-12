@@ -1,3 +1,40 @@
+# 3.0.0 (2024-04-12)
+
+
+### 🚀 Features
+
+- **operator:** ✅ add supensify operator ([e7fc483](https://github.com/jscutlery/devkit/commit/e7fc483))
+
+- **operators:** ✨add esm support ([77b5470](https://github.com/jscutlery/devkit/commit/77b5470))
+
+- ⚠️  **operators:** ✨ drop support for suspensify's projector ([f4bf6dc](https://github.com/jscutlery/devkit/commit/f4bf6dc))
+
+- **operators:** add suspensify's strict mode ([f9dd789](https://github.com/jscutlery/devkit/commit/f9dd789))
+
+- **operators:** ✨ expose pending state constant ([caaea8e](https://github.com/jscutlery/devkit/commit/caaea8e))
+
+
+### 🩹 Fixes
+
+- 🐞 bump workspace ([127c808](https://github.com/jscutlery/devkit/commit/127c808))
+
+- **operators:** 🏷️ fix typing errors ([91c084c](https://github.com/jscutlery/devkit/commit/91c084c))
+
+- **operators:** 🐞 fix suspensify type to be strict by default too ([c5d424c](https://github.com/jscutlery/devkit/commit/c5d424c))
+
+- **operators:** 🐞 export missing types + pending const ([96eed66](https://github.com/jscutlery/devkit/commit/96eed66))
+
+
+#### ⚠️  Breaking Changes
+
+- **operators:** suspensify's operator "projector" function is not supported anymore
+
+### ❤️  Thank You
+
+- Edouard Bozon @edbzn
+- Julien Brun
+- Younes Jaaidi
+
 ## 2.1.5 (2024-04-11)
 
 This was a version bump only for operators to align it with other projects, there were no code changes.

@@ -1,3 +1,60 @@
+## 0.3.0 (2024-04-12)
+
+
+### 🚀 Features
+
+- **microwave:** ✨ detach change detector ([5b7c086](https://github.com/jscutlery/devkit/commit/5b7c086))
+
+- **microwave:** ✨ trigger change detection after one tick ([6d5010e](https://github.com/jscutlery/devkit/commit/6d5010e))
+
+- **microwave:** ✨ trigger change detection on field change ([0b8e4a0](https://github.com/jscutlery/devkit/commit/0b8e4a0))
+
+- **microwave:** ✨ watch throws error if component is not microwaved ([d8c2c79](https://github.com/jscutlery/devkit/commit/d8c2c79))
+
+- **microwave:** ✨ watch fields ([d1330b9](https://github.com/jscutlery/devkit/commit/d1330b9))
+
+- **microwave:** ✨ stop watching changes on destroy ([636947b](https://github.com/jscutlery/devkit/commit/636947b))
+
+- **microwave:** ✨ allow watch in constructor ([ab31b3e](https://github.com/jscutlery/devkit/commit/ab31b3e))
+
+- **microwave:** ✨ allow custom strategies ([ae088ca](https://github.com/jscutlery/devkit/commit/ae088ca))
+
+- **microwave:** ✨ add initialized$ to strategy devkit ([a8d8e13](https://github.com/jscutlery/devkit/commit/a8d8e13))
+
+- **microwave:** ✨ initialized$ & destroyed$ complete on first emit ([2e2e13f](https://github.com/jscutlery/devkit/commit/2e2e13f))
+
+- **microwave:** ✨ add syncStrategy ([051412f](https://github.com/jscutlery/devkit/commit/051412f))
+
+- **microwave:** ✨ add proper support for strategy customization ([be0cc74](https://github.com/jscutlery/devkit/commit/be0cc74))
+
+- **microwave:** ✨ add requestAnimationFrame strategy ([c1a5094](https://github.com/jscutlery/devkit/commit/c1a5094))
+
+- **microwave:** ✨ add async strategy ([616fb4c](https://github.com/jscutlery/devkit/commit/616fb4c))
+
+- **playwright-ct-angular:** ✨ upgrade to playwright 1.39 support ([#264](https://github.com/jscutlery/devkit/pull/264))
+
+
+### 🩹 Fixes
+
+- update to Angular 14 ([#188](https://github.com/jscutlery/devkit/pull/188))
+
+- **microwave:** 🐞 fix asapStrategy coalescing ([088c5f0](https://github.com/jscutlery/devkit/commit/088c5f0))
+
+- **microwave:** 🐞 fix ngOnInit & ngOnDestroy binding ([8d58ed9](https://github.com/jscutlery/devkit/commit/8d58ed9))
+
+- **microwave:** 🐞 remove invalid deps & peerDeps ([bb58f67](https://github.com/jscutlery/devkit/commit/bb58f67))
+
+
+### 🔥 Performance
+
+- **microwave:** ⚡️ skip change detection if prop's value doesn't change ([4f5a5e6](https://github.com/jscutlery/devkit/commit/4f5a5e6))
+
+
+### ❤️  Thank You
+
+- Timeout
+- Younes Jaaidi
+
 ## [0.2.1](https://github.com/jscutlery/devkit/compare/microwave-0.2.0...microwave-0.2.1) (2024-03-22)
 
 # [0.2.0](https://github.com/jscutlery/devkit/compare/microwave-0.1.10...microwave-0.2.0) (2023-10-31)

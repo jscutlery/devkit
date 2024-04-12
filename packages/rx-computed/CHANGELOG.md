@@ -1,3 +1,34 @@
+## 0.3.0 (2024-04-12)
+
+
+### 🚀 Features
+
+- **rx-computed:** ✨ add rxComputed ([994ed28](https://github.com/jscutlery/devkit/commit/994ed28))
+
+- **rx-computed:** ✨return undefined as default initial value ([b9b525d](https://github.com/jscutlery/devkit/commit/b9b525d))
+
+- **rx-computed:** ✨ handle custom initial value ([87f8273](https://github.com/jscutlery/devkit/commit/87f8273))
+
+- **rx-computed:** ✨ handle async source ([3870ebb](https://github.com/jscutlery/devkit/commit/3870ebb))
+
+- **rx-computed:** ✨ throw error if source emits error ([e75ee40](https://github.com/jscutlery/devkit/commit/e75ee40))
+
+- **rx-computed:** ✨ unsubscribe when depdency changes ([ddcb24a](https://github.com/jscutlery/devkit/commit/ddcb24a))
+
+- **rx-computed:** allow rxComputed to accept a custom Injector ([6f3228a](https://github.com/jscutlery/devkit/commit/6f3228a))
+
+
+### 🩹 Fixes
+
+- **rx-computed:** adjust peer dependencies ([30277ca](https://github.com/jscutlery/devkit/commit/30277ca))
+
+
+### ❤️  Thank You
+
+- Chau Tran
+- Edouard Bozon @edbzn
+- Younes Jaaidi
+
 ## 0.2.6 (2024-04-11)
 
 This was a version bump only for rx-computed to align it with other projects, there were no code changes.
