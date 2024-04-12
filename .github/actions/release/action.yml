@@ -13,7 +13,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Version
+    - name: Release
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm_token }}
         GITHUB_TOKEN: ${{ inputs.git_bot_token }}
@@ -22,6 +22,10 @@ runs:
       # which is set up by `setup-node` action.
       shell: bash
       run: npx nx release --yes
+
+    - name: @hack remove 'swc-angular-{version}' tag until this is fixed https://github.com/nrwl/nx/issues/22798
+      shell: bash
+      run: git tag -d 'swc-angular-{version}'
 
     - name: Push changes
       uses: ad-m/github-push-action@master
