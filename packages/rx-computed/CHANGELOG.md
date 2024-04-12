@@ -1,33 +1,6 @@
 ## 0.3.0 (2024-04-12)
 
-
-### 🚀 Features
-
-- **rx-computed:** ✨ add rxComputed ([994ed28](https://github.com/jscutlery/devkit/commit/994ed28))
-
-- **rx-computed:** ✨return undefined as default initial value ([b9b525d](https://github.com/jscutlery/devkit/commit/b9b525d))
-
-- **rx-computed:** ✨ handle custom initial value ([87f8273](https://github.com/jscutlery/devkit/commit/87f8273))
-
-- **rx-computed:** ✨ handle async source ([3870ebb](https://github.com/jscutlery/devkit/commit/3870ebb))
-
-- **rx-computed:** ✨ throw error if source emits error ([e75ee40](https://github.com/jscutlery/devkit/commit/e75ee40))
-
-- **rx-computed:** ✨ unsubscribe when depdency changes ([ddcb24a](https://github.com/jscutlery/devkit/commit/ddcb24a))
-
-- **rx-computed:** allow rxComputed to accept a custom Injector ([6f3228a](https://github.com/jscutlery/devkit/commit/6f3228a))
-
-
-### 🩹 Fixes
-
-- **rx-computed:** adjust peer dependencies ([30277ca](https://github.com/jscutlery/devkit/commit/30277ca))
-
-
-### ❤️  Thank You
-
-- Chau Tran
-- Edouard Bozon @edbzn
-- Younes Jaaidi
+- Nothing changed
 
 ## 0.2.6 (2024-04-11)
 
@@ -35,13 +8,11 @@ This was a version bump only for rx-computed to align it with other projects, th
 
 ## 0.2.5 (2024-03-24)
 
-
 ### 🩹 Fixes
 
 - import of zone.js and zone.js/testing ([f14b091](https://github.com/jscutlery/devkit/commit/f14b091))
 
-
-### ❤️  Thank You
+### ❤️ Thank You
 
 - Adrian Baran
 - Younes Jaaidi
@@ -56,13 +27,15 @@ This was a version bump only for rx-computed to align it with other projects, th
 
 ### Bug Fixes
 
-- **rx-computed:** adjust peer dependencies ([30277ca](https://github.com/jscutlery/devkit/commit/30277ca6e14d68c19497fa280e95ed6a262d562b))
+- **rx-computed:** adjust peer
+  dependencies ([30277ca](https://github.com/jscutlery/devkit/commit/30277ca6e14d68c19497fa280e95ed6a262d562b))
 
 # [0.2.0](https://github.com/jscutlery/devkit/compare/rx-computed-0.1.1...rx-computed-0.2.0) (2023-05-25)
 
 ### Features
 
-- **rx-computed:** allow rxComputed to accept a custom Injector ([6f3228a](https://github.com/jscutlery/devkit/commit/6f3228a0413070c3f4fd0178420b204a2e825f04))
+- **rx-computed:** allow rxComputed to accept a custom
+  Injector ([6f3228a](https://github.com/jscutlery/devkit/commit/6f3228a0413070c3f4fd0178420b204a2e825f04))
 
 ## [0.1.1](https://github.com/jscutlery/devkit/compare/rx-computed-0.1.0...rx-computed-0.1.1) (2023-05-25)
 
@@ -70,9 +43,15 @@ This was a version bump only for rx-computed to align it with other projects, th
 
 ### Features
 
-- **rx-computed:** ✨ add rxComputed ([994ed28](https://github.com/jscutlery/devkit/commit/994ed283c5ee4068eac424ceb5c1b4d3f09b891d))
-- **rx-computed:** ✨ handle async source ([3870ebb](https://github.com/jscutlery/devkit/commit/3870ebbbabd6fba0f2491c9cbe45d1feba723b47))
-- **rx-computed:** ✨ handle custom initial value ([87f8273](https://github.com/jscutlery/devkit/commit/87f827394461431ebb7e2766b7dae6a418c98a46))
-- **rx-computed:** ✨ throw error if source emits error ([e75ee40](https://github.com/jscutlery/devkit/commit/e75ee408720a88e1be0582cd89eb782fbf92efe7))
-- **rx-computed:** ✨ unsubscribe when depdency changes ([ddcb24a](https://github.com/jscutlery/devkit/commit/ddcb24ac4f8438008638661963c81e8b46ad8424))
-- **rx-computed:** ✨return undefined as default initial value ([b9b525d](https://github.com/jscutlery/devkit/commit/b9b525d08b50eb0bca6f5d5386f4982eba152f06))
+- **rx-computed:** ✨ add
+  rxComputed ([994ed28](https://github.com/jscutlery/devkit/commit/994ed283c5ee4068eac424ceb5c1b4d3f09b891d))
+- **rx-computed:** ✨ handle async
+  source ([3870ebb](https://github.com/jscutlery/devkit/commit/3870ebbbabd6fba0f2491c9cbe45d1feba723b47))
+- **rx-computed:** ✨ handle custom initial
+  value ([87f8273](https://github.com/jscutlery/devkit/commit/87f827394461431ebb7e2766b7dae6a418c98a46))
+- **rx-computed:** ✨ throw error if source emits
+  error ([e75ee40](https://github.com/jscutlery/devkit/commit/e75ee408720a88e1be0582cd89eb782fbf92efe7))
+- **rx-computed:** ✨ unsubscribe when depdency
+  changes ([ddcb24a](https://github.com/jscutlery/devkit/commit/ddcb24ac4f8438008638661963c81e8b46ad8424))
+- **rx-computed:** ✨return undefined as default initial
+  value ([b9b525d](https://github.com/jscutlery/devkit/commit/b9b525d08b50eb0bca6f5d5386f4982eba152f06))

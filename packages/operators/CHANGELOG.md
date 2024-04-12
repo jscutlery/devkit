@@ -1,39 +1,6 @@
 # 3.0.0 (2024-04-12)
 
-
-### 🚀 Features
-
-- **operator:** ✅ add supensify operator ([e7fc483](https://github.com/jscutlery/devkit/commit/e7fc483))
-
-- **operators:** ✨add esm support ([77b5470](https://github.com/jscutlery/devkit/commit/77b5470))
-
-- ⚠️  **operators:** ✨ drop support for suspensify's projector ([f4bf6dc](https://github.com/jscutlery/devkit/commit/f4bf6dc))
-
-- **operators:** add suspensify's strict mode ([f9dd789](https://github.com/jscutlery/devkit/commit/f9dd789))
-
-- **operators:** ✨ expose pending state constant ([caaea8e](https://github.com/jscutlery/devkit/commit/caaea8e))
-
-
-### 🩹 Fixes
-
-- 🐞 bump workspace ([127c808](https://github.com/jscutlery/devkit/commit/127c808))
-
-- **operators:** 🏷️ fix typing errors ([91c084c](https://github.com/jscutlery/devkit/commit/91c084c))
-
-- **operators:** 🐞 fix suspensify type to be strict by default too ([c5d424c](https://github.com/jscutlery/devkit/commit/c5d424c))
-
-- **operators:** 🐞 export missing types + pending const ([96eed66](https://github.com/jscutlery/devkit/commit/96eed66))
-
-
-#### ⚠️  Breaking Changes
-
-- **operators:** suspensify's operator "projector" function is not supported anymore
-
-### ❤️  Thank You
-
-- Edouard Bozon @edbzn
-- Julien Brun
-- Younes Jaaidi
+- Nothing changed
 
 ## 2.1.5 (2024-04-11)
 
@@ -41,13 +8,11 @@ This was a version bump only for operators to align it with other projects, ther
 
 ## 2.1.4 (2024-03-24)
 
-
 ### 🩹 Fixes
 
 - import of zone.js and zone.js/testing ([f14b091](https://github.com/jscutlery/devkit/commit/f14b091))
 
-
-### ❤️  Thank You
+### ❤️ Thank You
 
 - Adrian Baran
 - Younes Jaaidi
@@ -66,25 +31,29 @@ This was a version bump only for operators to align it with other projects, ther
 
 ### Bug Fixes
 
-- **operators:** 🐞 export missing types + pending const ([96eed66](https://github.com/jscutlery/devkit/commit/96eed664a96e86e9e21e107b89d220a2f0addd9e))
+- **operators:** 🐞 export missing types + pending
+  const ([96eed66](https://github.com/jscutlery/devkit/commit/96eed664a96e86e9e21e107b89d220a2f0addd9e))
 
 # [2.1.0](https://github.com/jscutlery/devkit/compare/operators-2.0.1...operators-2.1.0) (2023-04-27)
 
 ### Features
 
-- **operators:** ✨ expose pending state constant ([caaea8e](https://github.com/jscutlery/devkit/commit/caaea8e3144aca71ecf75830777bcadd2ba23c37))
+- **operators:** ✨ expose pending state
+  constant ([caaea8e](https://github.com/jscutlery/devkit/commit/caaea8e3144aca71ecf75830777bcadd2ba23c37))
 
 ## [2.0.1](https://github.com/jscutlery/devkit/compare/operators-2.0.0...operators-2.0.1) (2023-04-27)
 
 ### Bug Fixes
 
-- **operators:** 🐞 fix suspensify type to be strict by default too ([c5d424c](https://github.com/jscutlery/devkit/commit/c5d424cea4faee0df5ab112851565a36fb575ebe))
+- **operators:** 🐞 fix suspensify type to be strict by default
+  too ([c5d424c](https://github.com/jscutlery/devkit/commit/c5d424cea4faee0df5ab112851565a36fb575ebe))
 
 # [2.0.0](https://github.com/jscutlery/devkit/compare/operators-1.1.1...operators-2.0.0) (2023-04-18)
 
 ### Tests
 
-- **operators:** make suspensify strict by default ([93b8c05](https://github.com/jscutlery/devkit/commit/93b8c0576086ff476e9239ead6175c8832f39c0e))
+- **operators:** make suspensify strict by
+  default ([93b8c05](https://github.com/jscutlery/devkit/commit/93b8c0576086ff476e9239ead6175c8832f39c0e))
 
 ### BREAKING CHANGES
 
@@ -96,7 +65,9 @@ This was a version bump only for operators to align it with other projects, ther
 
 ### Features
 
-- **operators:** add suspensify's strict mode ([f9dd789](https://github.com/jscutlery/devkit/commit/f9dd789d82cdff2fffb2241e8b0aab9bd76cb363)), closes [#237](https://github.com/jscutlery/devkit/issues/237)
+- **operators:** add suspensify's strict
+  mode ([f9dd789](https://github.com/jscutlery/devkit/commit/f9dd789d82cdff2fffb2241e8b0aab9bd76cb363)),
+  closes [#237](https://github.com/jscutlery/devkit/issues/237)
 
 ## [1.0.2](https://github.com/jscutlery/devkit/compare/operators-1.0.1...operators-1.0.2) (2023-04-18)
 
@@ -106,11 +77,14 @@ This was a version bump only for operators to align it with other projects, ther
 
 ### Bug Fixes
 
-- **operators:** 🏷️ fix typing errors ([91c084c](https://github.com/jscutlery/devkit/commit/91c084c29c6ad760376c10bc17004a2bfcd3a306))
+- **operators:** 🏷️ fix typing
+  errors ([91c084c](https://github.com/jscutlery/devkit/commit/91c084c29c6ad760376c10bc17004a2bfcd3a306))
 
 ### Features
 
-- **operators:** ✨ drop support for suspensify's projector ([f4bf6dc](https://github.com/jscutlery/devkit/commit/f4bf6dc413e866b5c047578162c1c1cbcb3c73f9)), closes [#236](https://github.com/jscutlery/devkit/issues/236)
+- **operators:** ✨ drop support for suspensify's
+  projector ([f4bf6dc](https://github.com/jscutlery/devkit/commit/f4bf6dc413e866b5c047578162c1c1cbcb3c73f9)),
+  closes [#236](https://github.com/jscutlery/devkit/issues/236)
 
 ### BREAKING CHANGES
 
@@ -122,7 +96,8 @@ This was a version bump only for operators to align it with other projects, ther
 
 ### Features
 
-- **operators:** ✨add esm support ([77b5470](https://github.com/jscutlery/devkit/commit/77b54704d26de058747ee919080873a434cd10b3))
+- **operators:** ✨add esm
+  support ([77b5470](https://github.com/jscutlery/devkit/commit/77b54704d26de058747ee919080873a434cd10b3))
 
 ## [0.1.8](https://github.com/jscutlery/devkit/compare/operators-0.1.7...operators-0.1.8) (2022-12-01)
 
@@ -148,4 +123,5 @@ This was a version bump only for operators to align it with other projects, ther
 
 ### Features
 
-- **operator:** ✅ add supensify operator ([e7fc483](https://github.com/jscutlery/test-utils/commit/e7fc483f197edda038da0a2a757620d49720d1db))
+- **operator:** ✅ add supensify
+  operator ([e7fc483](https://github.com/jscutlery/test-utils/commit/e7fc483f197edda038da0a2a757620d49720d1db))

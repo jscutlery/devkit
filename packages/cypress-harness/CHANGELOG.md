@@ -1,68 +1,6 @@
-## 0.6.0 (2024-04-12)
+## [0.6.0](https://github.com/jscutlery/devkit/compare/cypress-harness-0.5.2...cypress-harness-0.6.0) (2024-04-12)
 
-
-### 🚀 Features
-
-- use UnitTestElement ([79db9a0](https://github.com/jscutlery/devkit/commit/79db9a0))
-
-- ✅ remove log ([758c62a](https://github.com/jscutlery/devkit/commit/758c62a))
-
-- ✅ add cypress-mount ([6bf3a00](https://github.com/jscutlery/devkit/commit/6bf3a00))
-
-- **cypress-harness:** ✅ add getRootHarness ([27a1936](https://github.com/jscutlery/devkit/commit/27a1936))
-
-- **cypress-harness:** ✅ add chainable typed methods to `getRootHarness` result ([7f2936d](https://github.com/jscutlery/devkit/commit/7f2936d))
-
-- **cypress-harness:** ✅ log harness method name ([82c5744](https://github.com/jscutlery/devkit/commit/82c5744))
-
-- **cypress-harness:** ✅ add chainable typed methods to `getHarness` result ([32f7e86](https://github.com/jscutlery/devkit/commit/32f7e86))
-
-- **cypress-harness:** ✅ add @jscutlery/cypress-harness/support ([454016d](https://github.com/jscutlery/devkit/commit/454016d))
-
-- **cypress-harness:** ✅ support first level method chaining ([e52c26a](https://github.com/jscutlery/devkit/commit/e52c26a))
-
-- **cypress-harness:** ✅ make getHarness & getAllHarnesses & getRootHarness harnesses reusable ([35335a3](https://github.com/jscutlery/devkit/commit/35335a3))
-
-- **cypress-harness:** ✅ support recursive chaining ([363ce84](https://github.com/jscutlery/devkit/commit/363ce84))
-
-- **cypress-harness:** ✨ provide getPreprocessorConfig util ([56d74c9](https://github.com/jscutlery/devkit/commit/56d74c9))
-
-- **playwright-ct-angular:** ✨ upgrade to playwright 1.39 support ([#264](https://github.com/jscutlery/devkit/pull/264))
-
-
-### 🩹 Fixes
-
-- document root ([a99cf73](https://github.com/jscutlery/devkit/commit/a99cf73))
-
-- use standalone projects ([8e4b7b7](https://github.com/jscutlery/devkit/commit/8e4b7b7))
-
-- 🐞 bump workspace ([127c808](https://github.com/jscutlery/devkit/commit/127c808))
-
-- 🐞 add missing peerDependencies ([f820bad](https://github.com/jscutlery/devkit/commit/f820bad))
-
-- import of zone.js and zone.js/testing ([f14b091](https://github.com/jscutlery/devkit/commit/f14b091))
-
-- **cypress-harness:** 🐞 support cypress-mount 0.5.0 ([07877e5](https://github.com/jscutlery/devkit/commit/07877e5))
-
-- **cypress-harness:** 🐞 don't proxy native cypress functions ([db3a409](https://github.com/jscutlery/devkit/commit/db3a409))
-
-- **cypress-harness:** 🐞 correct return type of `getAllHarnesses` ([7b99fd9](https://github.com/jscutlery/devkit/commit/7b99fd9))
-
-- **cypress-harness:** 🐞 fix typing with strict mode ([8ff4b42](https://github.com/jscutlery/devkit/commit/8ff4b42))
-
-- **cypress-harness:** 🐞 fix `getAllHarnesses` type ([e66d08c](https://github.com/jscutlery/devkit/commit/e66d08c))
-
-- **cypress-harness:** 🐞 fix webpack import error ([787219c](https://github.com/jscutlery/devkit/commit/787219c))
-
-- **cypress-harness:** fix cypress harness chaining issue with Cypress 12 ([06e6c31](https://github.com/jscutlery/devkit/commit/06e6c31))
-
-
-### ❤️  Thank You
-
-- Adrian Baran
-- Edouard Bozon @edbzn
-- Jefiozie
-- Younes Jaaidi
+- Nothing changed
 
 ## [0.5.2](https://github.com/jscutlery/devkit/compare/cypress-harness-0.5.1...cypress-harness-0.5.2) (2024-03-22)
 
@@ -70,13 +8,15 @@
 
 ### Bug Fixes
 
-- import of zone.js and zone.js/testing ([f14b091](https://github.com/jscutlery/devkit/commit/f14b091326ceb6aaf0cbf7ebcb00637aac1477fd))
+- import of zone.js and
+  zone.js/testing ([f14b091](https://github.com/jscutlery/devkit/commit/f14b091326ceb6aaf0cbf7ebcb00637aac1477fd))
 
 # [0.5.0](https://github.com/jscutlery/devkit/compare/cypress-harness-0.4.7...cypress-harness-0.5.0) (2023-10-31)
 
 ### Features
 
-- **playwright-ct-angular:** ✨ upgrade to playwright 1.39 support ([#264](https://github.com/jscutlery/devkit/issues/264)) ([4354d3e](https://github.com/jscutlery/devkit/commit/4354d3e1fd076aebf524dfcc3e656d984820288c))
+- **playwright-ct-angular:** ✨ upgrade to playwright 1.39
+  support ([#264](https://github.com/jscutlery/devkit/issues/264)) ([4354d3e](https://github.com/jscutlery/devkit/commit/4354d3e1fd076aebf524dfcc3e656d984820288c))
 
 ## [0.4.7](https://github.com/jscutlery/devkit/compare/cypress-harness-0.4.6...cypress-harness-0.4.7) (2023-10-28)
 
@@ -98,13 +38,16 @@
 
 ### Bug Fixes
 
-- **cypress-harness:** fix cypress harness chaining issue with Cypress 12 ([06e6c31](https://github.com/jscutlery/devkit/commit/06e6c31111471604609b6e29fce7f9f39eaf3986)), closes [/docs.cypress.io/guides/references/changelog#12-0-0](https://github.com//docs.cypress.io/guides/references/changelog/issues/12-0-0) [#232](https://github.com/jscutlery/devkit/issues/232)
+- **cypress-harness:** fix cypress harness chaining issue with Cypress
+  12 ([06e6c31](https://github.com/jscutlery/devkit/commit/06e6c31111471604609b6e29fce7f9f39eaf3986)),
+  closes [/docs.cypress.io/guides/references/changelog#12-0-0](https://github.com//docs.cypress.io/guides/references/changelog/issues/12-0-0) [#232](https://github.com/jscutlery/devkit/issues/232)
 
 ## [0.4.2](https://github.com/jscutlery/devkit/compare/cypress-harness-0.4.1...cypress-harness-0.4.2) (2022-12-03)
 
 ### Bug Fixes
 
-- **cypress-harness:** 🐞 fix webpack import error ([787219c](https://github.com/jscutlery/devkit/commit/787219c243128c819567fe9f8678168d30fd8e12))
+- **cypress-harness:** 🐞 fix webpack import
+  error ([787219c](https://github.com/jscutlery/devkit/commit/787219c243128c819567fe9f8678168d30fd8e12))
 
 ## [0.4.1](https://github.com/jscutlery/devkit/compare/cypress-harness-0.4.0...cypress-harness-0.4.1) (2022-12-01)
 
@@ -112,8 +55,10 @@
 
 ### Features
 
-- **cypress-harness:** ✨ provide getPreprocessorConfig util ([56d74c9](https://github.com/jscutlery/devkit/commit/56d74c954785b4cc30d4aac63d7e87015e4b858f))
-- **cypress-harness:** ✨add support for Cypress 10 & 11 ([4d29535](https://github.com/jscutlery/devkit/commit/4d2953594f280031d8df0e5f429f74171ad236bf))
+- **cypress-harness:** ✨ provide getPreprocessorConfig
+  util ([56d74c9](https://github.com/jscutlery/devkit/commit/56d74c954785b4cc30d4aac63d7e87015e4b858f))
+- **cypress-harness:** ✨add support for Cypress 10 &
+  11 ([4d29535](https://github.com/jscutlery/devkit/commit/4d2953594f280031d8df0e5f429f74171ad236bf))
 
 ## [0.3.12](https://github.com/jscutlery/devkit/compare/cypress-harness-0.3.11...cypress-harness-0.3.12) (2022-06-24)
 
@@ -125,7 +70,8 @@
 
 ### Bug Fixes
 
-- 🐞 add missing peerDependencies ([f820bad](https://github.com/jscutlery/devkit/commit/f820bad0f2c1f2f41ecbc1f388a366601cbe16b5))
+- 🐞 add missing
+  peerDependencies ([f820bad](https://github.com/jscutlery/devkit/commit/f820bad0f2c1f2f41ecbc1f388a366601cbe16b5))
 - 🐞 bump workspace ([127c808](https://github.com/jscutlery/devkit/commit/127c808e61cd9e8be3f3e3fd32f64fe7ad1f7e55))
 
 ## [0.3.10](https://github.com/jscutlery/devkit/compare/cypress-harness-0.3.9...cypress-harness-0.3.10) (2022-03-26)
@@ -138,20 +84,24 @@
 
 ### Bug Fixes
 
-- use standalone projects ([8e4b7b7](https://github.com/jscutlery/devkit/commit/8e4b7b7fc5405fa01b6114654211ac45ec9bfd5e))
+- use standalone
+  projects ([8e4b7b7](https://github.com/jscutlery/devkit/commit/8e4b7b7fc5405fa01b6114654211ac45ec9bfd5e))
 
 ## [0.3.6](https://github.com/jscutlery/devkit/compare/cypress-harness-0.3.5...cypress-harness-0.3.6) (2021-08-05)
 
 ### Bug Fixes
 
-- **cypress-harness:** 🐞 fix `getAllHarnesses` type ([e66d08c](https://github.com/jscutlery/devkit/commit/e66d08c5745a934da3bc3ecc57adcfd44ee7b30d))
+- **cypress-harness:** 🐞 fix `getAllHarnesses`
+  type ([e66d08c](https://github.com/jscutlery/devkit/commit/e66d08c5745a934da3bc3ecc57adcfd44ee7b30d))
 
 ## [0.3.5](https://github.com/jscutlery/devkit/compare/cypress-harness-0.3.4...cypress-harness-0.3.5) (2021-06-29)
 
 ### Bug Fixes
 
-- **cypress-harness:** 🐞 correct return type of `getAllHarnesses` ([7b99fd9](https://github.com/jscutlery/devkit/commit/7b99fd9eff4e4614026d3fb9d2ec7d5f50e4fa47))
-- **cypress-harness:** 🐞 fix typing with strict mode ([8ff4b42](https://github.com/jscutlery/devkit/commit/8ff4b428d6c1c2a252f93eb9722c6f6cf67f5359))
+- **cypress-harness:** 🐞 correct return type
+  of `getAllHarnesses` ([7b99fd9](https://github.com/jscutlery/devkit/commit/7b99fd9eff4e4614026d3fb9d2ec7d5f50e4fa47))
+- **cypress-harness:** 🐞 fix typing with strict
+  mode ([8ff4b42](https://github.com/jscutlery/devkit/commit/8ff4b428d6c1c2a252f93eb9722c6f6cf67f5359))
 
 ## [0.3.4](https://github.com/jscutlery/devkit/compare/cypress-harness-0.3.3...cypress-harness-0.3.4) (2021-05-15)
 
@@ -165,36 +115,49 @@
 
 ### Bug Fixes
 
-- **cypress-harness:** 🐞 don't proxy native cypress functions ([db3a409](https://github.com/jscutlery/devkit/commit/db3a409a4f40334f8b7eccd6f126913a395a5b3d))
+- **cypress-harness:** 🐞 don't proxy native cypress
+  functions ([db3a409](https://github.com/jscutlery/devkit/commit/db3a409a4f40334f8b7eccd6f126913a395a5b3d))
 
 ### Features
 
-- **cypress-harness:** ✅ make getHarness & getAllHarnesses & getRootHarness harnesses reusable ([35335a3](https://github.com/jscutlery/devkit/commit/35335a38ea9949ba09066034bcb3c61d76318b1a)), closes [#3](https://github.com/jscutlery/devkit/issues/3)
-- **cypress-harness:** ✅ support first level method chaining ([e52c26a](https://github.com/jscutlery/devkit/commit/e52c26a5df9e21ce7c5a6feb041ba661613810c3))
-- **cypress-harness:** ✅ support recursive chaining ([363ce84](https://github.com/jscutlery/devkit/commit/363ce8471b18bda23f6aeb62c81bf53847fb8caf))
+- **cypress-harness:** ✅ make getHarness & getAllHarnesses & getRootHarness harnesses
+  reusable ([35335a3](https://github.com/jscutlery/devkit/commit/35335a38ea9949ba09066034bcb3c61d76318b1a)),
+  closes [#3](https://github.com/jscutlery/devkit/issues/3)
+- **cypress-harness:** ✅ support first level method
+  chaining ([e52c26a](https://github.com/jscutlery/devkit/commit/e52c26a5df9e21ce7c5a6feb041ba661613810c3))
+- **cypress-harness:** ✅ support recursive
+  chaining ([363ce84](https://github.com/jscutlery/devkit/commit/363ce8471b18bda23f6aeb62c81bf53847fb8caf))
 
 ## [0.2.1](https://github.com/jscutlery/devkit/compare/cypress-harness-0.2.0...cypress-harness-0.2.1) (2021-02-10)
 
 ### Bug Fixes
 
-- **cypress-harness:** 🐞 support cypress-mount 0.5.0 ([07877e5](https://github.com/jscutlery/devkit/commit/07877e524adabcf2b693c898a17b0fd5d977d3b8))
+- **cypress-harness:** 🐞 support cypress-mount
+  0.5.0 ([07877e5](https://github.com/jscutlery/devkit/commit/07877e524adabcf2b693c898a17b0fd5d977d3b8))
 
 # 0.2.0 (2021-01-04)
 
 ### Bug Fixes
 
-- **cypress-harness:** 🐞 fix "zone-testing is needed" error ([ab7b5a0](https://github.com/jscutlery/devkit/commit/ab7b5a0978c46aae8331c69f570541917984d154)), closes [#2](https://github.com/jscutlery/devkit/issues/2)
+- **cypress-harness:** 🐞 fix "zone-testing is needed"
+  error ([ab7b5a0](https://github.com/jscutlery/devkit/commit/ab7b5a0978c46aae8331c69f570541917984d154)),
+  closes [#2](https://github.com/jscutlery/devkit/issues/2)
 - document root ([a99cf73](https://github.com/jscutlery/devkit/commit/a99cf73b6a3f95e8188f171acb952203231f1118))
 
 ### Features
 
-- **cypress-harness:** ✅ add @jscutlery/cypress-harness/support ([454016d](https://github.com/jscutlery/devkit/commit/454016d71fbb30260c5c5dec4d5cdb8ab47653f9))
+- **cypress-harness:** ✅ add
+  @jscutlery/cypress-harness/support ([454016d](https://github.com/jscutlery/devkit/commit/454016d71fbb30260c5c5dec4d5cdb8ab47653f9))
 - ✅ remove log ([758c62a](https://github.com/jscutlery/devkit/commit/758c62a2ab42b6ae52a4ed917693cfda19b0a3b5))
 - use UnitTestElement ([79db9a0](https://github.com/jscutlery/devkit/commit/79db9a0526a8caddfa2d040d32dcf0f54399856b))
-- **cypress-harness:** ✅ add chainable typed methods to `getHarness` result ([32f7e86](https://github.com/jscutlery/devkit/commit/32f7e86c8ff5862fa4f7922bc4b4336a9729169d))
-- **cypress-harness:** ✅ add chainable typed methods to `getRootHarness` result ([7f2936d](https://github.com/jscutlery/devkit/commit/7f2936d16ee22214c5f2cae5da2b8544292f09fc))
-- **cypress-harness:** ✅ add getRootHarness ([27a1936](https://github.com/jscutlery/devkit/commit/27a19360aff0c280af027822f13d403e28b4990a))
-- **cypress-harness:** ✅ log harness method name ([82c5744](https://github.com/jscutlery/devkit/commit/82c574451df323db96736a062dc9cea9a132657d))
+- **cypress-harness:** ✅ add chainable typed methods to `getHarness`
+  result ([32f7e86](https://github.com/jscutlery/devkit/commit/32f7e86c8ff5862fa4f7922bc4b4336a9729169d))
+- **cypress-harness:** ✅ add chainable typed methods to `getRootHarness`
+  result ([7f2936d](https://github.com/jscutlery/devkit/commit/7f2936d16ee22214c5f2cae5da2b8544292f09fc))
+- **cypress-harness:** ✅ add
+  getRootHarness ([27a1936](https://github.com/jscutlery/devkit/commit/27a19360aff0c280af027822f13d403e28b4990a))
+- **cypress-harness:** ✅ log harness method
+  name ([82c5744](https://github.com/jscutlery/devkit/commit/82c574451df323db96736a062dc9cea9a132657d))
 
 # 0.1.0 (2020-12-01)
 
@@ -204,10 +167,15 @@
 
 ### Features
 
-- **cypress-harness:** ✅ add @jscutlery/cypress-harness/support ([454016d](https://github.com/jscutlery/devkit/commit/454016d71fbb30260c5c5dec4d5cdb8ab47653f9))
+- **cypress-harness:** ✅ add
+  @jscutlery/cypress-harness/support ([454016d](https://github.com/jscutlery/devkit/commit/454016d71fbb30260c5c5dec4d5cdb8ab47653f9))
 - ✅ remove log ([758c62a](https://github.com/jscutlery/devkit/commit/758c62a2ab42b6ae52a4ed917693cfda19b0a3b5))
 - use UnitTestElement ([79db9a0](https://github.com/jscutlery/devkit/commit/79db9a0526a8caddfa2d040d32dcf0f54399856b))
-- **cypress-harness:** ✅ add chainable typed methods to `getHarness` result ([32f7e86](https://github.com/jscutlery/devkit/commit/32f7e86c8ff5862fa4f7922bc4b4336a9729169d))
-- **cypress-harness:** ✅ add chainable typed methods to `getRootHarness` result ([7f2936d](https://github.com/jscutlery/devkit/commit/7f2936d16ee22214c5f2cae5da2b8544292f09fc))
-- **cypress-harness:** ✅ add getRootHarness ([27a1936](https://github.com/jscutlery/devkit/commit/27a19360aff0c280af027822f13d403e28b4990a))
-- **cypress-harness:** ✅ log harness method name ([82c5744](https://github.com/jscutlery/devkit/commit/82c574451df323db96736a062dc9cea9a132657d))
+- **cypress-harness:** ✅ add chainable typed methods to `getHarness`
+  result ([32f7e86](https://github.com/jscutlery/devkit/commit/32f7e86c8ff5862fa4f7922bc4b4336a9729169d))
+- **cypress-harness:** ✅ add chainable typed methods to `getRootHarness`
+  result ([7f2936d](https://github.com/jscutlery/devkit/commit/7f2936d16ee22214c5f2cae5da2b8544292f09fc))
+- **cypress-harness:** ✅ add
+  getRootHarness ([27a1936](https://github.com/jscutlery/devkit/commit/27a19360aff0c280af027822f13d403e28b4990a))
+- **cypress-harness:** ✅ log harness method
+  name ([82c5744](https://github.com/jscutlery/devkit/commit/82c574451df323db96736a062dc9cea9a132657d))
