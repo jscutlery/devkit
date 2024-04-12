@@ -74,7 +74,7 @@ export default swcAngularPreset();
 
 function assertCompatibleSwcCoreVersion() {
   if (!swcCoreVersion.startsWith('1.4.')) {
-    console.warn(`
+    console.error(`
     @swc/core version ${swcCoreVersion} is incompatible with @jscutlery/swc-angular.
     Please use @swc/core version 1.4.x.
     > npm add -D @swc/core@~1.4.0
