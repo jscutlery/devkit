@@ -1,0 +1,35 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "swc-angular-wide",
+  "sourceRoot": "tests/swc-angular-wide/src",
+  "prefix": "lib",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "debug": {
+      "command": "nx watch --all -- 'rm -Rf node_modules/.vite node_modules/.vitest && yarn jest --clearCache && nx test swc-angular-wide --skip-nx-cache'"
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "cwd": "{projectRoot}",
+        "commands": [
+          "jest",
+          "vitest --watch false"
+        ]
+      },
+      "dependsOn": [
+        {
+          "projects": [
+            "swc-angular-plugin"
+          ],
+          "target": "build"
+        }
+      ]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

@@ -38,15 +38,15 @@ rx-computed:
       - any-glob-to-any-file:
           - 'packages/rx-computed/**/*'
 
-swc-angular-preset:
+swc-angular:
   - changed-files:
       - any-glob-to-any-file:
-          - 'packages/swc-angular-preset/**/*'
+          - 'packages/swc-angular/**/*'
 
-swc-plugin-angular:
+swc-angular-plugin:
   - changed-files:
       - any-glob-to-any-file:
-          - 'packages/swc-plugin-angular/**/*'
+          - 'packages/swc-angular-plugin/**/*'
 
 test:
   - changed-files:
