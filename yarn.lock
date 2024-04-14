@@ -4718,7 +4718,7 @@ __metadata:
     tslib: 2.4.0
     typescript: 5.4.5
     unplugin-swc: 1.4.5
-    vite: 5.2.2
+    vite: 5.2.8
     vitest: 1.4.0
     zone.js: 0.14.4
   languageName: unknown
@@ -20372,7 +20372,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.18, postcss@npm:^8.4.31, postcss@npm:^8.4.33, postcss@npm:^8.4.35, postcss@npm:^8.4.36, postcss@npm:^8.4.38":
+"postcss@npm:^8.4.18, postcss@npm:^8.4.31, postcss@npm:^8.4.33, postcss@npm:^8.4.35, postcss@npm:^8.4.38":
   version: 8.4.38
   resolution: "postcss@npm:8.4.38"
   dependencies:
@@ -23961,13 +23961,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:5.2.2":
-  version: 5.2.2
-  resolution: "vite@npm:5.2.2"
+"vite@npm:5.2.8, vite@npm:^5.0.0":
+  version: 5.2.8
+  resolution: "vite@npm:5.2.8"
   dependencies:
     esbuild: ^0.20.1
     fsevents: ~2.3.3
-    postcss: ^8.4.36
+    postcss: ^8.4.38
     rollup: ^4.13.0
   peerDependencies:
     "@types/node": ^18.0.0 || >=20.0.0
@@ -23997,7 +23997,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: ef20480a0d4145f05378d33d295917995679c75205c19872346f18ad847cca8ac90794b7cfb280f787c0db60a90afcc1ae2c2e5ccedfe4751fb4a3c0ff07be69
+  checksum: c0a77271b548fce443af59a383939924ffcba8e6d0ba6ecb2e481d0ec2318465d2116ce9317599c448e6d6d8af11a67b8efc5b52cb1deab37d2e83311ac4f1b5
   languageName: node
   linkType: hard
 
@@ -24076,46 +24076,6 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: 06f1a4c858e4dc4c04a10466f4ccacea30c5a9f8574e5ba3deb9d03fa20e80ca6797f02dad97a988da7cdef96238dbc69c3b6a538156585c74722d996223619e
-  languageName: node
-  linkType: hard
-
-"vite@npm:^5.0.0":
-  version: 5.2.8
-  resolution: "vite@npm:5.2.8"
-  dependencies:
-    esbuild: ^0.20.1
-    fsevents: ~2.3.3
-    postcss: ^8.4.38
-    rollup: ^4.13.0
-  peerDependencies:
-    "@types/node": ^18.0.0 || >=20.0.0
-    less: "*"
-    lightningcss: ^1.21.0
-    sass: "*"
-    stylus: "*"
-    sugarss: "*"
-    terser: ^5.4.0
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-    less:
-      optional: true
-    lightningcss:
-      optional: true
-    sass:
-      optional: true
-    stylus:
-      optional: true
-    sugarss:
-      optional: true
-    terser:
-      optional: true
-  bin:
-    vite: bin/vite.js
-  checksum: c0a77271b548fce443af59a383939924ffcba8e6d0ba6ecb2e481d0ec2318465d2116ce9317599c448e6d6d8af11a67b8efc5b52cb1deab37d2e83311ac4f1b5
   languageName: node
   linkType: hard
 
