@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<svg xmlns='http://www.w3.org/2000/svg'
+     width='1000' height='290'
+     style='background-color: white'>
+  <g>
+    <rect fill='green' height='30' x='200' y='10' width='.3%'></rect>
+    <text fill='#222' x='5' y='30'>😜 nx cache (150ms)</text>
+
+    <rect fill='green' height='30' x='200' y='50' width='6%'></rect>
+    <text fill='#222' x='5' y='70'>vitest-swc-no-isolate (3.1s)</text>
+
+    <rect fill='green' height='30' x='200' y='90' width='21%'></rect>
+    <text fill='#222' x='5' y='110'>jest-swc (10.4s)</text>
+
+    <rect fill='grey' height='30' x='200' y='130' width='22%'></rect>
+    <text fill='#222' x='5' y='150'>angular-cli-karma (11s)</text>
+
+    <rect fill='#380030' height='30' x='200' y='170' width='36%'></rect>
+    <text fill='#222' x='5' y='190'>jest (18.1s)</text>
+
+    <rect fill='green' height='30' x='200' y='210' width='56%'></rect>
+    <text fill='#222' x='5' y='230'>vitest-swc (28s)</text>
+
+    <rect fill='#380030' height='30' x='200' y='250' width='72%'></rect>
+    <text fill='#222' x='5' y='270'>vitest (35.9s)</text>
+  </g>
+</svg>
