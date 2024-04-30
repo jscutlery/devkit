@@ -7,7 +7,9 @@
   "targets": {
     "build": {
       "executor": "@nx/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "project": "packages/playwright-ct-angular/package.json",
         "outputPath": "dist/packages/playwright-ct-angular",
@@ -15,11 +17,19 @@
         "tsConfig": "packages/playwright-ct-angular/tsconfig.lib.json",
         "main": "packages/playwright-ct-angular/src/index.ts",
         "compiler": "tsc",
-        "format": ["cjs", "esm"],
+        "format": [
+          "cjs",
+          "esm"
+        ],
+        "external": [
+          "@babel/core",
+          "playwright"
+        ],
         "generateExportsField": true,
         "additionalEntryPoints": [
           "packages/playwright-ct-angular/src/hooks.ts",
-          "packages/playwright-ct-angular/src/register.ts"
+          "packages/playwright-ct-angular/src/register.ts",
+          "packages/playwright-ct-angular/src/transform-angular.ts"
         ],
         "assets": [
           {
@@ -42,18 +52,25 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "outputs": [
+        "{options.outputFile}"
+      ]
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "packages/playwright-ct-angular/jest.config.ts"
       }
     },
     "nx-release-publish": {
       "executor": "@nx/js:release-publish",
-      "dependsOn": ["^nx-release-publish", "build"]
+      "dependsOn": [
+        "^nx-release-publish",
+        "build"
+      ]
     }
   }
 }

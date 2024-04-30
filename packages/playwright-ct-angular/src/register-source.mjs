@@ -3,7 +3,7 @@ import 'zone.js';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import {
   BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
+  platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Subscription } from 'rxjs';
@@ -32,29 +32,30 @@ export function pwRegister(components) {
 let subscription;
 
 globalThis.playwrightMount = async (component, rootElement, hooksConfig) => {
-  const loader = _componentLoaderMap.get(component.type);
-  const cmpType = await loader();
+  const cmpType = component.type;
 
   subscription = new Subscription();
 
   TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule],
+    imports: [BrowserAnimationsModule]
   });
   const fixture = TestBed.createComponent(cmpType);
+  fixture.nativeElement.id = 'root';
 
   /* Set inputs. */
-  for (const [name, value] of Object.entries(component.options.inputs ?? {})) {
+  for (const [name, value] of Object.entries(component.inputs ?? {})) {
     fixture.componentInstance[name] = value;
   }
 
   /* Subscribe to outputs. */
   for (const [name, callback] of Object.entries(
-    component.options.outputs ?? {}
+    component.outputs ?? {}
   )) {
     subscription.add(fixture.componentInstance[name].subscribe(callback));
   }
 
   fixture.autoDetectChanges();
+  await fixture.whenStable();
 };
 
 globalThis.playwrightUnmount = async (rootElement) => {
