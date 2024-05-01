@@ -100,20 +100,28 @@ export default declare((api) => {
 
 function collectClassMountUsages(path: NodePath<t.Program>): Set<string> {
   const names = new Set<string>();
+  let isInMountCall = false;
   path.traverse({
-    enter: (p) => {
-      // Treat calls to mount and all identifiers in arguments as component usages.
-      // e.g. mount(MyComponent, { imports: [OtherComponent], providers: [Token]})
-      if (
-        t.isCallExpression(p.node) &&
-        t.isIdentifier(p.node.callee) &&
-        p.node.callee.name === 'mount'
-      ) {
-        p.traverse({
-          Identifier: (p) => {
-            names.add(p.node.name);
-          },
-        });
+    CallExpression: {
+      enter(p) {
+        if (t.isIdentifier(p.node.callee) && p.node.callee.name === 'mount') {
+          isInMountCall = true;
+          return;
+        }
+
+        /* Ignore any function or method calls in `mount` args.
+         * e.g. {inputs: {recipe: recipeMother.withBasicInfo()}}. */
+        if (isInMountCall) {
+          p.skip();
+        }
+      },
+      exit() {
+        isInMountCall = false;
+      },
+    },
+    Identifier(p) {
+      if (isInMountCall) {
+        names.add(p.node.name);
       }
     },
   });

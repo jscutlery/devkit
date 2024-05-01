@@ -29,13 +29,12 @@ test.describe('<wm-recipe-search>', () => {
   });
 
   async function renderSearchComponent({ mount }: ComponentFixtures) {
-    const recipes = [
-      recipeMother.withBasicInfo('Beer').build(),
-      recipeMother.withBasicInfo('Burger').build(),
-    ];
     const locator = await mount(RecipeSearchTestContainer, {
       inputs: {
-        recipes,
+        recipes: [
+          recipeMother.withBasicInfo('Beer').build(),
+          recipeMother.withBasicInfo('Burger').build(),
+        ],
       },
     });
 
