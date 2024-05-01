@@ -43,13 +43,13 @@ globalThis.playwrightMount = async (component, rootElement, hooksConfig) => {
   fixture.nativeElement.id = 'root';
 
   /* Set inputs. */
-  for (const [name, value] of Object.entries(component.inputs ?? {})) {
+  for (const [name, value] of Object.entries(component.props ?? {})) {
     fixture.componentInstance[name] = value;
   }
 
   /* Subscribe to outputs. */
   for (const [name, callback] of Object.entries(
-    component.outputs ?? {}
+    component.on ?? {}
   )) {
     subscription.add(fixture.componentInstance[name].subscribe(callback));
   }

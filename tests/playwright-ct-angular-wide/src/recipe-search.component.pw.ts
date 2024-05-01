@@ -30,7 +30,7 @@ test.describe('<wm-recipe-search>', () => {
 
   async function renderSearchComponent({ mount }: ComponentFixtures) {
     const locator = await mount(RecipeSearchTestContainer, {
-      inputs: {
+      props: {
         recipes: [
           recipeMother.withBasicInfo('Beer').build(),
           recipeMother.withBasicInfo('Burger').build(),

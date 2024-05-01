@@ -23,7 +23,7 @@ test.describe('<wm-recipe-filter>', () => {
   async function renderRecipeFilter({ mount }: ComponentFixtures) {
     const filterChangeCalls: RecipeFilter[] = [];
     const locator = await mount(RecipeFilterComponent, {
-      outputs: {
+      on: {
         filterChange(filter) {
           filterChangeCalls.push(filter);
         },
