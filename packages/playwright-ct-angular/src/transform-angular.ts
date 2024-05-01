@@ -157,11 +157,12 @@ function importInfo(
 
   const imported = (specifier as any).imported;
 
-  if (t.isImportDefaultSpecifier(specifier)) {
-  } else if (t.isIdentifier(imported)) {
-    result.remoteName = imported.name;
-  } else {
-    result.remoteName = imported.value;
+  if (!t.isImportDefaultSpecifier(specifier)) {
+    if (t.isIdentifier(imported)) {
+      result.remoteName = imported.name;
+    } else {
+      result.remoteName = imported.value;
+    }
   }
 
   if (result.remoteName) result.id += '_' + result.remoteName;
