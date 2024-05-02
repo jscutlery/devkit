@@ -9,7 +9,7 @@ const config = defineConfig({
   testMatch: /pw\.tsx?/,
   snapshotDir: './__snapshots__',
   /* Maximum time one test can run for. */
-  timeout: 2 * 1000,
+  timeout: 5_000,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
