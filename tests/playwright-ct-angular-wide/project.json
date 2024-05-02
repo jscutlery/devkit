@@ -5,11 +5,10 @@
   "projectType": "application",
   "targets": {
     "component-test": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "playwright test -c tests/playwright-ct-angular-wide/playwright-ct.config.ts"
-      }
+      "command": "playwright test -c tests/playwright-ct-angular-wide/playwright-ct.config.ts",
+      "dependsOn": ["^build"]
     }
   },
+  "implicitDependencies": ["playwright-ct-angular"],
   "tags": []
 }

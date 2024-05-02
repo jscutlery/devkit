@@ -1,34 +1,79 @@
-/**
- * Copyright (c) Microsoft Corporation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+import * as path from 'node:path';
+import { Type } from '@angular/core';
+import type {
+  PlaywrightTestConfig,
+  TestType,
+} from '@playwright/experimental-ct-core';
+import * as playwrightCtCore from '@playwright/experimental-ct-core';
+import * as playwright from '@playwright/test';
+import type { Observable } from 'rxjs';
 
-export { devices, expect, test } from './lib/playwright-ct-angular';
-export type { ComponentFixtures } from './lib/playwright-ct-angular';
+export type { PlaywrightTestConfig };
+export { expect, devices } from '@playwright/test';
 
-import { defineConfig as originalDefineConfig } from '@playwright/experimental-ct-core';
-import * as path from 'path';
-
-function plugin() {
-  /* Only fetch upon request to avoid resolution in workers. */
-  const {
-    createPlugin,
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-  } = require('@playwright/experimental-ct-core/lib/vitePlugin');
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  return createPlugin(path.join(__dirname, 'register-source.mjs'), () => {});
+export interface ComponentFixtures {
+  mount<COMPONENT>(
+    component: Type<COMPONENT>,
+    options?: MountOptions<COMPONENT>,
+  ): Promise<MountResult<COMPONENT>>;
 }
 
-export const defineConfig: typeof originalDefineConfig = (config) =>
-  originalDefineConfig({ ...config, _plugins: [plugin] });
+export interface MountOptions<COMPONENT> {
+  props?: Partial<COMPONENT>;
+  on?: Outputs<COMPONENT>;
+}
+
+export type Outputs<COMPONENT> = Partial<{
+  /* For each field or method... is this an observable? */
+  [K in keyof COMPONENT]: COMPONENT[K] extends Observable<unknown>
+    ? /* It's an observable, so let's change the return type. */
+      (value: Emitted<COMPONENT[K]>) => void
+    : /* It's something else. */
+      COMPONENT[K];
+}>;
+
+export interface MountResult<COMPONENT> extends playwright.Locator {
+  unmount(): Promise<void>;
+
+  update(options: {
+    props?: Partial<COMPONENT>;
+    on?: Outputs<COMPONENT>;
+  }): Promise<void>;
+}
+
+type Emitted<OBSERVABLE> =
+  OBSERVABLE extends Observable<infer EMITTED> ? EMITTED : OBSERVABLE;
+
+/* @hack `test` is not exported in the type definition of `@playwright/experimental-ct-core`. */
+// @eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const test: TestType<ComponentFixtures> = (playwrightCtCore as any).test;
+
+export const defineConfig = (config, ...configs): PlaywrightTestConfig => {
+  const original = playwrightCtCore.defineConfig(
+    {
+      ...config,
+      '@playwright/test': {
+        packageJSON: require.resolve('./package.json'),
+      },
+      '@playwright/experimental-ct-core': {
+        registerSourceFile: path.join(__dirname, 'register-source.mjs'),
+      },
+    },
+    ...configs,
+  );
+
+  /* @hack for some weird reason, if we do not require the babel plugin here,
+   * babel loads an empty object instead of the default exported function. */
+  require('@jscutlery/playwright-ct-angular/transform-angular');
+
+  return {
+    ...original,
+    '@playwright/test': {
+      ...original['@playwright/test'],
+      babelPlugins: [
+        ...original['@playwright/test'].babelPlugins,
+        [require.resolve('@jscutlery/playwright-ct-angular/transform-angular')],
+      ],
+    },
+  } as PlaywrightTestConfig;
+};

@@ -1,9 +1,15 @@
 {
-  "extends": ["plugin:cypress/recommended", "../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*"],
+  "extends": [
+    "../../.eslintrc.json"
+  ],
+  "ignorePatterns": [
+    "!**/*"
+  ],
   "overrides": [
     {
-      "files": ["src/plugins/index.js"],
+      "files": [
+        "src/plugins/index.js"
+      ],
       "rules": {
         "@typescript-eslint/no-var-requires": "off",
         "no-undef": "off"

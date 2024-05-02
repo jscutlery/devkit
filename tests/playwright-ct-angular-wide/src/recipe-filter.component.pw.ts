@@ -1,30 +1,40 @@
-import { ComponentFixtures, expect, test } from '@jscutlery/playwright-ct-angular';
+import {
+  ComponentFixtures,
+  expect,
+  test,
+} from '@jscutlery/playwright-ct-angular';
+import { RecipeFilter } from './recipe-filter';
 import { RecipeFilterComponent } from './recipe-filter.component';
 
 test.describe('<wm-recipe-filter>', () => {
   test('should search recipes without keyword on load', async ({ mount }) => {
-    const { filterChangeSpy, updateFilter } = await renderRecipeFilter({ mount });
+    const { filterChangeCalls, updateFilter } = await renderRecipeFilter({
+      mount,
+    });
 
     await updateFilter({ keywords: 'Burger' });
 
-    expect(filterChangeSpy).toBeCalledTimes(6);
-    expect(filterChangeSpy).lastCalledWith(
-      expect.objectContaining({
-        keywords: 'Burger'
-      })
-    );
+    expect(filterChangeCalls).toHaveLength(6);
+    expect(filterChangeCalls[filterChangeCalls.length - 1]).toMatchObject({
+      keywords: 'Burger',
+    });
   });
 
   async function renderRecipeFilter({ mount }: ComponentFixtures) {
+    const filterChangeCalls: RecipeFilter[] = [];
     const locator = await mount(RecipeFilterComponent, {
-      spyOutputs: ['filterChange']
+      on: {
+        filterChange(filter) {
+          filterChangeCalls.push(filter);
+        },
+      },
     });
 
     return {
-      filterChangeSpy: locator.spies.filterChange,
+      filterChangeCalls,
       async updateFilter({ keywords }: { keywords: string }) {
-        await locator.getByLabel('Keywords').type(keywords);
-      }
+        await locator.getByLabel('Keywords').pressSequentially(keywords);
+      },
     };
   }
 });
