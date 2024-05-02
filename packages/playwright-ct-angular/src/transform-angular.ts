@@ -34,7 +34,9 @@ export default declare((api) => {
           importInfos = new Map();
         },
         exit(path) {
+          // @eslint-disable-next-line @typescript-eslint/no-explicit-any
           let firstDeclaration: any;
+          // @eslint-disable-next-line @typescript-eslint/no-explicit-any
           let lastImportDeclaration: any;
           path.get('body').forEach((p) => {
             if (p.isImportDeclaration()) lastImportDeclaration = p;
@@ -80,6 +82,7 @@ export default declare((api) => {
           const { localName, info } = importInfo(
             importNode,
             specifier as t.ImportSpecifier | t.ImportDefaultSpecifier,
+            // @eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             this.filename!,
           );
           if (classComponentNames.has(localName)) {
@@ -155,6 +158,7 @@ function importInfo(
     remoteName: undefined,
   };
 
+  // @eslint-disable-next-line @typescript-eslint/no-explicit-any
   const imported = (specifier as any).imported;
 
   if (!t.isImportDefaultSpecifier(specifier)) {

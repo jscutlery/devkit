@@ -45,6 +45,7 @@ type Emitted<OBSERVABLE> =
   OBSERVABLE extends Observable<infer EMITTED> ? EMITTED : OBSERVABLE;
 
 /* @hack `test` is not exported in the type definition of `@playwright/experimental-ct-core`. */
+// @eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const test: TestType<ComponentFixtures> = (playwrightCtCore as any).test;
 
 export const defineConfig = (config, ...configs): PlaywrightTestConfig => {
