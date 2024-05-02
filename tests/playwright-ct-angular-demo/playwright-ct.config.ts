@@ -5,7 +5,7 @@ import { env } from 'process';
  * See https://playwright.dev/docs/test-configuration.
  */
 const config = defineConfig({
-  testDir: 'tests',
+  testDir: 'src',
   testMatch: /pw\.tsx?/,
   snapshotDir: './__snapshots__',
   /* Maximum time one test can run for. */
@@ -18,11 +18,20 @@ const config = defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    testIdAttribute: 'data-role',
+
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
 
     /* Port to use for Playwright component endpoint. */
     ctPort: 3100,
+
+    ctViteConfig: {
+      resolve: {
+        /* @angular/material is using "style" as a Custom Conditional export to expose prebuilt styles etc... */
+        conditions: ['style'],
+      },
+    },
   },
 
   /* Configure projects for major browsers */
