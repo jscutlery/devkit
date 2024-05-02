@@ -1,3 +1,15 @@
+## 0.7.0 (2024-05-02)
+
+
+### 🚀 Features
+
+- ✨ add support for playwright 1.43 ([#358](https://github.com/jscutlery/devkit/pull/358))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## [0.6.0](https://github.com/jscutlery/devkit/compare/cypress-harness-0.5.2...cypress-harness-0.6.0) (2024-04-12)
 
 - Nothing changed
