@@ -48,7 +48,10 @@ type Emitted<OBSERVABLE> =
 // @eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const test: TestType<ComponentFixtures> = (playwrightCtCore as any).test;
 
-export const defineConfig = (config, ...configs): PlaywrightTestConfig => {
+export const defineConfig: typeof playwrightCtCore.defineConfig = (
+  config,
+  ...configs
+): PlaywrightTestConfig => {
   const original = playwrightCtCore.defineConfig(
     {
       ...config,

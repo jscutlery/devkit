@@ -4,6 +4,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   selector: 'jc-basic',
-  template: `Hello world!`,
+  template: `<h1>Hello world!</h1>`,
 })
 export class BasicComponent {}

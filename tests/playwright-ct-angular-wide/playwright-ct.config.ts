@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@jscutlery/playwright-ct-angular';
 import { env } from 'process';
+import swc from 'unplugin-swc';
+import { swcAngularUnpluginOptions } from '../../packages/swc-angular/src';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -23,6 +25,10 @@ const config = defineConfig({
 
     /* Port to use for Playwright component endpoint. */
     ctPort: 3100,
+
+    ctViteConfig: {
+      plugins: [swc.vite(swcAngularUnpluginOptions())],
+    },
   },
 
   /* Configure projects for major browsers */
