@@ -12,6 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Original file: https://github.com/microsoft/playwright/blob/8173cdc4857f8e0a98047e02e692c5da6544a170/packages/playwright-ct-core/src/tsxTransform.ts
  */
 
 import path from 'node:path';
