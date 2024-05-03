@@ -44,7 +44,7 @@ globalThis.playwrightMount = async (component, rootElement, hooksConfig) => {
 
   /* Set inputs. */
   for (const [name, value] of Object.entries(component.props ?? {})) {
-    fixture.componentInstance[name] = value;
+    fixture.componentRef.setInput(name, value);
   }
 
   /* Subscribe to outputs. */

@@ -1,5 +1,5 @@
 import * as path from 'node:path';
-import { Type } from '@angular/core';
+import { InputSignal, Type } from '@angular/core';
 import type {
   PlaywrightTestConfig,
   TestType,
@@ -19,9 +19,17 @@ export interface ComponentFixtures {
 }
 
 export interface MountOptions<COMPONENT> {
-  props?: Partial<COMPONENT>;
+  props?: Inputs<COMPONENT>;
   on?: Outputs<COMPONENT>;
 }
+
+export type Inputs<COMPONENT> = {
+  [PROPERTY in keyof COMPONENT]: COMPONENT[PROPERTY] extends InputSignal<
+    infer VALUE
+  >
+    ? VALUE
+    : COMPONENT[PROPERTY];
+};
 
 export type Outputs<COMPONENT> = Partial<{
   /* For each field or method... is this an observable? */
