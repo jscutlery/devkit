@@ -12,7 +12,7 @@ test('mount with template in separate file', async ({ mount }) => {
   await expect(component).toContainText('Hello world!');
 });
 
-test.skip('unmount', async ({ mount }) => {
+test('unmount', async ({ mount }) => {
   const component = await mount(BasicComponent);
   await component.unmount();
   await expect(component).not.toContainText('Hello world!');

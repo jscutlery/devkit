@@ -2,12 +2,11 @@ import { expect, test } from '@jscutlery/playwright-ct-angular';
 import { OutputUnsubscriptionComponent } from '../src/output-unsubscription.component';
 import { OutputComponent } from '../src/output.component';
 
-test.skip('output', async ({ mount }) => {
+test('output', async ({ mount }) => {
   let value: number | undefined;
   const component = await mount(OutputComponent, {
     on: {
-      // @ts-expect-error todo fix this
-      selectMagicValue(v) {
+      selectMagicValue(v: number) {
         value = v;
       },
     },
@@ -18,7 +17,7 @@ test.skip('output', async ({ mount }) => {
   expect(value).toBe(42);
 });
 
-test.skip('replace existing listener when new listener is set', async ({
+test('replace existing listener when new listener is set', async ({
   mount,
 }) => {
   let firstListenerCalled = false;
@@ -26,7 +25,6 @@ test.skip('replace existing listener when new listener is set', async ({
 
   const component = await mount(OutputComponent, {
     on: {
-      // @ts-expect-error todo fix this
       selectMagicValue() {
         firstListenerCalled = true;
       },
@@ -35,7 +33,6 @@ test.skip('replace existing listener when new listener is set', async ({
 
   await component.update({
     on: {
-      // @ts-expect-error todo fix this
       selectMagicValue() {
         secondListenerCalled = true;
       },

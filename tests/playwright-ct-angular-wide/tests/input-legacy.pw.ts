@@ -11,7 +11,7 @@ test('input legacy', async ({ mount }) => {
   await expect(component).toContainText('Hello world!');
 });
 
-test.skip('update input', async ({ mount }) => {
+test('update input', async ({ mount }) => {
   const component = await mount(InputLegacyComponent, {
     props: {
       title: 'Hello world!',

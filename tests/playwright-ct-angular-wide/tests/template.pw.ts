@@ -1,14 +1,12 @@
 import { expect, test } from '@jscutlery/playwright-ct-angular';
 import { ChildComponent } from '../src/child.component';
 
-test.skip('template', async ({ mount }) => {
-  // @ts-expect-error todo fix this
+test('template', async ({ mount }) => {
   const component = await mount('<h1>{{ 1 + 1 }}</h1>');
   await expect(component).toHaveText('2');
 });
 
-test.skip('template with child component', async ({ mount }) => {
-  // @ts-expect-error todo fix this
+test('template with child component', async ({ mount }) => {
   const component = await mount('<jc-child message="Hello!"/>', {
     imports: [ChildComponent],
   });
@@ -16,8 +14,7 @@ test.skip('template with child component', async ({ mount }) => {
   await expect(component).toContainText('Hello!');
 });
 
-test.skip('template with inputs', async ({ mount }) => {
-  // @ts-expect-error todo fix this
+test('template with inputs', async ({ mount }) => {
   const component = await mount('<h1>{{ message }}</h1>', {
     props: {
       message: 'Hello!',
@@ -27,14 +24,13 @@ test.skip('template with inputs', async ({ mount }) => {
   await expect(component).toContainText('Hello!');
 });
 
-test.skip('render a template with outputs', async ({ mount }) => {
-  let value: number;
+test('render a template with outputs', async ({ mount }) => {
+  let value: number | undefined;
   const component = await mount(
-    // @ts-expect-error todo fix this
-    '<button (submit)="onSubmit(42)">CLICK</button>',
+    '<button (click)="onSubmit(42)">CLICK</button>',
     {
       props: {
-        onSubmit(v: 42) {
+        onSubmit(v: number) {
           value = v;
         },
       },
@@ -43,7 +39,5 @@ test.skip('render a template with outputs', async ({ mount }) => {
 
   await component.click();
 
-  await expect(async () => {
-    expect(value).toBe('hello');
-  }).toPass();
+  expect(value).toBe(42);
 });

@@ -1,18 +1,22 @@
-import { JsonObject } from '@playwright/experimental-ct-core/types/component';
 import * as path from 'node:path';
-import { InputSignal, Type } from '@angular/core';
+import { InputSignal, Provider, Type } from '@angular/core';
 import type {
   PlaywrightTestConfig,
   TestType,
 } from '@playwright/experimental-ct-core';
 import * as playwrightCtCore from '@playwright/experimental-ct-core';
+import { JsonObject } from '@playwright/experimental-ct-core/types/component';
 import * as playwright from '@playwright/test';
-import type { Observable } from 'rxjs';
 
 export type { PlaywrightTestConfig };
 export { expect, devices } from '@playwright/test';
 
 export interface ComponentFixtures {
+  mount<COMPONENT, HOOKS extends JsonObject>(
+    template: string,
+    options?: MountTemplateOptions<COMPONENT, HOOKS>,
+  ): Promise<MountResult<COMPONENT>>;
+
   mount<COMPONENT, HOOKS extends JsonObject>(
     component: Type<COMPONENT>,
     options?: MountOptions<COMPONENT, HOOKS>,
@@ -21,8 +25,23 @@ export interface ComponentFixtures {
 
 export interface MountOptions<COMPONENT, HOOKS> {
   hooksConfig?: HOOKS;
+  providers?: Provider[];
   props?: Inputs<COMPONENT>;
-  on?: Outputs<COMPONENT>;
+  on?: OutputListeners<COMPONENT>;
+}
+
+export interface MountTemplateOptions<COMPONENT, HOOKS extends JsonObject>
+  extends MountOptions<COMPONENT, HOOKS> {
+  imports?: Type<unknown>[];
+}
+
+export interface MountResult<COMPONENT> extends playwright.Locator {
+  unmount(): Promise<void>;
+
+  update(options: {
+    props?: Inputs<COMPONENT>;
+    on?: OutputListeners<COMPONENT>;
+  }): Promise<void>;
 }
 
 export type Inputs<COMPONENT> = Partial<{
@@ -33,26 +52,18 @@ export type Inputs<COMPONENT> = Partial<{
     : COMPONENT[PROPERTY];
 }>;
 
-export type Outputs<COMPONENT> = Partial<{
-  /* For each field or method... is this an observable? */
-  [K in keyof COMPONENT]: COMPONENT[K] extends Observable<unknown>
-    ? /* It's an observable, so let's change the return type. */
-      (value: Emitted<COMPONENT[K]>) => void
-    : /* It's something else. */
-      COMPONENT[K];
-}>;
+export type OutputListeners<COMPONENT> = {
+  [PROPERTY in keyof COMPONENT as COMPONENT[PROPERTY] extends Subscribable<any>
+    ? PROPERTY
+    : never]: (value: Emitted<COMPONENT[PROPERTY]>) => void;
+};
 
-export interface MountResult<COMPONENT> extends playwright.Locator {
-  unmount(): Promise<void>;
-
-  update(options: {
-    props?: Partial<COMPONENT>;
-    on?: Outputs<COMPONENT>;
-  }): Promise<void>;
+interface Subscribable<T> {
+  subscribe(subscriber: (value: T) => void): void;
 }
 
-type Emitted<OBSERVABLE> =
-  OBSERVABLE extends Observable<infer EMITTED> ? EMITTED : OBSERVABLE;
+type Emitted<SUBSCRIBABLE> =
+  SUBSCRIBABLE extends Subscribable<infer EMITTED> ? EMITTED : SUBSCRIBABLE;
 
 /* @hack `test` is not exported in the type definition of `@playwright/experimental-ct-core`. */
 // @eslint-disable-next-line @typescript-eslint/no-explicit-any

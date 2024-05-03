@@ -2,7 +2,7 @@ import { expect, test } from '@jscutlery/playwright-ct-angular';
 import { HooksConfig } from '../playwright';
 import { InjectComponent } from '../src/inject.component';
 
-test.skip('inject a token', async ({ mount }) => {
+test('inject a token', async ({ mount }) => {
   const component = await mount<InjectComponent, HooksConfig>(InjectComponent, {
     hooksConfig: { injectToken: true },
     props: {
