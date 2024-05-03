@@ -1,3 +1,15 @@
+## 0.14.0 (2024-05-03)
+
+
+### 🚀 Features
+
+- **swc-angular:** ✨ allow @swc/core 1.5.x ([#366](https://github.com/jscutlery/devkit/pull/366))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.13.1 (2024-05-03)
 
 
