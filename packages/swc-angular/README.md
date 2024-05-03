@@ -2,24 +2,24 @@
 
 <!-- TOC -->
 
-* [⚡️ Speed Up Angular Testing with SWC 🦀](#-speed-up-angular-testing-with-swc-)
-    * [👀 What is this?](#-what-is-this)
-    * [🤔 Context](#-context)
-    * [🥇 Benchmark Summary](#-benchmark-summary)
-    * [🎭 Setup with Jest](#-setup-with-jest)
-        * [1. Install](#1-install)
-        * [2. Configure](#2-configure)
-        * [3. Add `reflect-metadata`](#3-add-reflect-metadata)
-    * [⚡️Setup with Vitest](#setup-with-vitest)
-        * [1. Install](#1-install-1)
-        * [2. Configure](#2-configure-1)
-        * [3. Add `reflect-metadata`](#3-add-reflect-metadata-1)
-    * [🥇 Benchmark Data](#-benchmark-data)
-        * [🔥 No Cache](#-no-cache)
-        * [⚡️ With Cache](#-with-cache)
-        * [🥱 Cold Start](#-cold-start)
-        * [Configurations](#configurations)
-        * [Source](#source)
+- [⚡️ Speed Up Angular Testing with SWC 🦀](#-speed-up-angular-testing-with-swc-)
+  - [👀 What is this?](#-what-is-this)
+  - [🤔 Context](#-context)
+  - [🥇 Benchmark Summary](#-benchmark-summary)
+  - [🎭 Setup with Jest](#-setup-with-jest)
+    - [1. Install](#1-install)
+    - [2. Configure](#2-configure)
+    - [3. Add `reflect-metadata`](#3-add-reflect-metadata)
+  - [⚡️Setup with Vitest](#setup-with-vitest)
+    - [1. Install](#1-install-1)
+    - [2. Configure](#2-configure-1)
+    - [3. Add `reflect-metadata`](#3-add-reflect-metadata-1)
+  - [🥇 Benchmark Data](#-benchmark-data)
+    - [🔥 No Cache](#-no-cache)
+    - [⚡️ With Cache](#-with-cache)
+    - [🥱 Cold Start](#-cold-start)
+    - [Configurations](#configurations)
+    - [Source](#source)
 
 <!-- TOC -->
 
@@ -120,7 +120,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   // ...
-  plugins: [swc.vite(swcAngularUnpluginOptions())]
+  plugins: [swc.vite(swcAngularUnpluginOptions())],
   // ...
 });
 ```
@@ -141,7 +141,7 @@ import 'reflect-metadata';
 All caches are cleared before each benchmark run.
 
 | Configuration                 |     Relative |       Mean [s] | Min [s] | Max [s] |
-|:------------------------------|-------------:|---------------:|--------:|--------:|
+| :---------------------------- | -----------: | -------------: | ------: | ------: |
 | 🥇`vitest-swc-no-isolate`     |         1.00 |  3.137 ± 0.061 |   3.042 |   3.227 |
 | 🥈`jest-swc`                  |  3.31 ± 0.15 | 10.393 ± 0.429 |   9.745 |  10.994 |
 | 🥉`angular-cli-karma`         |  3.52 ± 0.53 | 11.041 ± 1.642 |  10.218 |  15.690 |
@@ -157,7 +157,7 @@ All caches are cleared before each benchmark run.
 All tests are ran once to warm up the cache before running the benchmark.
 
 | Configuration                 |     Relative |       Mean [s] | Min [s] | Max [s] |
-|:------------------------------|-------------:|---------------:|--------:|--------:|
+| :---------------------------- | -----------: | -------------: | ------: | ------: |
 | 🥇`vitest-swc-no-isolate`     |         1.00 |  3.092 ± 0.090 |   3.030 |   3.301 |
 | 🥈`angular-cli-karma`         |  1.91 ± 0.07 |  5.901 ± 0.139 |   5.718 |   6.131 |
 | 🥉`jest-swc`                  |  2.93 ± 0.18 |  9.045 ± 0.494 |   8.513 |  10.065 |
@@ -176,7 +176,7 @@ All tests are ran once to warm up the cache before running the benchmark.
 Run a single test module just and try to measure the bootstrap time.
 
 | Configuration                 |    Relative |      Mean [s] | Min [s] | Max [s] |
-|:------------------------------|------------:|--------------:|--------:|--------:|
+| :---------------------------- | ----------: | ------------: | ------: | ------: |
 | 🥇`vitest-swc-no-isolate`     |        1.00 | 1.260 ± 0.024 |   1.241 |   1.314 |
 | 🥈`vitest-swc`                | 1.00 ± 0.03 | 1.262 ± 0.026 |   1.225 |   1.305 |
 | 🥉`jest-swc`                  | 1.44 ± 0.15 | 1.812 ± 0.186 |   1.714 |   2.310 |
@@ -190,7 +190,7 @@ Run a single test module just and try to measure the bootstrap time.
 ### Configurations
 
 |                               | Configuration                  | Test Isolation\* |
-|-------------------------------|:-------------------------------|-----------------:|
+| ----------------------------- | :----------------------------- | ---------------: |
 | `angular-cli-karma`           | Angular CLI's Karma            |            false |
 | `angular-cli-jest`            | Angular CLI's Jest             |             true |
 | `angular-cli-web-test-runner` | Angular CLI's @web/test-runner |             true |
@@ -206,5 +206,5 @@ Run a single test module just and try to measure the bootstrap time.
 
 ### Source
 
-💻 try it yourself: https://github.com/yjaaidi/experiments/tree/angular-jest-swc-benchmark
+💻 try it yourself: https://github.com/yjaaidi/experiments/tree/angular-swc-benchmark
 or checkout the last benchmark results: https://github.com/yjaaidi/experiments/actions/workflows/benchmark.yml
