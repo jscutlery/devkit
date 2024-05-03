@@ -1,9 +1,7 @@
 /* eslint-disable */
 import type { Config } from 'jest';
 
-/* @hack for some annoying reason, this file doesn't seem to be compiled
- * using our tsconfigs, so it is not aware of the tsconfig.base.json paths. */
-import { swcAngularJestTransformer } from '../../packages/swc-angular/src/index';
+import { swcAngularJestTransformer } from '@jscutlery/swc-angular';
 
 export default {
   displayName: 'demo',
