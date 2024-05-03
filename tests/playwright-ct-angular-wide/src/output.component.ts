@@ -9,8 +9,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   selector: 'jc-output',
-  template: ` <button (click)="action.emit(42)">CLICK</button>`,
+  template: ` <button (click)="selectMagicValue.emit(42)">CLICK</button>`,
 })
 export class OutputComponent {
-  @Output() action = new EventEmitter<number>();
+  @Output() selectMagicValue = new EventEmitter<number>();
 }
