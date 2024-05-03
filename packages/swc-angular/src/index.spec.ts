@@ -14,7 +14,7 @@ import { join } from 'node:path';
 
 test.each([
   [' <1.4.0', { version: '1.3.107' }],
-  ['>=1.5.0', { version: '1.5.0' }],
+  ['>=1.6.0', { version: '1.6.0' }],
 ])(
   'should throw an error when module is imported and version is %s',
   async (_, { version }) => {
