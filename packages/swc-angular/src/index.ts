@@ -1,7 +1,9 @@
 import type { Config } from '@swc/core';
-import { version as swcCoreVersion } from '@swc/core';
+import { version } from '@swc/core';
+import { fileSystem } from './utils';
+import { dirname, join } from 'node:path';
 
-assertCompatibleSwcCoreVersion();
+assertCompatibleSwcCoreVersion(version);
 
 export interface AngularPresetOptions {
   templateRawSuffix?: boolean;
@@ -72,12 +74,24 @@ interface SwcPluginAngularOptions {
  */
 export default swcAngularPreset();
 
-function assertCompatibleSwcCoreVersion() {
-  if (!swcCoreVersion.startsWith('1.4.')) {
+function assertCompatibleSwcCoreVersion(version: string) {
+  /* Fallback to reading version from package.json when not exported.
+   * This happens on Stackblitz. */
+  if (version == undefined) {
+    const packageJsonPath = join(
+      dirname(require.resolve('@swc/core')),
+      'package.json',
+    );
+    version = fileSystem.readJsonFile<{
+      version: string;
+    }>(packageJsonPath).version;
+  }
+
+  if (!(version.startsWith('1.4.') || version.startsWith('1.5.'))) {
     console.error(`
-    @swc/core version ${swcCoreVersion} is incompatible with @jscutlery/swc-angular.
-    Please use @swc/core version 1.4.x.
-    > npm add -D @swc/core@~1.4.0
+    @swc/core version ${version} is incompatible with @jscutlery/swc-angular.
+    Please use @swc/core version 1.4.x or 1.5.x.
+    > npm add -D @swc/core@~1.5.0
     `);
     process.exit(1);
   }

@@ -14,16 +14,11 @@
       "options": {
         "parallel": false,
         "cwd": "{projectRoot}",
-        "commands": [
-          "jest",
-          "vitest --watch false"
-        ]
+        "commands": ["jest", "vitest --watch false"]
       },
       "dependsOn": [
         {
-          "projects": [
-            "swc-angular-plugin"
-          ],
+          "projects": ["swc-angular", "swc-angular-plugin"],
           "target": "build"
         }
       ]
