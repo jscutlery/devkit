@@ -23,13 +23,13 @@ export interface MountOptions<COMPONENT> {
   on?: Outputs<COMPONENT>;
 }
 
-export type Inputs<COMPONENT> = {
+export type Inputs<COMPONENT> = Partial<{
   [PROPERTY in keyof COMPONENT]: COMPONENT[PROPERTY] extends InputSignal<
     infer VALUE
   >
     ? VALUE
     : COMPONENT[PROPERTY];
-};
+}>;
 
 export type Outputs<COMPONENT> = Partial<{
   /* For each field or method... is this an observable? */
