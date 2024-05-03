@@ -1,5 +1,5 @@
 // import { beforeMount } from '@jscutlery/playwright-ct-angular';
-import { TOKEN } from '../src/hooks.component';
+// import { TOKEN } from '../src/inject.component';
 
 export type HooksConfig = {
   injectToken?: boolean;

@@ -10,9 +10,9 @@ export const TOKEN = new InjectionToken<{ value: number }>('token');
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  selector: 'jc-hooks',
+  selector: 'jc-inject',
   template: `{{ value }}`,
 })
-export class HooksComponent {
+export class InjectComponent {
   value = inject(TOKEN).value;
 }
