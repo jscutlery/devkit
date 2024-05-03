@@ -1,3 +1,15 @@
+## 0.13.1 (2024-05-03)
+
+
+### 🩹 Fixes
+
+- **swc-angular:** 🐞 fix stackblitz support ([#364](https://github.com/jscutlery/devkit/pull/364))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.12.0 (2024-04-12)
 
 ### 🚀 Features
