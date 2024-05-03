@@ -1,3 +1,4 @@
+import { JsonObject } from '@playwright/experimental-ct-core/types/component';
 import * as path from 'node:path';
 import { InputSignal, Type } from '@angular/core';
 import type {
@@ -12,13 +13,14 @@ export type { PlaywrightTestConfig };
 export { expect, devices } from '@playwright/test';
 
 export interface ComponentFixtures {
-  mount<COMPONENT>(
+  mount<COMPONENT, HOOKS extends JsonObject>(
     component: Type<COMPONENT>,
-    options?: MountOptions<COMPONENT>,
+    options?: MountOptions<COMPONENT, HOOKS>,
   ): Promise<MountResult<COMPONENT>>;
 }
 
-export interface MountOptions<COMPONENT> {
+export interface MountOptions<COMPONENT, HOOKS> {
+  hooksConfig?: HOOKS;
   props?: Inputs<COMPONENT>;
   on?: Outputs<COMPONENT>;
 }
