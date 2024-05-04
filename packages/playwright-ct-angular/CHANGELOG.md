@@ -1,3 +1,22 @@
+## 0.5.0 (2024-05-04)
+
+
+### 🚀 Features
+
+- **playwright-ct-angular:** align with suggested official implementation ([#363](https://github.com/jscutlery/devkit/pull/363))
+
+- **playwright-ct-angular:** ✨ add playwright bin entry ([ea5e69a](https://github.com/jscutlery/devkit/commit/ea5e69a))
+
+
+### 🩹 Fixes
+
+- **playwright-ct-angular:** 🐞 update deps ([#361](https://github.com/jscutlery/devkit/pull/361))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.4.0 (2024-05-02)
 
 ### 🚀 Features
