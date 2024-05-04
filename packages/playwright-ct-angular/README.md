@@ -3,31 +3,62 @@
 This library brings **Angular support** to [Playwright's **experimental
 ** Component Testing](https://playwright.dev/docs/test-components).
 
-This will allow us to test our Angular components with Playwright without building the whole app and with more control.
+This will allow you to test your Angular components with Playwright without building the whole app and with more
+control.
 
 `@jscutlery/playwright-ct-angular` currently supports:
 
-- ✅ **Testing [Versatile Angular Components](https://marmicode.io/blog/versatile-angular)**
-- 🎛 **Passing type-safe inputs to the tested components**
-- 🎭 **Spying on component outputs in a type-safe fashion**
+- ✅ **Testing Angular components/directives/pipes**
+- 🎛 **Controlling inputs/outputs in a type-safe fashion**
+- 🥸 **Overriding providers**
+- 🍳 **Testing with templates**
 
 https://user-images.githubusercontent.com/2674658/206226065-ba856329-dda7-43b1-9c28-4416b190f4d4.mp4
 
-# 🚀 Writing our first
+# Table of Contents
 
-First, we will have to set up Playwright Component Testing as [mentioned below](#setup).
+<!-- TOC -->
+
+* [Playwright Component Testing for Angular _(experimental)_](#playwright-component-testing-for-angular-_experimental_)
+* [Table of Contents](#table-of-contents)
+* [🚀 Writing your first test](#-writing-your-first-test)
+    * [✅ Basic Test](#-basic-test)
+    * [🎛 Testing Inputs](#-testing-inputs)
+        * [Passing output callbacks](#passing-output-callbacks)
+    * [🥸 Providing Test Doubles & Importing Additional Modules](#-providing-test-doubles--importing-additional-modules)
+    * [🎨 Using Styles](#-using-styles)
+        * [Shared Styles](#shared-styles)
+        * [Specific Styles](#specific-styles)
+        * [Angular Material & Angular Libraries with styles](#angular-material--angular-libraries-with-styles)
+    * [More examples](#more-examples)
+* [⚠️ Known Limitations](#-known-limitations)
+    * [🪄 The Magic Behind the Scenes](#-the-magic-behind-the-scenes)
+    * [It is currently impossible to...](#it-is-currently-impossible-to)
+        * [...hold the component type in a variable](#hold-the-component-type-in-a-variable)
+        * [...use the component type elsewhere in the file.](#use-the-component-type-elsewhere-in-the-file)
+        * [...declare components in the same file.](#declare-components-in-the-same-file)
+* [📦 Setup](#-setup)
+    * [1. Install](#1-install)
+    * [2. Configure](#2-configure)
+    * [3. Change tests extension](#3-change-tests-extension)
+
+<!-- TOC -->
+
+# 🚀 Writing your first test
+
+First, you will have to set up Playwright Component Testing as [mentioned below](#setup).
 
 ⚠️ Make sure to check the [known limitations](#-known-limitations) before writing more tests.
 
 ## ✅ Basic Test
 
-Then, we can write our first test in `.../src/greetings.component.pw.ts`:
+Then, you can write your first test in `.../src/greetings.component.pw.ts`:
 
 ```ts
 import { expect, test } from '@jscutlery/playwright-ct-angular';
 import { GreetingsComponent } from './greetings.component';
 
-test('<jc-greetings> should be polite', async ({ mount }) => {
+test(`GreetingsComponent should be polite`, async ({ mount }) => {
   const locator = await mount(GreetingsComponent);
   expect(locator).toHaveText('👋 Hello!');
 });
@@ -39,7 +70,7 @@ test('<jc-greetings> should be polite', async ({ mount }) => {
 import { expect, test } from '@jscutlery/playwright-ct-angular';
 import { GreetingsComponent } from './greetings.component';
 
-test('<jc-greetings> should be polite', async ({ mount }) => {
+test(`GreetingsComponent should be polite`, async ({ mount }) => {
   const locator = await mount(GreetingsComponent, { props: { name: 'Edouard' } });
   expect(locator).toHaveText('👋 Hello Edouard!');
 });
@@ -47,7 +78,7 @@ test('<jc-greetings> should be polite', async ({ mount }) => {
 
 ### Passing output callbacks
 
-We can also pass custom output callback functions for some extreme cases or if we want to use a custom spy
+You can also pass custom output callback functions for some extreme cases or if you want to use a custom spy
 implementation for example or just debug.
 
 ```ts
@@ -95,20 +126,24 @@ test('...', async ({ mount }) => {
   ],
 })
 export class RecipeSearchTestContainer {
-  private _repo = inject(RecipeRepositoryFake);
-
-  @Input() set recipes(recipes: Recipe[]) {
-    this._repo.recipes = recipes;
-  }
+  recipes = input<Recipe[]>([]);
+  #repo = inject(RecipeRepositoryFake);
+  #syncRecipesWithRepo = effect(() => {
+    this.#repo.setRecipes(this.recipes());
+  });
 }
 
 /* Cf. https://github.com/jscutlery/devkit/tree/main/tests/playwright-ct-angular-wide/src/testing/recipe-repository.fake.ts
  * for a better example. */
 class RecipeRepositoryFake implements RecipeRepositoryDef {
-  recipes: Recipe[] = [];
+  #recipes: Recipe[] = [];
 
   searchRecipes() {
-    return defer(() => of(this.recipes));
+    return defer(() => of(this.#recipes));
+  }
+
+  setRecipes(recipes: Recipe[]) {
+    this.#recipes = recipes;
   }
 }
 ```
@@ -117,12 +152,12 @@ class RecipeRepositoryFake implements RecipeRepositoryDef {
 
 ### Shared Styles
 
-In order to import styles that are shared between our tests, we can do so by importing them in `playwright/index.ts`.
-We can also customize the shared `playwright/index.html` nearby.
+In order to import styles that are shared between your tests, you can do so by importing them in `playwright/index.ts`.
+You can also customize the shared `playwright/index.html` nearby.
 
 ### Specific Styles
 
-If we want to load some specific styles for a single test, we might prefer using a test container component:
+If you want to load some specific styles for a single test, you might prefer using a test container component:
 
 ```ts
 import styles from './some-styles.css';
@@ -164,31 +199,33 @@ const config: PlaywrightTestConfig = {
 
 ## More examples
 
-Cf. [/tests/playwright-ct-angular-wide/src](https://github.com/jscutlery/devkit/tree/main/tests/playwright-ct-angular-wide/src)
+Cf. [/tests/playwright-ct-angular-demo/src](https://github.com/jscutlery/devkit/tree/main/tests/playwright-ct-angular-demo/src)
 
 # ⚠️ Known Limitations
 
 The way Playwright Component Testing works is different from the way things work with Karma, Jest, Vitest, Cypress
 etc...
-Playwright Component Testing tests run in a Node.js environment while the component is rendered in a browser.
+Playwright Component Testing tests run in a Node.js environment and control the browser through Chrome DevTools
+Protocol, while the component is rendered in a browser.
 
-This causes a couple of limitations as we can't directly access the `TestBed's` or the component's internals,
-and we can only exchange serializable data with the component.
+This causes a couple of limitations as we can't directly access the `TestBed`'s or the component's internals,
+and **we can only exchange serializable data with the component**.
 
 ## 🪄 The Magic Behind the Scenes
 
 The magical workaround behind the scenes is that at build time:
 
 1. Playwright analyses all the calls to `mount()`,
-2. it grabs the first parameter (the component class),
+2. it grabs the arguments (e.g. the component class),
 3. replaces the component class with a unique string (constructed from the component class name and es-module),
-4. adds the component's es-module to Vite entrypoints,
-5. and finally creates a map matching each unique string to the right es-module.
+4. adds the component's ES module to Vite entrypoints,
+5. and finally creates a map matching each unique string to the right ES module.
 
-This way, when calling `mount()`, Playwright with communicate the unique string to the browser who will know which
-es-module to load.
+This way, when calling `mount()`, Playwright will communicate the unique string to the browser who will know which
+ES module to load.
 
 Cf. https://youtu.be/y3YxX4sFJbM
+
 Cf. https://github.com/microsoft/playwright/blob/cac67fb94f2c8a0ee82878054c39790e660f17ca/packages/playwright-test/src/tsxTransform.ts#L153
 
 ## It is currently impossible to...
@@ -217,39 +254,18 @@ test(MyComponent.name, async ({ mount }) => {
 class GreetingsComponent {
 }
 
-test('<jc-greetings>', async ({ mount }) => {
+test('should work', async ({ mount }) => {
   await mount(GreetingsComponent);
 });
 ```
 
-### ...pass any symbol other than a component class
+# 📦 Setup
 
-This makes the following impossible:
-
-- passing providers to the `mount()` function
-- passing modules to the `mount()` function (this is what currently makes the usage of mounting templates impossible)
-- use non-standalone components
-
-### ...use non-[Versatile Angular Style](https://marmicode.io/blog/versatile-angular)
-
-We'll need a vite plugin to support traditional DI, external templates and stylesheets etc...
-
-## 🔮 Future workarounds
-
-If you really can't make it to [Versatile Angular Style](https://marmicode.io/blog/versatile-angular),
-we can think of a couple of workarounds like using a vite plugin like **Brandon
-Roberts' [vite-plugin-angular](https://github.com/analogjs/analog/tree/main/packages/vite-plugin-angular)**
-
-We could also implement some custom transform that registers the providers and import modules, like Playwright does for
-the component class.
-
-# Setup
-
-## 📦 Install
+### 1. Install
 
 ```sh
 # You can run this command in an existing workspace.
-yarn create playwright --ct # or npm init playwright@latest -- --ct
+npm create playwright -- --ct
 
 # Choose React
 
@@ -259,29 +275,46 @@ yarn create playwright --ct # or npm init playwright@latest -- --ct
 #  svelte
 #  solid
 
-yarn add -D @jscutlery/playwright-ct-angular @playwright/test # or npm install -D @jscutlery/playwright-ct-angular @playwright/test
+npm add -D @jscutlery/playwright-ct-angular @jscutlery/swc-angular unplugin-swc
+npm uninstall -D @playwright/experimental-ct-react
 ```
 
-## 🛠 Configure
+### 2. Configure
 
-Update `playwright-ct-config.ts` and replace:
+- Update `playwright-ct.config.ts` and replace:
 
 ```ts
-import type { PlaywrightTestConfig } from '@playwright/experimental-ct-react';
-import { devices } from '@playwright/experimental-ct-react';
+import { defineConfig, devices } from '@playwright/experimental-ct-react';
 ```
 
 with
 
 ```ts
-import type { PlaywrightTestConfig } from '@jscutlery/playwright-ct-angular';
-import { devices } from '@jscutlery/playwright-ct-angular';
+import { defineConfig, devices } from '@jscutlery/playwright-ct-angular';
+import { swcAngularUnpluginOptions } from '@jscutlery/swc-angular'
+import swc from 'unplugin-swc';
 ```
 
-### Change tests extension
+- Configure vite plugin:
+
+```ts
+export default defineConfig({
+  use: {
+    // ...
+    ctViteConfig: {
+      // ...
+      plugins: [
+        swc.vite(swcAngularUnpluginOptions())
+      ]
+    }
+  }
+});
+```
+
+### 3. Change tests extension
 
 In order to avoid collisions with other tests (e.g. Jest / Vitest),
-We can replace the default matching extension `.spec.ts` with `.pw.ts`:
+You can replace the default matching extension `.spec.ts` with `.pw.ts`:
 
 ```ts
 const config: PlaywrightTestConfig = {
