@@ -1,5 +1,10 @@
 import * as path from 'node:path';
-import { InputSignal, Provider, Type } from '@angular/core';
+import {
+  EnvironmentProviders,
+  InputSignal,
+  Provider,
+  Type,
+} from '@angular/core';
 import type {
   PlaywrightTestConfig,
   TestType,
@@ -25,7 +30,7 @@ export interface ComponentFixtures {
 
 export interface MountOptions<COMPONENT, HOOKS> {
   hooksConfig?: HOOKS;
-  providers?: Provider[];
+  providers?: Array<Provider | EnvironmentProviders>;
   props?: Inputs<COMPONENT>;
   on?: OutputListeners<COMPONENT>;
 }
