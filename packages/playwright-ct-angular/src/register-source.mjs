@@ -1,5 +1,6 @@
 import '@angular/compiler';
 import 'zone.js';
+
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { Subscription } from 'rxjs';
@@ -20,6 +21,9 @@ window.playwrightMount = async (component, rootElement, hooksConfig) => {
     await hook({ hooksConfig, TestBed });
 
   const fixture = await __pwRenderComponent(component);
+
+  fixture.autoDetectChanges();
+  await fixture.whenStable();
 
   for (const hook of window.__pw_hooks_after_mount || [])
     await hook({ hooksConfig });
@@ -52,7 +56,8 @@ window.playwrightUpdate = async (rootElement, component) => {
   __pwUpdateProps(fixture, component);
   __pwUpdateEvents(fixture, component.on);
 
-  fixture.detectChanges();
+  fixture.autoDetectChanges();
+  await fixture.whenStable();
 };
 
 /** @type {WeakMap<import('@angular/core/testing').ComponentFixture, Record<string, import('rxjs').Subscription>>} */
@@ -90,15 +95,11 @@ async function __pwRenderComponent(component) {
     providers: component.providers
   });
 
-  await TestBed.compileComponents();
-
   const fixture = TestBed.createComponent(componentClass);
   fixture.nativeElement.id = 'root';
 
   __pwUpdateProps(fixture, component);
   __pwUpdateEvents(fixture, component.on);
-
-  fixture.autoDetectChanges();
 
   return fixture;
 }
@@ -117,7 +118,6 @@ function __pwUpdateProps(fixture, componentInfo) {
     for (const [name, value] of Object.entries(componentInfo.props))
       fixture.componentRef.setInput(name, value);
   }
-
 }
 
 /**
@@ -130,12 +130,10 @@ function __pwUpdateEvents(fixture, events = {}) {
     /* Unsubscribe previous listener. */
     outputSubscriptionRecord[name]?.unsubscribe();
 
-    const subscription = fixture.componentInstance[
+    /* Store new subscription. */
+    outputSubscriptionRecord[name] = fixture.componentInstance[
       name
       ].subscribe((/** @type {unknown} */ event) => listener(event));
-
-    /* Store new subscription. */
-    outputSubscriptionRecord[name] = subscription;
   }
 
   /* Update output subscription registry. */
