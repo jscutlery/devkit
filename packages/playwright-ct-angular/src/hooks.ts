@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { TestBedStatic } from '@angular/core/testing';
+import { JsonObject } from '@playwright/experimental-ct-core/types/component';
 
 const __pw_hooks_before_mount = [];
 const __pw_hooks_after_mount = [];
@@ -20,10 +22,17 @@ const __pw_hooks_after_mount = [];
 window['__pw_hooks_before_mount'] = __pw_hooks_before_mount;
 window['__pw_hooks_after_mount'] = __pw_hooks_after_mount;
 
-export const beforeMount = (callback) => {
+export function beforeMount<HOOKS extends JsonObject>(
+  callback: (params: {
+    hooksConfig?: HOOKS;
+    TestBed: TestBedStatic;
+  }) => Promise<void>,
+): void {
   __pw_hooks_before_mount.push(callback);
-};
+}
 
-export const afterMount = (callback) => {
+export function afterMount<HOOKS extends JsonObject>(
+  callback: (params: { hooksConfig?: HOOKS }) => Promise<void>,
+): void {
   __pw_hooks_after_mount.push(callback);
-};
+}

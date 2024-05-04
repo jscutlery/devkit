@@ -5,7 +5,13 @@
     "types": []
   },
   "include": [
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
     "playwright-ct.config.ts",
-    "tests/**/*.pw.ts"
+    "**/*.pw.ts",
+    "**/*.pw.js",
+    "**/*.pw.tsx",
+    "**/*.pw.jsx"
   ]
 }

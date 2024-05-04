@@ -1,13 +1,11 @@
 import { defineConfig, devices } from '@jscutlery/playwright-ct-angular';
 import { env } from 'process';
-import swc from 'unplugin-swc';
-import { swcAngularUnpluginOptions } from '../../packages/swc-angular/src';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 const config = defineConfig({
-  testDir: 'tests',
+  testDir: 'src',
   testMatch: /pw\.tsx?/,
   snapshotDir: './__snapshots__',
   /* Maximum time one test can run for. */
@@ -20,6 +18,8 @@ const config = defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    testIdAttribute: 'data-role',
+
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
 
@@ -27,7 +27,10 @@ const config = defineConfig({
     ctPort: 3100,
 
     ctViteConfig: {
-      plugins: [swc.vite(swcAngularUnpluginOptions())],
+      resolve: {
+        /* @angular/material is using "style" as a Custom Conditional export to expose prebuilt styles etc... */
+        conditions: ['style'],
+      },
     },
   },
 
