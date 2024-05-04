@@ -5,6 +5,11 @@ import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@ang
 import { Subscription } from 'rxjs';
 import { Component, reflectComponentType } from '@angular/core';
 
+/**
+ * @typedef {{type: string} & import('./index').MountTemplateOptions} TemplateInfo
+ * @typedef {{type: import('@angular/core').Type<unknown>} & import('./index').MountOptions | TemplateInfo} ComponentInfo
+ */
+
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting()
