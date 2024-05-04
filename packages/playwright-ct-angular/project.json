@@ -32,6 +32,11 @@
         ],
         "assets": [
           {
+            "glob": "cli.js",
+            "input": "packages/playwright-ct-angular/src",
+            "output": "."
+          },
+          {
             "glob": "register-source.mjs",
             "input": "packages/playwright-ct-angular/src",
             "output": "."
