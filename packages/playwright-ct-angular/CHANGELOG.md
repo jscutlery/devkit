@@ -1,3 +1,15 @@
+## 0.5.1 (2024-05-06)
+
+
+### 🩹 Fixes
+
+- **playwright-ct-angular:** 🐞 fix output listeners type ([#370](https://github.com/jscutlery/devkit/pull/370))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.5.0 (2024-05-04)
 
 
