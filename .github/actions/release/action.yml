@@ -25,7 +25,7 @@ runs:
 
     - name: hack remove 'swc-angular-{version}' tag until this is fixed https://github.com/nrwl/nx/issues/22798
       shell: bash
-      run: git tag -df 'swc-angular-{version}' || true
+      run: git tag -d 'swc-angular-{version}' || true
 
     - name: Push changes
       uses: ad-m/github-push-action@master
