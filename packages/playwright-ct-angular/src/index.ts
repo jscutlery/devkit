@@ -1,6 +1,7 @@
 import * as path from 'node:path';
-import {
+import type {
   EnvironmentProviders,
+  EventEmitter,
   InputSignal,
   Provider,
   Type,
@@ -58,14 +59,16 @@ export type Inputs<COMPONENT> = Partial<{
 }>;
 
 export type OutputListeners<COMPONENT> = {
-  [PROPERTY in keyof COMPONENT as COMPONENT[PROPERTY] extends Subscribable<any>
+  [PROPERTY in keyof COMPONENT as COMPONENT[PROPERTY] extends Subscribable<unknown>
     ? PROPERTY
     : never]: (value: Emitted<COMPONENT[PROPERTY]>) => void;
 };
 
-interface Subscribable<T> {
-  subscribe(subscriber: (value: T) => void): void;
-}
+type Subscribable<T> =
+  | {
+      subscribe(next: (value: T) => void): void;
+    }
+  | EventEmitter<T>;
 
 type Emitted<SUBSCRIBABLE> =
   SUBSCRIBABLE extends Subscribable<infer EMITTED> ? EMITTED : SUBSCRIBABLE;
