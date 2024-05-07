@@ -5,7 +5,7 @@ test('output legacy', async ({ mount }) => {
   let value: number | undefined;
   const component = await mount(OutputLegacyComponent, {
     on: {
-      selectMagicValue(v: number) {
+      selectMagicValue(v) {
         value = v;
       },
     },

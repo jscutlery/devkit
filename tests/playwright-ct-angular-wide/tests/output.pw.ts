@@ -6,7 +6,7 @@ test('output', async ({ mount }) => {
   let value: number | undefined;
   const component = await mount(OutputComponent, {
     on: {
-      selectMagicValue(v: number) {
+      selectMagicValue(v) {
         value = v;
       },
     },

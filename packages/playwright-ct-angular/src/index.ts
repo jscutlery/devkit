@@ -58,11 +58,11 @@ export type Inputs<COMPONENT> = Partial<{
     : COMPONENT[PROPERTY];
 }>;
 
-export type OutputListeners<COMPONENT> = {
+export type OutputListeners<COMPONENT> = Partial<{
   [PROPERTY in keyof COMPONENT as COMPONENT[PROPERTY] extends Subscribable<unknown>
     ? PROPERTY
     : never]: (value: Emitted<COMPONENT[PROPERTY]>) => void;
-};
+}>;
 
 type Subscribable<T> =
   | {
