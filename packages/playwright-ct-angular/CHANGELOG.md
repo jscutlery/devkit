@@ -1,3 +1,15 @@
+## 0.6.0 (2024-05-07)
+
+
+### 🚀 Features
+
+- **playwright-ct-angular:** ✨ improve output listeners type inference ([#371](https://github.com/jscutlery/devkit/pull/371))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.5.1 (2024-05-06)
 
 
