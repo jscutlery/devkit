@@ -29,8 +29,7 @@
     "publish:cypress-harness": "npm publish dist/packages/cypress-harness",
     "publish:cypress-mount": "npm publish dist/packages/cypress-mount",
     "contributors:add": "all-contributors add",
-    "prepare": "husky install",
-    "postinstall": "ln -snf ../../dist/packages/swc-angular-plugin node_modules/@jscutlery/swc-angular-plugin"
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
