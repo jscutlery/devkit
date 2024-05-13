@@ -1,3 +1,15 @@
+## 0.14.1 (2024-05-13)
+
+
+### 🩹 Fixes
+
+- 📦 update dependency zone.js to v0.14.5 ([#377](https://github.com/jscutlery/devkit/pull/377))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.14.0 (2024-05-03)
 
 This was a version bump only for swc-angular-plugin to align it with other projects, there were no code changes.
