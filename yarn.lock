@@ -3674,6 +3674,7 @@ __metadata:
     "@commitlint/config-angular": ^19.0.0
     "@jscutlery/playwright-ct-angular": "link:dist/packages/playwright-ct-angular"
     "@jscutlery/swc-angular": "link:dist/packages/swc-angular"
+    "@jscutlery/swc-angular-plugin": "link:dist/packages/swc-angular-plugin"
     "@monodon/rust": 1.4.0
     "@nx/angular": 19.0.0
     "@nx/cypress": 19.0.0
@@ -3788,6 +3789,12 @@ __metadata:
     "@angular/core": ^16.0.0
     "@jscutlery/operators": ^2.0.0
   languageName: unknown
+  linkType: soft
+
+"@jscutlery/swc-angular-plugin@link:dist/packages/swc-angular-plugin::locator=%40jscutlery%2Fdevkit%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@jscutlery/swc-angular-plugin@link:dist/packages/swc-angular-plugin::locator=%40jscutlery%2Fdevkit%40workspace%3A."
+  languageName: node
   linkType: soft
 
 "@jscutlery/swc-angular-plugin@workspace:packages/swc-angular-plugin":
