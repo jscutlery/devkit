@@ -211,6 +211,59 @@ Protocol, while the component is rendered in a browser.
 This causes a couple of limitations as we can't directly access the `TestBed`'s or the component's internals,
 and **we can only exchange serializable data with the component**.
 
+## It is not possible to hold the component type in a variable
+
+```ts
+// 🛑 this won't work
+const cmp = MyComponent;
+await mount(cmp);
+```
+
+### It is not possible to use the component type elsewhere in the file.
+
+```ts
+// 🛑 this won't work
+test(MyComponent.name, async ({ mount }) => {
+});
+```
+
+### It is not possible to declare components in the same file.
+
+```ts
+// 🛑 this won't work
+@Component({ ... })
+class GreetingsComponent {
+}
+
+test('should work', async ({ mount }) => {
+  await mount(GreetingsComponent);
+});
+```
+
+### It is not possible to use anything in providers which is not serializable or "importable".
+
+```ts
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { MY_PROVIDERS } from './my-providers';
+import { MyFake } from './my-fake';
+
+@Injectable()
+class MyLocalFake {
+  // ...
+}
+
+// 🛑 this won't work because the result of `provideAnimations()` is not serializable
+mount(GreetingsComponent, { providers: [provideAnimations()] })
+// 🛑 this won't work because `MyLocalFake` is not "importable"
+mount(GreetingsComponent, { providers: [{ provide: MyService, useClass: MyLocalFake }] })
+// ✅ this works
+mount(GreetingsComponent, { providers: MY_PROVIDERS });
+// ✅ this works
+mount(GreetingsComponent, { providers: [{ provide: MY_VALUE, useValue: 'my-value' }] });
+// ✅ this works
+mount(GreetingsComponent, { providers: [{ provide: MyService, useClass: MyFake }] });
+```
+
 ## 🪄 The Magic Behind the Scenes
 
 The magical workaround behind the scenes is that at build time:
@@ -228,36 +281,7 @@ Cf. https://youtu.be/y3YxX4sFJbM
 
 Cf. https://github.com/microsoft/playwright/blob/cac67fb94f2c8a0ee82878054c39790e660f17ca/packages/playwright-test/src/tsxTransform.ts#L153
 
-## It is currently impossible to...
-
-### ...hold the component type in a variable
-
-```ts
-// 🛑 this won't work
-const cmp = MyComponent;
-await mount(cmp);
-```
-
-### ...use the component type elsewhere in the file.
-
-```ts
-// 🛑 this won't work
-test(MyComponent.name, async ({ mount }) => {
-});
-```
-
-### ...declare components in the same file.
-
-```ts
-// 🛑 this won't work
-@Component({ ... })
-class GreetingsComponent {
-}
-
-test('should work', async ({ mount }) => {
-  await mount(GreetingsComponent);
-});
-```
+###       
 
 # 📦 Setup
 
