@@ -1,7 +1,5 @@
 import { defineConfig, devices } from '@jscutlery/playwright-ct-angular';
-import { swcAngularUnpluginOptions } from '@jscutlery/swc-angular';
 import { env } from 'process';
-import swc from 'unplugin-swc';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -29,7 +27,6 @@ const config = defineConfig({
     ctPort: 3100,
 
     ctViteConfig: {
-      plugins: [swc.vite(swcAngularUnpluginOptions())],
       resolve: {
         /* @angular/material is using "style" as a Custom Conditional export to expose prebuilt styles etc... */
         conditions: ['style'],

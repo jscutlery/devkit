@@ -5,9 +5,6 @@
   "prefix": "lib",
   "tags": [],
   "projectType": "library",
-  "implicitDependencies": [
-    "swc-angular"
-  ],
   "targets": {
     "debug": {
       "command": "nx watch --all -- 'rm -Rf node_modules/.vite node_modules/.vitest && yarn jest --clearCache && nx test swc-angular-wide --skip-nx-cache'"
@@ -17,13 +14,13 @@
       "options": {
         "parallel": false,
         "cwd": "{projectRoot}",
-        "commands": [
-          "jest",
-          "vitest --watch false"
-        ]
+        "commands": ["jest", "vitest --watch false"]
       },
       "dependsOn": [
-        "^build"
+        {
+          "projects": ["swc-angular", "swc-angular-plugin"],
+          "target": "build"
+        }
       ]
     },
     "lint": {

@@ -1,7 +1,7 @@
+import { defineConfig, devices } from '@jscutlery/playwright-ct-angular';
 import { env } from 'process';
 import swc from 'unplugin-swc';
-import { defineConfig, devices } from '@jscutlery/playwright-ct-angular';
-import { swcAngularUnpluginOptions } from '@jscutlery/swc-angular';
+import { swcAngularUnpluginOptions } from '../../packages/swc-angular/src';
 
 /**
  * See https://playwright.dev/docs/test-configuration.

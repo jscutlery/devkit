@@ -1,4 +1,4 @@
-import type { Recipe } from './recipe';
+import { Recipe } from './recipe';
 import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CardComponent } from './shared-ui/card.component';
@@ -8,7 +8,7 @@ import { CardComponent } from './shared-ui/card.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'wm-recipe-preview',
   imports: [CardComponent, NgIf],
-  template: ` <wm-card *ngIf="recipe" [pictureUri]="recipe.pictureUri">
+  template: `<wm-card *ngIf="recipe" [pictureUri]="recipe.pictureUri">
     <h2 data-role="recipe-name">{{ recipe.name }}</h2>
     <ng-content></ng-content>
   </wm-card>`,

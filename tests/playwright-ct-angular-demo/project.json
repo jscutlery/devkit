@@ -3,10 +3,6 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "tests/playwright-ct-angular-demo/src",
   "projectType": "application",
-  "implicitDependencies": [
-    "playwright-ct-angular",
-    "swc-angular"
-  ],
   "targets": {
     "component-test": {
       "command": "playwright test -c {projectRoot}/playwright-ct.config.ts",
@@ -15,5 +11,8 @@
       ]
     }
   },
+  "implicitDependencies": [
+    "playwright-ct-angular"
+  ],
   "tags": []
 }
