@@ -1,3 +1,15 @@
+## 0.5.0 (2024-05-14)
+
+
+### 🚀 Features
+
+- **rx-computed:** ✨ allow usage with Angular 17 & 18 ([a470079](https://github.com/jscutlery/devkit/commit/a470079))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.4.1 (2024-05-13)
 
 

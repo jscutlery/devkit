@@ -1,3 +1,15 @@
+## 0.14.2 (2024-05-14)
+
+
+### 🩹 Fixes
+
+- **swc-angular:** 🐞 fix @swc/core range in peer deps ([bbb0436](https://github.com/jscutlery/devkit/commit/bbb0436))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.14.1 (2024-05-13)
 
 
