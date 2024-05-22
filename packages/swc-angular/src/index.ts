@@ -1,7 +1,7 @@
-import type { Config } from '@swc/core';
+import { dirname, join } from 'node:path';
+import type { Options } from '@swc/core';
 import { version } from '@swc/core';
 import { fileSystem } from './utils';
-import { dirname, join } from 'node:path';
 
 assertCompatibleSwcCoreVersion(version);
 
@@ -35,7 +35,8 @@ export function swcAngularPreset(options: AngularPresetOptions = {}) {
     env: {
       include: ['transform-async-to-generator'],
     },
-  } satisfies Config;
+    swcrc: false,
+  } satisfies Options;
 }
 
 export function swcAngularJestTransformer(): [string, Record<string, unknown>] {
@@ -48,7 +49,7 @@ export function swcAngularVitePreset() {
   });
 }
 
-export function swcAngularUnpluginOptions(): Config & {
+export function swcAngularUnpluginOptions(): Options & {
   tsconfigFile?: boolean;
 } {
   return {
