@@ -1,3 +1,7 @@
+## 0.14.5 (2024-05-22)
+
+This was a version bump only for swc-angular-plugin to align it with other projects, there were no code changes.
+
 ## 0.14.4 (2024-05-21)
 
 

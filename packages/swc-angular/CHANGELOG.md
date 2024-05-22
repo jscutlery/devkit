@@ -1,3 +1,15 @@
+## 0.14.5 (2024-05-22)
+
+
+### 🩹 Fixes
+
+- **swc-angular:** 🐞 ignore .swcrc to fix conflicts ([#402](https://github.com/jscutlery/devkit/pull/402))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi
+
 ## 0.14.4 (2024-05-21)
 
 
