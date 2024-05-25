@@ -17746,16 +17746,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-nesting@npm:^12.1.4":
-  version: 12.1.4
-  resolution: "postcss-nesting@npm:12.1.4"
+"postcss-nesting@npm:^12.1.5":
+  version: 12.1.5
+  resolution: "postcss-nesting@npm:12.1.5"
   dependencies:
     "@csstools/selector-resolve-nested": ^1.1.0
     "@csstools/selector-specificity": ^3.1.1
-    postcss-selector-parser: ^6.0.13
+    postcss-selector-parser: ^6.1.0
   peerDependencies:
     postcss: ^8.4
-  checksum: 6452ca53212c3ea1acd7ef19bcf786874bf31795f6fccf45a696186bf32c1b460f8237f6a58d4a2603c3ad82961d007c694dceee7edeaad2298c37db7dbcceee
+  checksum: b026aa84cde046632c3b149329312f62b54595bdb164e7a2d5c2c1f0e58fb438c86bec313a4323992981031ace5656a65918b3494bf193b869f17b49f0144b6f
   languageName: node
   linkType: hard
 
@@ -18021,8 +18021,8 @@ __metadata:
   linkType: hard
 
 "postcss-preset-env@npm:~9.5.0":
-  version: 9.5.13
-  resolution: "postcss-preset-env@npm:9.5.13"
+  version: 9.5.14
+  resolution: "postcss-preset-env@npm:9.5.14"
   dependencies:
     "@csstools/postcss-cascade-layers": ^4.0.6
     "@csstools/postcss-color-function": ^3.0.16
@@ -18076,7 +18076,7 @@ __metadata:
     postcss-image-set-function: ^6.0.3
     postcss-lab-function: ^6.0.16
     postcss-logical: ^7.0.1
-    postcss-nesting: ^12.1.4
+    postcss-nesting: ^12.1.5
     postcss-opacity-percentage: ^2.0.0
     postcss-overflow-shorthand: ^5.0.1
     postcss-page-break: ^3.0.4
@@ -18086,7 +18086,7 @@ __metadata:
     postcss-selector-not: ^7.0.2
   peerDependencies:
     postcss: ^8.4
-  checksum: 9e929a7749b5b5cc22c655cd835295417b900fea00ad70b070de0aeb32582135df175dbada1e5f965f3db7551f6a242da9eef4bb65e1508fac6c70d55b30bdbe
+  checksum: bc2836d6a98516eff3886d9feb674719cfc6ac4b6a05d664e9cbbfcf0fb16160504a286cd3780673e2186318b5a2a25db1e87b140d9b1f1b5838d9f6df919075
   languageName: node
   linkType: hard
 
@@ -18174,6 +18174,16 @@ __metadata:
     cssesc: ^3.0.0
     util-deprecate: ^1.0.2
   checksum: e1cd68e33a39e3dc1e1e5bd8717be5bbe3cc23a4cecb466c3acb2f3a77daad7a47df4d6137a76f8db74cf160d2fb16b2cfdb4ccbebdfda844690f8d545fe281d
+  languageName: node
+  linkType: hard
+
+"postcss-selector-parser@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "postcss-selector-parser@npm:6.1.0"
+  dependencies:
+    cssesc: ^3.0.0
+    util-deprecate: ^1.0.2
+  checksum: 449f614e6706421be307d8638183c61ba45bc3b460fe3815df8971dbb4d59c4087181940d879daee4a7a2daf3d86e915db1cce0c006dd68ca75b4087079273bd
   languageName: node
   linkType: hard
 
