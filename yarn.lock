@@ -22,15 +22,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@analogjs/vite-plugin-angular@npm:1.3.1":
-  version: 1.3.1
-  resolution: "@analogjs/vite-plugin-angular@npm:1.3.1"
+"@analogjs/vite-plugin-angular@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@analogjs/vite-plugin-angular@npm:1.4.0"
   dependencies:
     ts-morph: ^21.0.0
   peerDependencies:
-    "@angular-devkit/build-angular": ">=15.0.0 || ^18.0.0-rc.0"
-    "@ngtools/webpack": ">=15.0.0 || ^18.0.0-rc.0"
-  checksum: 7f04862407874c307d26217253696af73d6f1ba004159195628309ed37c6d4a1a17c6d7aab9cc957c39151b0926954fc1126835c3de8332a4835914c84854f38
+    "@angular-devkit/build-angular": ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    "@ngtools/webpack": ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: a39aab27431116b3580f5ef88852db48da7e38bf7f7d83c72eb2c91091ff8ae48a0f7a6a1f9ff67caf7ef7328b8bd07d5a8a91912f3c03d8513b8a2f5f2ea0e4
   languageName: node
   linkType: hard
 
@@ -4151,7 +4151,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jscutlery/devkit@workspace:."
   dependencies:
-    "@analogjs/vite-plugin-angular": 1.3.1
+    "@analogjs/vite-plugin-angular": 1.4.0
     "@angular-devkit/build-angular": 17.3.8
     "@angular-devkit/core": 17.3.8
     "@angular-devkit/schematics": 17.3.8
