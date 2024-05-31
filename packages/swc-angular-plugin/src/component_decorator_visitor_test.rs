@@ -14,7 +14,6 @@ fn test_replace_template_url() {
         MyCmp = _ts_decorate([
             Component({
                 selector: 'app-hello',
-                styleUrls: ['./style.css'],
                 templateUrl: './hello.component.html'
             })
         ], MyCmp);"# },
@@ -25,7 +24,6 @@ fn test_replace_template_url() {
         MyCmp = _ts_decorate([
             Component({
                 selector: 'app-hello',
-                styles: [],
                 template: _jsc_template_0
             })
         ], MyCmp);
@@ -83,24 +81,60 @@ fn test_replace_style_url() {
         ComponentDecoratorVisitor::default(),
         indoc! {
         r#"class MyCmp {}
-            MyCmp = _ts_decorate([
-                Component({
-                    selector: 'app-hello',
-                    styleUrl: './style.css',
-                    template: 'something'
-                })
-            ], MyCmp);"# },
+        MyCmp = _ts_decorate([
+            Component({
+                selector: 'app-hello',
+                styleUrl: './style.css',
+                template: 'something'
+            })
+        ], MyCmp);"# },
         indoc! {
-        r#"class MyCmp {
-            }
-            MyCmp = _ts_decorate([
-                Component({
-                    selector: 'app-hello',
-                    styles: [],
-                    template: 'something'
-                })
-            ], MyCmp);
-            "# },
+        r#"import _jsc_style_0 from "./style.css";
+        class MyCmp {
+        }
+        MyCmp = _ts_decorate([
+            Component({
+                selector: 'app-hello',
+                styles: [
+                    _jsc_style_0
+                ],
+                template: 'something'
+            })
+        ], MyCmp);
+        "# },
+    );
+}
+
+#[test]
+fn test_replace_style_urls() {
+    test_visitor(
+        ComponentDecoratorVisitor::default(),
+        indoc! {
+        r#"class MyCmp {}
+        MyCmp = _ts_decorate([
+            Component({
+                selector: 'app-hello',
+                styleUrls: ['./style1.css', './style2.css'],
+                templateUrl: './hello.component.html'
+            })
+        ], MyCmp);"# },
+        indoc! {
+        r#"import _jsc_style_0 from "./style1.css";
+        import _jsc_style_1 from "./style2.css";
+        import _jsc_template_2 from "./hello.component.html";
+        class MyCmp {
+        }
+        MyCmp = _ts_decorate([
+            Component({
+                selector: 'app-hello',
+                styles: [
+                    _jsc_style_0,
+                    _jsc_style_1
+                ],
+                template: _jsc_template_2
+            })
+        ], MyCmp);
+        "# },
     );
 }
 
@@ -151,18 +185,22 @@ fn test_append_relative_path_to_template_url() {
         MyCmp = _ts_decorate([
             Component({
                 selector: 'app-hello',
+                styleUrls: ['style.css'],
                 templateUrl: 'hello.component.html'
             })
         ], MyCmp);"# },
         indoc! {
-        r#"
-        import _jsc_template_0 from "./hello.component.html";
+        r#"import _jsc_style_0 from "./style.css";
+        import _jsc_template_1 from "./hello.component.html";
         class MyCmp {
         }
         MyCmp = _ts_decorate([
             Component({
                 selector: 'app-hello',
-                template: _jsc_template_0
+                styles: [
+                    _jsc_style_0
+                ],
+                template: _jsc_template_1
             })
         ], MyCmp);
         "# },
@@ -173,6 +211,7 @@ fn test_append_relative_path_to_template_url() {
 fn test_add_raw_query_to_template_import() {
     test_visitor(
         ComponentDecoratorVisitor::new(ComponentDecoratorVisitorOptions {
+            style_inline_suffix: true,
             template_raw_suffix: true,
         }),
         indoc! {
@@ -185,14 +224,17 @@ fn test_add_raw_query_to_template_import() {
             })
         ], MyCmp);"# },
         indoc! {
-        r#"import _jsc_template_0 from "./hello.component.html?raw";
+        r#"import _jsc_style_0 from "./style.css?inline";
+        import _jsc_template_1 from "./hello.component.html?raw";
         class MyCmp {
         }
         MyCmp = _ts_decorate([
             Component({
                 selector: 'app-hello',
-                styles: [],
-                template: _jsc_template_0
+                styles: [
+                    _jsc_style_0
+                ],
+                template: _jsc_template_1
             })
         ], MyCmp);
         "# },

@@ -1,6 +1,6 @@
 use std::ops::Deref;
 
-use swc_core::ecma::ast::{ArrayLit, Expr, Ident, Lit, ModuleItem, PropName};
+use swc_core::ecma::ast::{ArrayLit, Expr, ExprOrSpread, Ident, Lit, ModuleItem, PropName};
 use swc_core::ecma::visit::{VisitMut, VisitMutWith};
 
 use crate::import_declaration::{ImportDeclaration, ImportDeclarationSpecifier};
@@ -25,6 +25,7 @@ impl ComponentDecoratorVisitor {
 
 #[derive(Default)]
 pub struct ComponentDecoratorVisitorOptions {
+    pub style_inline_suffix: bool,
     pub template_raw_suffix: bool,
 }
 
@@ -74,9 +75,17 @@ impl VisitMut for ComponentDecoratorVisitor {
                 span: Default::default(),
                 optional: false,
             });
+
+            let mut style_path = match &node.value.deref() {
+                Expr::Lit(Lit::Str(str)) => str.value.to_string(),
+                _ => return,
+            };
+
             node.value = Expr::Array(ArrayLit {
                 span: Default::default(),
-                elems: vec![],
+                elems: vec![
+                    self.generate_style_entry(&mut style_path),
+                ],
             })
             .into();
         }
@@ -87,9 +96,30 @@ impl VisitMut for ComponentDecoratorVisitor {
                 span: Default::default(),
                 optional: false,
             });
+
+            let mut elems = vec![];
+
+            let style_paths = match &node.value.deref() {
+                Expr::Array(array) => &array.elems,
+                _ => return,
+            };
+
+            for path_option in style_paths.iter() {
+                /* Ignore non-string values in styleUrls */
+                let mut path = match path_option {
+                    Some(value) => match &value.expr.deref() {
+                        Expr::Lit(Lit::Str(str)) => str.value.to_string(),
+                        _ => continue,
+                    },
+                    _ => continue,
+                };
+
+                elems.push(self.generate_style_entry(&mut path));
+            }
+
             node.value = Expr::Array(ArrayLit {
                 span: Default::default(),
-                elems: vec![],
+                elems,
             })
             .into();
         }
@@ -154,5 +184,33 @@ impl ComponentDecoratorVisitor {
         let unique_id = self.unique_id;
         self.unique_id += 1;
         format!("_jsc_{name}_{unique_id}")
+    }
+
+    fn generate_style_entry(&mut self, path: &mut String) -> Option<ExprOrSpread> {
+        if !path.starts_with("./") {
+            path.insert_str(0, "./");
+        }
+
+        /* Add ?raw suffix for vite support when option is enabled. */
+        if self.options.style_inline_suffix {
+            path.push_str("?inline");
+        }
+
+        let style_var_name = self.generate_var_name("style");
+
+        self.imports.push(ImportDeclaration {
+            specifier: ImportDeclarationSpecifier::Default(style_var_name.clone()),
+            source: path.clone(),
+        });
+
+        Some(ExprOrSpread {
+            expr: Expr::Ident(Ident {
+                sym: style_var_name.into(),
+                span: Default::default(),
+                optional: Default::default(),
+            })
+            .into(),
+            spread: Default::default(),
+        })
     }
 }

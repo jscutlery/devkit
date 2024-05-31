@@ -6,6 +6,7 @@ import { fileSystem } from './utils';
 assertCompatibleSwcCoreVersion(version);
 
 export interface AngularPresetOptions {
+  styleInlineSuffix?: boolean;
   templateRawSuffix?: boolean;
 }
 
@@ -26,6 +27,7 @@ export function swcAngularPreset(options: AngularPresetOptions = {}) {
           [
             '@jscutlery/swc-angular-plugin',
             {
+              styleInlineSuffix: options.styleInlineSuffix,
               templateRawSuffix: options.templateRawSuffix,
             } as SwcPluginAngularOptions,
           ],
@@ -45,6 +47,7 @@ export function swcAngularJestTransformer(): [string, Record<string, unknown>] {
 
 export function swcAngularVitePreset() {
   return swcAngularPreset({
+    styleInlineSuffix: true,
     templateRawSuffix: true,
   });
 }
@@ -67,6 +70,7 @@ export function swcAngularUnpluginOptions(): Options & {
 }
 
 interface SwcPluginAngularOptions {
+  styleInlineSuffix?: boolean;
   templateRawSuffix?: boolean;
 }
 

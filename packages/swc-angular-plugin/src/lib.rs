@@ -25,13 +25,21 @@ pub fn process_transform(program: Program, metadata: TransformPluginProgramMetad
         serde_json::from_str(config_str.as_str())
             .expect("Invalid @jscutlery/swc-angular-plugin config")
     });
+
+    let style_inline_suffix = config
+        .as_ref()
+        .and_then(|value| value["styleInlineSuffix"].as_bool())
+        .unwrap_or_default();
+
     let template_raw_suffix = config
+        .as_ref()
         .and_then(|value| value["templateRawSuffix"].as_bool())
         .unwrap_or_default();
 
     program
         .fold_with(&mut as_folder(ComponentDecoratorVisitor::new(
             ComponentDecoratorVisitorOptions {
+                style_inline_suffix,
                 template_raw_suffix,
             },
         )))
