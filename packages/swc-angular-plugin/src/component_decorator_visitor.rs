@@ -25,6 +25,7 @@ impl ComponentDecoratorVisitor {
 
 #[derive(Default)]
 pub struct ComponentDecoratorVisitorOptions {
+    pub import_styles: bool,
     pub style_inline_suffix: bool,
     pub template_raw_suffix: bool,
 }
@@ -76,16 +77,19 @@ impl VisitMut for ComponentDecoratorVisitor {
                 optional: false,
             });
 
-            let mut style_path = match &node.value.deref() {
-                Expr::Lit(Lit::Str(str)) => str.value.to_string(),
-                _ => return,
-            };
-
             node.value = Expr::Array(ArrayLit {
                 span: Default::default(),
-                elems: vec![
-                    self.generate_style_entry(&mut style_path),
-                ],
+                elems: match self.options.import_styles {
+                    true => {
+                        let mut style_path = match &node.value.deref() {
+                            Expr::Lit(Lit::Str(str)) => str.value.to_string(),
+                            _ => return,
+                        };
+
+                        vec![self.generate_style_entry(&mut style_path)]
+                    },
+                    _ => vec![],
+                },
             })
             .into();
         }
@@ -99,22 +103,24 @@ impl VisitMut for ComponentDecoratorVisitor {
 
             let mut elems = vec![];
 
-            let style_paths = match &node.value.deref() {
-                Expr::Array(array) => &array.elems,
-                _ => return,
-            };
-
-            for path_option in style_paths.iter() {
-                /* Ignore non-string values in styleUrls */
-                let mut path = match path_option {
-                    Some(value) => match &value.expr.deref() {
-                        Expr::Lit(Lit::Str(str)) => str.value.to_string(),
-                        _ => continue,
-                    },
-                    _ => continue,
+            if self.options.import_styles {
+                let style_paths = match &node.value.deref() {
+                    Expr::Array(array) => &array.elems,
+                    _ => return,
                 };
 
-                elems.push(self.generate_style_entry(&mut path));
+                for path_option in style_paths.iter() {
+                    /* Ignore non-string values in styleUrls */
+                    let mut path = match path_option {
+                        Some(value) => match &value.expr.deref() {
+                            Expr::Lit(Lit::Str(str)) => str.value.to_string(),
+                            _ => continue,
+                        },
+                        _ => continue,
+                    };
+
+                    elems.push(self.generate_style_entry(&mut path));
+                }
             }
 
             node.value = Expr::Array(ArrayLit {

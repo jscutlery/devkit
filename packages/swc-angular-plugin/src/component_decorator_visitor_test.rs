@@ -76,9 +76,40 @@ fn test_replace_multiple_template_urls() {
 }
 
 #[test]
-fn test_replace_style_url() {
+fn test_discard_style_url() {
     test_visitor(
         ComponentDecoratorVisitor::default(),
+        indoc! {
+        r#"class MyCmp {}
+        MyCmp = _ts_decorate([
+            Component({
+                selector: 'app-hello',
+                styleUrl: './style.css',
+                template: 'something'
+            })
+        ], MyCmp);"# },
+        indoc! {
+        r#"class MyCmp {
+        }
+        MyCmp = _ts_decorate([
+            Component({
+                selector: 'app-hello',
+                styles: [],
+                template: 'something'
+            })
+        ], MyCmp);
+        "# },
+    );
+}
+
+#[test]
+fn test_replace_style_url() {
+    test_visitor(
+        ComponentDecoratorVisitor::new(ComponentDecoratorVisitorOptions {
+            import_styles: true,
+            style_inline_suffix: false,
+            template_raw_suffix: false,
+        }),
         indoc! {
         r#"class MyCmp {}
         MyCmp = _ts_decorate([
@@ -108,7 +139,11 @@ fn test_replace_style_url() {
 #[test]
 fn test_replace_style_urls() {
     test_visitor(
-        ComponentDecoratorVisitor::default(),
+        ComponentDecoratorVisitor::new(ComponentDecoratorVisitorOptions {
+            import_styles: true,
+            style_inline_suffix: false,
+            template_raw_suffix: false,
+        }),
         indoc! {
         r#"class MyCmp {}
         MyCmp = _ts_decorate([
@@ -177,15 +212,19 @@ fn test_replace_urls_in_component_decorator_only() {
 }
 
 #[test]
-fn test_append_relative_path_to_template_url() {
+fn test_append_relative_path_to_template_and_style_url() {
     test_visitor(
-        ComponentDecoratorVisitor::default(),
+        ComponentDecoratorVisitor::new(ComponentDecoratorVisitorOptions {
+            import_styles: true,
+            style_inline_suffix: false,
+            template_raw_suffix: false,
+        }),
         indoc! {
         r#"class MyCmp {}
         MyCmp = _ts_decorate([
             Component({
                 selector: 'app-hello',
-                styleUrls: ['style.css'],
+                styleUrl: 'style.css',
                 templateUrl: 'hello.component.html'
             })
         ], MyCmp);"# },
@@ -208,9 +247,10 @@ fn test_append_relative_path_to_template_url() {
 }
 
 #[test]
-fn test_add_raw_query_to_template_import() {
+fn test_add_raw_query_to_template_and_style_import() {
     test_visitor(
         ComponentDecoratorVisitor::new(ComponentDecoratorVisitorOptions {
+            import_styles: true,
             style_inline_suffix: true,
             template_raw_suffix: true,
         }),
@@ -219,7 +259,7 @@ fn test_add_raw_query_to_template_import() {
         MyCmp = _ts_decorate([
             Component({
                 selector: 'app-hello',
-                styleUrls: ['./style.css'],
+                styleUrl: './style.css',
                 templateUrl: './hello.component.html'
             })
         ], MyCmp);"# },
