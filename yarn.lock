@@ -4197,7 +4197,7 @@ __metadata:
     "@playwright/test": 1.44.1
     "@schematics/angular": 17.3.8
     "@swc-node/register": 1.9.1
-    "@swc/core": 1.5.7
+    "@swc/core": 1.5.24
     "@swc/helpers": 0.5.11
     "@swc/jest": 0.2.36
     "@types/babel__core": ^7.20.5
@@ -4215,7 +4215,7 @@ __metadata:
     dotenv: 16.0.3
     eslint: 9.3.0
     eslint-config-prettier: 9.0.0
-    eslint-plugin-cypress: 3.2.0
+    eslint-plugin-cypress: 3.3.0
     husky: ^9.0.0
     jest: 29.7.0
     jest-environment-jsdom: 29.7.0
@@ -6401,94 +6401,94 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-arm64@npm:1.5.7":
-  version: 1.5.7
-  resolution: "@swc/core-darwin-arm64@npm:1.5.7"
+"@swc/core-darwin-arm64@npm:1.5.24":
+  version: 1.5.24
+  resolution: "@swc/core-darwin-arm64@npm:1.5.24"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-x64@npm:1.5.7":
-  version: 1.5.7
-  resolution: "@swc/core-darwin-x64@npm:1.5.7"
+"@swc/core-darwin-x64@npm:1.5.24":
+  version: 1.5.24
+  resolution: "@swc/core-darwin-x64@npm:1.5.24"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm-gnueabihf@npm:1.5.7":
-  version: 1.5.7
-  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.5.7"
+"@swc/core-linux-arm-gnueabihf@npm:1.5.24":
+  version: 1.5.24
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.5.24"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-gnu@npm:1.5.7":
-  version: 1.5.7
-  resolution: "@swc/core-linux-arm64-gnu@npm:1.5.7"
+"@swc/core-linux-arm64-gnu@npm:1.5.24":
+  version: 1.5.24
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.5.24"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-musl@npm:1.5.7":
-  version: 1.5.7
-  resolution: "@swc/core-linux-arm64-musl@npm:1.5.7"
+"@swc/core-linux-arm64-musl@npm:1.5.24":
+  version: 1.5.24
+  resolution: "@swc/core-linux-arm64-musl@npm:1.5.24"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-gnu@npm:1.5.7":
-  version: 1.5.7
-  resolution: "@swc/core-linux-x64-gnu@npm:1.5.7"
+"@swc/core-linux-x64-gnu@npm:1.5.24":
+  version: 1.5.24
+  resolution: "@swc/core-linux-x64-gnu@npm:1.5.24"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-musl@npm:1.5.7":
-  version: 1.5.7
-  resolution: "@swc/core-linux-x64-musl@npm:1.5.7"
+"@swc/core-linux-x64-musl@npm:1.5.24":
+  version: 1.5.24
+  resolution: "@swc/core-linux-x64-musl@npm:1.5.24"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-win32-arm64-msvc@npm:1.5.7":
-  version: 1.5.7
-  resolution: "@swc/core-win32-arm64-msvc@npm:1.5.7"
+"@swc/core-win32-arm64-msvc@npm:1.5.24":
+  version: 1.5.24
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.5.24"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-win32-ia32-msvc@npm:1.5.7":
-  version: 1.5.7
-  resolution: "@swc/core-win32-ia32-msvc@npm:1.5.7"
+"@swc/core-win32-ia32-msvc@npm:1.5.24":
+  version: 1.5.24
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.5.24"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@swc/core-win32-x64-msvc@npm:1.5.7":
-  version: 1.5.7
-  resolution: "@swc/core-win32-x64-msvc@npm:1.5.7"
+"@swc/core-win32-x64-msvc@npm:1.5.24":
+  version: 1.5.24
+  resolution: "@swc/core-win32-x64-msvc@npm:1.5.24"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core@npm:1.5.7":
-  version: 1.5.7
-  resolution: "@swc/core@npm:1.5.7"
+"@swc/core@npm:1.5.24":
+  version: 1.5.24
+  resolution: "@swc/core@npm:1.5.24"
   dependencies:
-    "@swc/core-darwin-arm64": 1.5.7
-    "@swc/core-darwin-x64": 1.5.7
-    "@swc/core-linux-arm-gnueabihf": 1.5.7
-    "@swc/core-linux-arm64-gnu": 1.5.7
-    "@swc/core-linux-arm64-musl": 1.5.7
-    "@swc/core-linux-x64-gnu": 1.5.7
-    "@swc/core-linux-x64-musl": 1.5.7
-    "@swc/core-win32-arm64-msvc": 1.5.7
-    "@swc/core-win32-ia32-msvc": 1.5.7
-    "@swc/core-win32-x64-msvc": 1.5.7
-    "@swc/counter": ^0.1.2
-    "@swc/types": 0.1.7
+    "@swc/core-darwin-arm64": 1.5.24
+    "@swc/core-darwin-x64": 1.5.24
+    "@swc/core-linux-arm-gnueabihf": 1.5.24
+    "@swc/core-linux-arm64-gnu": 1.5.24
+    "@swc/core-linux-arm64-musl": 1.5.24
+    "@swc/core-linux-x64-gnu": 1.5.24
+    "@swc/core-linux-x64-musl": 1.5.24
+    "@swc/core-win32-arm64-msvc": 1.5.24
+    "@swc/core-win32-ia32-msvc": 1.5.24
+    "@swc/core-win32-x64-msvc": 1.5.24
+    "@swc/counter": ^0.1.3
+    "@swc/types": ^0.1.7
   peerDependencies:
-    "@swc/helpers": ^0.5.0
+    "@swc/helpers": "*"
   dependenciesMeta:
     "@swc/core-darwin-arm64":
       optional: true
@@ -6513,11 +6513,11 @@ __metadata:
   peerDependenciesMeta:
     "@swc/helpers":
       optional: true
-  checksum: 8e11626b782df914ee53dcb3e7f52e4bd2e1a896873c0e76ec674d19d05d87eec06e2223e0958d68ef1e0cdfb4cd505e3b1a297561e9506063738337f0c5409d
+  checksum: eafbcf5ea93540dc7cb0802c8ae8df5e995f586611195647e70d966bb6407e8233d31c3d954da58eb158a0c9a57d9207e52bb1518579de64cd34b67b025acc14
   languageName: node
   linkType: hard
 
-"@swc/counter@npm:^0.1.2, @swc/counter@npm:^0.1.3":
+"@swc/counter@npm:^0.1.3":
   version: 0.1.3
   resolution: "@swc/counter@npm:0.1.3"
   checksum: df8f9cfba9904d3d60f511664c70d23bb323b3a0803ec9890f60133954173047ba9bdeabce28cd70ba89ccd3fd6c71c7b0bd58be85f611e1ffbe5d5c18616598
@@ -6546,7 +6546,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/types@npm:0.1.7":
+"@swc/types@npm:^0.1.7":
   version: 0.1.7
   resolution: "@swc/types@npm:0.1.7"
   dependencies:
@@ -11533,14 +11533,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-cypress@npm:3.2.0":
-  version: 3.2.0
-  resolution: "eslint-plugin-cypress@npm:3.2.0"
+"eslint-plugin-cypress@npm:3.3.0":
+  version: 3.3.0
+  resolution: "eslint-plugin-cypress@npm:3.3.0"
   dependencies:
     globals: ^13.20.0
   peerDependencies:
     eslint: ">=7"
-  checksum: 1e5e8ed12e7e04666b1f8ae5fb006af6594097c81a76c37c592a5184e30e55da77814629d92700c7a583bc683845dcc73c103287bf073901718e82e8d7d421ce
+  checksum: 9966876934455e7c345d8f5a152cc3136b263285a3650554be289f859b40e1bd095f98a310f67168ee74751a8c66a900b016a60afb53ea8ac4d3a12e27d91cac
   languageName: node
   linkType: hard
 
