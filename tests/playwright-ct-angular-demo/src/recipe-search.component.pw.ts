@@ -5,7 +5,6 @@ import {
 } from '@jscutlery/playwright-ct-angular';
 import { RecipeSearchTestContainer } from './recipe-search.test-container';
 import { TESTING_PROVIDERS } from './testing/providers';
-import { recipeMother } from './testing/recipe.mother';
 
 test.describe('<wm-recipe-search>', () => {
   test('should search recipes without keyword on load', async ({ mount }) => {
@@ -32,12 +31,6 @@ test.describe('<wm-recipe-search>', () => {
   async function renderSearchComponent({ mount }: ComponentFixtures) {
     const locator = await mount(RecipeSearchTestContainer, {
       providers: [TESTING_PROVIDERS],
-      props: {
-        recipes: [
-          recipeMother.withBasicInfo('Beer').build(),
-          recipeMother.withBasicInfo('Burger').build(),
-        ],
-      },
     });
 
     return {

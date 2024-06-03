@@ -3,6 +3,7 @@ import { Recipe } from './recipe';
 import { RecipeRepository } from './recipe-repository.service';
 import { RecipeSearchComponent } from './recipe-search.component';
 import { RecipeRepositoryFake } from './testing/recipe-repository.fake';
+import { recipeMother } from './testing/recipe.mother';
 
 @Component({
   standalone: true,
@@ -12,14 +13,17 @@ import { RecipeRepositoryFake } from './testing/recipe-repository.fake';
     RecipeRepositoryFake,
     {
       provide: RecipeRepository,
-      useExisting: RecipeRepositoryFake
-    }
-  ]
+      useExisting: RecipeRepositoryFake,
+    },
+  ],
 })
 export class RecipeSearchTestContainer {
   private _repo = inject(RecipeRepositoryFake);
 
-  @Input() set recipes(recipes: Recipe[]) {
-    this._repo.setRecipes(recipes);
+  constructor() {
+    this._repo.setRecipes([
+      recipeMother.withBasicInfo('Beer').build(),
+      recipeMother.withBasicInfo('Burger').build(),
+    ]);
   }
 }

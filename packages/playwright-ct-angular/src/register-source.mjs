@@ -1,10 +1,9 @@
 import '@angular/compiler';
 import 'zone.js';
-
-import { getTestBed, TestBed, TestComponentRenderer } from '@angular/core/testing';
+import { Component, reflectComponentType } from '@angular/core';
+import { ComponentFixtureAutoDetect, getTestBed, TestBed, TestComponentRenderer } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { Subscription } from 'rxjs';
-import { Component, reflectComponentType } from '@angular/core';
 
 /**
  * @typedef {{type: string} & import('./index').MountTemplateOptions} TemplateInfo
@@ -21,9 +20,6 @@ window.playwrightMount = async (component, rootElement, hooksConfig) => {
     await hook({ hooksConfig, TestBed });
 
   const fixture = await __pwRenderComponent(component, rootElement);
-
-  fixture.autoDetectChanges();
-  await fixture.whenStable();
 
   for (const hook of window.__pw_hooks_after_mount || [])
     await hook({ hooksConfig });
@@ -56,7 +52,6 @@ window.playwrightUpdate = async (rootElement, component) => {
   __pwUpdateProps(fixture, component);
   __pwUpdateEvents(fixture, component.on);
 
-  fixture.autoDetectChanges();
   await fixture.whenStable();
 };
 
@@ -94,6 +89,7 @@ async function __pwRenderComponent(component, rootElement) {
   TestBed.configureTestingModule({
     imports: [componentClass],
     providers: [
+      { provide: ComponentFixtureAutoDetect, useValue: true },
       {
         provide: TestComponentRenderer,
         useValue: new PlaywrightTestComponentRenderer(rootElement)
@@ -105,6 +101,8 @@ async function __pwRenderComponent(component, rootElement) {
   const fixture = TestBed.createComponent(componentClass);
   __pwUpdateProps(fixture, component);
   __pwUpdateEvents(fixture, component.on);
+
+  await fixture.whenStable();
 
   return fixture;
 }
@@ -119,6 +117,7 @@ function __pwUpdateProps(fixture, componentInfo) {
 
   if (__pwIsTemplate(componentInfo)) {
     Object.assign(fixture.componentInstance, componentInfo.props);
+    fixture.detectChanges();
   } else {
     for (const [name, value] of Object.entries(componentInfo.props))
       fixture.componentRef.setInput(name, value);
