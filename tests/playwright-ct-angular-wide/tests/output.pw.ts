@@ -12,7 +12,7 @@ test('output', async ({ mount }) => {
     },
   });
 
-  await component.click();
+  await component.getByRole('button').click();
 
   expect(value).toBe(42);
 });
@@ -39,7 +39,7 @@ test('replace existing listener when new listener is set', async ({
     },
   });
 
-  await component.click();
+  await component.getByRole('button').click();
   expect(firstListenerCalled).toBe(false);
   expect(secondListenerCalled).toBe(true);
 });

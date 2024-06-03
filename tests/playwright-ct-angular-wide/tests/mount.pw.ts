@@ -7,6 +7,11 @@ test('mount', async ({ mount }) => {
   await expect(component).toContainText('Hello world!');
 });
 
+test('mount and return the right locator', async ({ mount }) => {
+  const component = await mount(BasicComponent);
+  expect(await component.innerHTML()).toBe('<h1>Hello world!</h1>');
+});
+
 test('mount with template in separate file', async ({ mount }) => {
   const component = await mount(BasicWithTemplateComponent);
   await expect(component).toContainText('Hello world!');

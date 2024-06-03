@@ -1,7 +1,7 @@
 import '@angular/compiler';
 import 'zone.js';
 
-import { getTestBed, TestBed } from '@angular/core/testing';
+import { getTestBed, TestBed, TestComponentRenderer } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { Subscription } from 'rxjs';
 import { Component, reflectComponentType } from '@angular/core';
@@ -20,7 +20,7 @@ window.playwrightMount = async (component, rootElement, hooksConfig) => {
   for (const hook of window.__pw_hooks_before_mount || [])
     await hook({ hooksConfig, TestBed });
 
-  const fixture = await __pwRenderComponent(component);
+  const fixture = await __pwRenderComponent(component, rootElement);
 
   fixture.autoDetectChanges();
   await fixture.whenStable();
@@ -68,8 +68,9 @@ const __pwFixtureRegistry = new Map();
 
 /**
  * @param {ComponentInfo} component
+ * @param {Element} rootElement
  */
-async function __pwRenderComponent(component) {
+async function __pwRenderComponent(component, rootElement) {
   /** @type {import('@angular/core').Type<unknown>} */
   let componentClass;
 
@@ -92,12 +93,16 @@ async function __pwRenderComponent(component) {
 
   TestBed.configureTestingModule({
     imports: [componentClass],
-    providers: component.providers
+    providers: [
+      {
+        provide: TestComponentRenderer,
+        useValue: new PlaywrightTestComponentRenderer(rootElement)
+      },
+      ...component.providers ?? []
+    ]
   });
 
   const fixture = TestBed.createComponent(componentClass);
-  fixture.nativeElement.id = 'root';
-
   __pwUpdateProps(fixture, component);
   __pwUpdateEvents(fixture, component.on);
 
@@ -145,4 +150,25 @@ function __pwUpdateEvents(fixture, events = {}) {
  */
 function __pwIsTemplate(component) {
   return typeof component.type === 'string';
+}
+
+class PlaywrightTestComponentRenderer extends TestComponentRenderer {
+
+  constructor(rootElement) {
+    super();
+    this._children = [];
+    this._rootElement = rootElement;
+  }
+
+  insertRootElement(testRootElementId) {
+    const testRootElement = document.createElement('div');
+    testRootElement.id = testRootElementId;
+    this._rootElement.appendChild(testRootElement);
+  }
+
+  removeAllRootElements() {
+    for (const child of this._children)
+      this._rootElement.removeChild(child);
+    this._children = [];
+  }
 }
