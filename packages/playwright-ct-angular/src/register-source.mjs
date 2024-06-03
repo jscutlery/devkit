@@ -1,5 +1,3 @@
-import '@angular/compiler';
-import 'zone.js';
 import { Component, reflectComponentType } from '@angular/core';
 import { ComponentFixtureAutoDetect, getTestBed, TestBed, TestComponentRenderer } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';

@@ -1,3 +1,4 @@
+import 'zone.js';
 import { beforeMount } from '@jscutlery/playwright-ct-angular/hooks';
 import { TOKEN } from '../src/inject.component';
 

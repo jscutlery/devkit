@@ -281,7 +281,7 @@ Cf. https://youtu.be/y3YxX4sFJbM
 
 Cf. https://github.com/microsoft/playwright/blob/cac67fb94f2c8a0ee82878054c39790e660f17ca/packages/playwright-test/src/tsxTransform.ts#L153
 
-###       
+###                  
 
 # 📦 Setup
 
@@ -347,3 +347,34 @@ const config: PlaywrightTestConfig = {
   ...
 }
 ```
+
+### 4. Choose between zoneful or zoneless testing
+
+#### Zoneful Testing
+
+If you want to use zoneful testing, you have to import `zone.js` in your `playwright/index.ts`:
+
+```ts
+// playwright/index.ts
+import 'zone.js';
+```
+
+#### Zoneless Testing
+
+For zoneless testing, you have to provide `provideExperimentalZonelessChangeDetection()` in your `playwright/index.ts`:
+
+```ts
+// playwright/index.ts
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { beforeMount } from '@jscutlery/playwright-ct-angular/hooks';
+
+beforeMount(async ({ TestBed }) => {
+  TestBed.configureTestingModule({
+    providers: [
+      provideExperimentalZonelessChangeDetection(),
+    ],
+  });
+});
+```
+
+Cf. [Zoneless Example's `playwright/index.ts`](../../tests/playwright-ct-angular-demo/playwright/index.ts)
