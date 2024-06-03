@@ -5,7 +5,6 @@ import {
 } from '@jscutlery/playwright-ct-angular';
 import { RecipeFilter } from './recipe-filter';
 import { RecipeFilterComponent } from './recipe-filter.component';
-import { TESTING_PROVIDERS } from './testing/providers';
 
 test.describe('<wm-recipe-filter>', () => {
   test('should search recipes without keyword on load', async ({ mount }) => {
@@ -24,7 +23,6 @@ test.describe('<wm-recipe-filter>', () => {
   async function renderRecipeFilter({ mount }: ComponentFixtures) {
     const filterChangeCalls: RecipeFilter[] = [];
     const locator = await mount(RecipeFilterComponent, {
-      providers: [TESTING_PROVIDERS],
       on: {
         filterChange(filter: RecipeFilter) {
           filterChangeCalls.push(filter);

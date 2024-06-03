@@ -4,7 +4,6 @@ import {
   test,
 } from '@jscutlery/playwright-ct-angular';
 import { RecipeSearchTestContainer } from './recipe-search.test-container';
-import { TESTING_PROVIDERS } from './testing/providers';
 
 test.describe('<wm-recipe-search>', () => {
   test('should search recipes without keyword on load', async ({ mount }) => {
@@ -29,14 +28,12 @@ test.describe('<wm-recipe-search>', () => {
   });
 
   async function renderSearchComponent({ mount }: ComponentFixtures) {
-    const locator = await mount(RecipeSearchTestContainer, {
-      providers: [TESTING_PROVIDERS],
-    });
+    const locator = await mount(RecipeSearchTestContainer);
 
     return {
       recipeTitleLocator: locator.getByTestId('recipe-name'),
       async updateFilter({ keywords }: { keywords: string }) {
-        await locator.getByLabel('Keywords').type(keywords);
+        await locator.getByLabel('Keywords').fill(keywords);
       },
       async verifyScreenshot(name: string) {
         /* Wait for images to load. */
