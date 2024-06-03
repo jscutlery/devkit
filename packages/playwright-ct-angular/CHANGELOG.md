@@ -1,3 +1,15 @@
+## 0.6.5 (2024-06-03)
+
+
+### 🩹 Fixes
+
+- **playwright-ct-angular:** 🐞remove useless manual change detection ([#426](https://github.com/jscutlery/devkit/pull/426))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi @yjaaidi
+
 ## 0.6.4 (2024-06-03)
 
 
