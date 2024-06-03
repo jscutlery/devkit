@@ -1,3 +1,15 @@
+## 0.7.0 (2024-06-03)
+
+
+### 🚀 Features
+
+- **playwright-ct-angular:** ✨ allow zoneless testing ([#427](https://github.com/jscutlery/devkit/pull/427))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi @yjaaidi
+
 ## 0.6.5 (2024-06-03)
 
 
