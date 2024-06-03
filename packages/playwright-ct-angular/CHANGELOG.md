@@ -1,3 +1,15 @@
+## 0.6.4 (2024-06-03)
+
+
+### 🩹 Fixes
+
+- **playwright-ct-angular:** 🐞 fix host element locator ([#424](https://github.com/jscutlery/devkit/pull/424))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi @yjaaidi
+
 ## 0.6.3 (2024-05-21)
 
 
