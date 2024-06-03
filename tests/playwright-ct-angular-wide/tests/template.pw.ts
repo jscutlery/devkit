@@ -37,7 +37,7 @@ test('render a template with outputs', async ({ mount }) => {
     },
   );
 
-  await component.click();
+  await component.getByRole('button').click();
 
   expect(value).toBe(42);
 });
