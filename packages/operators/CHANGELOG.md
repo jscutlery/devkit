@@ -1,3 +1,10 @@
+## 3.1.6 (2024-06-19)
+
+
+### 🩹 Fixes
+
+- 📦 update dependency @babel/core to v7.24.7 ([#452](https://github.com/jscutlery/devkit/pull/452))
+
 ## 3.1.5 (2024-06-11)
 
 
