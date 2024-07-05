@@ -4286,7 +4286,7 @@ __metadata:
     tslib: 2.6.3
     typescript: 5.4.5
     unplugin-swc: 1.4.5
-    vite: 5.3.2
+    vite: 5.3.3
     vitest: 1.6.0
     zone.js: 0.14.7
   languageName: unknown
@@ -18741,7 +18741,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.2.14, postcss@npm:^8.4.14, postcss@npm:^8.4.23, postcss@npm:^8.4.24, postcss@npm:^8.4.31, postcss@npm:^8.4.33, postcss@npm:^8.4.38, postcss@npm:^8.4.5":
+"postcss@npm:^8.2.14, postcss@npm:^8.4.14, postcss@npm:^8.4.23, postcss@npm:^8.4.24, postcss@npm:^8.4.31, postcss@npm:^8.4.33, postcss@npm:^8.4.38, postcss@npm:^8.4.39, postcss@npm:^8.4.5":
   version: 8.4.39
   resolution: "postcss@npm:8.4.39"
   dependencies:
@@ -21843,7 +21843,47 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:5.3.2, vite@npm:^5.0.0, vite@npm:^5.0.13, vite@npm:^5.2.8":
+"vite@npm:5.3.3":
+  version: 5.3.3
+  resolution: "vite@npm:5.3.3"
+  dependencies:
+    esbuild: ^0.21.3
+    fsevents: ~2.3.3
+    postcss: ^8.4.39
+    rollup: ^4.13.0
+  peerDependencies:
+    "@types/node": ^18.0.0 || >=20.0.0
+    less: "*"
+    lightningcss: ^1.21.0
+    sass: "*"
+    stylus: "*"
+    sugarss: "*"
+    terser: ^5.4.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+    less:
+      optional: true
+    lightningcss:
+      optional: true
+    sass:
+      optional: true
+    stylus:
+      optional: true
+    sugarss:
+      optional: true
+    terser:
+      optional: true
+  bin:
+    vite: bin/vite.js
+  checksum: 1a54b678c03b52be934b0db95295aa573819063fad9e13f148936cfc4006d081a6790fdd2dbe111b09b75b9a8d49f15e0788c58b86156d238ab3a0c1cc1a941f
+  languageName: node
+  linkType: hard
+
+"vite@npm:^5.0.0, vite@npm:^5.0.13, vite@npm:^5.2.8":
   version: 5.3.2
   resolution: "vite@npm:5.3.2"
   dependencies:
