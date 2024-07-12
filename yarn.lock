@@ -4245,7 +4245,7 @@ __metadata:
     jest-environment-jsdom: 29.7.0
     jest-preset-angular: 14.1.1
     mock-fs: ^5.1.1
-    ng-packagr: 18.0.0
+    ng-packagr: 18.1.0
     nx: 19.1.2
     postcss: ^8.4.5
     postcss-import: 16.1.0
@@ -11230,7 +11230,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:>=0.15.13":
+"esbuild@npm:>=0.15.13, esbuild@npm:^0.23.0":
   version: 0.23.0
   resolution: "esbuild@npm:0.23.0"
   dependencies:
@@ -16128,9 +16128,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-packagr@npm:18.0.0":
-  version: 18.0.0
-  resolution: "ng-packagr@npm:18.0.0"
+"ng-packagr@npm:18.1.0":
+  version: 18.1.0
+  resolution: "ng-packagr@npm:18.1.0"
   dependencies:
     "@rollup/plugin-json": ^6.1.0
     "@rollup/plugin-node-resolve": ^15.2.3
@@ -16143,7 +16143,7 @@ __metadata:
     commander: ^12.0.0
     convert-source-map: ^2.0.0
     dependency-graph: ^1.0.0
-    esbuild: ^0.21.3
+    esbuild: ^0.23.0
     fast-glob: ^3.3.1
     find-cache-dir: ^3.3.2
     injection-js: ^2.4.0
@@ -16156,10 +16156,10 @@ __metadata:
     rxjs: ^7.8.1
     sass: ^1.69.5
   peerDependencies:
-    "@angular/compiler-cli": ^18.0.0-next.0 || ^18.1.0-next.0
+    "@angular/compiler-cli": ^18.0.0 || ^18.2.0-next.0
     tailwindcss: ^2.0.0 || ^3.0.0
     tslib: ^2.3.0
-    typescript: ">=5.4 <5.5"
+    typescript: ">=5.4 <5.6"
   dependenciesMeta:
     rollup:
       optional: true
@@ -16168,7 +16168,7 @@ __metadata:
       optional: true
   bin:
     ng-packagr: cli/main.js
-  checksum: da810351a6a69e483183e445151308318b7dff1b39330efc59e36d5207ebb3c90642150fcce364c2cda3e32f86ce581ea75ad4c017d7952d3fd4d257732a0b5d
+  checksum: ef5dd103056c402c2db018e8d458e70c680ad7a1ce8a83b81767549f5c99742d5bc61206fbf099a448741363c0283e7e25109d248b4daf0fc6e1ad4b61487210
   languageName: node
   linkType: hard
 
