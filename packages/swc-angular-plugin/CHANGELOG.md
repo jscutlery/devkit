@@ -1,3 +1,10 @@
+## 0.14.14 (2024-08-25)
+
+
+### 🩹 Fixes
+
+- 📦 update dependency tslib to v2.7.0 ([#546](https://github.com/jscutlery/devkit/pull/546))
+
 ## 0.14.13 (2024-08-24)
 
 
