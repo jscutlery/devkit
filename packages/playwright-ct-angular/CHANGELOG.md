@@ -1,3 +1,15 @@
+## 0.8.1 (2024-09-17)
+
+
+### 🩹 Fixes
+
+- **playwright-ct-angular:** 🐞 support required inputs ([#578](https://github.com/jscutlery/devkit/pull/578))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi @yjaaidi
+
 ## 0.8.0 (2024-09-17)
 
 
