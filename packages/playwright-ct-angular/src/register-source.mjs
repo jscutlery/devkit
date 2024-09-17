@@ -1,7 +1,6 @@
 import { Component, reflectComponentType } from '@angular/core';
-import { ComponentFixtureAutoDetect, getTestBed, TestBed, TestComponentRenderer } from '@angular/core/testing';
+import { getTestBed, TestBed, TestComponentRenderer } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-import { Subscription } from 'rxjs';
 
 /**
  * @typedef {{type: string} & import('./index').MountTemplateOptions} TemplateInfo
@@ -68,16 +67,17 @@ async function __pwRenderComponent(component, rootElement) {
   let componentClass;
 
   if (__pwIsTemplate(component)) {
-    const templateInfo = /** @type {TemplateInfo} */(component);
+    const templateInfo = /** @type {TemplateInfo} */ (component);
     componentClass = Component({
       standalone: true,
       selector: 'pw-template-component',
       imports: templateInfo.imports,
-      template: templateInfo.type
-    })(class {
-    });
+      template: templateInfo.type,
+    })(class {});
   } else {
-    componentClass = /** @type {import('@angular/core').Type<unknown>} */(component.type);
+    componentClass = /** @type {import('@angular/core').Type<unknown>} */ (
+      component.type
+    );
   }
 
   const componentMetadata = reflectComponentType(componentClass);
@@ -87,18 +87,19 @@ async function __pwRenderComponent(component, rootElement) {
   TestBed.configureTestingModule({
     imports: [componentClass],
     providers: [
-      { provide: ComponentFixtureAutoDetect, useValue: true },
       {
         provide: TestComponentRenderer,
-        useValue: new PlaywrightTestComponentRenderer(rootElement)
+        useValue: new PlaywrightTestComponentRenderer(rootElement),
       },
-      ...component.providers ?? []
-    ]
+      ...(component.providers ?? []),
+    ],
   });
 
   const fixture = TestBed.createComponent(componentClass);
   __pwUpdateProps(fixture, component);
   __pwUpdateEvents(fixture, component.on);
+  /* TODO: switch back to ComponentFixtureAutoDetect once this is fixed https://github.com/angular/angular/issues/57856 */
+  fixture.autoDetectChanges();
 
   await fixture.whenStable();
 
