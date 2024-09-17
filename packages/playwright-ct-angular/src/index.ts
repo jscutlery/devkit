@@ -11,19 +11,18 @@ import type {
   TestType,
 } from '@playwright/experimental-ct-core';
 import * as playwrightCtCore from '@playwright/experimental-ct-core';
-import { JsonObject } from '@playwright/experimental-ct-core/types/component';
 import * as playwright from '@playwright/test';
 
 export type { PlaywrightTestConfig };
 export { expect, devices } from '@playwright/test';
 
 export interface ComponentFixtures {
-  mount<COMPONENT, HOOKS extends JsonObject>(
+  mount<COMPONENT, HOOKS>(
     template: string,
     options?: MountTemplateOptions<COMPONENT, HOOKS>,
   ): Promise<MountResult<COMPONENT>>;
 
-  mount<COMPONENT, HOOKS extends JsonObject>(
+  mount<COMPONENT, HOOKS>(
     component: Type<COMPONENT>,
     options?: MountOptions<COMPONENT, HOOKS>,
   ): Promise<MountResult<COMPONENT>>;
@@ -36,7 +35,7 @@ export interface MountOptions<COMPONENT, HOOKS> {
   on?: OutputListeners<COMPONENT>;
 }
 
-export interface MountTemplateOptions<COMPONENT, HOOKS extends JsonObject>
+export interface MountTemplateOptions<COMPONENT, HOOKS>
   extends MountOptions<COMPONENT, HOOKS> {
   imports?: Type<unknown>[];
 }
