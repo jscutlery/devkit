@@ -1,3 +1,15 @@
+## 0.8.0 (2024-09-17)
+
+
+### 🚀 Features
+
+- **playwright-ct-angular:** ✨ upgrade playwright to 1.47.1 ([#577](https://github.com/jscutlery/devkit/pull/577))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi @yjaaidi
+
 ## 0.7.9 (2024-08-25)
 
 
