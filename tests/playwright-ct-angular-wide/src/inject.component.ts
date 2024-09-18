@@ -5,7 +5,7 @@ import {
   InjectionToken,
 } from '@angular/core';
 
-export const TOKEN = new InjectionToken<{ value: number }>('token');
+export const TOKEN = new InjectionToken<{ value: string }>('token');
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
