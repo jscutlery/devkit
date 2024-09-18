@@ -1,3 +1,15 @@
+## 0.9.0 (2024-09-18)
+
+
+### 🚀 Features
+
+- **playwright-ct-angular:** ✨ allow inject in beforeMount hook ([#581](https://github.com/jscutlery/devkit/pull/581))
+
+
+### ❤️  Thank You
+
+- Younes Jaaidi @yjaaidi
+
 ## 0.8.1 (2024-09-17)
 
 
