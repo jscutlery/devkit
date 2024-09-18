@@ -1,6 +1,13 @@
 import { Component, reflectComponentType } from '@angular/core';
-import { getTestBed, TestBed, TestComponentRenderer } from '@angular/core/testing';
-import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import {
+  getTestBed,
+  TestBed,
+  TestComponentRenderer,
+} from '@angular/core/testing';
+import {
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting,
+} from '@angular/platform-browser-dynamic/testing';
 
 /**
  * @typedef {{type: string} & import('./index').MountTemplateOptions} TemplateInfo
@@ -9,10 +16,20 @@ import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@ang
 
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting()
+  platformBrowserDynamicTesting(),
 );
 
 window.playwrightMount = async (component, rootElement, hooksConfig) => {
+  TestBed.configureTestingModule({
+    providers: [
+      {
+        provide: TestComponentRenderer,
+        useValue: new PlaywrightTestComponentRenderer(rootElement),
+      },
+      ...(component.providers ?? []),
+    ],
+  });
+
   for (const hook of window.__pw_hooks_before_mount || [])
     await hook({ hooksConfig, TestBed });
 
@@ -26,11 +43,12 @@ window.playwrightMount = async (component, rootElement, hooksConfig) => {
 
 window.playwrightUnmount = async (rootElement) => {
   const fixture = __pwFixtureRegistry.get(rootElement.id);
-  if (!fixture)
-    throw new Error('Component was not mounted');
+  if (!fixture) throw new Error('Component was not mounted');
 
   /* Unsubscribe from all outputs. */
-  for (const subscription of Object.values(__pwOutputSubscriptionRegistry.get(fixture) ?? {}))
+  for (const subscription of Object.values(
+    __pwOutputSubscriptionRegistry.get(fixture) ?? {},
+  ))
     subscription?.unsubscribe();
   __pwOutputSubscriptionRegistry.delete(fixture);
 
@@ -43,8 +61,7 @@ window.playwrightUnmount = async (rootElement) => {
  */
 window.playwrightUpdate = async (rootElement, component) => {
   const fixture = __pwFixtureRegistry.get(rootElement.id);
-  if (!fixture)
-    throw new Error('Component was not mounted');
+  if (!fixture) throw new Error('Component was not mounted');
 
   __pwUpdateProps(fixture, component);
   __pwUpdateEvents(fixture, component.on);
@@ -84,17 +101,6 @@ async function __pwRenderComponent(component, rootElement) {
   if (!componentMetadata?.isStandalone)
     throw new Error('Only standalone components are supported');
 
-  TestBed.configureTestingModule({
-    imports: [componentClass],
-    providers: [
-      {
-        provide: TestComponentRenderer,
-        useValue: new PlaywrightTestComponentRenderer(rootElement),
-      },
-      ...(component.providers ?? []),
-    ],
-  });
-
   const fixture = TestBed.createComponent(componentClass);
   __pwUpdateProps(fixture, component);
   __pwUpdateEvents(fixture, component.on);
@@ -111,8 +117,7 @@ async function __pwRenderComponent(component, rootElement) {
  * @param {ComponentInfo} componentInfo
  */
 function __pwUpdateProps(fixture, componentInfo) {
-  if (!componentInfo.props)
-    return;
+  if (!componentInfo.props) return;
 
   if (__pwIsTemplate(componentInfo)) {
     Object.assign(fixture.componentInstance, componentInfo.props);
@@ -134,9 +139,9 @@ function __pwUpdateEvents(fixture, events = {}) {
     outputSubscriptionRecord[name]?.unsubscribe();
 
     /* Store new subscription. */
-    outputSubscriptionRecord[name] = fixture.componentInstance[
-      name
-      ].subscribe((/** @type {unknown} */ event) => listener(event));
+    outputSubscriptionRecord[name] = fixture.componentInstance[name].subscribe(
+      (/** @type {unknown} */ event) => listener(event),
+    );
   }
 
   /* Update output subscription registry. */
@@ -151,7 +156,6 @@ function __pwIsTemplate(component) {
 }
 
 class PlaywrightTestComponentRenderer extends TestComponentRenderer {
-
   constructor(rootElement) {
     super();
     this._children = [];
@@ -165,8 +169,7 @@ class PlaywrightTestComponentRenderer extends TestComponentRenderer {
   }
 
   removeAllRootElements() {
-    for (const child of this._children)
-      this._rootElement.removeChild(child);
+    for (const child of this._children) this._rootElement.removeChild(child);
     this._children = [];
   }
 }
