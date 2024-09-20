@@ -22,11 +22,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@analogjs/vite-plugin-angular@npm:1.8.0":
-  version: 1.8.0
-  resolution: "@analogjs/vite-plugin-angular@npm:1.8.0"
+"@analogjs/vite-plugin-angular@npm:1.8.1":
+  version: 1.8.1
+  resolution: "@analogjs/vite-plugin-angular@npm:1.8.1"
   dependencies:
     ts-morph: ^21.0.0
+    vfile: ^6.0.3
   peerDependencies:
     "@angular-devkit/build-angular": ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
     "@angular/build": ^18.0.0
@@ -35,7 +36,7 @@ __metadata:
       optional: true
     "@angular/build":
       optional: true
-  checksum: fe1794111a15a58cb5f22218a27736e5e8d7ad467f8657f9717a10226ff2297379dc0bb9783dc08a6b82aa3ad57265a0a537d6b099a43dadac0aaa8fb2410105
+  checksum: be9f3f4b74327c87e394dca8b1ec68b3acd723a2f8d8ba6324a0c201f09675b6e60441c3009cce6b9cb64fb855d60dd8ebd1ba3583d5f36e607345d105993435
   languageName: node
   linkType: hard
 
@@ -4083,7 +4084,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jscutlery/devkit@workspace:."
   dependencies:
-    "@analogjs/vite-plugin-angular": 1.8.0
+    "@analogjs/vite-plugin-angular": 1.8.1
     "@angular-devkit/build-angular": 18.2.4
     "@angular-devkit/core": 18.2.4
     "@angular-devkit/schematics": 18.2.4
@@ -7193,6 +7194,13 @@ __metadata:
   version: 4.0.5
   resolution: "@types/tough-cookie@npm:4.0.5"
   checksum: f19409d0190b179331586365912920d192733112a195e870c7f18d20ac8adb7ad0b0ff69dad430dba8bc2be09593453a719cfea92dc3bda19748fd158fe1498d
+  languageName: node
+  linkType: hard
+
+"@types/unist@npm:^3.0.0":
+  version: 3.0.3
+  resolution: "@types/unist@npm:3.0.3"
+  checksum: 96e6453da9e075aaef1dc22482463898198acdc1eeb99b465e65e34303e2ec1e3b1ed4469a9118275ec284dc98019f63c3f5d49422f0e4ac707e5ab90fb3b71a
   languageName: node
   linkType: hard
 
@@ -21497,6 +21505,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"unist-util-stringify-position@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "unist-util-stringify-position@npm:4.0.0"
+  dependencies:
+    "@types/unist": ^3.0.0
+  checksum: e2e7aee4b92ddb64d314b4ac89eef7a46e4c829cbd3ee4aee516d100772b490eb6b4974f653ba0717a0071ca6ea0770bf22b0a2ea62c65fcba1d071285e96324
+  languageName: node
+  linkType: hard
+
 "universalify@npm:^0.1.0":
   version: 0.1.2
   resolution: "universalify@npm:0.1.2"
@@ -21732,6 +21749,26 @@ __metadata:
     core-util-is: 1.0.2
     extsprintf: ^1.2.0
   checksum: c431df0bedf2088b227a4e051e0ff4ca54df2c114096b0c01e1cbaadb021c30a04d7dd5b41ab277bcd51246ca135bf931d4c4c796ecae7a4fef6d744ecef36ea
+  languageName: node
+  linkType: hard
+
+"vfile-message@npm:^4.0.0":
+  version: 4.0.2
+  resolution: "vfile-message@npm:4.0.2"
+  dependencies:
+    "@types/unist": ^3.0.0
+    unist-util-stringify-position: ^4.0.0
+  checksum: 964e7e119f4c0e0270fc269119c41c96da20afa01acb7c9809a88365c8e0c64aa692fafbd952669382b978002ecd7ad31ef4446d85e8a22cdb62f6df20186c2d
+  languageName: node
+  linkType: hard
+
+"vfile@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "vfile@npm:6.0.3"
+  dependencies:
+    "@types/unist": ^3.0.0
+    vfile-message: ^4.0.0
+  checksum: 152b6729be1af70df723efb65c1a1170fd483d41086557da3651eea69a1dd1f0c22ea4344834d56d30734b9185bcab63e22edc81d3f0e9bed8aa4660d61080af
   languageName: node
   linkType: hard
 
