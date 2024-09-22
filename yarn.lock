@@ -4167,7 +4167,7 @@ __metadata:
     tslib: 2.7.0
     typescript: 5.4.5
     unplugin-swc: 1.5.1
-    vite: 5.4.6
+    vite: 5.4.7
     vitest: 2.1.1
     zone.js: 0.15.0
   languageName: unknown
@@ -21872,6 +21872,49 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: ea293748f624b3bb53e68d30ddc55e7addeaa38bbcde06d900e6d476bef3d0550de2a67f5316680dbeae483afedd3e735fb91b65004659f62bece537ed038a59
+  languageName: node
+  linkType: hard
+
+"vite@npm:5.4.7":
+  version: 5.4.7
+  resolution: "vite@npm:5.4.7"
+  dependencies:
+    esbuild: ^0.21.3
+    fsevents: ~2.3.3
+    postcss: ^8.4.43
+    rollup: ^4.20.0
+  peerDependencies:
+    "@types/node": ^18.0.0 || >=20.0.0
+    less: "*"
+    lightningcss: ^1.21.0
+    sass: "*"
+    sass-embedded: "*"
+    stylus: "*"
+    sugarss: "*"
+    terser: ^5.4.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+    less:
+      optional: true
+    lightningcss:
+      optional: true
+    sass:
+      optional: true
+    sass-embedded:
+      optional: true
+    stylus:
+      optional: true
+    sugarss:
+      optional: true
+    terser:
+      optional: true
+  bin:
+    vite: bin/vite.js
+  checksum: aecb3380a85b8b2df9cbd01077b132e042b5a9f9bc87a302ccd69c5e528323eb4972ae41c430d8336a5d1d3ca253beb5e92ce74bc4e5fca3d0dd8651daa33d03
   languageName: node
   linkType: hard
 
