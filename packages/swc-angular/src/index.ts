@@ -88,7 +88,7 @@ function assertCompatibleSwcCoreVersion(version: string) {
     }>(packageJsonPath).version;
   }
 
-  if (!(version.startsWith('1.4.') || version.startsWith('1.5.'))) {
+  if (!(version.startsWith('1.4.') || version.startsWith('1.5.') || version.startsWith('1.6.'))) {
     console.error(`
     @swc/core version ${version} is incompatible with @jscutlery/swc-angular.
     Please use @swc/core version 1.4.x or 1.5.x.

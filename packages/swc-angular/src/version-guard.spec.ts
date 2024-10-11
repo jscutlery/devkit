@@ -14,7 +14,7 @@ import { join } from 'node:path';
 
 test.each([
   [' <1.4.0', { version: '1.3.107' }],
-  ['>=1.6.0', { version: '1.6.0' }],
+  ['>=1.7.0', { version: '1.7.0' }],
 ])(
   'should throw an error when module is imported and version is %s',
   async (_, { version }) => {
@@ -37,11 +37,11 @@ test.each([
   },
 );
 
-test('should not throw an error when module is imported and version is ~1.4.0', async () => {
+test.each(['1.4.0', '1.5.29', '1.6.13'])('should not throw an error when module is imported and version is ~1.4.0', async (version) => {
   setUp();
 
   vi.doMock('@swc/core', () => ({
-    version: '1.4.0',
+    version,
   }));
 
   await import('./index');
@@ -66,21 +66,21 @@ test('should fallback to package.json if version is not available (this happens 
   expect(process.exit).not.toHaveBeenCalledOnce();
 });
 
-test('should throw an error if version from package.json is not compatible', async () => {
+test.each(['1.3.0', '1.7.0'])('should throw an error if version from package.json is not compatible', async (version) => {
   const { fileSystem } = setUp();
 
   vi.doMock('@swc/core', () => ({
     version: undefined,
   }));
   fileSystem.setJsonFile('node_modules/@swc/core/package.json', {
-    version: '1.3.0',
+    version
   });
 
   await import('./index');
 
   expect(console.error).toHaveBeenCalledWith(
     expect.stringContaining(
-      `@swc/core version 1.3.0 is incompatible with @jscutlery/swc-angular`,
+      `@swc/core version ${version} is incompatible with @jscutlery/swc-angular`,
     ),
   );
 });
