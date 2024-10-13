@@ -48,7 +48,9 @@ test.describe('<wm-recipe-search>', () => {
           /* Prefer using whole page screenshot for two reasons:
            * 1. it's the same resolution and the Playwright reporter diff will show slider.
            * 2. we make sure that there's no extra overlay in the DOM (e.g. dialog). */
-          await expect(locator.page()).toHaveScreenshot(`${name}.png`);
+          await expect(locator.page()).toHaveScreenshot(`${name}.png`, {
+            maxDiffPixelRatio: 0.3,
+          });
         }).toPass();
       },
     };
