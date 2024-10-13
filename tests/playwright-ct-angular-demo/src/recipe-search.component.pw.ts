@@ -37,7 +37,10 @@ test.describe('<wm-recipe-search>', () => {
       },
       async verifyScreenshot(name: string) {
         /* Wait for images to load. */
-        await locator.page().waitForLoadState('networkidle');
+        await locator.page().waitForFunction(() => {
+          const images = Array.from(document.querySelectorAll('img'));
+          return images.every(img => img.complete);
+        });
 
         /* For some reason, Firefox reaches here while all images didn't load yet.
          * Keep trying until it succeeds. */

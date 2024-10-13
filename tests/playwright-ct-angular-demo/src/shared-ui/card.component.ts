@@ -10,8 +10,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'wm-card',
   imports: [NgIf],
-  template: ` <img *ngIf='pictureUri' class='picture' [src]='pictureUri' />
-  <div class='content'>
+  template: ` <img *ngIf="pictureUri" class="picture" [src]="pictureUri" />
+  <div class="content">
     <ng-content></ng-content>
   </div>`,
   styles: [
