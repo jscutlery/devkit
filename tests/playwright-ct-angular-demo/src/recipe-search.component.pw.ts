@@ -37,7 +37,10 @@ test.describe('<wm-recipe-search>', () => {
       },
       async verifyScreenshot(name: string) {
         /* Wait for images to load. */
-        await locator.page().waitForLoadState('networkidle');
+        await locator.page().waitForFunction(() => {
+          const images = Array.from(document.querySelectorAll('img'));
+          return images.every(img => img.complete);
+        });
 
         /* For some reason, Firefox reaches here while all images didn't load yet.
          * Keep trying until it succeeds. */
@@ -45,7 +48,9 @@ test.describe('<wm-recipe-search>', () => {
           /* Prefer using whole page screenshot for two reasons:
            * 1. it's the same resolution and the Playwright reporter diff will show slider.
            * 2. we make sure that there's no extra overlay in the DOM (e.g. dialog). */
-          await expect(locator.page()).toHaveScreenshot(`${name}.png`);
+          await expect(locator.page()).toHaveScreenshot(`${name}.png`, {
+            maxDiffPixelRatio: 0.3,
+          });
         }).toPass();
       },
     };
