@@ -1,3 +1,15 @@
+## 0.16.0 (2024-10-14)
+
+
+### 🚀 Features
+
+- **swc-plugin-angular:** ✨ optional transform styleUrl and styleUrls ([#421](https://github.com/jscutlery/devkit/pull/421))
+
+
+### ❤️  Thank You
+
+- 56789a1987 @56789a1987
+
 ## 0.15.0 (2024-10-14)
 
 
