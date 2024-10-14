@@ -16,4 +16,20 @@ This means that while it is suitable for testing, it shouldn't be used to build 
 
 ## Try it now with your Jest tests
 
-Cf. [`@jscutlery/swc-angular`](../swc-angular/README.md) 
+Cf. [`@jscutlery/swc-angular`](../swc-angular/README.md)
+
+## Config
+
+```ts
+[
+  '@jscutlery/swc-angular-plugin',
+  {
+    // this plugin removes styles by default, enable this to transform style urls to style imports
+    importStyles?: boolean,
+    // add ?inline suffix to style imports for vite support
+    styleInlineSuffix?: boolean,
+    // add ?raw suffix to template imports for vite support
+    templateRawSuffix?: boolean,
+  }
+]
+```

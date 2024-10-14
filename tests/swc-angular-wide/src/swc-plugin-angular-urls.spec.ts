@@ -8,8 +8,7 @@ describe('swc-angular-plugin: urls', () => {
     @Component({
       standalone: true,
       templateUrl: './fixtures/test.component.html',
-      styleUrl:
-        './fixtures/does-not-exist-as-we-just-remove-it-anyway.component.css',
+      styleUrl: './fixtures/test.component.css',
     })
     class Container {}
 
