@@ -1,3 +1,16 @@
+## 0.9.3 (2024-10-15)
+
+
+### 🩹 Fixes
+
+- **playwright-ct-angular:** 🐞 update peer deps ([d3890f2](https://github.com/jscutlery/devkit/commit/d3890f2))
+
+
+### ❤️  Thank You
+
+- 56789a1987 @56789a1987
+- Edouard Bozon @edbzn
+
 ## 0.9.2 (2024-10-14)
 
 
