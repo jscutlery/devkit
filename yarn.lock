@@ -4464,7 +4464,7 @@ __metadata:
     ts-jest: 29.2.5
     ts-node: 10.9.2
     tslib: 2.7.0
-    typescript: 5.4.5
+    typescript: 5.6.3
     unplugin-swc: 1.5.1
     vite: 5.4.9
     vitest: 2.1.3
@@ -22137,7 +22137,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.4.5, typescript@npm:~5.4.2":
+"typescript@npm:5.6.3":
+  version: 5.6.3
+  resolution: "typescript@npm:5.6.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: ba302f8822777ebefb28b554105f3e074466b671e7444ec6b75dadc008a62f46f373d9e57ceced1c433756d06c8b7dc569a7eefdf3a9573122a49205ff99021a
+  languageName: node
+  linkType: hard
+
+"typescript@npm:~5.4.2":
   version: 5.4.5
   resolution: "typescript@npm:5.4.5"
   bin:
@@ -22147,7 +22157,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@5.4.5#~builtin<compat/typescript>, typescript@patch:typescript@~5.4.2#~builtin<compat/typescript>":
+"typescript@patch:typescript@5.6.3#~builtin<compat/typescript>":
+  version: 5.6.3
+  resolution: "typescript@patch:typescript@npm%3A5.6.3#~builtin<compat/typescript>::version=5.6.3&hash=8c6c40"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: f6947c263dc67ea8429eefc3921683320f901a07d9ef29a1101a34f5b30108343b5a29aa77a581217a17f2616091ae7bd3043b304cf37f37d5e128e19296c08b
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@~5.4.2#~builtin<compat/typescript>":
   version: 5.4.5
   resolution: "typescript@patch:typescript@npm%3A5.4.5#~builtin<compat/typescript>::version=5.4.5&hash=5adc0c"
   bin:
