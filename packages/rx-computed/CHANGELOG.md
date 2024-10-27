@@ -1,3 +1,17 @@
+## 0.6.0 (2024-10-27)
+
+
+### 🚀 Features
+
+- **rx-computed:** ✨ add Angular 19 support ([#632](https://github.com/jscutlery/devkit/pull/632))
+
+
+### ❤️  Thank You
+
+- 56789a1987 @56789a1987
+- Edouard Bozon @edbzn
+- Younes Jaaidi @yjaaidi
+
 ## 0.5.13 (2024-10-14)
 
 
