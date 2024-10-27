@@ -6,6 +6,7 @@ import {
   Injector,
   signal,
   Signal,
+  untracked,
 } from '@angular/core';
 import { pending, Suspense, suspensify } from '@jscutlery/operators';
 import { Observable } from 'rxjs';
@@ -15,7 +16,7 @@ export function rxComputed<T, INITIAL_VALUE = T | null | undefined>(
   {
     initialValue,
     injector,
-  }: { initialValue?: INITIAL_VALUE; injector?: Injector } = {}
+  }: { initialValue?: INITIAL_VALUE; injector?: Injector } = {},
 ): Signal<T | INITIAL_VALUE> {
   if (!injector) assertInInjectionContext(rxComputed);
   injector ??= inject(Injector);
@@ -26,10 +27,10 @@ export function rxComputed<T, INITIAL_VALUE = T | null | undefined>(
     (onCleanup) => {
       const sub = fn()
         .pipe(suspensify())
-        .subscribe((value) => sig.set(value));
+        .subscribe((value) => untracked(() => sig.set(value)));
       onCleanup(() => sub.unsubscribe());
     },
-    { allowSignalWrites: true, injector }
+    { injector },
   );
 
   return computed(() => {
