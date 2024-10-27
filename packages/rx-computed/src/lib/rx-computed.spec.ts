@@ -1,9 +1,8 @@
 import {
-  Component,
   EnvironmentInjector,
   Injector,
   runInInjectionContext,
-  signal
+  signal,
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { NEVER, Observable, of, Subject, throwError } from 'rxjs';
@@ -65,7 +64,7 @@ describe(rxComputed.name, () => {
         new Observable((observer) => {
           observer.next(value() * 2);
           return unsubscribe;
-        })
+        }),
     );
 
     /* Update dependency and flush effects... */
@@ -73,14 +72,14 @@ describe(rxComputed.name, () => {
     flushEffects();
 
     /* ... and make sure that observable tear down is called. */
-    expect(unsubscribe).toBeCalled();
+    expect(unsubscribe).toHaveBeenCalled();
   });
 
   describe('without injection context', () => {
     it('should throw when invoked without injection context', () => {
       const { rxComputed } = setUpWithoutInjectionContext();
       expect(() => rxComputed(() => NEVER)).toThrow(
-        /rxComputed\(\) can only be used within an injection context/
+        /rxComputed\(\) can only be used within an injection context/,
       );
     });
 
@@ -90,7 +89,7 @@ describe(rxComputed.name, () => {
       const envInjector = TestBed.inject(EnvironmentInjector);
 
       const signal = rxComputed(() => of(42), {
-        injector: envInjector
+        injector: envInjector,
       });
       expect(signal()).toEqual(42);
     });
@@ -102,14 +101,12 @@ describe(rxComputed.name, () => {
     return {
       flushEffects,
       rxComputed<T>(...args: Parameters<typeof rxComputed<T>>) {
-        const signal = runInTestingInjectionContext(() =>
-          rxComputed(...args)
-        );
+        const signal = runInTestingInjectionContext(() => rxComputed(...args));
 
         flushEffects();
 
         return signal;
-      }
+      },
     };
   }
 });
@@ -125,29 +122,19 @@ function setUpWithoutInjectionContext() {
       flushEffects();
 
       return signal;
-    }
+    },
   };
 }
 
-
 function setUpSignalTesting() {
-  const injector = TestBed.inject(Injector);
-  const fixture = TestBed.createComponent(NoopComponent);
-
   /* Inspiration: https://github.com/angular/angular/blob/06b498f67f2ad16bb465ef378bdb16da84e41a1c/packages/core/rxjs-interop/test/to_observable_spec.ts#LL30C25-L30C25 */
   return {
     flushEffects() {
-      fixture.detectChanges();
+      TestBed.flushEffects();
     },
     runInTestingInjectionContext<T>(fn: () => T): T {
+      const injector = TestBed.inject(Injector);
       return runInInjectionContext(injector, fn);
-    }
+    },
   };
-}
-
-@Component({
-  standalone: true,
-  template: ''
-})
-class NoopComponent {
 }
