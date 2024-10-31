@@ -1,3 +1,16 @@
+## 0.16.1 (2024-10-31)
+
+
+### 🩹 Fixes
+
+- 📦 update dependency tslib to v2.8.0 ([#638](https://github.com/jscutlery/devkit/pull/638))
+
+
+### ❤️  Thank You
+
+- Edouard Bozon @edbzn
+- Younes Jaaidi @yjaaidi
+
 ## 0.16.0 (2024-10-14)
 
 
