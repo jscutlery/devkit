@@ -22,21 +22,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@analogjs/vite-plugin-angular@npm:1.9.1":
-  version: 1.9.1
-  resolution: "@analogjs/vite-plugin-angular@npm:1.9.1"
+"@analogjs/vite-plugin-angular@npm:1.9.2":
+  version: 1.9.2
+  resolution: "@analogjs/vite-plugin-angular@npm:1.9.2"
   dependencies:
     ts-morph: ^21.0.0
     vfile: ^6.0.3
   peerDependencies:
-    "@angular-devkit/build-angular": ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-    "@angular/build": ^18.0.0
+    "@angular-devkit/build-angular": ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc.0
+    "@angular/build": ^18.0.0 || ^19.0.0-rc.0
   peerDependenciesMeta:
     "@angular-devkit/build-angular":
       optional: true
     "@angular/build":
       optional: true
-  checksum: 3cfd06b092300c18e9336bbf0f596301fb1339da355ae6994fdf1f988839697d99f11abf85297922674ae33b0faeb319492004648d207e59998eaa9f752524fb
+  checksum: 689400f0d87b75e0d47449fa0fbdcd84b2d2e66aeb8f28efdb689018d66338c09fde431f0d387e7769c03ecae142b0671fabdd833589f1172fff085f6365c872
   languageName: node
   linkType: hard
 
@@ -4426,7 +4426,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jscutlery/devkit@workspace:."
   dependencies:
-    "@analogjs/vite-plugin-angular": 1.9.1
+    "@analogjs/vite-plugin-angular": 1.9.2
     "@angular-devkit/build-angular": 18.2.11
     "@angular-devkit/core": 18.2.11
     "@angular-devkit/schematics": 18.2.11
