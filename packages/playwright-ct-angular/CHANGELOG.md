@@ -1,3 +1,10 @@
+## 0.9.6 (2024-11-08)
+
+
+### 🩹 Fixes
+
+- 📦 update babel monorepo ([#647](https://github.com/jscutlery/devkit/pull/647))
+
 ## 0.9.5 (2024-11-04)
 
 
