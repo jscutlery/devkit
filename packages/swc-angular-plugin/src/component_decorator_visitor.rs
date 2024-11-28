@@ -1,5 +1,6 @@
 use std::ops::Deref;
 
+use swc_core::common::SyntaxContext;
 use swc_core::ecma::ast::{ArrayLit, Expr, ExprOrSpread, Ident, Lit, ModuleItem, PropName};
 use swc_core::ecma::visit::{VisitMut, VisitMutWith};
 
@@ -75,7 +76,8 @@ impl VisitMut for ComponentDecoratorVisitor {
                 sym: "styles".into(),
                 span: Default::default(),
                 optional: false,
-            });
+                ctxt: SyntaxContext::default(),
+            }.into());
 
             node.value = Expr::Array(ArrayLit {
                 span: Default::default(),
@@ -96,10 +98,11 @@ impl VisitMut for ComponentDecoratorVisitor {
 
         if key.sym.eq("styleUrls") {
             node.key = PropName::Ident(Ident {
+                ctxt: SyntaxContext::default(),
                 sym: "styles".into(),
                 span: Default::default(),
                 optional: false,
-            });
+            }.into());
 
             let mut elems = vec![];
 
@@ -132,10 +135,11 @@ impl VisitMut for ComponentDecoratorVisitor {
 
         if key.sym.eq("templateUrl") {
             node.key = PropName::Ident(Ident {
+                ctxt: SyntaxContext::default(),
                 sym: "template".into(),
                 span: Default::default(),
                 optional: false,
-            });
+            }.into());
 
             let mut template_path = match &node.value.deref() {
                 Expr::Lit(Lit::Str(str)) => str.value.to_string(),
@@ -161,6 +165,7 @@ impl VisitMut for ComponentDecoratorVisitor {
             });
 
             node.value = Expr::Ident(Ident {
+                ctxt: SyntaxContext::default(),
                 sym: template_var_name.into(),
                 span: Default::default(),
                 optional: Default::default(),
@@ -211,6 +216,7 @@ impl ComponentDecoratorVisitor {
 
         Some(ExprOrSpread {
             expr: Expr::Ident(Ident {
+                ctxt: SyntaxContext::default(),
                 sym: style_var_name.into(),
                 span: Default::default(),
                 optional: Default::default(),
