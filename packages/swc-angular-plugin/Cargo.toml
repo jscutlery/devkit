@@ -1,6 +1,6 @@
 [package]
 name = "swc-angular-plugin"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 [lib]
@@ -8,15 +8,15 @@ crate-type = ["cdylib"]
 
 [dependencies]
 serde = "1"
-swc_core = { version = "0.90.24", features = ["ecma_plugin_transform"] }
-swc_ecma_parser = { version = "0.143.10", features = ["typescript"] }
-swc_ecma_utils = "0.127.14"
+swc_core = { version = "0.109.2", features = ["ecma_plugin_transform"] }
+swc_ecma_parser = { version = "0.152.2", features = ["typescript"] }
+swc_ecma_utils = "0.138.1"
 indoc = "2.0.5"
 serde_json = "1.0.114"
 
 [dev-dependencies]
 ansi_term = "0.12.1"
-testing = "0.35.21"
+testing = "0.42.1"
 
 [profile.release]
 # Disable LTO to avoid linker error when using TransformPluginProgramMetadata#get_transform_plugin_config()

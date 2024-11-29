@@ -1,6 +1,6 @@
-use swc_core::ecma::ast::{
+use swc_core::{common::SyntaxContext, ecma::ast::{
     CallExpr, Callee, Expr, ExprOrSpread, ExprStmt, Ident, MemberExpr, MemberProp, Str,
-};
+}};
 use swc_ecma_utils::swc_ecma_ast::{ArrayLit, Lit, Stmt};
 
 pub const ANGULAR_CORE_SYMBOL: &str = "_jsc_angular_core";
@@ -25,9 +25,10 @@ impl From<AngularPropDecorator> for Stmt {
                         sym: ANGULAR_CORE_SYMBOL.into(),
                         span: Default::default(),
                         optional: Default::default(),
+                        ctxt: SyntaxContext::default(),
                     })
                     .into(),
-                    prop: MemberProp::Ident(create_ident(&decorator_info.decorator_name)),
+                    prop: MemberProp::Ident(create_ident(&decorator_info.decorator_name).into()),
                     span: Default::default(),
                 })
                 .into(),
@@ -35,6 +36,7 @@ impl From<AngularPropDecorator> for Stmt {
             args: decorator_info.decorator_args,
             span: Default::default(),
             type_args: Default::default(),
+            ctxt: SyntaxContext::default(),
         });
 
         /* `_ts_decorate(decorator, {class_ident}.prototype, "{property_name}")` */
@@ -55,7 +57,7 @@ impl From<AngularPropDecorator> for Stmt {
                 ExprOrSpread {
                     expr: Expr::Member(MemberExpr {
                         obj: Expr::Ident(decorator_info.class_ident).into(),
-                        prop: MemberProp::Ident(create_ident("prototype")),
+                        prop: MemberProp::Ident(create_ident("prototype").into()),
                         span: Default::default(),
                     })
                     .into(),
@@ -73,6 +75,7 @@ impl From<AngularPropDecorator> for Stmt {
             ],
             span: Default::default(),
             type_args: Default::default(),
+            ctxt: SyntaxContext::default(),
         });
 
         Stmt::Expr(ExprStmt {
@@ -91,5 +94,6 @@ fn create_ident(ident: &str) -> Ident {
         sym: ident.into(),
         span: Default::default(),
         optional: Default::default(),
+        ctxt: SyntaxContext::default(),
     }
 }

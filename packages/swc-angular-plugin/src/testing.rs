@@ -3,7 +3,7 @@ use ansi_term::Color;
 use indoc::formatdoc;
 use swc_core::ecma::transforms::testing::Tester;
 use swc_core::ecma::visit::{as_folder, VisitMut};
-use swc_ecma_parser::{Syntax, TsConfig};
+use swc_ecma_parser::{Syntax, TsSyntax};
 
 /// This is a helper function for testing the visitor.
 /// We use it instead of the `test_inline!` macro because we are injecting raw code
@@ -12,10 +12,10 @@ use swc_ecma_parser::{Syntax, TsConfig};
 /// The typical example is when we add a decorator call in the middle of a function
 /// with no indentation.
 pub fn test_visitor<V>(visitor: V, input: &str, expected: &str) where V: VisitMut {
-    let syntax = Syntax::Typescript(TsConfig::default());
+    let syntax = Syntax::Typescript(TsSyntax::default());
     let transform = as_folder(visitor);
     let actual = Tester::run(|tester| {
-        let result = tester.apply_transform(transform, "input.js", syntax, input)?;
+        let result = tester.apply_transform(transform, "input.js", syntax, Some(true), input)?;
         Ok(tester.print(&result, &Default::default()))
     });
 

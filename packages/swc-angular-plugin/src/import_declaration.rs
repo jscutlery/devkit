@@ -1,6 +1,6 @@
-use swc_core::ecma::ast::{
+use swc_core::{common::SyntaxContext, ecma::ast::{
     Ident, ImportDecl, ImportDefaultSpecifier, ImportStarAsSpecifier, ModuleDecl, ModuleItem, Str,
-};
+}};
 
 pub struct ImportDeclaration {
     pub specifier: ImportDeclarationSpecifier,
@@ -18,6 +18,7 @@ impl From<ImportDeclaration> for ModuleItem {
             ImportDeclarationSpecifier::Default(symbol) => ImportDefaultSpecifier {
                 span: Default::default(),
                 local: Ident {
+                    ctxt: SyntaxContext::default(),
                     span: Default::default(),
                     sym: symbol.into(),
                     optional: false,
@@ -27,6 +28,7 @@ impl From<ImportDeclaration> for ModuleItem {
             ImportDeclarationSpecifier::StarAs(symbol) => ImportStarAsSpecifier {
                 span: Default::default(),
                 local: Ident {
+                    ctxt: SyntaxContext::default(),
                     span: Default::default(),
                     sym: symbol.into(),
                     optional: false,

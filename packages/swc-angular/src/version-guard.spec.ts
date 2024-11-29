@@ -13,8 +13,8 @@ import { join } from 'node:path';
  */
 
 test.each([
-  [' <1.4.0', { version: '1.3.107' }],
-  ['>=1.7.0', { version: '1.7.0' }],
+  [' <1.7.0', { version: '1.6.13' }],
+  ['>=1.10.0', { version: '1.10.0' }],
 ])(
   'should throw an error when module is imported and version is %s',
   async (_, { version }) => {
@@ -37,7 +37,7 @@ test.each([
   },
 );
 
-test.each(['1.4.0', '1.5.29', '1.6.13'])('should not throw an error when module is imported and version is ~1.4.0', async (version) => {
+test.each(['1.7.42', '1.8.0', '1.9.3'])('should not throw an error when module is imported and version is ~1.7.0 or 1.8.0 or 1.9.0', async (version) => {
   setUp();
 
   vi.doMock('@swc/core', () => ({
@@ -57,7 +57,7 @@ test('should fallback to package.json if version is not available (this happens 
     version: undefined,
   }));
   fileSystem.setJsonFile('node_modules/@swc/core/package.json', {
-    version: '1.4.0',
+    version: '1.9.3',
   });
 
   await import('./index');
@@ -66,7 +66,7 @@ test('should fallback to package.json if version is not available (this happens 
   expect(process.exit).not.toHaveBeenCalledOnce();
 });
 
-test.each(['1.3.0', '1.7.0'])('should throw an error if version from package.json is not compatible', async (version) => {
+test.each(['1.6.0', '1.10.0'])('should throw an error if version from package.json is not compatible', async (version) => {
   const { fileSystem } = setUp();
 
   vi.doMock('@swc/core', () => ({
