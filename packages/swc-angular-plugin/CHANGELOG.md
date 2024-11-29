@@ -1,3 +1,15 @@
+## 0.17.0 (2024-11-29)
+
+
+### 🚀 Features
+
+- **swc-angular-plugin:** add support for latest @swc/core ([#674](https://github.com/jscutlery/devkit/pull/674))
+
+
+### ❤️  Thank You
+
+- Dmitry Zakharov @pumano
+
 ## 0.16.3 (2024-11-08)
 
 
