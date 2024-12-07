@@ -5,6 +5,7 @@ import { ChangeDetectionStrategy, Component, NgModule } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jc-sandbox-title',
   template: `<h1>🚀 Let's test!</h1>`,
+  standalone: false,
 })
 export class TitleComponent {}
 

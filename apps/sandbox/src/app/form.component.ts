@@ -16,6 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   `,
   styles: [``],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class FormComponent {}
 
