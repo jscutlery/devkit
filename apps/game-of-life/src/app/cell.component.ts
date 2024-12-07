@@ -29,6 +29,7 @@ import { GameOfLife } from './game-of-life.service';
       }
     `,
   ],
+  standalone: false,
 })
 export class CellComponent implements OnInit {
   @Input() col?: number = undefined;
@@ -36,7 +37,10 @@ export class CellComponent implements OnInit {
 
   color?: string = undefined;
 
-  constructor(private _gol: GameOfLife, private _cdr: ChangeDetectorRef) {}
+  constructor(
+    private _gol: GameOfLife,
+    private _cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit() {
     if (this.row == null || this.col == null) {
