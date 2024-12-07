@@ -146,7 +146,7 @@ describe(Microwave.name, () => {
 
         const finalizeSpy = jest.fn();
         const evaluation$ = watch(component, 'evaluation').pipe(
-          finalize(finalizeSpy)
+          finalize(finalizeSpy),
         );
 
         observe(evaluation$);
@@ -204,6 +204,7 @@ describe(Microwave.name, () => {
 @Microwave()
 @Component({
   template: `{{ meal }} is {{ evaluation }}`,
+  standalone: false,
 })
 class GreetingsComponent {
   meal?: string = undefined;
@@ -213,6 +214,7 @@ class GreetingsComponent {
 @Microwave()
 @Component({
   template: `{{ meal }} is {{ evaluation }}`,
+  standalone: false,
 })
 class GreetingsWithWatchComponent {
   meal?: string = undefined;

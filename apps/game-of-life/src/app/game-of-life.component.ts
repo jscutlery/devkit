@@ -37,6 +37,7 @@ import { GameOfLife, range } from './game-of-life.service';
       }
     `,
   ],
+  standalone: false,
 })
 export class GameOfLifeComponent implements OnDestroy, OnInit {
   colCount = 100;
