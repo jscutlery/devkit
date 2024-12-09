@@ -49,7 +49,7 @@ describe(decorateComponent.name, () => {
     expect(mockHooks.onPropertyDeclare).toBeCalledWith(
       cmp,
       'something',
-      undefined
+      undefined,
     );
   });
 
@@ -87,6 +87,7 @@ describe(decorateComponent.name, () => {
 
     @Component({
       template: '',
+      standalone: false,
     })
     class MyComponent implements OnInit, OnDestroy {
       something?: number = undefined;

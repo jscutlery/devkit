@@ -10,6 +10,7 @@ import { TitleModule } from './title.component';
     <jc-sandbox-title></jc-sandbox-title>
     <jc-sandbox-form></jc-sandbox-form>
   `,
+  standalone: false,
 })
 export class AppComponent {}
 

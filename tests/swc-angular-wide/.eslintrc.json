@@ -24,7 +24,10 @@
             "prefix": "jsc",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@angular-eslint/prefer-standalone": "warn",
+        "@angular-eslint/no-input-rename": "warn",
+        "@angular-eslint/no-output-rename": "warn"
       }
     },
     {
