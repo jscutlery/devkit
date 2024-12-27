@@ -4120,7 +4120,7 @@ __metadata:
     tslib: 2.8.1
     typescript: 5.6.3
     unplugin-swc: 1.5.1
-    vite: 6.0.5
+    vite: 6.0.6
     vitest: 2.1.8
     zone.js: 0.15.0
   languageName: unknown
@@ -11233,7 +11233,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:>=0.15.13, esbuild@npm:^0.24.0":
+"esbuild@npm:>=0.15.13, esbuild@npm:^0.24.0, esbuild@npm:^0.24.2":
   version: 0.24.2
   resolution: "esbuild@npm:0.24.2"
   dependencies:
@@ -22119,11 +22119,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:6.0.5":
-  version: 6.0.5
-  resolution: "vite@npm:6.0.5"
+"vite@npm:6.0.6":
+  version: 6.0.6
+  resolution: "vite@npm:6.0.6"
   dependencies:
-    esbuild: 0.24.0
+    esbuild: ^0.24.2
     fsevents: ~2.3.3
     postcss: ^8.4.49
     rollup: ^4.23.0
@@ -22167,7 +22167,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 51191684025a534f5c4467ce5cefa358fde4bbf5956cac66e55d8d4cb390dfc82d6d44b19d39919e2e899214cfdf81b33c9bb8e3f5fc12becdd4ceceffc3ba1e
+  checksum: 6786a42805dc7f277462ace1890cdf07562fefd79ef00e15e5e7eca64b3ef90589b768cf44622f4b6fa336ef167e6f7611d0a3cc81fe25798a1eb7e1b3d659b6
   languageName: node
   linkType: hard
 
