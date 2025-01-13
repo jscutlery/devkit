@@ -1,3 +1,13 @@
+## 0.18.0 (2025-01-13)
+
+### 🚀 Features
+
+- **swc-angular-plugin:** use new `wasm32-wasip1` build target ([d2a23a2](https://github.com/jscutlery/devkit/commit/d2a23a2))
+
+### ❤️ Thank You
+
+- Edouard Bozon @edbzn
+
 ## 0.17.0 (2024-11-29)
 
 
