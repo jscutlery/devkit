@@ -138,10 +138,7 @@ impl VisitMut for ComponentPropertyVisitor {
 
 impl ComponentPropertyVisitor {
     fn drain_component_decorators(&mut self, class: &Ident) -> Option<Vec<Stmt>> {
-        let mut props = match self.component_props.remove(class) {
-            Some(props) => props,
-            None => return None,
-        };
+        let mut props = self.component_props.remove(class)?;
 
         let mut stmts: Vec<Stmt> = Vec::with_capacity(props.len());
         for prop in props.drain(..) {

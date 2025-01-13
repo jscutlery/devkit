@@ -9,10 +9,7 @@ pub struct OutputPropParser {}
 
 impl AngularPropParser for OutputPropParser {
     fn parse_prop(&self, class: &Ident, class_prop: &ClassProp) -> Option<Box<dyn AngularProp>> {
-        let (name, options) = match Self::parse_output_prop_info(class_prop) {
-            Some(result) => result,
-            None => return None,
-        };
+        let (name, options) = Self::parse_output_prop_info(class_prop)?;
 
         Some(Box::new(OutputProp {
             class: class.clone(),
