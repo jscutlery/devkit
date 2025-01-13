@@ -1,8 +1,5 @@
 use serde_json::Value;
-use swc_core::ecma::{
-    ast::Program,
-    visit::{as_folder, FoldWith},
-};
+use swc_core::ecma::{ast::Program, visit::visit_mut_pass};
 use swc_core::plugin::{plugin_transform, proxies::TransformPluginProgramMetadata};
 
 use crate::component_decorator_visitor::{
@@ -42,12 +39,12 @@ pub fn process_transform(program: Program, metadata: TransformPluginProgramMetad
         .unwrap_or_default();
 
     program
-        .fold_with(&mut as_folder(ComponentDecoratorVisitor::new(
+        .apply(&mut visit_mut_pass(ComponentDecoratorVisitor::new(
             ComponentDecoratorVisitorOptions {
                 import_styles,
                 style_inline_suffix,
                 template_raw_suffix,
             },
         )))
-        .fold_with(&mut as_folder(ComponentPropertyVisitor::default()))
+        .apply(&mut visit_mut_pass(ComponentPropertyVisitor::default()))
 }
