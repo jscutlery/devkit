@@ -9,7 +9,7 @@
       "options": {
         "parallel": false,
         "commands": [
-          "cargo build --target wasm32-wasi --release --target-dir dist/{projectRoot}",
+          "cargo build --target wasm32-wasip1 --release --target-dir dist/{projectRoot}",
           "cp {projectRoot}/package.json dist/{projectRoot}",
           "cp {projectRoot}/*.md dist/{projectRoot}"
         ]

@@ -9,10 +9,7 @@ pub struct InputPropParser {}
 
 impl AngularPropParser for InputPropParser {
     fn parse_prop(&self, class: &Ident, class_prop: &ClassProp) -> Option<Box<dyn AngularProp>> {
-        let angular_prop_info = match parse_angular_prop(class_prop, "input") {
-            Some(value) => value,
-            None => return None,
-        };
+        let angular_prop_info = parse_angular_prop(class_prop, "input")?;
 
         let options_arg = if angular_prop_info.required {
             angular_prop_info.args.first()
