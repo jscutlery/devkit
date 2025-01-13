@@ -1,3 +1,9 @@
+## 0.18.1 (2025-01-13)
+
+### 🩹 Fixes
+
+- 📦 update dependency @babel/helper-plugin-utils to v7.26.5 ([#720](https://github.com/jscutlery/devkit/pull/720))
+
 ## 0.18.0 (2025-01-13)
 
 ### 🚀 Features

@@ -1,3 +1,19 @@
+## 0.9.7 (2025-01-13)
+
+### 🚀 Features
+
+- **swc-angular-plugin:** use new `wasm32-wasip1` build target ([d2a23a2](https://github.com/jscutlery/devkit/commit/d2a23a2))
+- **swc-angular-plugin:** add support for latest @swc/core ([#674](https://github.com/jscutlery/devkit/pull/674))
+
+### 🩹 Fixes
+
+- 📦 update dependency @babel/helper-plugin-utils to v7.26.5 ([#720](https://github.com/jscutlery/devkit/pull/720))
+
+### ❤️ Thank You
+
+- Dmitry Zakharov @pumano
+- Edouard Bozon @edbzn
+
 ## 0.9.6 (2024-11-08)
 
 
