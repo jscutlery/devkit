@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use swc_core::ecma::ast::{Ident, ModuleItem};
+use swc_core::ecma::ast::{Callee, Ident, ModuleItem};
 use swc_core::ecma::visit::{VisitMut, VisitMutWith};
 use swc_ecma_utils::swc_ecma_ast::Stmt;
 
@@ -13,9 +13,13 @@ use crate::component_property_visitor::query_prop_parser::QueryPropParser;
 use crate::import_declaration::{ImportDeclaration, ImportDeclarationSpecifier};
 
 pub struct ComponentPropertyVisitor {
-    prop_parsers: Vec<Box<dyn AngularPropParser>>,
     component_props: HashMap<Ident, Vec<Box<dyn AngularProp>>>,
     current_component: Option<Ident>,
+    /* This property tells us if there are decorators in the file.
+     * If there are none, this means that the file was already partially compiled
+     * (e.g. Angular libraries). */
+    has_decorators: bool,
+    prop_parsers: Vec<Box<dyn AngularPropParser>>,
     should_import_angular_core: bool,
 }
 
@@ -24,6 +28,7 @@ impl Default for ComponentPropertyVisitor {
         Self {
             component_props: HashMap::new(),
             current_component: None,
+            has_decorators: false,
             prop_parsers: vec![
                 Box::<InputPropParser>::default(),
                 Box::<OutputPropParser>::default(),
@@ -46,6 +51,10 @@ impl VisitMut for ComponentPropertyVisitor {
     }
 
     fn visit_mut_class_prop(&mut self, class_prop: &mut swc_core::ecma::ast::ClassProp) {
+        if !self.has_decorators {
+            return;
+        }
+
         let current_component = match &self.current_component {
             Some(current_component) => current_component,
             None => return,
@@ -68,6 +77,16 @@ impl VisitMut for ComponentPropertyVisitor {
      * `class MyCmp {}` -> `class MyCmp {} _ts_decorate(...);`
      */
     fn visit_mut_module_items(&mut self, items: &mut Vec<ModuleItem>) {
+        /* First-pass to check if there are any decorator usages.
+         * For some reason, SWC replaces decorators with `_ts_decorate` calls
+         * before calling our plugin but the `_ts_decorate` function declaration
+         * is not present in the AST for some reason.
+         * This means that we have to scan usages (which appear after the class declarations)
+         * before transforming the said classes. */
+        let mut decorator_usage_finder = DecoratorUsageFinder::default();
+        decorator_usage_finder.visit_mut_module_items(items);
+        self.has_decorators = decorator_usage_finder.has_decorators;
+
         let mut new_items = Vec::with_capacity(
             /* +1 In case there are decorators, and we have to add an @angular/core import statement. */
             items.len() + 1,
@@ -148,5 +167,26 @@ impl ComponentPropertyVisitor {
         }
 
         Some(stmts)
+    }
+}
+
+#[derive(Default)]
+struct DecoratorUsageFinder {
+    has_decorators: bool,
+}
+
+impl VisitMut for DecoratorUsageFinder {
+    fn visit_mut_callee(&mut self, callee: &mut Callee) {
+        if self.has_decorators {
+            return;
+        }
+
+        if callee
+            .as_expr()
+            .and_then(|expr| expr.as_ident())
+            .is_some_and(|ident| ident.sym.eq("_ts_decorate"))
+        {
+            self.has_decorators = true;
+        }
     }
 }
