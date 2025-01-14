@@ -1,4 +1,6 @@
 /* eslint-disable */
+import { swcAngularJestTransformer } from '@jscutlery/swc-angular';
+
 module.exports = {
   displayName: 'game-of-life',
   preset: '../../jest.preset.js',
@@ -6,7 +8,8 @@ module.exports = {
   globals: {},
   coverageDirectory: '../../coverage/apps/game-of-life',
   transform: {
-    '^.+\\.(ts|mjs|js|html)$': [
+    '^.+\\.(ts|mjs|js)$': swcAngularJestTransformer(),
+    '^.+\\.(html)$': [
       'jest-preset-angular',
       {
         tsconfig: '<rootDir>/tsconfig.spec.json',

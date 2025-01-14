@@ -13,8 +13,8 @@ import { join } from 'node:path';
  */
 
 test.each([
-  [' <1.7.0', { version: '1.6.13' }],
-  ['>=1.10.0', { version: '1.10.0' }],
+  [' <1.10.0', { version: '1.9.3' }],
+  ['>=1.11.0', { version: '1.11.0' }],
 ])(
   'should throw an error when module is imported and version is %s',
   async (_, { version }) => {
@@ -37,18 +37,21 @@ test.each([
   },
 );
 
-test.each(['1.7.42', '1.8.0', '1.9.3'])('should not throw an error when module is imported and version is ~1.7.0 or 1.8.0 or 1.9.0', async (version) => {
-  setUp();
+test.each(['1.10.0', '1.10.7'])(
+  'should not throw an error when module is imported and version is ~1.10.0',
+  async (version) => {
+    setUp();
 
-  vi.doMock('@swc/core', () => ({
-    version,
-  }));
+    vi.doMock('@swc/core', () => ({
+      version,
+    }));
 
-  await import('./index');
+    await import('./index');
 
-  expect(console.error).not.toHaveBeenCalledOnce();
-  expect(process.exit).not.toHaveBeenCalledOnce();
-});
+    expect(console.error).not.toHaveBeenCalledOnce();
+    expect(process.exit).not.toHaveBeenCalledOnce();
+  },
+);
 
 test('should fallback to package.json if version is not available (this happens on stackblitz)', async () => {
   const { fileSystem } = setUp();
@@ -57,7 +60,7 @@ test('should fallback to package.json if version is not available (this happens 
     version: undefined,
   }));
   fileSystem.setJsonFile('node_modules/@swc/core/package.json', {
-    version: '1.9.3',
+    version: '1.10.7',
   });
 
   await import('./index');
@@ -66,24 +69,27 @@ test('should fallback to package.json if version is not available (this happens 
   expect(process.exit).not.toHaveBeenCalledOnce();
 });
 
-test.each(['1.6.0', '1.10.0'])('should throw an error if version from package.json is not compatible', async (version) => {
-  const { fileSystem } = setUp();
+test.each(['1.9.3', '1.11.0'])(
+  'should throw an error if version from package.json is not compatible',
+  async (version) => {
+    const { fileSystem } = setUp();
 
-  vi.doMock('@swc/core', () => ({
-    version: undefined,
-  }));
-  fileSystem.setJsonFile('node_modules/@swc/core/package.json', {
-    version
-  });
+    vi.doMock('@swc/core', () => ({
+      version: undefined,
+    }));
+    fileSystem.setJsonFile('node_modules/@swc/core/package.json', {
+      version,
+    });
 
-  await import('./index');
+    await import('./index');
 
-  expect(console.error).toHaveBeenCalledWith(
-    expect.stringContaining(
-      `@swc/core version ${version} is incompatible with @jscutlery/swc-angular`,
-    ),
-  );
-});
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringContaining(
+        `@swc/core version ${version} is incompatible with @jscutlery/swc-angular`,
+      ),
+    );
+  },
+);
 
 function setUp() {
   const fileSystem = new FileSystemFake();

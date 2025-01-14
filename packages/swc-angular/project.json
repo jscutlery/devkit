@@ -40,6 +40,12 @@
     "lint": {
       "executor": "@nx/eslint:lint"
     },
+    "test":{
+      "executor": "@nx/vite:test",
+      "options": {
+        "config": "packages/swc-angular/vitest.config.mts"
+      }
+    },
     "nx-release-publish": {
       "executor": "@nx/js:release-publish",
       "dependsOn": [

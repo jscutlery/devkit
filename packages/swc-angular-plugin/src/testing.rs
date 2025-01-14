@@ -2,7 +2,7 @@ use ::testing::diff;
 use ansi_term::Color;
 use indoc::formatdoc;
 use swc_core::ecma::transforms::testing::Tester;
-use swc_core::ecma::visit::{as_folder, VisitMut};
+use swc_core::ecma::visit::{visit_mut_pass, VisitMut};
 use swc_ecma_parser::{Syntax, TsSyntax};
 
 /// This is a helper function for testing the visitor.
@@ -13,7 +13,7 @@ use swc_ecma_parser::{Syntax, TsSyntax};
 /// with no indentation.
 pub fn test_visitor<V>(visitor: V, input: &str, expected: &str) where V: VisitMut {
     let syntax = Syntax::Typescript(TsSyntax::default());
-    let transform = as_folder(visitor);
+    let transform = visit_mut_pass(visitor);
     let actual = Tester::run(|tester| {
         let result = tester.apply_transform(transform, "input.js", syntax, Some(true), input)?;
         Ok(tester.print(&result, &Default::default()))
