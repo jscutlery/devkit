@@ -1,3 +1,13 @@
+## 0.19.0 (2025-01-14)
+
+### 🚀 Features
+
+- **swc-angular:** upgrade swc core version to support 1.10.x ([3995b73](https://github.com/jscutlery/devkit/commit/3995b73))
+
+### ❤️ Thank You
+
+- Edouard Bozon @edbzn
+
 ## 0.18.2 (2025-01-14)
 
 ### 🩹 Fixes
