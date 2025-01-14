@@ -1,3 +1,13 @@
+## 0.18.2 (2025-01-14)
+
+### 🩹 Fixes
+
+- **swc-angular:** 🐞 fix invalid transform of partially compiled libs ([#723](https://github.com/jscutlery/devkit/pull/723))
+
+### ❤️ Thank You
+
+- Younes Jaaidi @yjaaidi
+
 ## 0.18.1 (2025-01-13)
 
 ### 🩹 Fixes

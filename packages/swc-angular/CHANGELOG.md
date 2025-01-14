@@ -1,3 +1,7 @@
+## 0.18.2 (2025-01-14)
+
+This was a version bump only for swc-angular to align it with other projects, there were no code changes.
+
 ## 0.18.1 (2025-01-13)
 
 ### 🩹 Fixes
