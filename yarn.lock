@@ -4164,7 +4164,7 @@ __metadata:
     jest-environment-jsdom: 29.7.0
     jest-preset-angular: 14.5.0
     mock-fs: ^5.4.1
-    ng-packagr: 19.0.1
+    ng-packagr: 19.1.0
     nx: 20.3.1
     postcss: ^8.4.49
     postcss-import: 16.1.0
@@ -9574,10 +9574,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^12.1.0":
-  version: 12.1.0
-  resolution: "commander@npm:12.1.0"
-  checksum: 68e9818b00fc1ed9cdab9eb16905551c2b768a317ae69a5e3c43924c2b20ac9bb65b27e1cab36aeda7b6496376d4da908996ba2c0b5d79463e0fb1e77935d514
+"commander@npm:^13.0.0":
+  version: 13.0.0
+  resolution: "commander@npm:13.0.0"
+  checksum: 3981c8c197c93ceeb949f6e2250785ea319209c502b7c53d6dc36148347739c72b15de2e4bcad80bedc3f8e1e5544a89ca4e7d673b2f3238ac51b44292ad08d6
   languageName: node
   linkType: hard
 
@@ -16410,9 +16410,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-packagr@npm:19.0.1":
-  version: 19.0.1
-  resolution: "ng-packagr@npm:19.0.1"
+"ng-packagr@npm:19.1.0":
+  version: 19.1.0
+  resolution: "ng-packagr@npm:19.1.0"
   dependencies:
     "@rollup/plugin-json": ^6.1.0
     "@rollup/wasm-node": ^4.24.0
@@ -16420,7 +16420,7 @@ __metadata:
     ansi-colors: ^4.1.3
     browserslist: ^4.22.1
     chokidar: ^4.0.1
-    commander: ^12.1.0
+    commander: ^13.0.0
     convert-source-map: ^2.0.0
     dependency-graph: ^1.0.0
     esbuild: ^0.24.0
@@ -16434,12 +16434,12 @@ __metadata:
     postcss: ^8.4.47
     rollup: ^4.24.0
     rxjs: ^7.8.1
-    sass: ^1.79.5
+    sass: ^1.81.0
   peerDependencies:
-    "@angular/compiler-cli": ^19.0.0-next.0
+    "@angular/compiler-cli": ^19.0.0 || ^19.1.0-next.0 || ^19.2.0-next.0
     tailwindcss: ^2.0.0 || ^3.0.0
     tslib: ^2.3.0
-    typescript: ">=5.5 <5.7"
+    typescript: ">=5.5 <5.8"
   dependenciesMeta:
     rollup:
       optional: true
@@ -16448,7 +16448,7 @@ __metadata:
       optional: true
   bin:
     ng-packagr: cli/main.js
-  checksum: 4fc4ca2a359287285e9a1f65c279dc771de3ee70f4ffe3933b0c97d3a3276342d9078ef668c5c3482bdfa509a2e0470239ada70421dfc2c189dfb97e85bbd0ce
+  checksum: 27afcee9b28166f4cdc7751150e6b1bdaa760a639bfe72dab703fd9fe458b9154b2eb145cd1f7bc2e80145009f3f295d11f4b20809b88df2832fe9959dae2ddb
   languageName: node
   linkType: hard
 
@@ -19927,7 +19927,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.42.1, sass@npm:^1.79.5":
+"sass@npm:^1.42.1":
   version: 1.83.1
   resolution: "sass@npm:1.83.1"
   dependencies:
@@ -19941,6 +19941,23 @@ __metadata:
   bin:
     sass: sass.js
   checksum: 367a9f270c74a9ad2851955e1cf5b2a05e57d27aec4bf054be1da48eb49858076467b65ec180d8c4392b5c55c0f4d4ba644855f985652ffca15d68a20641d5e0
+  languageName: node
+  linkType: hard
+
+"sass@npm:^1.81.0":
+  version: 1.83.4
+  resolution: "sass@npm:1.83.4"
+  dependencies:
+    "@parcel/watcher": ^2.4.1
+    chokidar: ^4.0.0
+    immutable: ^5.0.2
+    source-map-js: ">=0.6.2 <2.0.0"
+  dependenciesMeta:
+    "@parcel/watcher":
+      optional: true
+  bin:
+    sass: sass.js
+  checksum: 500958ea77ceb92db0aaef7e6ee5bc3cc016f4ad42fcad40dd2a2891b758c74538c651c47c01f9c04d9b743453efd5a6ba0caccc679f03c6da47a7bb25b2d30c
   languageName: node
   linkType: hard
 
