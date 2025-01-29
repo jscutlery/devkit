@@ -1,3 +1,17 @@
+## 0.4.19 (2025-01-29)
+
+### 🚀 Features
+
+- **swc-angular:** upgrade swc core version to support 1.10.x ([3995b73](https://github.com/jscutlery/devkit/commit/3995b73))
+
+### 🩹 Fixes
+
+- 📦 update dependency @babel/core to v7.26.7 ([#746](https://github.com/jscutlery/devkit/pull/746))
+
+### ❤️ Thank You
+
+- Edouard Bozon
+
 ## 0.4.18 (2025-01-13)
 
 ### 🚀 Features
