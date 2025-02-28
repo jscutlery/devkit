@@ -1,3 +1,9 @@
+## 0.19.4 (2025-02-28)
+
+### 🩹 Fixes
+
+- 📦 update dependency rxjs to v7.8.2 ([#788](https://github.com/jscutlery/devkit/pull/788))
+
 ## 0.19.3 (2025-02-17)
 
 ### 🩹 Fixes
