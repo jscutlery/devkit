@@ -46,23 +46,28 @@ export function swcAngularPreset(options: AngularPresetOptions = {}) {
   } satisfies Options;
 }
 
-export function swcAngularJestTransformer(): [string, Record<string, unknown>] {
-  return ['@swc/jest', swcAngularPreset()];
+export function swcAngularJestTransformer(
+  options: AngularPresetOptions = {},
+): [string, Record<string, unknown>] {
+  return ['@swc/jest', swcAngularPreset(options)];
 }
 
-export function swcAngularVitePreset() {
+export function swcAngularVitePreset(options: AngularPresetOptions = {}) {
   return swcAngularPreset({
     importStyles: true,
     styleInlineSuffix: true,
     templateRawSuffix: true,
+    ...options,
   });
 }
 
-export function swcAngularUnpluginOptions(): Options & {
+export function swcAngularUnpluginOptions(
+  options: AngularPresetOptions = {},
+): Options & {
   tsconfigFile?: boolean;
 } {
   return {
-    ...swcAngularVitePreset(),
+    ...swcAngularVitePreset(options),
     /* Since we are using SWC's env option, we need to disable the tsconfigFile option.
      * Otherwise `unpluggin-swc` will try to use the target from the tsconfig's `compilerOptions`,
      * and make SWC produce the following error: "`env` and `jsc.target` cannot be used together".
