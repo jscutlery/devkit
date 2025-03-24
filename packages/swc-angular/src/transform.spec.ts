@@ -1,5 +1,5 @@
 import { transform } from '@swc/core';
-import { swcAngularPreset } from '@jscutlery/swc-angular';
+import { swcAngularPreset } from './index';
 import { describe, expect, it } from 'vitest';
 
 describe('swc-angular', () => {
