@@ -2,17 +2,13 @@
   "name": "swc-angular",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/swc-angular/src",
-  "implicitDependencies": [
-    "swc-angular-plugin"
-  ],
+  "implicitDependencies": ["swc-angular-plugin"],
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/rollup:rollup",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/swc-angular",
         "main": "packages/swc-angular/src/index.ts",
@@ -31,10 +27,7 @@
         ],
         "project": "packages/swc-angular/package.json",
         "compiler": "swc",
-        "format": [
-          "cjs",
-          "esm"
-        ]
+        "format": ["cjs", "esm"]
       }
     },
     "lint": {
@@ -48,10 +41,14 @@
     },
     "nx-release-publish": {
       "executor": "@nx/js:release-publish",
-      "dependsOn": [
-        "^nx-release-publish",
-        "build"
-      ]
+      "dependsOn": ["^nx-release-publish", "build"]
+    },
+    "test": {
+      "command": "vitest",
+      "dependsOn": ["build", "^build"],
+      "options": {
+        "cwd": "{projectRoot}"
+      }
     }
   }
 }

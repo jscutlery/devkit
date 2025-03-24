@@ -9,6 +9,7 @@ export interface AngularPresetOptions {
   importStyles?: boolean;
   styleInlineSuffix?: boolean;
   templateRawSuffix?: boolean;
+  useDefineForClassFields?: boolean;
 }
 
 export function swcAngularPreset(options: AngularPresetOptions = {}) {
@@ -22,6 +23,7 @@ export function swcAngularPreset(options: AngularPresetOptions = {}) {
       transform: {
         legacyDecorator: true,
         decoratorMetadata: true,
+        useDefineForClassFields: options.useDefineForClassFields,
       },
       experimental: {
         plugins: [
@@ -37,6 +39,7 @@ export function swcAngularPreset(options: AngularPresetOptions = {}) {
       },
     },
     env: {
+      targets: ['last 2 chrome versions'],
       include: ['transform-async-to-generator'],
     },
     swcrc: false,
