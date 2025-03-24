@@ -10,12 +10,12 @@ export default mergeConfig(
       reporters: ['default'],
       coverage: {
         reportsDirectory: '../../coverage/packages/swc-angular',
-        provider: 'v8'
+        provider: 'v8',
       },
       typecheck: {
         enabled: true,
-        tsconfig: './tsconfig.spec.json'
-      }
-    }
-  })
+        tsconfig: './tsconfig.spec.json',
+      },
+    },
+  }),
 );

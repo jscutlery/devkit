@@ -2,7 +2,7 @@
 
 <!-- TOC -->
 
-- [⚡️ Speed Up Angular Testing with SWC 🦀](#-speed-up-angular-testing-with-swc-)
+- [⚡️ Speed Up Angular Testing with SWC 🦀](#️-speed-up-angular-testing-with-swc-)
   - [👀 What is this?](#-what-is-this)
   - [🤔 Context](#-context)
   - [🥇 Benchmark Summary](#-benchmark-summary)
@@ -10,13 +10,15 @@
     - [1. Install](#1-install)
     - [2. Configure](#2-configure)
     - [3. Add `reflect-metadata`](#3-add-reflect-metadata)
-  - [⚡️Setup with Vitest](#setup-with-vitest)
+  - [⚡️Setup with Vitest](#️setup-with-vitest)
     - [1. Install](#1-install-1)
     - [2. Configure](#2-configure-1)
     - [3. Add `reflect-metadata`](#3-add-reflect-metadata-1)
+  - [🙋‍♂️ F.A.Q.](#️-faq)
+    - [TypeScript property inheritance issue](#typescript-property-inheritance-issue)
   - [🥇 Benchmark Data](#-benchmark-data)
     - [🔥 No Cache](#-no-cache)
-    - [⚡️ With Cache](#-with-cache)
+    - [⚡️ With Cache](#️-with-cache)
     - [🥱 Cold Start](#-cold-start)
     - [Configurations](#configurations)
     - [Source](#source)
@@ -133,6 +135,24 @@ located at `src/test-setup.ts`.
 ```ts
 import 'reflect-metadata';
 ```
+
+## 🙋‍♂️ F.A.Q.
+
+### TypeScript property inheritance issue
+
+If you encounter an issue with TypeScript property inheritance _(Cf. https://github.com/jscutlery/devkit/issues/376)_, then you can try to disable the `useDefineForClassFields` option:
+
+```ts
+swcAngularJestTransformer({ useDefineForClassFields: false });
+```
+
+or
+
+```ts
+swcAngularUnpluginOptions({ useDefineForClassFields: false });
+```
+
+_🙏 Thanks to [@santiagof4](https://github.com/santiagof4), [@pumano](https://github.com/pumano), and [@ryan-bendel](https://github.com/ryan-bendel)._
 
 ## 🥇 Benchmark Data
 

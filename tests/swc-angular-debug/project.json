@@ -1,0 +1,17 @@
+{
+  "name": "swc-angular-debug",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tests/swc-angular-debug/src",
+  "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["swc-angular"],
+  "targets": {
+    "debug": {
+      "command": "tsx {projectRoot}/src/main.ts",
+      "dependsOn": ["^build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
