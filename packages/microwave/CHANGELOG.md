@@ -1,3 +1,13 @@
+## 0.5.0 (2025-03-24)
+
+### 🚀 Features
+
+- ✨ handle `useDefineForClassFields` option ([#793](https://github.com/jscutlery/devkit/pull/793))
+
+### ❤️ Thank You
+
+- Younes Jaaidi @yjaaidi
+
 ## 0.4.22 (2025-02-28)
 
 ### 🩹 Fixes
