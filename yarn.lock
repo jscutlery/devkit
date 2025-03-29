@@ -4523,7 +4523,7 @@ __metadata:
     tsx: 4.19.3
     typescript: 5.6.3
     unplugin-swc: 1.5.1
-    vite: 6.1.0
+    vite: 6.2.3
     vitest: 3.0.7
     zone.js: 0.15.0
   languageName: unknown
@@ -19160,7 +19160,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.2.14, postcss@npm:^8.4.24, postcss@npm:^8.4.33, postcss@npm:^8.4.38, postcss@npm:^8.4.43, postcss@npm:^8.4.47, postcss@npm:^8.4.49, postcss@npm:^8.5.1, postcss@npm:^8.5.2, postcss@npm:^8.5.3":
+"postcss@npm:^8.2.14, postcss@npm:^8.4.24, postcss@npm:^8.4.33, postcss@npm:^8.4.38, postcss@npm:^8.4.43, postcss@npm:^8.4.47, postcss@npm:^8.4.49, postcss@npm:^8.5.2, postcss@npm:^8.5.3":
   version: 8.5.3
   resolution: "postcss@npm:8.5.3"
   dependencies:
@@ -22516,58 +22516,6 @@ __metadata:
   bin:
     vite-node: vite-node.mjs
   checksum: 90a3dd0e1b620cdf0c20272739cd1035af20c9b7606c1a093b3368b2c7c59cfd2327c27faabfbc9b293ae5d9a3318aeb40a2a974fe42807167e4cec625d9759e
-  languageName: node
-  linkType: hard
-
-"vite@npm:6.1.0":
-  version: 6.1.0
-  resolution: "vite@npm:6.1.0"
-  dependencies:
-    esbuild: ^0.24.2
-    fsevents: ~2.3.3
-    postcss: ^8.5.1
-    rollup: ^4.30.1
-  peerDependencies:
-    "@types/node": ^18.0.0 || ^20.0.0 || >=22.0.0
-    jiti: ">=1.21.0"
-    less: "*"
-    lightningcss: ^1.21.0
-    sass: "*"
-    sass-embedded: "*"
-    stylus: "*"
-    sugarss: "*"
-    terser: ^5.16.0
-    tsx: ^4.8.1
-    yaml: ^2.4.2
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-    jiti:
-      optional: true
-    less:
-      optional: true
-    lightningcss:
-      optional: true
-    sass:
-      optional: true
-    sass-embedded:
-      optional: true
-    stylus:
-      optional: true
-    sugarss:
-      optional: true
-    terser:
-      optional: true
-    tsx:
-      optional: true
-    yaml:
-      optional: true
-  bin:
-    vite: bin/vite.js
-  checksum: ed0b5385546d0dafe7bd91e94679aa4ca9064d29a8fd8cb8f9baea388fc049504a83cecd9bae41d19ae025b8b4fd621f1ec6c41255e9bf8c872fd9fa94b9cd42
   languageName: node
   linkType: hard
 
