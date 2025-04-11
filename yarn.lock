@@ -4480,8 +4480,8 @@ __metadata:
     "@nx/vite": 20.3.1
     "@nx/web": 20.3.1
     "@nx/workspace": 20.3.1
-    "@playwright/experimental-ct-core": 1.50.1
-    "@playwright/test": 1.50.1
+    "@playwright/experimental-ct-core": 1.51.1
+    "@playwright/test": 1.51.1
     "@schematics/angular": 19.2.7
     "@swc-node/register": 1.10.9
     "@swc/core": 1.10.18
@@ -6055,14 +6055,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/experimental-ct-core@npm:1.50.1":
-  version: 1.50.1
-  resolution: "@playwright/experimental-ct-core@npm:1.50.1"
+"@playwright/experimental-ct-core@npm:1.51.1":
+  version: 1.51.1
+  resolution: "@playwright/experimental-ct-core@npm:1.51.1"
   dependencies:
-    playwright: 1.50.1
-    playwright-core: 1.50.1
-    vite: ^5.4.14
-  checksum: c0c80d4ebe82a1c98844eb48ca6c3515d3182a0af399be93caafaf0804c1e00e77aeaf8787f94a6d329bf0b1db92fdca5fe18ee8756099b0adbe18a32675646b
+    playwright: 1.51.1
+    playwright-core: 1.51.1
+    vite: ^5.4.14 || ^6.0.0
+  checksum: f523d2a898874a10df90f7f24ac56567ba72d50a455abbe3617d2e70dea76536226990df337abfc81dc6ce2386dc9e6d805641820553893eea5490f6be091987
   languageName: node
   linkType: hard
 
@@ -6077,14 +6077,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.50.1":
-  version: 1.50.1
-  resolution: "@playwright/test@npm:1.50.1"
+"@playwright/test@npm:1.51.1":
+  version: 1.51.1
+  resolution: "@playwright/test@npm:1.51.1"
   dependencies:
-    playwright: 1.50.1
+    playwright: 1.51.1
   bin:
     playwright: cli.js
-  checksum: ace565b0638e629a35f9b38e32e4f93a84605a96b50a9a229f91668b686b5f845fe8739fb73a361d281472e9daa655b0c2be7255f57f590244214aaad264711d
+  checksum: c3c14f37451cc0323234e37fa559a075e5aee9f5e6ca06fa3b4a132ec6c809909b22877daca1fa48c95a1112d859346c10111e7003f44582a05100dd5385bbef
   languageName: node
   linkType: hard
 
@@ -17930,12 +17930,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.50.1":
-  version: 1.50.1
-  resolution: "playwright-core@npm:1.50.1"
+"playwright-core@npm:1.51.1":
+  version: 1.51.1
+  resolution: "playwright-core@npm:1.51.1"
   bin:
     playwright-core: cli.js
-  checksum: 9c9c3115e8c39c9a2f4e0dc5b2bc1d76925fb0244051ace2bcffc7b2b66cf6fe1b96d9162f81bc7d9b7811b8c6f9df5aa93052d1284bfd6d30203bf4f7b58868
+  checksum: 1eb37e22e97435a5ed6389b4caa666fbe618348861cae97e67586e20c8fed9ac3d3dc899ff3b9237d0ddfcf087d5b552b80be247e246fc45b75282f96be714bb
   languageName: node
   linkType: hard
 
@@ -17954,18 +17954,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:1.50.1":
-  version: 1.50.1
-  resolution: "playwright@npm:1.50.1"
+"playwright@npm:1.51.1":
+  version: 1.51.1
+  resolution: "playwright@npm:1.51.1"
   dependencies:
     fsevents: 2.3.2
-    playwright-core: 1.50.1
+    playwright-core: 1.51.1
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 02e3618acf7d0e08b45c4f4de0be259b83549e9551af9d5902fcc5a2a9c9667e8ef3e94ef62160bad1cda03aa643dbd01e418640a20f656cf4464afdf4b73bbd
+  checksum: 2d78f53eed438d26df9743f98227d2e33bb5a378c8d0144a4ed75b4010c9c517d5a6ee6c1c9245ad61dc615054c5e19d2ded5a6e285e35d2bca39b05bc9c4a35
   languageName: node
   linkType: hard
 
@@ -22592,7 +22592,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.2.8, vite@npm:^5.4.14":
+"vite@npm:^5.2.8":
   version: 5.4.14
   resolution: "vite@npm:5.4.14"
   dependencies:
@@ -22632,6 +22632,58 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: 7360661da0415809454ff8809b6666e868ffc3e5ccfbd5fc17425341546cdc3dd3d37c68fcd6ed7305252aaecd0d251ede3745b57aaebd00b8aececc30b6697b
+  languageName: node
+  linkType: hard
+
+"vite@npm:^5.4.14 || ^6.0.0":
+  version: 6.2.6
+  resolution: "vite@npm:6.2.6"
+  dependencies:
+    esbuild: ^0.25.0
+    fsevents: ~2.3.3
+    postcss: ^8.5.3
+    rollup: ^4.30.1
+  peerDependencies:
+    "@types/node": ^18.0.0 || ^20.0.0 || >=22.0.0
+    jiti: ">=1.21.0"
+    less: "*"
+    lightningcss: ^1.21.0
+    sass: "*"
+    sass-embedded: "*"
+    stylus: "*"
+    sugarss: "*"
+    terser: ^5.16.0
+    tsx: ^4.8.1
+    yaml: ^2.4.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+    jiti:
+      optional: true
+    less:
+      optional: true
+    lightningcss:
+      optional: true
+    sass:
+      optional: true
+    sass-embedded:
+      optional: true
+    stylus:
+      optional: true
+    sugarss:
+      optional: true
+    terser:
+      optional: true
+    tsx:
+      optional: true
+    yaml:
+      optional: true
+  bin:
+    vite: bin/vite.js
+  checksum: ddeb36d29c053c6d6f0e70eb01939848db611135878d85e9497fc4b899667f58ce35ea4014acf01342ee1cf115879280fac809c0a806ad6432833cde87fe90dc
   languageName: node
   linkType: hard
 
