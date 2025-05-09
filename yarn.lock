@@ -2271,13 +2271,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@colors/colors@npm:1.5.0":
-  version: 1.5.0
-  resolution: "@colors/colors@npm:1.5.0"
-  checksum: d64d5260bed1d5012ae3fc617d38d1afc0329fec05342f4e6b838f46998855ba56e0a73833f4a80fa8378c84810da254f76a8a19c39d038260dc06dc4e007425
-  languageName: node
-  linkType: hard
-
 "@commitlint/cli@npm:^19.6.0":
   version: 19.8.0
   resolution: "@commitlint/cli@npm:19.8.0"
@@ -4390,7 +4383,7 @@ __metadata:
     "@vitest/ui": 3.1.3
     autoprefixer: ^10.4.0
     babel-jest: 29.7.0
-    cypress: 14.3.2
+    cypress: 14.3.3
     cypress-pipe: ^2.0.0
     dotenv: 16.5.0
     eslint: 9.14.0
@@ -9681,16 +9674,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cli-table3@npm:~0.6.5":
-  version: 0.6.5
-  resolution: "cli-table3@npm:0.6.5"
+"cli-table3@npm:0.6.1":
+  version: 0.6.1
+  resolution: "cli-table3@npm:0.6.1"
   dependencies:
-    "@colors/colors": 1.5.0
+    colors: 1.4.0
     string-width: ^4.2.0
   dependenciesMeta:
-    "@colors/colors":
+    colors:
       optional: true
-  checksum: ab7afbf4f8597f1c631f3ee6bb3481d0bfeac8a3b81cffb5a578f145df5c88003b6cfff46046a7acae86596fdd03db382bfa67f20973b6b57425505abc47e42c
+  checksum: 956e175f8eb019c26465b9f1e51121c08d8978e2aab04be7f8520ea8a4e67906fcbd8516dfb77e386ae3730ef0281aa21a65613dffbfa3d62969263252bd25a9
   languageName: node
   linkType: hard
 
@@ -9836,6 +9829,13 @@ __metadata:
   version: 2.0.20
   resolution: "colorette@npm:2.0.20"
   checksum: 0c016fea2b91b733eb9f4bcdb580018f52c0bc0979443dad930e5037a968237ac53d9beb98e218d2e9235834f8eebce7f8e080422d6194e957454255bde71d3d
+  languageName: node
+  linkType: hard
+
+"colors@npm:1.4.0":
+  version: 1.4.0
+  resolution: "colors@npm:1.4.0"
+  checksum: 98aa2c2418ad87dedf25d781be69dc5fc5908e279d9d30c34d8b702e586a0474605b3a189511482b9d5ed0d20c867515d22749537f7bc546256c6014f3ebdcec
   languageName: node
   linkType: hard
 
@@ -10721,9 +10721,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:14.3.2":
-  version: 14.3.2
-  resolution: "cypress@npm:14.3.2"
+"cypress@npm:14.3.3":
+  version: 14.3.3
+  resolution: "cypress@npm:14.3.3"
   dependencies:
     "@cypress/request": ^3.0.8
     "@cypress/xvfb": ^1.2.4
@@ -10738,7 +10738,7 @@ __metadata:
     check-more-types: ^2.24.0
     ci-info: ^4.1.0
     cli-cursor: ^3.1.0
-    cli-table3: ~0.6.5
+    cli-table3: 0.6.1
     commander: ^6.2.1
     common-tags: ^1.8.0
     dayjs: ^1.10.4
@@ -10770,7 +10770,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 8c008519a929fb9d1ebdee190682fd86b12b46e14443e71fabf801e6bc503720854a934bb36b9cad2267c690b5ab0a0e8329ff13d8189bbc5d6affdea9e3fd8c
+  checksum: c76b58e25a3dfa8eefd8047f247fed9a6ad21a3f277c1273dd49caeef8ae2916f472f8dad4870c32d5fdefee46766dc54655b30eb451c238bf9f22ffa78fd59f
   languageName: node
   linkType: hard
 
