@@ -4407,7 +4407,7 @@ __metadata:
     tslib: 2.8.1
     tsx: 4.19.4
     typescript: 5.6.3
-    unplugin-swc: 1.5.2
+    unplugin-swc: 1.5.3
     vite: 6.3.5
     vitest: 3.1.3
     zone.js: 0.15.0
@@ -6103,7 +6103,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:^5.0.1, @rollup/pluginutils@npm:^5.1.0":
+"@rollup/pluginutils@npm:^5.0.1, @rollup/pluginutils@npm:^5.1.0, @rollup/pluginutils@npm:^5.1.4":
   version: 5.1.4
   resolution: "@rollup/pluginutils@npm:5.1.4"
   dependencies:
@@ -8188,7 +8188,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.1.0, acorn@npm:^8.11.0, acorn@npm:^8.14.0, acorn@npm:^8.4.1, acorn@npm:^8.5.0, acorn@npm:^8.7.1, acorn@npm:^8.8.1, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
+"acorn@npm:^8.1.0, acorn@npm:^8.11.0, acorn@npm:^8.14.0, acorn@npm:^8.14.1, acorn@npm:^8.4.1, acorn@npm:^8.5.0, acorn@npm:^8.7.1, acorn@npm:^8.8.1, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
   version: 8.14.1
   resolution: "acorn@npm:8.14.1"
   bin:
@@ -22370,26 +22370,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unplugin-swc@npm:1.5.2":
-  version: 1.5.2
-  resolution: "unplugin-swc@npm:1.5.2"
+"unplugin-swc@npm:1.5.3":
+  version: 1.5.3
+  resolution: "unplugin-swc@npm:1.5.3"
   dependencies:
-    "@rollup/pluginutils": ^5.1.0
+    "@rollup/pluginutils": ^5.1.4
     load-tsconfig: ^0.2.5
-    unplugin: ^1.11.0
+    unplugin: ^2.3.4
   peerDependencies:
     "@swc/core": ^1.2.108
-  checksum: b5d0b55420e8bee4c752e957c51ea544286d0233721f14f2afa1aa0d7a67fbe1ee1812a48b04f06aae8496a3dad0eacfe438b63f5ba849d617d39c822d7bf9f0
+  checksum: badde5edff541310aeedddc44c83389d9ae446ff19efd5fccf07967e7bc2528975305ce0ffebddc3cb4f542d5b1ade01a42bc61067c071bbc044a0f35fa5d295
   languageName: node
   linkType: hard
 
-"unplugin@npm:^1.11.0":
-  version: 1.16.1
-  resolution: "unplugin@npm:1.16.1"
+"unplugin@npm:^2.3.4":
+  version: 2.3.4
+  resolution: "unplugin@npm:2.3.4"
   dependencies:
-    acorn: ^8.14.0
+    acorn: ^8.14.1
+    picomatch: ^4.0.2
     webpack-virtual-modules: ^0.6.2
-  checksum: c1e898b746418c56a84979e02177e66286a8805d6b207885bd4a4f975b0bc0c773145a947aa07b6dd0347491e45cd25b56e70516f52610acea986914f250ba49
+  checksum: 2039f759bd9e8a4c09fb2eca25ace8160e5f2aca38a8e6a8a621a0a85de335de5455b9f97a984dcfec8daa135c4334065f8c4fe4dd7080f2f30554bde7056c62
   languageName: node
   linkType: hard
 
