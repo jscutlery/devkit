@@ -2765,15 +2765,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/postcss-is-pseudo-class@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "@csstools/postcss-is-pseudo-class@npm:5.0.1"
+"@csstools/postcss-is-pseudo-class@npm:^5.0.3":
+  version: 5.0.3
+  resolution: "@csstools/postcss-is-pseudo-class@npm:5.0.3"
   dependencies:
     "@csstools/selector-specificity": ^5.0.0
     postcss-selector-parser: ^7.0.0
   peerDependencies:
     postcss: ^8.4
-  checksum: 6f9fa0815d762a3eee703d14ab992b1e653d0b7abfe0422755daf659fa0d360a015c624357a0b75dc660054acf54997171ce723740f96441cef540d00b60be7d
+  checksum: 60474c5d651bd4dd940c2727d71b235390fb631fc347d0b29f92f7d29cf812e6c796284eeb9206441bfcd00b778068a2fadc465262a4752310b2f9abbc432973
   languageName: node
   linkType: hard
 
@@ -3016,12 +3016,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/selector-resolve-nested@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@csstools/selector-resolve-nested@npm:3.0.0"
+"@csstools/selector-resolve-nested@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@csstools/selector-resolve-nested@npm:3.1.0"
   peerDependencies:
     postcss-selector-parser: ^7.0.0
-  checksum: 2059b6d1931d157162fb4a79ebdea614cf2b0024609f5e5cba4aa44a80367b25503c22c49bff99de4fa5fa921ce713cc642fa8aa562f3535e8d0126e6b41778e
+  checksum: eaad6a6c99345cae2849a2c73daf53381fabd75851eefd830ee743e4d454d4e2930aa99c8b9e651fed92b9a8361f352c6c754abf82c576bba4953f1e59c927e9
   languageName: node
   linkType: hard
 
@@ -18931,16 +18931,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-nesting@npm:^13.0.1":
-  version: 13.0.1
-  resolution: "postcss-nesting@npm:13.0.1"
+"postcss-nesting@npm:^13.0.2":
+  version: 13.0.2
+  resolution: "postcss-nesting@npm:13.0.2"
   dependencies:
-    "@csstools/selector-resolve-nested": ^3.0.0
+    "@csstools/selector-resolve-nested": ^3.1.0
     "@csstools/selector-specificity": ^5.0.0
     postcss-selector-parser: ^7.0.0
   peerDependencies:
     postcss: ^8.4
-  checksum: 71899e369a92678d6a19846a40cf851d84751f7018ea42e17707aa15611bc4bc3774deb1adc23b941dcb6350c83f78761230070055dd299b843de1c8d88b5b86
+  checksum: fce488a2e77d9a8183a4e014caf047e41cb2422c07de1d49a092734fc90feeb8ced21090e3e284cfb2956afdba73e4a3547065ede228b209003bac5e1de62f0a
   languageName: node
   linkType: hard
 
@@ -19206,8 +19206,8 @@ __metadata:
   linkType: hard
 
 "postcss-preset-env@npm:~10.2.0":
-  version: 10.2.1
-  resolution: "postcss-preset-env@npm:10.2.1"
+  version: 10.2.3
+  resolution: "postcss-preset-env@npm:10.2.3"
   dependencies:
     "@csstools/postcss-cascade-layers": ^5.0.1
     "@csstools/postcss-color-function": ^4.0.10
@@ -19221,7 +19221,7 @@ __metadata:
     "@csstools/postcss-hwb-function": ^4.0.10
     "@csstools/postcss-ic-unit": ^4.0.2
     "@csstools/postcss-initial": ^2.0.1
-    "@csstools/postcss-is-pseudo-class": ^5.0.1
+    "@csstools/postcss-is-pseudo-class": ^5.0.3
     "@csstools/postcss-light-dark-function": ^2.0.9
     "@csstools/postcss-logical-float-and-clear": ^3.0.0
     "@csstools/postcss-logical-overflow": ^2.0.0
@@ -19265,7 +19265,7 @@ __metadata:
     postcss-image-set-function: ^7.0.0
     postcss-lab-function: ^7.0.10
     postcss-logical: ^8.1.0
-    postcss-nesting: ^13.0.1
+    postcss-nesting: ^13.0.2
     postcss-opacity-percentage: ^3.0.0
     postcss-overflow-shorthand: ^6.0.0
     postcss-page-break: ^3.0.4
@@ -19275,7 +19275,7 @@ __metadata:
     postcss-selector-not: ^8.0.1
   peerDependencies:
     postcss: ^8.4
-  checksum: e3d2b4811648941c52e55df6a5caf852b89119cea3385768ecfc1ccef3525106b9c6d7228cb4cb45b84652f3b5ac403d59711ee4188f8d09f2855b51ce141012
+  checksum: 8c153d32e6ec89063db7efd25355bdc87038a460522097558733ca16eed9017ffd6f50f28795806a432a8f7049a2c9d983d67c3f60ea475ba09bfa88cbd12f39
   languageName: node
   linkType: hard
 
