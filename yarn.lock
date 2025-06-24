@@ -4483,7 +4483,7 @@ __metadata:
     tslib: 2.8.1
     tsx: 4.19.4
     typescript: 5.6.3
-    unplugin-swc: 1.5.4
+    unplugin-swc: 1.5.5
     vite: 6.3.5
     vitest: 3.2.3
     zone.js: 0.15.1
@@ -6179,7 +6179,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:^5.0.1, @rollup/pluginutils@npm:^5.1.0, @rollup/pluginutils@npm:^5.1.4":
+"@rollup/pluginutils@npm:^5.0.1, @rollup/pluginutils@npm:^5.1.0":
   version: 5.1.4
   resolution: "@rollup/pluginutils@npm:5.1.4"
   dependencies:
@@ -6192,6 +6192,22 @@ __metadata:
     rollup:
       optional: true
   checksum: dc0294580effbf68965ed7939c9e469b8c8847b59842e4691fd10d0a8d0b178600bd912694c409ae33600c9059efce72e96f25917cff983afd57f092a7aeb8d2
+  languageName: node
+  linkType: hard
+
+"@rollup/pluginutils@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "@rollup/pluginutils@npm:5.2.0"
+  dependencies:
+    "@types/estree": ^1.0.0
+    estree-walker: ^2.0.2
+    picomatch: ^4.0.2
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: d34a7215cddbc11fff7663f8ca05e8e04b48af4c4b19f5545902bef07e508c029cd254d6c5ae66d2e3309d459d44f326f1adaa6b6a4dae3c27bd26a3baef70a4
   languageName: node
   linkType: hard
 
@@ -22714,16 +22730,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unplugin-swc@npm:1.5.4":
-  version: 1.5.4
-  resolution: "unplugin-swc@npm:1.5.4"
+"unplugin-swc@npm:1.5.5":
+  version: 1.5.5
+  resolution: "unplugin-swc@npm:1.5.5"
   dependencies:
-    "@rollup/pluginutils": ^5.1.4
+    "@rollup/pluginutils": ^5.2.0
     load-tsconfig: ^0.2.5
     unplugin: ^2.3.5
   peerDependencies:
     "@swc/core": ^1.2.108
-  checksum: 8f0f162226f327a01c831701ed2710fb24a3419c3833ea3a4ca37ab09d2c73ff761ad41d3290542de8582a52de2793c1ffe48645ea7cc08503b1a47e2fe81d63
+  checksum: 286799d543ac9a32e1d8c10131ced6f83ef00075c9ffd81d6325846f8949e18755e2fb1f622728924a3fc5d4c95052d44d3320db56049b4275ffc48471bfa08d
   languageName: node
   linkType: hard
 
