@@ -37,7 +37,7 @@ impl AngularPropParser for QueryPropParser {
 }
 
 impl QueryPropParser {
-    fn parse_query_prop_info(class_prop: &ClassProp) -> Option<(QueryType, AngularPropInfo)> {
+    fn parse_query_prop_info(class_prop: &ClassProp) -> Option<(QueryType, AngularPropInfo<'_>)> {
         /* `viewChild` & `viewChildren` are probably more frequently used so let's
          * try to parse them first. */
         if let Some(prop_info) = parse_angular_prop(class_prop, "viewChild") {
