@@ -1,3 +1,13 @@
+## 0.20.6 (2025-10-19)
+
+### 🩹 Fixes
+
+- **swc-angular-plugin:** make lifetime explicit in parse_query_prop_info return type ([#906](https://github.com/jscutlery/devkit/pull/906))
+
+### ❤️ Thank You
+
+- Jay Bell
+
 ## 0.20.5 (2025-05-31)
 
 ### 🩹 Fixes
