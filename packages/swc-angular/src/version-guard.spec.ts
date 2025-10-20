@@ -13,8 +13,8 @@ import { join } from 'node:path';
  */
 
 test.each([
-  [' <1.10.0', { version: '1.9.3' }],
-  ['>=1.11.0', { version: '1.11.0' }],
+  [' <1.13.0', { version: '1.12.0' }],
+  ['>=1.14.0', { version: '1.14.0' }],
 ])(
   'should throw an error when module is imported and version is %s',
   async (_, { version }) => {
@@ -37,8 +37,8 @@ test.each([
   },
 );
 
-test.each(['1.10.0', '1.10.7'])(
-  'should not throw an error when module is imported and version is ~1.10.0',
+test.each(['1.13.0', '1.13.7'])(
+  'should not throw an error when module is imported and version is ~1.13.0',
   async (version) => {
     setUp();
 
@@ -60,7 +60,7 @@ test('should fallback to package.json if version is not available (this happens 
     version: undefined,
   }));
   fileSystem.setJsonFile('node_modules/@swc/core/package.json', {
-    version: '1.10.7',
+    version: '1.13.0',
   });
 
   await import('./index');
@@ -69,7 +69,7 @@ test('should fallback to package.json if version is not available (this happens 
   expect(process.exit).not.toHaveBeenCalledOnce();
 });
 
-test.each(['1.9.3', '1.11.0'])(
+test.each(['1.12.0', '1.14.0'])(
   'should throw an error if version from package.json is not compatible',
   async (version) => {
     const { fileSystem } = setUp();

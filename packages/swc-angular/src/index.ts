@@ -103,11 +103,11 @@ function assertCompatibleSwcCoreVersion(version: string) {
     }>(packageJsonPath).version;
   }
 
-  if (!version.startsWith('1.10.')) {
+  if (!version.startsWith('1.13.')) {
     console.error(`
     @swc/core version ${version} is incompatible with @jscutlery/swc-angular.
-    Please use @swc/core version 1.10.x
-    > npm add -D @swc/core@~1.10.0
+    Please use @swc/core version 1.13.x
+    > npm add -D @swc/core@~1.13.0
     `);
     process.exit(1);
   }
