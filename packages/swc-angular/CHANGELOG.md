@@ -1,3 +1,9 @@
+## 0.21.0 (2025-10-21)
+
+### 🚀 Features
+
+- **swc-angular:** ✨ require @swc/core@~1.13.0 ([f079d05](https://github.com/jscutlery/devkit/commit/f079d05))
+
 ## 0.20.6 (2025-10-19)
 
 This was a version bump only for swc-angular to align it with other projects, there were no code changes.
