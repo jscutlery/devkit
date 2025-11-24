@@ -4392,6 +4392,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jridgewell/remapping@npm:^2.3.5":
+  version: 2.3.5
+  resolution: "@jridgewell/remapping@npm:2.3.5"
+  dependencies:
+    "@jridgewell/gen-mapping": ^0.3.5
+    "@jridgewell/trace-mapping": ^0.3.24
+  checksum: 4a66a7397c3dc9c6b5c14a0024b1f98c5e1d90a0dbc1e5955b5038f2db339904df2a0ee8a66559fafb4fc23ff33700a2639fd40bbdd2e9e82b58b3bdf83738e3
+  languageName: node
+  linkType: hard
+
 "@jridgewell/resolve-uri@npm:^3.0.3, @jridgewell/resolve-uri@npm:^3.1.0":
   version: 3.1.2
   resolution: "@jridgewell/resolve-uri@npm:3.1.2"
@@ -4545,7 +4555,7 @@ __metadata:
     tslib: 2.8.1
     tsx: 4.19.4
     typescript: 5.6.3
-    unplugin-swc: 1.5.5
+    unplugin-swc: 1.5.9
     vite: 6.3.5
     vitest: 3.2.3
     zone.js: 0.15.1
@@ -6313,9 +6323,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "@rollup/pluginutils@npm:5.2.0"
+"@rollup/pluginutils@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "@rollup/pluginutils@npm:5.3.0"
   dependencies:
     "@types/estree": ^1.0.0
     estree-walker: ^2.0.2
@@ -6325,7 +6335,7 @@ __metadata:
   peerDependenciesMeta:
     rollup:
       optional: true
-  checksum: d34a7215cddbc11fff7663f8ca05e8e04b48af4c4b19f5545902bef07e508c029cd254d6c5ae66d2e3309d459d44f326f1adaa6b6a4dae3c27bd26a3baef70a4
+  checksum: 2df47496f1f380ce67426b6d31cada1354b40844bb333b365653720b0847ce45446f347ae50313ed17a56c1b4cbba27431c42733ad75ad08764df5b4312946d9
   languageName: node
   linkType: hard
 
@@ -8573,12 +8583,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.1.0, acorn@npm:^8.11.0, acorn@npm:^8.14.0, acorn@npm:^8.14.1, acorn@npm:^8.4.1, acorn@npm:^8.5.0, acorn@npm:^8.7.1, acorn@npm:^8.8.1, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
+"acorn@npm:^8.1.0, acorn@npm:^8.11.0, acorn@npm:^8.14.0, acorn@npm:^8.4.1, acorn@npm:^8.5.0, acorn@npm:^8.7.1, acorn@npm:^8.8.1, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
   version: 8.14.1
   resolution: "acorn@npm:8.14.1"
   bin:
     acorn: bin/acorn
   checksum: 260d9bb6017a1b6e42d31364687f0258f78eb20210b36ef2baad38fd619d78d4e95ff7dde9b3dbe0d81f137f79a8d651a845363a26e6985997f7b71145dc5e94
+  languageName: node
+  linkType: hard
+
+"acorn@npm:^8.15.0":
+  version: 8.15.0
+  resolution: "acorn@npm:8.15.0"
+  bin:
+    acorn: bin/acorn
+  checksum: 309c6b49aedf1a2e34aaf266de06de04aab6eb097c02375c66fdeb0f64556a6a823540409914fb364d9a11bc30d79d485a2eba29af47992d3490e9886c4391c3
   languageName: node
   linkType: hard
 
@@ -18301,6 +18320,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"picomatch@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "picomatch@npm:4.0.3"
+  checksum: 6817fb74eb745a71445debe1029768de55fd59a42b75606f478ee1d0dc1aa6e78b711d041a7c9d5550e042642029b7f373dc1a43b224c4b7f12d23436735dba0
+  languageName: node
+  linkType: hard
+
 "pify@npm:^2.2.0, pify@npm:^2.3.0":
   version: 2.3.0
   resolution: "pify@npm:2.3.0"
@@ -22886,27 +22912,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unplugin-swc@npm:1.5.5":
-  version: 1.5.5
-  resolution: "unplugin-swc@npm:1.5.5"
+"unplugin-swc@npm:1.5.9":
+  version: 1.5.9
+  resolution: "unplugin-swc@npm:1.5.9"
   dependencies:
-    "@rollup/pluginutils": ^5.2.0
+    "@rollup/pluginutils": ^5.3.0
     load-tsconfig: ^0.2.5
-    unplugin: ^2.3.5
+    unplugin: ^2.3.11
   peerDependencies:
     "@swc/core": ^1.2.108
-  checksum: 286799d543ac9a32e1d8c10131ced6f83ef00075c9ffd81d6325846f8949e18755e2fb1f622728924a3fc5d4c95052d44d3320db56049b4275ffc48471bfa08d
+  checksum: a4258fe43f8fa61ceee5007fef00580c4c23392ef35285ba5a1c9e0a0173df098585f8ccca4c35798e8ed60a91acbea0d0c656e0621282eb5f60ef6dbc3a9587
   languageName: node
   linkType: hard
 
-"unplugin@npm:^2.3.5":
-  version: 2.3.5
-  resolution: "unplugin@npm:2.3.5"
+"unplugin@npm:^2.3.11":
+  version: 2.3.11
+  resolution: "unplugin@npm:2.3.11"
   dependencies:
-    acorn: ^8.14.1
-    picomatch: ^4.0.2
+    "@jridgewell/remapping": ^2.3.5
+    acorn: ^8.15.0
+    picomatch: ^4.0.3
     webpack-virtual-modules: ^0.6.2
-  checksum: 63ee3a206a05aaa9aa2faf00bf59fb1e63c2bf1d0cd37fdd5b5d178bd8f34d009755a3122a02ce412c0153cc152c826ef7e17744148b7ab8d9292db96d4d8ccc
+  checksum: 9ed52ac0d154ed269b2a0844aa04b78900728db45a61bf9d78eadcef1c5a3ccb2751aba229df20972713bd8f43f2640a9c5b57a2d395b8e6ce6ba76ebf0c9ab8
   languageName: node
   linkType: hard
 
