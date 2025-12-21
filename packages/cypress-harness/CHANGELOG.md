@@ -1,3 +1,13 @@
+## 0.8.6 (2025-12-21)
+
+### 🚀 Features
+
+- **swc-angular:** ✨ require @swc/core@~1.13.0 ([f079d05](https://github.com/jscutlery/devkit/commit/f079d05))
+
+### 🩹 Fixes
+
+- 📦 update dependency @babel/core to v7.28.5 ([#926](https://github.com/jscutlery/devkit/pull/926))
+
 ## 0.8.5 (2025-05-31)
 
 ### 🩹 Fixes
