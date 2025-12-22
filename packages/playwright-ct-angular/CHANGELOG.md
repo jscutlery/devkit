@@ -1,3 +1,9 @@
+## 0.10.7 (2025-12-22)
+
+### 🩹 Fixes
+
+- 📦 update dependency zone.js to v0.16.0 ([#927](https://github.com/jscutlery/devkit/pull/927))
+
 ## 0.10.6 (2025-12-21)
 
 ### 🚀 Features
