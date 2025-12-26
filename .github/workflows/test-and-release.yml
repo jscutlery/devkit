@@ -45,7 +45,7 @@ jobs:
       - name: Component Test
         run: yarn nx affected --target=component-test --parallel=1
       - name: Upload test results on failure
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: test-results
