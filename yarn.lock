@@ -3021,6 +3021,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@csstools/postcss-property-rule-prelude-list@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@csstools/postcss-property-rule-prelude-list@npm:1.0.0"
+  dependencies:
+    "@csstools/css-parser-algorithms": ^3.0.5
+    "@csstools/css-tokenizer": ^3.0.4
+  peerDependencies:
+    postcss: ^8.4
+  checksum: f915cef138a8a96d256a47c6c317456d3d31d516777bc3d556ad8276a2d919405cc24781c91e4c629f2bf009e79be84f38cf62ac73fe94edd7bf61d4b2c7cf93
+  languageName: node
+  linkType: hard
+
 "@csstools/postcss-random-function@npm:^2.0.1":
   version: 2.0.1
   resolution: "@csstools/postcss-random-function@npm:2.0.1"
@@ -3083,6 +3095,17 @@ __metadata:
   peerDependencies:
     postcss: ^8.4
   checksum: 6465a883be42d4cc4a4e83be2626a1351de4bfe84a63641c53e7c39d3c0e109152489ca2d8235625cdf6726341c676b9fbbca18fe80bb5eae8d488a0e42fc5e4
+  languageName: node
+  linkType: hard
+
+"@csstools/postcss-syntax-descriptor-syntax-production@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@csstools/postcss-syntax-descriptor-syntax-production@npm:1.0.1"
+  dependencies:
+    "@csstools/css-tokenizer": ^3.0.4
+  peerDependencies:
+    postcss: ^8.4
+  checksum: d0216cf3cd0b86203c5927cb211500543dec498d6d91b393caaa1df82af7dd7570a477a9a829ab15341ef812e341a7b34193f204a18c10e571b6da8df14c2127
   languageName: node
   linkType: hard
 
@@ -4864,7 +4887,7 @@ __metadata:
     nx: 20.3.1
     postcss: ^8.4.49
     postcss-import: 16.1.1
-    postcss-preset-env: ~10.5.0
+    postcss-preset-env: ~10.6.0
     postcss-url: 10.1.3
     prettier: 3.7.4
     rxjs: 7.8.2
@@ -9365,7 +9388,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:^10.4.0, autoprefixer@npm:^10.4.22, autoprefixer@npm:^10.4.9":
+"autoprefixer@npm:^10.4.0, autoprefixer@npm:^10.4.23, autoprefixer@npm:^10.4.9":
   version: 10.4.23
   resolution: "autoprefixer@npm:10.4.23"
   dependencies:
@@ -9931,7 +9954,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.28.0, browserslist@npm:^4.28.1":
+"browserslist@npm:^4.28.1":
   version: 4.28.1
   resolution: "browserslist@npm:4.28.1"
   dependencies:
@@ -11284,10 +11307,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cssdb@npm:^8.5.2":
-  version: 8.5.2
-  resolution: "cssdb@npm:8.5.2"
-  checksum: 2bc40b10a3f7f9f0c3926f84e76443f04b75041990ffca74bf7b3233663809eabc7c1ca50394af412cd81d595a337ba5b15e191dd8cd3ebc3f9966130e893135
+"cssdb@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "cssdb@npm:8.6.0"
+  checksum: efd81181220de7c57a944b506ccdd35bc490eeea27787599b6b80537d453d340b63208bbac9d9888629aa8d12bdfeb1e691e5575c7146639afe09e3d5e3fb740
   languageName: node
   linkType: hard
 
@@ -19896,9 +19919,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-preset-env@npm:~10.5.0":
-  version: 10.5.0
-  resolution: "postcss-preset-env@npm:10.5.0"
+"postcss-preset-env@npm:~10.6.0":
+  version: 10.6.0
+  resolution: "postcss-preset-env@npm:10.6.0"
   dependencies:
     "@csstools/postcss-alpha-function": ^1.0.1
     "@csstools/postcss-cascade-layers": ^5.0.2
@@ -19929,21 +19952,23 @@ __metadata:
     "@csstools/postcss-oklab-function": ^4.0.12
     "@csstools/postcss-position-area-property": ^1.0.0
     "@csstools/postcss-progressive-custom-properties": ^4.2.1
+    "@csstools/postcss-property-rule-prelude-list": ^1.0.0
     "@csstools/postcss-random-function": ^2.0.1
     "@csstools/postcss-relative-color-syntax": ^3.0.12
     "@csstools/postcss-scope-pseudo-class": ^4.0.1
     "@csstools/postcss-sign-functions": ^1.1.4
     "@csstools/postcss-stepped-value-functions": ^4.0.9
+    "@csstools/postcss-syntax-descriptor-syntax-production": ^1.0.1
     "@csstools/postcss-system-ui-font-family": ^1.0.0
     "@csstools/postcss-text-decoration-shorthand": ^4.0.3
     "@csstools/postcss-trigonometric-functions": ^4.0.9
     "@csstools/postcss-unset-value": ^4.0.0
-    autoprefixer: ^10.4.22
-    browserslist: ^4.28.0
+    autoprefixer: ^10.4.23
+    browserslist: ^4.28.1
     css-blank-pseudo: ^7.0.1
     css-has-pseudo: ^7.0.3
     css-prefers-color-scheme: ^10.0.0
-    cssdb: ^8.5.2
+    cssdb: ^8.6.0
     postcss-attribute-case-insensitive: ^7.0.1
     postcss-clamp: ^4.1.0
     postcss-color-functional-notation: ^7.0.12
@@ -19971,7 +19996,7 @@ __metadata:
     postcss-selector-not: ^8.0.1
   peerDependencies:
     postcss: ^8.4
-  checksum: e1dad835b9421561e7627eab608e1a0715142c8e4dfc70d5553362be40114d871c9967df2e6f0b3694d28b2adb8cad2481fdae65fcf5dafc172622535a651a3d
+  checksum: b8485cc514f488085aa2cfe65256348d4b30aa582c41c4115da17219dc6effe951a9b80ecdfa48fa542ed901f383b010a43c2a26cd70cea1897fa54d5900f12a
   languageName: node
   linkType: hard
 
