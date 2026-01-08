@@ -3181,9 +3181,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/request@npm:^3.0.9":
-  version: 3.0.9
-  resolution: "@cypress/request@npm:3.0.9"
+"@cypress/request@npm:^3.0.10":
+  version: 3.0.10
+  resolution: "@cypress/request@npm:3.0.10"
   dependencies:
     aws-sign2: ~0.7.0
     aws4: ^1.8.0
@@ -3198,12 +3198,12 @@ __metadata:
     json-stringify-safe: ~5.0.1
     mime-types: ~2.1.19
     performance-now: ^2.1.0
-    qs: 6.14.0
+    qs: ~6.14.1
     safe-buffer: ^5.1.2
     tough-cookie: ^5.0.0
     tunnel-agent: ^0.6.0
     uuid: ^8.3.2
-  checksum: d22327b6fc52c8c6bbfa82b3a5b40f890f869da615c0dd494b3bf2c016eb3b1875082b451571d6b109a84c7e73a5869e9a997cdb71716e46900f607002e6afd0
+  checksum: f1504a39421ea1102d1045a8c3c11f52867c3449547ff2282847324f1935b7d9ba62fd6d0fc788b689fe59b7a418420e0c9a76cebb82f5c7b6704dfce6f1859f
   languageName: node
   linkType: hard
 
@@ -4871,7 +4871,7 @@ __metadata:
     "@vitest/ui": 3.2.4
     autoprefixer: ^10.4.0
     babel-jest: 29.7.0
-    cypress: 15.8.1
+    cypress: 15.8.2
     cypress-pipe: ^2.0.0
     dotenv: 17.2.3
     eslint: 9.14.0
@@ -11499,11 +11499,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:15.8.1":
-  version: 15.8.1
-  resolution: "cypress@npm:15.8.1"
+"cypress@npm:15.8.2":
+  version: 15.8.2
+  resolution: "cypress@npm:15.8.2"
   dependencies:
-    "@cypress/request": ^3.0.9
+    "@cypress/request": ^3.0.10
     "@cypress/xvfb": ^1.2.4
     "@types/sinonjs__fake-timers": 8.1.1
     "@types/sizzle": ^2.3.2
@@ -11547,7 +11547,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: e86503016fc5430c6ce9e2300782d62ad5f633ab7c3579a3ef19a989540c4098b28ac22504b74eae5951e582eb10826298faec58a90b77edb70589129fec3897
+  checksum: 93483feb8d1394b5aec69f1f5fedeefcc5f63100c4ca5bf1bea6c4acf4b21930a37aa80697bf54a0398b825a3e5105d34d25a9092609fd27eebe8400b7a3ea7d
   languageName: node
   linkType: hard
 
@@ -20371,12 +20371,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:6.14.0, qs@npm:^6.12.3, qs@npm:^6.4.0":
+"qs@npm:^6.12.3, qs@npm:^6.4.0":
   version: 6.14.0
   resolution: "qs@npm:6.14.0"
   dependencies:
     side-channel: ^1.1.0
   checksum: 189b52ad4e9a0da1a16aff4c58b2a554a8dad9bd7e287c7da7446059b49ca2e33a49e570480e8be406b87fccebf134f51c373cbce36c8c83859efa0c9b71d635
+  languageName: node
+  linkType: hard
+
+"qs@npm:~6.14.1":
+  version: 6.14.1
+  resolution: "qs@npm:6.14.1"
+  dependencies:
+    side-channel: ^1.1.0
+  checksum: 7fffab0344fd75bfb6b8c94b8ba17f3d3e823d25b615900f68b473c3a078e497de8eaa08f709eaaa170eedfcee50638a7159b98abef7d8c89c2ede79291522f2
   languageName: node
   linkType: hard
 
