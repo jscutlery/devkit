@@ -1,3 +1,9 @@
+## 0.21.3 (2026-01-18)
+
+### 🩹 Fixes
+
+- 📦 update babel monorepo to v7.28.6 ([#947](https://github.com/jscutlery/devkit/pull/947))
+
 ## 0.21.2 (2025-12-22)
 
 ### 🩹 Fixes
