@@ -1,3 +1,13 @@
+## 0.21.4 (2026-02-06)
+
+### 🩹 Fixes
+
+- **swc-angular:** set @swc/core peer dependency version to current supported version ([#953](https://github.com/jscutlery/devkit/pull/953))
+
+### ❤️ Thank You
+
+- Kai Röder
+
 ## 0.21.3 (2026-01-18)
 
 ### 🩹 Fixes
