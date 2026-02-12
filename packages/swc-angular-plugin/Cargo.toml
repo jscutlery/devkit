@@ -14,7 +14,7 @@ serde_json = "1.0.114"
 
 [dev-dependencies]
 ansi_term = "0.12.1"
-testing = "0.42.1"
+testing = "19.0.0"
 
 [profile.release]
 # Disable LTO to avoid linker error when using TransformPluginProgramMetadata#get_transform_plugin_config()
