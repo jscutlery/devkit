@@ -1,3 +1,13 @@
+## 0.22.0 (2026-02-12)
+
+### 🚀 Features
+
+- **swc-angular:** update @swc/core to version 1.15.x ([#956](https://github.com/jscutlery/devkit/pull/956))
+
+### ❤️ Thank You
+
+- Edouard Bozon
+
 ## 0.21.5 (2026-02-12)
 
 ### 🩹 Fixes
