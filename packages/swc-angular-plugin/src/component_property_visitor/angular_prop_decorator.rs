@@ -1,7 +1,6 @@
 use swc_core::{common::SyntaxContext, ecma::ast::{
-    CallExpr, Callee, Expr, ExprOrSpread, ExprStmt, Ident, MemberExpr, MemberProp, Str,
+    ArrayLit, CallExpr, Callee, Expr, ExprOrSpread, ExprStmt, Ident, Lit, MemberExpr, MemberProp, Stmt, Str,
 }};
-use swc_ecma_utils::swc_ecma_ast::{ArrayLit, Lit, Stmt};
 
 pub const ANGULAR_CORE_SYMBOL: &str = "_jsc_angular_core";
 

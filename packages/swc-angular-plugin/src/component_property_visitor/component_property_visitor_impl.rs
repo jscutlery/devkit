@@ -1,8 +1,7 @@
 use std::collections::HashMap;
 
-use swc_core::ecma::ast::{Callee, Ident, ModuleItem};
+use swc_core::ecma::ast::{Callee, Ident, ModuleItem, Stmt};
 use swc_core::ecma::visit::{VisitMut, VisitMutWith};
-use swc_ecma_utils::swc_ecma_ast::Stmt;
 
 use crate::component_property_visitor::angular_prop_decorator::ANGULAR_CORE_SYMBOL;
 use crate::component_property_visitor::angular_prop_parser::{AngularProp, AngularPropParser};

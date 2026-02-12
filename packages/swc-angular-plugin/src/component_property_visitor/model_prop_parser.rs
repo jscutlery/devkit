@@ -50,7 +50,7 @@ impl AngularProp for ModelProp {
             .and_then(|options| get_prop_value(options, "alias"));
 
         let output_name = match alias_expr {
-            Some(Expr::Lit(Lit::Str(alias))) => alias.value.to_string(),
+            Some(Expr::Lit(Lit::Str(alias))) => alias.value.as_str().unwrap_or("").to_string(),
             _ => self.name.clone(),
         };
         let output_name = format!("{}Change", output_name);
