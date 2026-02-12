@@ -7,7 +7,6 @@ import {
   take,
 } from 'rxjs';
 import { ChangeDetectionFns } from './change-detection-fns';
-
 /**
  * This should stay decoupled from Angular.
  *
@@ -15,21 +14,20 @@ import { ChangeDetectionFns } from './change-detection-fns';
  * @returns an set of methods and observables that respectively
  * control and represent the state of the object.
  */
-export function getEngine<COMPONENT, K extends keyof COMPONENT = keyof COMPONENT>(
-  component: COMPONENT
-): MicrowaveEngine<COMPONENT, K> {
+export function getEngine<
+  COMPONENT,
+  K extends keyof COMPONENT = keyof COMPONENT,
+>(component: COMPONENT): MicrowaveEngine<COMPONENT, K> {
   /* Memoize engine. */
   const microwavedComponent = component as Microwaved<COMPONENT>;
   const engine = microwavedComponent[_ENGINE_SYMBOL];
   if (engine != null) {
     return engine;
   }
-
   const destroyed$ = new ReplaySubject<void>(1);
   const initialized$ = new ReplaySubject<void>(1);
   const state$ = new BehaviorSubject<Partial<COMPONENT>>({});
   let changeDetectionFns: ChangeDetectionFns;
-
   return (microwavedComponent[_ENGINE_SYMBOL] = {
     destroyed$: destroyed$.pipe(take(1)),
     initialized$: initialized$.pipe(take(1)),
@@ -58,7 +56,6 @@ export function getEngine<COMPONENT, K extends keyof COMPONENT = keyof COMPONENT
       if (state$.value[property] === value) {
         return;
       }
-
       state$.next({ ...state$.value, [property]: value });
     },
     watchProperty(property) {
@@ -66,13 +63,10 @@ export function getEngine<COMPONENT, K extends keyof COMPONENT = keyof COMPONENT
     },
   });
 }
-
 export const _ENGINE_SYMBOL = Symbol('MicrowaveEngine');
-
 export type Microwaved<T, K extends keyof T = keyof T> = T & {
   [_ENGINE_SYMBOL]?: MicrowaveEngine<T, K>;
 };
-
 export interface MicrowaveEngine<T, K extends keyof T> {
   /**
    * Functions below form the strategy facade.
@@ -84,7 +78,6 @@ export interface MicrowaveEngine<T, K extends keyof T> {
   changed$: Observable<void>;
   detach(): void;
   detectChanges(): void;
-
   /**
    * Functions below are used to bind with component.
    */
@@ -94,27 +87,23 @@ export interface MicrowaveEngine<T, K extends keyof T> {
   getProperty<PROP extends K>(property: PROP): T[PROP] | undefined;
   setProperty<PROP extends K>(property: PROP, value: T[PROP]): void;
   watchProperty<PROP extends K>(
-    property: PROP
+    property: PROP,
   ): Observable<T[PROP] | undefined>;
 }
-
 export type MicrowaveSubjectsMap<T, K extends keyof T> = Map<
   K,
   BehaviorSubject<T[K]>
 >;
-
 export function _getPropertySubject<T, K extends keyof T, PROP extends K>(
   subjectsMap: MicrowaveSubjectsMap<T, K>,
-  property: PROP
+  property: PROP,
 ): BehaviorSubject<T[PROP]> {
   let subject = subjectsMap.get(property);
-
   if (subject == null) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     subject = new BehaviorSubject(undefined as any);
     subjectsMap.set(property, subject);
   }
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return subject as any;
 }

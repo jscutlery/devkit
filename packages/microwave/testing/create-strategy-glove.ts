@@ -1,6 +1,5 @@
 import { Strategy } from './../src/lib/devkit';
 import { Subject } from 'rxjs';
-
 export function createStrategyGlove({
   strategy,
 }: {
@@ -11,7 +10,6 @@ export function createStrategyGlove({
   const destroyed$ = new Subject<void>();
   const detach = jest.fn();
   const detectChanges = jest.fn();
-
   strategy({
     initialized$,
     changed$,
@@ -19,7 +17,6 @@ export function createStrategyGlove({
     detach,
     detectChanges,
   });
-
   const markInitialized = () => {
     initialized$.next();
     initialized$.complete();
@@ -29,7 +26,6 @@ export function createStrategyGlove({
     destroyed$.next();
     destroyed$.complete();
   };
-
   return {
     markInitialized,
     markChanged,

@@ -13,17 +13,18 @@ import { GameOfLife, range } from './game-of-life.service';
       class="grid"
       [style.gridTemplateColumns]="gridTemplateColumns"
       [style.gridTemplateRows]="gridTemplateRows"
-    >
-      <ng-container *ngFor="let rowIndex of rows">
-        <jc-cell
-          *ngFor="let colIndex of cols"
-          [col]="colIndex"
-          [row]="rowIndex"
-        ></jc-cell>
-      </ng-container>
+      >
+      @for (rowIndex of rows; track rowIndex) {
+        @for (colIndex of cols; track colIndex) {
+          <jc-cell
+            [col]="colIndex"
+            [row]="rowIndex"
+          ></jc-cell>
+        }
+      }
     </section>
     <button class="button" (click)="reset()">RESET</button>
-  `,
+    `,
   styles: [
     `
       .grid {

@@ -7,7 +7,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { getHarness } from '@jscutlery/cypress-harness';
-
 @Component({
   standalone: true,
   imports: [
@@ -26,11 +25,9 @@ import { getHarness } from '@jscutlery/cypress-harness';
 export class TestedComponent {
   control = new FormControl();
 }
-
 describe(getHarness.name, () => {
   /* getHarness is lazy, so we can share the same reference. */
   const datepicker = getHarness(MatDatepickerInputHarness);
-
   it('should set date using material datepicker harness', () => {
     mountComponent();
     datepicker.setValue('1/1/2010');
@@ -40,7 +37,6 @@ describe(getHarness.name, () => {
     datepicker.getCalendar().selectCell({ text: '10' });
     datepicker.getValue().should('equal', '2/10/2010');
   });
-
   it('should set date using imperative approach', () => {
     mountComponent();
     datepicker.then(async (harness) => {
@@ -49,11 +45,9 @@ describe(getHarness.name, () => {
       const calendar = await harness.getCalendar();
       await calendar.next();
       await calendar.selectCell({ text: '10' });
-
       expect(await harness.getValue()).to.equal('2/10/2010');
     });
   });
-
   function mountComponent() {
     return cy.mount(TestedComponent, {
       imports: [BrowserAnimationsModule],

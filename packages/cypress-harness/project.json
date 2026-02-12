@@ -3,8 +3,8 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/cypress-harness/src",
   "projectType": "library",
-  "generators": {},
   "tags": [],
+  "generators": {},
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",

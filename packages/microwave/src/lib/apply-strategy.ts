@@ -1,10 +1,9 @@
 import { getEngine } from './core/engine';
 import { getStrategyDevKit, Strategy } from './devkit';
 import { decorateComponent, IvyComponentType } from './shared/decorator';
-
 export function applyStrategy<T>(
   componentType: IvyComponentType<T>,
-  strategy: Strategy<T>
+  strategy: Strategy<T>,
 ) {
   _bindComponentToEngine(componentType, {
     onCreate(component) {
@@ -12,10 +11,13 @@ export function applyStrategy<T>(
     },
   });
 }
-
 export function _bindComponentToEngine<T>(
   componentType: IvyComponentType<T>,
-  { onCreate }: { onCreate: (component: T) => void }
+  {
+    onCreate,
+  }: {
+    onCreate: (component: T) => void;
+  },
 ) {
   decorateComponent(componentType, {
     onCreate(component, changeDetectionFns) {

@@ -1,5 +1,4 @@
 import { mount } from 'cypress/angular';
-
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
@@ -9,5 +8,4 @@ declare global {
     }
   }
 }
-
 Cypress.Commands.add('mount', mount);
