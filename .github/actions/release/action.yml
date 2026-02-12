@@ -13,15 +13,24 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Configure npm for publishing
+      shell: bash
+      run: |
+        echo "//registry.npmjs.org/:_authToken=${{ inputs.npm_token }}" > ~/.npmrc
+        echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
+    
     - name: Release
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm_token }}
         GITHUB_TOKEN: ${{ inputs.git_bot_token }}
-      # Use npx instead of yarn because yarn automagically sets NPM_* environment variables
-      # like NPM_CONFIG_REGISTRY so npm publish ends up ignoring the .npmrc file
-      # which is set up by `setup-node` action.
+      # Use npm for publishing by creating .yarnrc.yml to specify npm as publishConfig
       shell: bash
-      run: npx nx release --yes
+      run: |
+        cat > .yarnrc.yml << EOF
+        npmPublishRegistry: "https://registry.npmjs.org/"
+        npmAuthToken: "${{ inputs.npm_token }}"
+        EOF
+        npx --yes nx release --yes
 
     - name: hack remove 'swc-angular-{version}' tag until this is fixed https://github.com/nrwl/nx/issues/22798
       shell: bash
