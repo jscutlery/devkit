@@ -37,18 +37,12 @@
       "executor": "@nx/vite:test",
       "options": {
         "config": "packages/swc-angular/vitest.config.mts"
-      }
+      },
+      "dependsOn": ["build", "^build"]
     },
     "nx-release-publish": {
       "executor": "@nx/js:release-publish",
       "dependsOn": ["^nx-release-publish", "build"]
-    },
-    "test": {
-      "command": "vitest",
-      "dependsOn": ["build", "^build"],
-      "options": {
-        "cwd": "{projectRoot}"
-      }
     }
   }
 }
