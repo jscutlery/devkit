@@ -4,16 +4,16 @@ import { createLocalStrategy } from './local';
 describe(createLocalStrategy.name, () => {
   it('should detach change detector immediately', () => {
     const { detach } = setUp();
-    expect(detach).toBeCalledTimes(1);
+    expect(detach).toHaveBeenCalledTimes(1);
   });
   it('should not trigger change detection too early', () => {
     const { detectChanges } = setUp();
-    expect(detectChanges).not.toBeCalled();
+    expect(detectChanges).not.toHaveBeenCalled();
   });
   it('should not trigger change detection before initialization', () => {
     const { detectChanges, markChanged } = setUp();
     markChanged();
-    expect(detectChanges).not.toBeCalled();
+    expect(detectChanges).not.toHaveBeenCalled();
   });
   it('should trigger change detection after initialized then destroyed', () => {
     const {
@@ -27,19 +27,19 @@ describe(createLocalStrategy.name, () => {
     markDestroyed();
     clearMocks();
     markChanged();
-    expect(detectChanges).not.toBeCalled();
+    expect(detectChanges).not.toHaveBeenCalled();
   });
   it('should trigger change detection when initialized', () => {
     const { detectChanges, markInitialized } = setUp();
     markInitialized();
-    expect(detectChanges).toBeCalledTimes(1);
+    expect(detectChanges).toHaveBeenCalledTimes(1);
   });
   it('should trigger change detection when changed', () => {
     const { detectChanges, markInitialized, markChanged, clearMocks } = setUp();
     markInitialized();
     clearMocks();
     markChanged();
-    expect(detectChanges).toBeCalledTimes(1);
+    expect(detectChanges).toHaveBeenCalledTimes(1);
   });
   it('should coalesce using given coalescing source', () => {
     /* A subject to simulate the coalescer's tick. */

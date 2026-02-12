@@ -7,16 +7,16 @@ describe(Microwave.name, () => {
   const { observe } = createObserver();
   it('should detach change detector on startup', () => {
     const { cdRef } = createComponent(GreetingsComponent);
-    expect(cdRef.detach).toBeCalledTimes(1);
+    expect(cdRef.detach).toHaveBeenCalledTimes(1);
   });
   it('should not trigger change detection before one tick', () => {
     const { cdRef } = createComponent(GreetingsComponent);
-    expect(cdRef.detectChanges).toBeCalledTimes(0);
+    expect(cdRef.detectChanges).toHaveBeenCalledTimes(0);
   });
   it('should trigger change detection after one tick', async () => {
     const { cdRef, flushMicrotasks } = createComponent(GreetingsComponent);
     await flushMicrotasks();
-    expect(cdRef.detectChanges).toBeCalledTimes(1);
+    expect(cdRef.detectChanges).toHaveBeenCalledTimes(1);
   });
   it('should trigger change detection once when fields change', async () => {
     const { cdRef, component, flushMicrotasks } =
@@ -26,7 +26,7 @@ describe(Microwave.name, () => {
     component.meal = 'Lasagna';
     component.evaluation = 'Delicious';
     await flushMicrotasks();
-    expect(cdRef.detectChanges).toBeCalledTimes(1);
+    expect(cdRef.detectChanges).toHaveBeenCalledTimes(1);
   });
   it('should not trigger change detection if property is set to same value', async () => {
     const { cdRef, component, flushMicrotasks } =
@@ -37,7 +37,7 @@ describe(Microwave.name, () => {
     /* Set property to identical value. */
     component.meal = 'Lasagna';
     await flushMicrotasks();
-    expect(cdRef.detectChanges).not.toBeCalled();
+    expect(cdRef.detectChanges).not.toHaveBeenCalled();
   });
   it('should stop triggering change detection on destroy', async () => {
     const {
@@ -51,22 +51,22 @@ describe(Microwave.name, () => {
     component.evaluation = 'Delicious';
     destroy();
     await flushMicrotasks();
-    expect(cdRef.detectChanges).toBeCalledTimes(0);
+    expect(cdRef.detectChanges).toHaveBeenCalledTimes(0);
   });
   describe(watch.name, () => {
     describe('with eager watch', () => {
       it('should emit initial value', () => {
         const { component } = createComponent(GreetingsWithWatchComponent);
         const spy = observe(component.evaluation$);
-        expect(spy.next).toBeCalledTimes(1);
-        expect(spy.next).toBeCalledWith('meh');
+        expect(spy.next).toHaveBeenCalledTimes(1);
+        expect(spy.next).toHaveBeenCalledWith('meh');
       });
       it('should emit changes', () => {
         const { component } = createComponent(GreetingsWithWatchComponent);
         const spy = observe(component.evaluation$);
         component.evaluation = 'Delicious';
-        expect(spy.next).toBeCalledTimes(2);
-        expect(spy.next).lastCalledWith('Delicious');
+        expect(spy.next).toHaveBeenCalledTimes(2);
+        expect(spy.next).toHaveBeenLastCalledWith('Delicious');
       });
     });
     describe('with late watch', () => {
@@ -74,30 +74,30 @@ describe(Microwave.name, () => {
         const { component } = createComponent(GreetingsComponent);
         const meal$ = watch(component, 'meal');
         const spy = observe(meal$);
-        expect(spy.next).toBeCalledTimes(1);
-        expect(spy.next).toBeCalledWith(undefined);
+        expect(spy.next).toHaveBeenCalledTimes(1);
+        expect(spy.next).toHaveBeenCalledWith(undefined);
       });
       it('should emit initial value', () => {
         const { component } = createComponent(GreetingsComponent);
         const evaluation$ = watch(component, 'evaluation');
         const spy = observe(evaluation$);
-        expect(spy.next).toBeCalledTimes(1);
-        expect(spy.next).toBeCalledWith('meh');
+        expect(spy.next).toHaveBeenCalledTimes(1);
+        expect(spy.next).toHaveBeenCalledWith('meh');
       });
       it('should emit changes', () => {
         const { component } = createComponent(GreetingsComponent);
         const evaluation$ = watch(component, 'evaluation');
         const spy = observe(evaluation$);
         component.evaluation = 'Delicious';
-        expect(spy.next).toBeCalledTimes(2);
-        expect(spy.next).lastCalledWith('Delicious');
+        expect(spy.next).toHaveBeenCalledTimes(2);
+        expect(spy.next).toHaveBeenLastCalledWith('Delicious');
       });
       it('should emit distinct values only', () => {
         const { component } = createComponent(GreetingsComponent);
         const evaluation$ = watch(component, 'evaluation');
         const spy = observe(evaluation$);
         component.evaluation = 'meh';
-        expect(spy.next).toBeCalledTimes(1);
+        expect(spy.next).toHaveBeenCalledTimes(1);
       });
       it('should stop watching on destroy', () => {
         const { component, destroy } = createComponent(GreetingsComponent);
@@ -107,7 +107,7 @@ describe(Microwave.name, () => {
         );
         observe(evaluation$);
         destroy();
-        expect(finalizeSpy).toBeCalledTimes(1);
+        expect(finalizeSpy).toHaveBeenCalledTimes(1);
       });
     });
   });

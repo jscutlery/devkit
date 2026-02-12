@@ -7,35 +7,35 @@ describe(decorateComponent.name, () => {
   it('should trigger real ngOnInit', () => {
     const { cmp, ngOnInit } = bowl;
     cmp.ngOnInit();
-    expect(ngOnInit).toBeCalledTimes(1);
+    expect(ngOnInit).toHaveBeenCalledTimes(1);
     /* Make sure instance is bound to the wrapped method. */
-    expect(ngOnInit).toBeCalledWith(cmp);
+    expect(ngOnInit).toHaveBeenCalledWith(cmp);
   });
   it('should trigger real ngOnDestroy', () => {
     const { cmp, ngOnDestroy } = bowl;
     cmp.ngOnDestroy();
-    expect(ngOnDestroy).toBeCalledTimes(1);
+    expect(ngOnDestroy).toHaveBeenCalledTimes(1);
     /* Make sure instance is bound to the wrapped method. */
-    expect(ngOnDestroy).toBeCalledWith(cmp);
+    expect(ngOnDestroy).toHaveBeenCalledWith(cmp);
   });
   it('should trigger onCreate', () => {
     const { mockHooks } = bowl;
-    expect(mockHooks.onCreate).toBeCalledTimes(1);
+    expect(mockHooks.onCreate).toHaveBeenCalledTimes(1);
   });
   it('should trigger onInit', () => {
     const { cmp, mockHooks } = bowl;
     cmp.ngOnInit();
-    expect(mockHooks.onInit).toBeCalledTimes(1);
+    expect(mockHooks.onInit).toHaveBeenCalledTimes(1);
   });
   it('should trigger onDestroy', () => {
     const { cmp, mockHooks } = bowl;
     cmp.ngOnDestroy();
-    expect(mockHooks.onDestroy).toBeCalledTimes(1);
+    expect(mockHooks.onDestroy).toHaveBeenCalledTimes(1);
   });
   it('should trigger onPropertyDeclare', () => {
     const { cmp, mockHooks } = bowl;
-    expect(mockHooks.onPropertyDeclare).toBeCalledTimes(1);
-    expect(mockHooks.onPropertyDeclare).toBeCalledWith(
+    expect(mockHooks.onPropertyDeclare).toHaveBeenCalledTimes(1);
+    expect(mockHooks.onPropertyDeclare).toHaveBeenCalledWith(
       cmp,
       'something',
       undefined,
@@ -45,20 +45,20 @@ describe(decorateComponent.name, () => {
     const { cmp, mockHooks } = bowl;
     mockHooks.onPropertyGet.mockReturnValue(42);
     expect(cmp.something).toEqual(42);
-    expect(mockHooks.onPropertyGet).toBeCalledTimes(1);
-    expect(mockHooks.onPropertyGet).toBeCalledWith(cmp, 'something');
+    expect(mockHooks.onPropertyGet).toHaveBeenCalledTimes(1);
+    expect(mockHooks.onPropertyGet).toHaveBeenCalledWith(cmp, 'something');
   });
   it('should trigger onPropertySet', () => {
     const { cmp, mockHooks } = bowl;
     cmp.something = 42;
-    expect(mockHooks.onPropertySet).toBeCalledTimes(1);
-    expect(mockHooks.onPropertySet).toBeCalledWith(cmp, 'something', 42);
+    expect(mockHooks.onPropertySet).toHaveBeenCalledTimes(1);
+    expect(mockHooks.onPropertySet).toHaveBeenCalledWith(cmp, 'something', 42);
   });
   it('should not call any hook except onCreate & onPropertyDeclare when created', () => {
     const { mockHooks } = bowl;
-    expect(mockHooks.onDestroy).not.toBeCalled();
-    expect(mockHooks.onPropertyGet).not.toBeCalled();
-    expect(mockHooks.onPropertySet).not.toBeCalled();
+    expect(mockHooks.onDestroy).not.toHaveBeenCalled();
+    expect(mockHooks.onPropertyGet).not.toHaveBeenCalled();
+    expect(mockHooks.onPropertySet).not.toHaveBeenCalled();
   });
   function setUp() {
     const ngOnInit = jest.fn();

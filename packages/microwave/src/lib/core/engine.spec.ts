@@ -8,15 +8,15 @@ describe(getEngine.name, () => {
     const { engine } = bowl;
     const spy = observe(engine.initialized$);
     engine.markInitialized();
-    expect(spy.next).toBeCalledTimes(1);
-    expect(spy.complete).toBeCalledTimes(1);
+    expect(spy.next).toHaveBeenCalledTimes(1);
+    expect(spy.complete).toHaveBeenCalledTimes(1);
   });
   it('should mark destroyed', () => {
     const { engine } = bowl;
     const spy = observe(engine.destroyed$);
     engine.markDestroyed();
-    expect(spy.next).toBeCalledTimes(1);
-    expect(spy.complete).toBeCalledTimes(1);
+    expect(spy.next).toHaveBeenCalledTimes(1);
+    expect(spy.complete).toHaveBeenCalledTimes(1);
   });
   function setUp() {
     class MyClass {}
