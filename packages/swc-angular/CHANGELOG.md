@@ -1,3 +1,13 @@
+## 0.21.5 (2026-02-12)
+
+### 🩹 Fixes
+
+- **rx-computed:** update @jscutlery/operators dependency version from ^2.0.0 to ^3.0.0 ([b96cf37](https://github.com/jscutlery/devkit/commit/b96cf37))
+
+### ❤️ Thank You
+
+- Edouard Bozon
+
 ## 0.21.4 (2026-02-06)
 
 ### 🩹 Fixes

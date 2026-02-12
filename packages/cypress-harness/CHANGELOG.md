@@ -1,3 +1,7 @@
+## 0.8.9 (2026-02-12)
+
+This was a version bump only for cypress-harness to align it with other projects, there were no code changes.
+
 ## 0.8.8 (2026-01-18)
 
 ### 🩹 Fixes
