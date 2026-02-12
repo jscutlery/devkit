@@ -2,11 +2,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "types": []
+    "types": [],
+    "moduleResolution": "bundler"
   },
-  "include": [
-    "src/**/*.d.ts"
-  ],
+  "include": ["src/**/*.d.ts"],
   "exclude": [
     "jest.config.ts",
     "cypress/**/*",

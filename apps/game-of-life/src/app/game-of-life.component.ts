@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { Microwave } from '@jscutlery/microwave';
 import { animationFrames, Subscription, throttleTime } from 'rxjs';
 import { CellModule } from './cell.component';
@@ -13,17 +13,18 @@ import { GameOfLife, range } from './game-of-life.service';
       class="grid"
       [style.gridTemplateColumns]="gridTemplateColumns"
       [style.gridTemplateRows]="gridTemplateRows"
-    >
-      <ng-container *ngFor="let rowIndex of rows">
-        <jc-cell
-          *ngFor="let colIndex of cols"
-          [col]="colIndex"
-          [row]="rowIndex"
-        ></jc-cell>
-      </ng-container>
+      >
+      @for (rowIndex of rows; track rowIndex) {
+        @for (colIndex of cols; track colIndex) {
+          <jc-cell
+            [col]="colIndex"
+            [row]="rowIndex"
+          ></jc-cell>
+        }
+      }
     </section>
     <button class="button" (click)="reset()">RESET</button>
-  `,
+    `,
   styles: [
     `
       .grid {
@@ -48,8 +49,7 @@ export class GameOfLifeComponent implements OnDestroy, OnInit {
   gridTemplateRows = `repeat(${this.rowCount}, 1fr)`;
 
   private _subscription = new Subscription();
-
-  constructor(private _gol: GameOfLife) {}
+  private _gol = inject(GameOfLife);
 
   async ngOnInit() {
     this.reset();

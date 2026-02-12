@@ -3,8 +3,9 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/game-of-life/src",
-  "implicitDependencies": ["swc-angular"],
   "prefix": "jc",
+  "tags": [],
+  "implicitDependencies": ["swc-angular"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser-esbuild",
@@ -65,7 +66,8 @@
           "buildTarget": "game-of-life:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -84,6 +86,5 @@
       },
       "dependsOn": ["^build"]
     }
-  },
-  "tags": []
+  }
 }

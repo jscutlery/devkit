@@ -105,6 +105,7 @@ describe('swc-angular-plugin: input', () => {
     class Title {
       title = input<string>();
 
+      // eslint-disable-next-line @angular-eslint/prefer-inject
       constructor(private _service: Service) {}
     }
 

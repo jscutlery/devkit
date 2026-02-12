@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
+  inject,
   Input,
   NgModule,
   OnInit,
@@ -37,10 +38,8 @@ export class CellComponent implements OnInit {
 
   color?: string = undefined;
 
-  constructor(
-    private _gol: GameOfLife,
-    private _cdr: ChangeDetectorRef,
-  ) {}
+  private _gol = inject(GameOfLife);
+  private _cdr = inject(ChangeDetectorRef);
 
   ngOnInit() {
     if (this.row == null || this.col == null) {

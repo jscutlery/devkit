@@ -50,8 +50,8 @@ describe(suspensify.name, () => {
 
     it('should emit pending', () => {
       const { next } = setUpStrict(new Subject<'🍔'>());
-      expect(next).toBeCalledTimes(1);
-      expect(next).toBeCalledWith({
+      expect(next).toHaveBeenCalledTimes(1);
+      expect(next).toHaveBeenCalledWith({
         finalized: false,
         hasError: false,
         hasValue: false,
@@ -65,7 +65,7 @@ describe(suspensify.name, () => {
         new Observable((observer) => observer.next('🍔'))
       );
 
-      expect(next).lastCalledWith({
+      expect(next).toHaveBeenLastCalledWith({
         finalized: false,
         hasError: false,
         hasValue: true,
@@ -76,13 +76,13 @@ describe(suspensify.name, () => {
 
     it('should emit once (not pending + value)', () => {
       const { next } = setUpStrict(of('🍔'));
-      expect(next).toBeCalledTimes(1);
+      expect(next).toHaveBeenCalledTimes(1);
     });
 
     it('should emit error', () => {
       const { next } = setUpStrict(throwError(() => new Error('🐞')));
-      expect(next).toBeCalledTimes(1);
-      expect(next).toBeCalledWith({
+      expect(next).toHaveBeenCalledTimes(1);
+      expect(next).toHaveBeenCalledWith({
         finalized: true,
         hasError: true,
         hasValue: false,
@@ -94,7 +94,7 @@ describe(suspensify.name, () => {
     it('should mark finalized on complete with value', () => {
       const { next } = setUpStrict(of('🍔'));
 
-      expect(next).toBeCalledWith({
+      expect(next).toHaveBeenCalledWith({
         finalized: true,
         hasError: false,
         hasValue: true,
@@ -106,7 +106,7 @@ describe(suspensify.name, () => {
     it('should mark finalized on complete without value', () => {
       const { next } = setUpStrict(EMPTY);
 
-      expect(next).toBeCalledWith({
+      expect(next).toHaveBeenCalledWith({
         finalized: true,
         hasError: false,
         hasValue: false,
@@ -120,8 +120,8 @@ describe(suspensify.name, () => {
 
       subject.error(new Error('🐞'));
 
-      expect(next).toBeCalledTimes(2);
-      expect(next).lastCalledWith(
+      expect(next).toHaveBeenCalledTimes(2);
+      expect(next).toHaveBeenLastCalledWith(
         expect.objectContaining({
           pending: false,
           error: new Error('🐞'),
@@ -144,8 +144,8 @@ describe(suspensify.name, () => {
   describe('lax mode', () => {
     it('should emit result with value', () => {
       const { next } = setUpLax(of('🍔'));
-      expect(next).toBeCalledTimes(1);
-      expect(next).toBeCalledWith({
+      expect(next).toHaveBeenCalledTimes(1);
+      expect(next).toHaveBeenCalledWith({
         finalized: true,
         hasError: false,
         hasValue: true,
@@ -157,8 +157,8 @@ describe(suspensify.name, () => {
 
     it('should emit result with error', () => {
       const { next } = setUpLax(throwError(() => new Error('🐞')));
-      expect(next).toBeCalledTimes(1);
-      expect(next).toBeCalledWith({
+      expect(next).toHaveBeenCalledTimes(1);
+      expect(next).toHaveBeenCalledWith({
         finalized: true,
         hasError: true,
         hasValue: false,
@@ -170,8 +170,8 @@ describe(suspensify.name, () => {
 
     it('should emit result with pending=true and without value nor error', () => {
       const { next } = setUpLax(new Subject<'🍔'>());
-      expect(next).toBeCalledTimes(1);
-      expect(next).toBeCalledWith({
+      expect(next).toHaveBeenCalledTimes(1);
+      expect(next).toHaveBeenCalledWith({
         finalized: false,
         hasError: false,
         hasValue: false,
@@ -187,8 +187,8 @@ describe(suspensify.name, () => {
 
       subject.next('🍔');
 
-      expect(next).toBeCalledTimes(2);
-      expect(next).lastCalledWith({
+      expect(next).toHaveBeenCalledTimes(2);
+      expect(next).toHaveBeenLastCalledWith({
         finalized: false,
         hasError: false,
         hasValue: true,
@@ -204,8 +204,8 @@ describe(suspensify.name, () => {
 
       subject.error(new Error('🐞'));
 
-      expect(next).toBeCalledTimes(2);
-      expect(next).lastCalledWith(
+      expect(next).toHaveBeenCalledTimes(2);
+      expect(next).toHaveBeenLastCalledWith(
         expect.objectContaining({
           pending: false,
           error: new Error('🐞'),

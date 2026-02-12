@@ -12,22 +12,18 @@ export function createTestingBowl<T>(
     tearDown,
   }: {
     tearDown?: () => void | Promise<void> | Partial<T> | Promise<Partial<T>>;
-  } = {}
+  } = {},
 ): T {
   const bowl: Partial<T> = {};
-
   beforeEach(async () => {
     Object.assign(bowl, await setUp());
   });
-
   afterEach(async () => {
     if (tearDown == null) {
       return;
     }
-
     Object.assign(bowl, await tearDown());
   });
-
   /* We force the type to T as we are quite sure that beforeEach
    * will run before any usage.
    * This will avoid optional chaining and type hinting. */

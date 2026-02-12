@@ -4,6 +4,7 @@
   "projectType": "application",
   "sourceRoot": "apps/sandbox/src",
   "prefix": "jc",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser-esbuild",
@@ -58,7 +59,8 @@
         "production": {
           "buildTarget": "sandbox:build:production"
         }
-      }
+      },
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -77,6 +79,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/apps/sandbox"]
     }
-  },
-  "tags": []
+  }
 }

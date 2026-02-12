@@ -1,11 +1,8 @@
 import { Observable, PartialObserver, Subscription } from 'rxjs';
-
 export function createObserver() {
   let subscription: Subscription;
-
   beforeEach(() => (subscription = new Subscription()));
   afterEach(() => subscription.unsubscribe());
-
   return {
     observe<T>(observable: Observable<T>) {
       const observer: PartialObserver<T> = {
