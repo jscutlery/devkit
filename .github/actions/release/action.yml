@@ -13,12 +13,16 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Enable Corepack
+      shell: bash
+      run: corepack enable
+
     - name: Configure npm for publishing
       shell: bash
       run: |
         echo "//registry.npmjs.org/:_authToken=${{ inputs.npm_token }}" > ~/.npmrc
         echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
-    
+
     - name: Release
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm_token }}
