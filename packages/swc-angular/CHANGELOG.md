@@ -1,3 +1,17 @@
+## 0.22.1 (2026-02-12)
+
+### 🚀 Features
+
+- **release:** add Corepack enable step to release action ([c581902](https://github.com/jscutlery/devkit/commit/c581902))
+
+### 🩹 Fixes
+
+- **release:** update npm publishing configuration to use .yarnrc.yml ([0eeb739](https://github.com/jscutlery/devkit/commit/0eeb739))
+
+### ❤️ Thank You
+
+- Edouard Bozon
+
 ## 0.22.0 (2026-02-12)
 
 ### 🚀 Features
