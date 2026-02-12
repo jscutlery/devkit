@@ -1,3 +1,7 @@
+## 0.10.12 (2026-02-12)
+
+This was a version bump only for playwright-ct-angular to align it with other projects, there were no code changes.
+
 ## 0.10.11 (2026-02-12)
 
 This was a version bump only for playwright-ct-angular to align it with other projects, there were no code changes.
