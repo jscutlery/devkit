@@ -1,4 +1,4 @@
-import { Component, Injectable, Input, Output } from '@angular/core';
+import { Component, inject, Injectable, Input, Output } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import { delay, finalize, map } from 'rxjs';
 import { Microwave, watch } from './microwave';
@@ -25,10 +25,13 @@ class MealComponent {
   evaluationChange = watch(this, 'evaluation');
   capitalizedMeal?: string = undefined;
   evaluation?: string = undefined;
-  constructor(snitch: Snitch) {
+  
+  private snitch = inject(Snitch);
+  
+  constructor() {
     watch(this, 'meal')
       .pipe(
-        finalize(() => (snitch.finalized = true)),
+        finalize(() => (this.snitch.finalized = true)),
         delay(10),
         map((meal) => meal?.toUpperCase()),
       )

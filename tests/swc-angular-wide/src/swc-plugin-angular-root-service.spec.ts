@@ -37,6 +37,7 @@ describe('swc-angular-plugin: root service', () => {
       template: ` <h1>{{ rootService.value }}</h1> `,
     })
     class Container {
+      // eslint-disable-next-line @angular-eslint/prefer-inject
       constructor(public rootService: RootService) {}
     }
 

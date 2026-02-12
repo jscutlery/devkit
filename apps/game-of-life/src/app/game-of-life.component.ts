@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { Microwave } from '@jscutlery/microwave';
 import { animationFrames, Subscription, throttleTime } from 'rxjs';
 import { CellModule } from './cell.component';
@@ -49,8 +49,7 @@ export class GameOfLifeComponent implements OnDestroy, OnInit {
   gridTemplateRows = `repeat(${this.rowCount}, 1fr)`;
 
   private _subscription = new Subscription();
-
-  constructor(private _gol: GameOfLife) {}
+  private _gol = inject(GameOfLife);
 
   async ngOnInit() {
     this.reset();
