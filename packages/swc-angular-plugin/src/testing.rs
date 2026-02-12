@@ -1,9 +1,9 @@
 use ::testing::diff;
 use ansi_term::Color;
 use indoc::formatdoc;
+use swc_core::ecma::parser::{Syntax, TsSyntax};
 use swc_core::ecma::transforms::testing::Tester;
 use swc_core::ecma::visit::{visit_mut_pass, VisitMut};
-use swc_ecma_parser::{Syntax, TsSyntax};
 
 /// This is a helper function for testing the visitor.
 /// We use it instead of the `test_inline!` macro because we are injecting raw code

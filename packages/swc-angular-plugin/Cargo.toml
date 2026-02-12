@@ -8,15 +8,13 @@ crate-type = ["cdylib"]
 
 [dependencies]
 serde = "1"
-swc_core = { version = "10.0.2", features = ["ecma_plugin_transform"] }
-swc_ecma_parser = { version = "6.0.2", features = ["typescript"] }
-swc_ecma_utils = "7.0.0"
+swc_core = { version = "56.0.0", features = ["ecma_plugin_transform", "ecma_parser_typescript"] }
 indoc = "2.0.5"
 serde_json = "1.0.114"
 
 [dev-dependencies]
 ansi_term = "0.12.1"
-testing = "0.42.1"
+testing = "19.0.0"
 
 [profile.release]
 # Disable LTO to avoid linker error when using TransformPluginProgramMetadata#get_transform_plugin_config()

@@ -84,7 +84,7 @@ impl VisitMut for ComponentDecoratorVisitor {
                 elems: match self.options.import_styles {
                     true => {
                         let mut style_path = match &node.value.deref() {
-                            Expr::Lit(Lit::Str(str)) => str.value.to_string(),
+                            Expr::Lit(Lit::Str(str)) => str.value.as_str().unwrap_or("").to_string(),
                             _ => return,
                         };
 
@@ -116,7 +116,7 @@ impl VisitMut for ComponentDecoratorVisitor {
                     /* Ignore non-string values in styleUrls */
                     let mut path = match path_option {
                         Some(value) => match &value.expr.deref() {
-                            Expr::Lit(Lit::Str(str)) => str.value.to_string(),
+                            Expr::Lit(Lit::Str(str)) => str.value.as_str().unwrap_or("").to_string(),
                             _ => continue,
                         },
                         _ => continue,
@@ -142,7 +142,7 @@ impl VisitMut for ComponentDecoratorVisitor {
             }.into());
 
             let mut template_path = match &node.value.deref() {
-                Expr::Lit(Lit::Str(str)) => str.value.to_string(),
+                Expr::Lit(Lit::Str(str)) => str.value.as_str().unwrap_or("").to_string(),
                 _ => return,
             };
 

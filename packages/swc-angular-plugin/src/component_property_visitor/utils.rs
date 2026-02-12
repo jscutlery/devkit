@@ -1,10 +1,9 @@
 use std::ops::Deref;
 
 use swc_core::{common::SyntaxContext, ecma::ast::{
-    ClassProp, Expr, ExprOrSpread, Ident, KeyValueProp, Lit, ObjectLit, Prop, PropName,
+    Callee, ClassProp, Expr, ExprOrSpread, Ident, KeyValueProp, Lit, ObjectLit, Prop, PropName,
     PropOrSpread,
 }};
-use swc_ecma_utils::ExprExt;
 
 /**
  * Return the property name and the function call expression or None
@@ -16,14 +15,17 @@ pub fn parse_angular_prop<'prop>(
 ) -> Option<AngularPropInfo<'prop>> {
     let key_ident = class_prop.key.as_ident()?;
 
-    let call = class_prop
-        .value
-        .as_ref()
-        .and_then(|v| v.as_expr().as_call())?;
+    let call = match class_prop.value.as_ref()?.as_ref() {
+        Expr::Call(call) => call,
+        _ => return None,
+    };
 
-    let callee = call.callee.as_expr()?;
+    let callee = match &call.callee {
+        Callee::Expr(expr) => expr.as_ref(),
+        _ => return None,
+    };
 
-    let required = match callee.as_expr() {
+    let required = match callee {
         /* e.g. false if `input()`. */
         Expr::Ident(ident) if ident.sym.eq(&function_name) => false,
         /* e.g. true if `input.required(). */
@@ -44,7 +46,7 @@ pub fn parse_angular_prop<'prop>(
     };
 
     let angular_prop = AngularPropInfo {
-        name: key_ident.sym.to_string(),
+        name: key_ident.sym.as_str().to_string(),
         required,
         args: &call.args,
     };
