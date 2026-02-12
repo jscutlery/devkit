@@ -59,10 +59,11 @@ describe('swc-angular-plugin: output', () => {
   });
 
   function render(cmpType: Type<unknown>) {
-    const { nativeElement } = createComponent(cmpType);
+    const { fixture, nativeElement } = createComponent(cmpType);
     return {
       clickButton() {
         nativeElement.querySelector('button')?.click();
+        fixture.detectChanges();
       },
       getParagraph() {
         return nativeElement.querySelector('p')?.textContent;

@@ -125,6 +125,7 @@ describe('swc-angular-plugin: model', () => {
         }
         inputEl.value = value;
         inputEl.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
       },
       getParagraph() {
         return nativeElement.querySelector('p')?.textContent;
