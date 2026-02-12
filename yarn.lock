@@ -5506,8 +5506,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jscutlery/microwave@workspace:packages/microwave"
   peerDependencies:
-    "@angular/common": ^14.0.2
-    "@angular/core": ^14.0.2
+    "@angular/common": ">=14.0.0 <22.0.0"
+    "@angular/core": ">=14.0.0 <22.0.0"
     rxjs: ^7.0.0
   languageName: unknown
   linkType: soft
@@ -5534,10 +5534,10 @@ __metadata:
     "@playwright/experimental-ct-core": 1.47.1
     "@playwright/test": 1.47.1
   peerDependencies:
-    "@angular/compiler": ^16.0.0 || ^17.0.0 || ^18.0.0
-    "@angular/core": ^16.0.0 || ^17.0.0 || ^18.0.0
-    "@angular/platform-browser": ^16.0.0 || ^17.0.0 || ^18.0.0
-    "@angular/platform-browser-dynamic": ^16.0.0 || ^17.0.0 || ^18.0.0
+    "@angular/compiler": ">=16.0.0 <22.0.0"
+    "@angular/core": ">=16.0.0 <22.0.0"
+    "@angular/platform-browser": ">=16.0.0 <22.0.0"
+    "@angular/platform-browser-dynamic": ">=16.0.0 <22.0.0"
     rxjs: ^7.0.0
     zone.js: "*"
   bin:
@@ -5551,7 +5551,7 @@ __metadata:
   dependencies:
     tslib: ^2.4.0
   peerDependencies:
-    "@angular/core": ">=16.0.0 <20.0.0"
+    "@angular/core": ">=16.0.0 <22.0.0"
     "@jscutlery/operators": ^2.0.0
   languageName: unknown
   linkType: soft
