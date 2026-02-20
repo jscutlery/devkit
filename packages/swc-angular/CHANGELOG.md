@@ -1,3 +1,9 @@
+## 0.22.3 (2026-02-20)
+
+### 🩹 Fixes
+
+- 📦 update dependency @babel/core to v7.29.0 ([#967](https://github.com/jscutlery/devkit/pull/967))
+
 ## 0.22.2 (2026-02-12)
 
 This was a version bump only for swc-angular to align it with other projects, there were no code changes.
