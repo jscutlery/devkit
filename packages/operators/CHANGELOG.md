@@ -1,3 +1,7 @@
+## 3.2.14 (2026-02-21)
+
+This was a version bump only for operators to align it with other projects, there were no code changes.
+
 ## 3.2.13 (2026-02-20)
 
 This was a version bump only for operators to align it with other projects, there were no code changes.
