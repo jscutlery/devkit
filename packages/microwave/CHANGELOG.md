@@ -1,3 +1,9 @@
+## 0.5.15 (2026-05-11)
+
+### 🧱 Updated Dependencies
+
+- Updated cypress-harness to 0.8.15
+
 ## 0.5.14 (2026-02-21)
 
 ### 🧱 Updated Dependencies
