@@ -4888,7 +4888,7 @@ __metadata:
     postcss: "npm:^8.4.49"
     postcss-import: "npm:16.1.1"
     postcss-preset-env: "npm:~11.2.0"
-    postcss-url: "npm:10.1.3"
+    postcss-url: "npm:10.1.4"
     prettier: "npm:3.8.3"
     rxjs: "npm:7.8.2"
     ts-jest: "npm:29.4.9"
@@ -17938,15 +17938,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:~3.0.4":
-  version: 3.0.8
-  resolution: "minimatch@npm:3.0.8"
-  dependencies:
-    brace-expansion: "npm:^1.1.7"
-  checksum: 10c0/72b226f452dcfb5075255f53534cb83fc25565b909e79b9be4fad463d735cb1084827f7013ff41d050e77ee6e474408c6073473edd2fb72c2fd630cfb0acc6ad
-  languageName: node
-  linkType: hard
-
 "minimist@npm:^1.2.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6, minimist@npm:^1.2.8":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
@@ -20530,17 +20521,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-url@npm:10.1.3":
-  version: 10.1.3
-  resolution: "postcss-url@npm:10.1.3"
+"postcss-url@npm:10.1.4":
+  version: 10.1.4
+  resolution: "postcss-url@npm:10.1.4"
   dependencies:
     make-dir: "npm:~3.1.0"
     mime: "npm:~2.5.2"
-    minimatch: "npm:~3.0.4"
+    minimatch: "npm:^3.1.5"
     xxhashjs: "npm:~0.2.2"
   peerDependencies:
     postcss: ^8.0.0
-  checksum: 10c0/8ac985e58d544ce986cdbe41ecbe1c179b5ca3f71cf97179d02d019817d4a80aa3758ec5c9cc8343f95583682addf448ba6bcbc2d4f4c01b4fb269e217c4ef24
+  checksum: 10c0/7bb5ac1b6ae6f7d99705408ee1cd1d6dca5b74922f8f1bd53fa076d3306df5f77215b15a3c93dde30569d305ec15df918cffdd2f4d5c120e6c19d78a7021f565
   languageName: node
   linkType: hard
 
