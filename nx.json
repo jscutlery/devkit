@@ -155,12 +155,16 @@
           "rx-computed"
         ],
         "projectsRelationship": "independent",
-        "releaseTagPattern": "{projectName}-{version}"
+        "releaseTag": {
+          "pattern": "{projectName}-{version}"
+        }
       },
       "swc-angular": {
         "projects": ["swc-angular", "swc-angular-plugin"],
         "projectsRelationship": "fixed",
-        "releaseTagPattern": "swc-angular-{version}"
+        "releaseTag": {
+          "pattern": "swc-angular-{version}"
+        }
       }
     },
     "version": {
