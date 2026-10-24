@@ -12,28 +12,21 @@ Thank you for your contribution 🤗!
 
 ```sh
 # install dependencies
-yarn install
+pnpm install
 
 # run the tests
-yarn test
+pnpm test
 
 # build the library
-yarn build
+pnpm build
 ```
 
-## Using `npm link` or `yarn link`
+## Using `pnpm link` or `npm link`
 
-In order to use the library locally on another project, you can use the `npm`|`yarn` link feature.
-
-1. Head to the built package and inform npm|yarn about it:
+In order to use the library locally on another project, build it, then link the built package from your project:
 
 ```sh
-cd dist/packages/{package-name}
-yarn link # or npm link
-```
-
-2. Go to your project and link the package:
-
-```sh
-yarn link @jscutlery/{package-name} # or npm link @jscutlery/{package-name}
+pnpm link {path-to-devkit}/dist/packages/{package-name}
+# or, with npm
+npm link {path-to-devkit}/dist/packages/{package-name}
 ```

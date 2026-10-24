@@ -21,7 +21,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
       - name: Build
-        run: yarn nx affected --target=build
+        run: pnpm nx affected --target=build
 
   lint:
     runs-on: ubuntu-latest
@@ -30,7 +30,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
       - name: Lint
-        run: yarn nx affected --target=lint
+        run: pnpm nx affected --target=lint
 
   test:
     runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
       - name: Test
-        run: yarn nx affected --target=test
+        run: pnpm nx affected --target=test
 
   component-test:
     runs-on: ubuntu-latest
@@ -47,10 +47,11 @@ jobs:
       - uses: actions/checkout@v6
       - name: Setup
         uses: ./.github/actions/setup
-      - name: Install Playwright Browsers
-        run: yarn playwright install --with-deps
+        with:
+          cypress: 'true'
+          playwright: 'true'
       - name: Component Test
-        run: yarn nx affected --target=component-test --parallel=1
+        run: pnpm nx affected --target=component-test --parallel=1
       - name: Upload test results on failure
         uses: actions/upload-artifact@v7
         if: failure()
@@ -64,8 +65,10 @@ jobs:
       - uses: actions/checkout@v6
       - name: Setup
         uses: ./.github/actions/setup
+        with:
+          cypress: 'true'
       - name: E2E
-        run: yarn nx affected --target=e2e --parallel=1
+        run: pnpm nx affected --target=e2e --parallel=1
 
   release:
     runs-on: ubuntu-latest

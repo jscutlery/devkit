@@ -10,6 +10,14 @@ inputs:
     description: Node.js version
     required: false
     default: '20'
+  cypress:
+    description: Install the Cypress binary (only the jobs running Cypress need it)
+    required: false
+    default: 'false'
+  playwright:
+    description: Install the Playwright browsers and their system dependencies
+    required: false
+    default: 'false'
 
 runs:
   using: composite
@@ -29,10 +37,18 @@ runs:
       with:
         target: wasm32-wasip1
 
+    # pnpm 12 ships a native executable: pnpm/setup downloads it, whereas
+    # pnpm/action-setup leaves the npm package's text placeholder as the `pnpm` bin.
+    # It must run before setup-node, which needs pnpm for its store cache.
+    - name: Install pnpm
+      uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+      with:
+        install: false
+
     - name: Use Node.js
       uses: actions/setup-node@v6
       with:
-        cache: yarn
+        cache: pnpm
         node-version: ${{ inputs.node_version }}
         # This doesn't just set the registry url, but also sets
         # the right configuration in .npmrc that reads NPM token
@@ -44,6 +60,42 @@ runs:
     - name: Set nx base & head commit hashes in env vars
       uses: nrwl/nx-set-shas@v4
 
-    - name: yarn install
+    - name: Read browser tool versions
+      id: versions
       shell: bash
-      run: yarn install --immutable
+      run: |
+        echo "cypress=$(jq -r .devDependencies.cypress package.json)" >> "$GITHUB_OUTPUT"
+        echo "playwright=$(jq -r '.devDependencies["@playwright/test"]' package.json)" >> "$GITHUB_OUTPUT"
+
+    # Restored before the install so Cypress' postinstall finds the binary and skips the download.
+    - name: Cache Cypress binary
+      if: inputs.cypress == 'true'
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/Cypress
+        key: cypress-${{ runner.os }}-${{ steps.versions.outputs.cypress }}
+
+    - name: pnpm install
+      shell: bash
+      run: |
+        if [ "${{ inputs.cypress }}" != 'true' ]; then export CYPRESS_INSTALL_BINARY=0; fi
+        pnpm install --frozen-lockfile
+
+    - name: Cache Playwright browsers
+      if: inputs.playwright == 'true'
+      id: playwright-cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ runner.os }}-${{ steps.versions.outputs.playwright }}
+
+    - name: Install Playwright browsers
+      if: inputs.playwright == 'true' && steps.playwright-cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: pnpm exec playwright install --with-deps
+
+    # The cache only holds the browsers; their apt packages still need installing.
+    - name: Install Playwright system dependencies
+      if: inputs.playwright == 'true' && steps.playwright-cache.outputs.cache-hit == 'true'
+      shell: bash
+      run: pnpm exec playwright install-deps
