@@ -1,3 +1,9 @@
+## 0.7.16 (2026-10-24)
+
+### 🧱 Updated Dependencies
+
+- Updated operators to 3.2.16
+
 ## 0.7.15 (2026-05-11)
 
 ### 🧱 Updated Dependencies

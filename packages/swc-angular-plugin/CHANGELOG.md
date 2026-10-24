@@ -1,3 +1,32 @@
+## 0.23.0 (2026-10-24)
+
+### 🚀 Features
+
+- ⚠️  **swc-angular:** support @swc/core 1.16.x ([#1101](https://github.com/jscutlery/devkit/pull/1101), [#999](https://github.com/jscutlery/devkit/issues/999))
+
+### ⚠️  Breaking Changes
+
+- **swc-angular:** support @swc/core 1.16.x  ([#1101](https://github.com/jscutlery/devkit/pull/1101), [#999](https://github.com/jscutlery/devkit/issues/999))
+  @jscutlery/swc-angular and @jscutlery/swc-angular-plugin
+  now require @swc/core 1.16.x. @swc/core 1.15.x is no longer supported.
+  Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
+  * refactor(swc-angular-plugin): use ? for the missing query locator
+  Clippy 1.99 flags the match as question_mark, and CI runs clippy with
+  -D warnings.
+  Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
+  * build: 📦 pin Rust toolchain to 1.99.1
+  CI installed whatever stable Rust was current, so the 1.99 release broke
+  the plugin build (wasm link error) and lint (new clippy rule) without any
+  change in the repo. actions-rust-lang/setup-rust-toolchain reads
+  rust-toolchain.toml when no toolchain input is given, so CI and local
+  builds now use the same version.
+  Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
+
+### ❤️ Thank You
+
+- Claude Opus 5.5 (1M context)
+- Edouard Bozon
+
 ## 0.22.5 (2026-05-11)
 
 ### 🩹 Fixes
