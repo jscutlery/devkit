@@ -60,6 +60,9 @@
         "production": {
           "buildTarget": "sandbox:build:production"
         }
+      },
+      "readyWhen": {
+        "signal": true
       }
     },
     "extract-i18n": {
