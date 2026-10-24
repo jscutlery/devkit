@@ -1,6 +1,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 
-import { Component, Injectable, input, Type } from '@angular/core';
+import { Component, computed, Injectable, input, Type } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { createComponent } from './testing';
 
 describe('swc-angular-plugin: input', () => {
@@ -120,6 +121,29 @@ describe('swc-angular-plugin: input', () => {
 
     const { heading } = render(Container);
     expect(heading).toBe('Hello input!');
+  });
+
+  it('should set required inputs with setInput when constructor has parameter properties', () => {
+    @Component({
+      standalone: true,
+      selector: 'jsc-title',
+      template: ` <h1>Hello {{ upperTitle() }}!</h1> `,
+    })
+    class Title {
+      title = input.required<string>();
+      upperTitle = computed(() => this.title().toUpperCase());
+
+      // eslint-disable-next-line @angular-eslint/prefer-inject
+      constructor(private _service: Service) {}
+    }
+
+    const fixture = TestBed.createComponent(Title);
+    fixture.componentRef.setInput('title', 'input');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('h1')?.textContent).toBe(
+      'Hello INPUT!',
+    );
   });
 
   function render(cmpType: Type<unknown>) {
