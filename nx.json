@@ -95,15 +95,6 @@
         }
       }
     },
-    "@nx/eslint:lint": {
-      "inputs": [
-        "default",
-        "^default",
-        "{workspaceRoot}/eslint.config.mjs",
-        "{workspaceRoot}/tools/eslint-rules/**/*"
-      ],
-      "cache": true
-    },
     "@nx/rollup:rollup": {
       "cache": true,
       "dependsOn": ["^build"],
@@ -186,5 +177,27 @@
   },
   "affected": {
     "legacy": true
-  }
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      },
+      "include": [
+        "apps/game-of-life/**/*",
+        "apps/sandbox/**/*",
+        "packages/cypress-harness/**/*",
+        "packages/microwave/**/*",
+        "packages/operators/**/*",
+        "packages/playwright-ct-angular/**/*",
+        "packages/rx-computed/**/*",
+        "packages/swc-angular/**/*",
+        "tests/cypress-harness-e2e/**/*",
+        "tests/cypress-harness-wide/**/*",
+        "tests/swc-angular-debug/**/*",
+        "tests/swc-angular-wide/**/*"
+      ]
+    }
+  ]
 }

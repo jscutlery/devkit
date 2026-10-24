@@ -30,9 +30,6 @@
         "format": ["cjs", "esm"]
       }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
     "test": {
       "executor": "@nx/vitest:test",
       "dependsOn": ["build", "^build"],

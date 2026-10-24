@@ -29,9 +29,6 @@
         "jestConfig": "packages/microwave/jest.config.ts"
       }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
     "component-test-build": {
       "executor": "@angular-devkit/build-angular:browser-esbuild",
       "options": {

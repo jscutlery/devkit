@@ -26,10 +26,6 @@
         "skipServe": true,
         "devServerTarget": "cypress-harness-wide:component-test-build"
       }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
     }
   }
 }

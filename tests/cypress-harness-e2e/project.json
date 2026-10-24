@@ -13,10 +13,6 @@
         "devServerTarget": "sandbox:serve",
         "testingType": "e2e"
       }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
     }
   }
 }
