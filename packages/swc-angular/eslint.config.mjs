@@ -27,6 +27,7 @@ export default [
           ignoredFiles: [
             '{projectRoot}/**/*.spec-d.ts',
             '{projectRoot}/{vite,vitest}.config.{js,ts,mjs,mts}',
+            '{projectRoot}/rollup.config.{js,ts,mjs,mts,cjs,cts}',
           ],
           ignoredDependencies: ['@jscutlery/swc-angular-plugin', '@swc/core'],
         },

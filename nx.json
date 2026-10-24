@@ -76,19 +76,6 @@
       "inputs": ["default", "^production"],
       "cache": true
     },
-    "@nx/jest:jest": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
-      "cache": true,
-      "options": {
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
-    },
     "@nx/js:release-publish": {
       "dependsOn": ["build"],
       "options": {
@@ -213,7 +200,7 @@
     {
       "plugin": "@nx/vitest",
       "options": {
-        "testMode": "watch",
+        "testMode": "run",
         "testTargetName": "test"
       },
       "include": ["packages/swc-angular/**/*"]
