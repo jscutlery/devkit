@@ -7,11 +7,8 @@
   "implicitDependencies": ["sandbox"],
   "targets": {
     "e2e": {
-      "executor": "@nx/cypress:cypress",
       "options": {
-        "cypressConfig": "tests/cypress-harness-e2e/cypress.config.ts",
-        "devServerTarget": "sandbox:serve",
-        "testingType": "e2e"
+        "config-file": "./cypress.config.ts"
       }
     }
   }

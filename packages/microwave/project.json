@@ -32,15 +32,6 @@
         "tsConfig": "packages/microwave/tsconfig.lib.json"
       }
     },
-    "component-test": {
-      "executor": "@nx/cypress:cypress",
-      "options": {
-        "cypressConfig": "packages/microwave/cypress.config.ts",
-        "testingType": "component",
-        "skipServe": true,
-        "devServerTarget": "microwave:component-test-build"
-      }
-    },
     "nx-release-publish": {
       "executor": "@nx/js:release-publish",
       "dependsOn": ["^nx-release-publish", "build"]

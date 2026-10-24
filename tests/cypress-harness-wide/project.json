@@ -17,15 +17,6 @@
           "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css"
         ]
       }
-    },
-    "component-test": {
-      "executor": "@nx/cypress:cypress",
-      "options": {
-        "cypressConfig": "tests/cypress-harness-wide/cypress.config.ts",
-        "testingType": "component",
-        "skipServe": true,
-        "devServerTarget": "cypress-harness-wide:component-test-build"
-      }
     }
   }
 }

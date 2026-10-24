@@ -121,6 +121,16 @@
           "passWithNoTests": true
         }
       }
+    ],
+    "component-test": [
+      {
+        "filter": {
+          "plugin": "@nx/cypress/plugin"
+        },
+        "options": {
+          "config-file": "./cypress.config.ts"
+        }
+      }
     ]
   },
   "namedInputs": {
@@ -232,6 +242,26 @@
         "packages/playwright-ct-angular/**/*",
         "packages/rx-computed/**/*"
       ]
+    },
+    {
+      "plugin": "@nx/cypress/plugin",
+      "options": {
+        "targetName": "component-test",
+        "ciTargetName": "e2e-ci",
+        "componentTestingTargetName": "component-test",
+        "openTargetName": "open-cypress"
+      },
+      "include": ["packages/microwave/**/*", "tests/cypress-harness-wide/**/*"]
+    },
+    {
+      "plugin": "@nx/cypress/plugin",
+      "options": {
+        "targetName": "e2e",
+        "ciTargetName": "e2e-ci",
+        "componentTestingTargetName": "component-test",
+        "openTargetName": "open-cypress"
+      },
+      "include": ["tests/cypress-harness-e2e/**/*"]
     }
   ]
 }

@@ -2,7 +2,9 @@ import { defineConfig } from 'cypress';
 import { nxComponentTestingPreset } from '@nx/angular/plugins/component-testing';
 export default defineConfig({
   component: {
-    ...nxComponentTestingPreset(__filename),
+    ...nxComponentTestingPreset(__filename, {
+      buildTarget: 'microwave:component-test-build',
+    }),
     // Cypress 14+ defaults justInTimeCompile to true (webpack only), which can
     // intermittently run 0 tests in CI. Remove this line to opt back in.
     justInTimeCompile: false,
