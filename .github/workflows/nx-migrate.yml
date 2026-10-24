@@ -42,6 +42,10 @@ jobs:
       - name: Run @nx/workspace migrations
         if: steps.nrwl-workspace-has-migrations.outputs.has_migrations == 'true'
         run: yarn nx migrate --run-migrations
+        env:
+          # Migrations that edit package.json make nx run `yarn`, which is
+          # immutable by default on CI and fails with YN0028.
+          YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
       - name: Test
         id: test
