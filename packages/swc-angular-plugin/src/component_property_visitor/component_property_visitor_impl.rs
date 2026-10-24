@@ -1,6 +1,8 @@
 use std::collections::HashMap;
 
-use swc_core::ecma::ast::{Callee, Ident, ModuleItem, Stmt};
+use swc_core::ecma::ast::{
+    AssignOp, Callee, ClassProp, Constructor, Ident, ModuleItem, PropName, Stmt,
+};
 use swc_core::ecma::visit::{VisitMut, VisitMutWith};
 
 use crate::component_property_visitor::angular_prop_decorator::ANGULAR_CORE_SYMBOL;
@@ -49,26 +51,41 @@ impl VisitMut for ComponentPropertyVisitor {
         self.current_component = None;
     }
 
-    fn visit_mut_class_prop(&mut self, class_prop: &mut swc_core::ecma::ast::ClassProp) {
-        if !self.has_decorators {
-            return;
+    fn visit_mut_class_prop(&mut self, class_prop: &mut ClassProp) {
+        self.collect_props(class_prop);
+    }
+
+    /* With `useDefineForClassFields: false`, SWC moves field initializers into the
+     * constructor before running the plugin when the class has parameter properties.
+     * e.g. `constructor(private s: S) {}` -> `constructor(s) { this.s = s; this.myInput = input(); }` */
+    fn visit_mut_constructor(&mut self, constructor: &mut Constructor) {
+        for stmt in constructor.body.iter().flat_map(|body| &body.stmts) {
+            let Some(assign) = stmt
+                .as_expr()
+                .and_then(|expr_stmt| expr_stmt.expr.as_assign())
+                .filter(|assign| assign.op == AssignOp::Assign)
+            else {
+                continue;
+            };
+
+            let Some(name) = assign
+                .left
+                .as_simple()
+                .and_then(|target| target.as_member())
+                .filter(|member| member.obj.is_this())
+                .and_then(|member| member.prop.as_ident())
+            else {
+                continue;
+            };
+
+            self.collect_props(&ClassProp {
+                key: PropName::Ident(name.clone()),
+                value: Some(assign.right.clone()),
+                ..Default::default()
+            });
         }
 
-        let current_component = match &self.current_component {
-            Some(current_component) => current_component,
-            None => return,
-        };
-
-        for prop_parser in self.prop_parsers.iter() {
-            if let Some(prop) = prop_parser.parse_prop(current_component, class_prop) {
-                let component_props = self
-                    .component_props
-                    .entry(current_component.clone())
-                    .or_default();
-                component_props.push(prop);
-                self.should_import_angular_core = true;
-            }
-        }
+        constructor.visit_mut_children_with(self);
     }
 
     /**
@@ -155,6 +172,28 @@ impl VisitMut for ComponentPropertyVisitor {
 }
 
 impl ComponentPropertyVisitor {
+    fn collect_props(&mut self, class_prop: &ClassProp) {
+        if !self.has_decorators {
+            return;
+        }
+
+        let current_component = match &self.current_component {
+            Some(current_component) => current_component,
+            None => return,
+        };
+
+        for prop_parser in self.prop_parsers.iter() {
+            if let Some(prop) = prop_parser.parse_prop(current_component, class_prop) {
+                let component_props = self
+                    .component_props
+                    .entry(current_component.clone())
+                    .or_default();
+                component_props.push(prop);
+                self.should_import_angular_core = true;
+            }
+        }
+    }
+
     fn drain_component_decorators(&mut self, class: &Ident) -> Option<Vec<Stmt>> {
         let mut props = self.component_props.remove(class)?;
 

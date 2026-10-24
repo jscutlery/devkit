@@ -16,7 +16,11 @@
       "options": {
         "parallel": false,
         "cwd": "{projectRoot}",
-        "commands": ["jest", "vitest"]
+        "commands": [
+          "jest",
+          "jest -c jest-no-define-for-class-fields.config.ts",
+          "vitest"
+        ]
       }
     }
   }

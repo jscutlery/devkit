@@ -656,6 +656,43 @@ fn test_content_children_with_options() {
 }
 
 #[test]
+fn test_props_assigned_in_constructor() {
+    test_visitor(
+        ComponentPropertyVisitor::default(),
+        indoc! {
+        r#"class MyCmp {
+            constructor(service){
+                this.service = service;
+                this.myInput = input.required();
+                this.myOutput = output();
+            }
+        }
+        MyCmp = _ts_decorate([], MyCmp);
+        "# },
+        indoc! {
+        r#"import * as _jsc_angular_core from "@angular/core";
+        class MyCmp {
+            constructor(service){
+                this.service = service;
+                this.myInput = input.required();
+                this.myOutput = output();
+            }
+        }
+        _ts_decorate([
+            _jsc_angular_core.Input({
+                isSignal: true,
+                required: true
+            })
+        ], MyCmp.prototype, "myInput");
+        _ts_decorate([
+            _jsc_angular_core.Output()
+        ], MyCmp.prototype, "myOutput");
+        MyCmp = _ts_decorate([], MyCmp);
+        "# },
+    );
+}
+
+#[test]
 fn test_exported_class() {
     test_visitor(
         ComponentPropertyVisitor::default(),
