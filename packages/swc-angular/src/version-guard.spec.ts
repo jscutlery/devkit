@@ -1,6 +1,7 @@
 import { afterEach, expect, test, vi } from 'vitest';
 import { FileSystem } from './utils';
-import { join } from 'node:path';
+import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
 
 /**
  * Using an old version of `@swc/core` will simply crash with the following error:
@@ -59,7 +60,7 @@ test('should fallback to package.json if version is not available (this happens 
   vi.doMock('@swc/core', () => ({
     version: undefined,
   }));
-  fileSystem.setJsonFile('node_modules/@swc/core/package.json', {
+  fileSystem.setJsonFile(swcCorePackageJsonPath, {
     version: '1.16.0',
   });
 
@@ -77,7 +78,7 @@ test.each(['1.15.40', '1.17.0'])(
     vi.doMock('@swc/core', () => ({
       version: undefined,
     }));
-    fileSystem.setJsonFile('node_modules/@swc/core/package.json', {
+    fileSystem.setJsonFile(swcCorePackageJsonPath, {
       version,
     });
 
@@ -107,18 +108,20 @@ afterEach(() => {
   vi.resetModules();
 });
 
+/* Resolved like the guard does: under pnpm this is the real path in node_modules/.pnpm. */
+const swcCorePackageJsonPath = join(
+  dirname(createRequire(__filename).resolve('@swc/core')),
+  'package.json',
+);
+
 class FileSystemFake implements FileSystem {
   #jsonFiles = new Map<string, any>();
-  #workspaceRoot = join(__dirname, '../../..');
 
   readJsonFile(path: string) {
     return this.#jsonFiles.get(path);
   }
 
-  /**
-   * Set the content of a JSON file using the workspace root as the base path.
-   */
   setJsonFile(path: string, content: any) {
-    this.#jsonFiles.set(join(this.#workspaceRoot, path), content);
+    this.#jsonFiles.set(path, content);
   }
 }

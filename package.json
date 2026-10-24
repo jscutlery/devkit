@@ -64,6 +64,7 @@
     "@angular/language-service": "21.1.4",
     "@commitlint/cli": "^21.0.0",
     "@commitlint/config-angular": "^21.0.0",
+    "@jest/globals": "30.5.2",
     "@jscutlery/playwright-ct-angular": "link:dist/packages/playwright-ct-angular",
     "@jscutlery/swc-angular": "link:dist/packages/swc-angular",
     "@jscutlery/swc-angular-plugin": "link:dist/packages/swc-angular-plugin",
@@ -112,14 +113,17 @@
     "jest-preset-angular": "16.1.5",
     "jest-util": "30.5.1",
     "jiti": "2.7.0",
+    "jsonc-eslint-parser": "^2.4.2",
     "mock-fs": "^5.4.1",
     "ng-packagr": "21.2.3",
     "nx": "24.0.1",
+    "playwright": "1.50.1",
     "postcss": "^8.4.49",
     "postcss-import": "16.1.1",
     "postcss-preset-env": "~11.2.0",
     "postcss-url": "10.1.4",
     "prettier": "3.8.3",
+    "reflect-metadata": "^0.2.2",
     "ts-jest": "29.4.9",
     "ts-node": "10.9.2",
     "tsx": "4.21.0",
@@ -129,8 +133,5 @@
     "vite": "8.3.5",
     "vitest": "4.1.6"
   },
-  "workspaces": [
-    "packages/*"
-  ],
-  "packageManager": "yarn@4.13.0"
+  "packageManager": "pnpm@12.5.1+sha512.e3f305bc784a2bc89f5ad3b6138889470fae8d2af5f36b61216ec91c2c3d64089775f9de38aac331044ea40f245cb0d5666392dfdf65824e1907ef6a2c62de5f"
 }

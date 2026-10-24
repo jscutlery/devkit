@@ -1,0 +1,32 @@
+packages:
+  - packages/*
+
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  # Downloads the Cypress binary used by the e2e and component-test targets.
+  'cypress': true
+  'esbuild': true
+  # Its postinstall script is not published, nothing to run.
+  'less': false
+  'lmdb': true
+  'msgpackr-extract': true
+  'nx': true
+  'unrs-resolver': true
+
+# Keeps pnpm-lock.yaml a single YAML document: the default (`download`) prepends an
+# env document pinning pnpm itself, which Nx's lockfile parser rejects
+# ("expected a single document in the stream"). CI pins pnpm via `packageManager`.
+pmOnFail: ignore
+
+# TEMPORARY: nx 24.0.1 (#1105) is younger than pnpm's default 1-day minimumReleaseAge.
+# Remove once it is older than a day.
+minimumReleaseAgeExclude:
+  - nx
+  - '@nx/*'
+
+# Peers of the published packages that live in this repo. Without these, pnpm
+# auto-installs them from npm, so tests would run against the last release.
+overrides:
+  '@jscutlery/operators': 'workspace:*'
+  '@jscutlery/swc-angular-plugin': 'link:dist/packages/swc-angular-plugin'

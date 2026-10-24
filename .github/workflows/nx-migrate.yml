@@ -16,21 +16,23 @@ jobs:
         uses: ./.github/actions/setup
         with:
           git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
+          cypress: 'true'
+          playwright: 'true'
 
       - name: Check if @nx/workspace is outdated
         id: nrwl-workspace-outdated
         run: |
-          IS_OUTDATED=$(test ! -z "$(npm outdated @nx/workspace)" && echo true || echo false)
+          IS_OUTDATED=$(test ! -z "$(pnpm outdated @nx/workspace)" && echo true || echo false)
           echo $IS_OUTDATED
           echo "outdated=$IS_OUTDATED" >> $GITHUB_OUTPUT
 
       - name: Update @nx/workspace
         if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
-        run: yarn nx migrate latest
+        run: pnpm nx migrate latest
 
       - name: Install dependencies
         if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
-        run: yarn install --no-immutable
+        run: pnpm install --no-frozen-lockfile
 
       - name: Check if has migrations
         id: nrwl-workspace-has-migrations
@@ -41,19 +43,19 @@ jobs:
 
       - name: Run @nx/workspace migrations
         if: steps.nrwl-workspace-has-migrations.outputs.has_migrations == 'true'
-        run: yarn nx migrate --run-migrations
+        run: pnpm nx migrate --run-migrations
         env:
-          # Migrations that edit package.json make nx run `yarn`, which is
-          # immutable by default on CI and fails with YN0028.
-          YARN_ENABLE_IMMUTABLE_INSTALLS: false
+          # Migrations that edit package.json make nx run `pnpm install`, which
+          # uses a frozen lockfile by default on CI and fails with ERR_PNPM_OUTDATED_LOCKFILE.
+          pnpm_config_frozen_lockfile: false
 
       - name: Test
         id: test
         if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
         continue-on-error: true
         run: |
-          yarn nx affected --target=build,lint,test
-          yarn nx affected --target=component-test,e2e --parallel=1
+          pnpm nx affected --target=build,lint,test
+          pnpm nx affected --target=component-test,e2e --parallel=1
 
       - name: Commit changes
         if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
