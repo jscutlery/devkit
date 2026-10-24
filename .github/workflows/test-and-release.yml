@@ -8,6 +8,11 @@ on:
   # Releases are manual: run this workflow on main from the Actions tab.
   workflow_dispatch: { }
 
+# Runs on main (merges and releases) queue instead of overlapping; PR runs stay independent.
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.run_id) || format('{0}-{1}', github.workflow, github.ref) }}
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
