@@ -5,6 +5,8 @@ on:
     branches:
       - main
   pull_request: { }
+  # Releases are manual: run this workflow on main from the Actions tab.
+  workflow_dispatch: { }
 
 jobs:
   build:
@@ -63,7 +65,13 @@ jobs:
   release:
     runs-on: ubuntu-latest
 
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+
+    permissions:
+      actions: read
+      contents: read
+      # npm trusted publishing (OIDC), cf. https://docs.npmjs.com/trusted-publishers
+      id-token: write
 
     needs:
       - build
@@ -78,8 +86,8 @@ jobs:
         uses: ./.github/actions/setup
         with:
           git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
+          node_version: '24'
       - name: Release
         uses: ./.github/actions/release
         with:
           git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
-          npm_token: ${{ secrets.NPM_TOKEN }}
