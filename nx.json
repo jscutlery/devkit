@@ -160,6 +160,7 @@
     },
     "version": {
       "conventionalCommits": true,
+      "adjustSemverBumpsForZeroMajorVersion": true,
       "fallbackCurrentVersionResolver": "disk",
       "preserveLocalDependencyProtocols": false
     },
