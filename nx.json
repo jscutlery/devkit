@@ -109,15 +109,15 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
-    "@nx/vite:test": {
-      "cache": true,
-      "inputs": ["default", "^production"]
-    },
     "@nx/js:release-publish": {
       "dependsOn": ["build"],
       "options": {
         "packageRoot": "dist/{projectRoot}"
       }
+    },
+    "@nx/vitest:test": {
+      "cache": true,
+      "inputs": ["default", "^production"]
     }
   },
   "namedInputs": {

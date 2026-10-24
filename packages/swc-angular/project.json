@@ -2,9 +2,9 @@
   "name": "swc-angular",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/swc-angular/src",
-  "implicitDependencies": ["swc-angular-plugin"],
   "projectType": "library",
   "tags": [],
+  "implicitDependencies": ["swc-angular-plugin"],
   "targets": {
     "build": {
       "executor": "@nx/rollup:rollup",
@@ -33,12 +33,12 @@
     "lint": {
       "executor": "@nx/eslint:lint"
     },
-    "test":{
-      "executor": "@nx/vite:test",
+    "test": {
+      "executor": "@nx/vitest:test",
+      "dependsOn": ["build", "^build"],
       "options": {
         "config": "packages/swc-angular/vitest.config.mts"
-      },
-      "dependsOn": ["build", "^build"]
+      }
     },
     "nx-release-publish": {
       "executor": "@nx/js:release-publish",
