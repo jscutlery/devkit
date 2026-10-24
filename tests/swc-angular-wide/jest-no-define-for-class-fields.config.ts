@@ -1,7 +1,8 @@
+/** @jest-config-loader ts-node */
 import type { Config } from 'jest';
 
 import { swcAngularJestTransformer } from '@jscutlery/swc-angular';
-import baseConfig from './jest.config.ts';
+import baseConfig from './jest.config';
 
 /* Angular CLI projects default to `useDefineForClassFields: false`. */
 export default {
