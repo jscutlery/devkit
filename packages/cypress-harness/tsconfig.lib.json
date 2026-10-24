@@ -2,11 +2,11 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "strict": true,
-    "module": "esnext",
+    "module": "nodenext",
     "outDir": "../../dist/out-tsc",
     "declaration": true,
     "types": ["node"],
-    "moduleResolution": "bundler"
+    "moduleResolution": "nodenext"
   },
   "exclude": ["**/*.spec.ts", "**/*.test.ts", "jest.config.ts"],
   "include": ["**/*.ts"]
