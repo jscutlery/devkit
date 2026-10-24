@@ -25,6 +25,8 @@ export default [
     files: ['**/*.ts', '**/*.tsx'],
     rules: {
       'no-extra-semi': 'off',
+      // Newly enabled by the typescript-eslint v8 recommended set; was not enforced before the upgrade.
+      '@typescript-eslint/no-unused-expressions': 'off',
     },
     languageOptions: {
       parserOptions: {
