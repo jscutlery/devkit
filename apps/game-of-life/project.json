@@ -10,6 +10,7 @@
     "build": {
       "executor": "@angular-devkit/build-angular:browser-esbuild",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/game-of-life",
         "index": "apps/game-of-life/src/index.html",
@@ -53,11 +54,12 @@
           "sourceMap": true,
           "namedChunks": true
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "defaultConfiguration": "development",
+      "continuous": true,
       "configurations": {
         "production": {
           "buildTarget": "game-of-life:build:production"
@@ -65,9 +67,7 @@
         "development": {
           "buildTarget": "game-of-life:build:development"
         }
-      },
-      "defaultConfiguration": "development",
-      "continuous": true
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -81,10 +81,10 @@
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/game-of-life"],
+      "dependsOn": ["^build"],
       "options": {
         "jestConfig": "apps/game-of-life/jest.config.ts"
-      },
-      "dependsOn": ["^build"]
+      }
     }
   }
 }

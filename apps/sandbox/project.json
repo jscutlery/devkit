@@ -8,6 +8,7 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser-esbuild",
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/sandbox",
         "index": "apps/sandbox/src/index.html",
@@ -47,11 +48,11 @@
             }
           ]
         }
-      },
-      "outputs": ["{options.outputPath}"]
+      }
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "continuous": true,
       "options": {
         "buildTarget": "sandbox:build"
       },
@@ -59,8 +60,7 @@
         "production": {
           "buildTarget": "sandbox:build:production"
         }
-      },
-      "continuous": true
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -74,10 +74,10 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/sandbox"],
       "options": {
         "jestConfig": "apps/sandbox/jest.config.ts"
-      },
-      "outputs": ["{workspaceRoot}/coverage/apps/sandbox"]
+      }
     }
   }
 }

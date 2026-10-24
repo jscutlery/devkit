@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "tests/cypress-harness-wide/src",
   "projectType": "application",
+  "tags": [],
   "targets": {
     "component-test-build": {
       "executor": "@angular-devkit/build-angular:browser-esbuild",
@@ -30,6 +31,5 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": []
+  }
 }
