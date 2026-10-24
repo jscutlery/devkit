@@ -24,7 +24,6 @@ export default [
   {
     files: ['**/*.ts', '**/*.tsx'],
     rules: {
-      '@typescript-eslint/no-extra-semi': 'error',
       'no-extra-semi': 'off',
     },
     languageOptions: {
@@ -37,7 +36,6 @@ export default [
   {
     files: ['**/*.js', '**/*.jsx'],
     rules: {
-      '@typescript-eslint/no-extra-semi': 'error',
       'no-extra-semi': 'off',
     },
   },
