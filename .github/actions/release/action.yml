@@ -6,6 +6,10 @@ inputs:
   git_bot_token:
     description: Git bot token
     required: true
+  publish_only:
+    description: Skip versioning, changelogs and git, and only publish the current versions to npm
+    required: false
+    default: 'false'
 
 runs:
   using: composite
@@ -20,16 +24,24 @@ runs:
       run: npm install -g npm@^11.5.1 && npm --version
 
     - name: Release
+      if: inputs.publish_only != 'true'
       env:
         GITHUB_TOKEN: ${{ inputs.git_bot_token }}
       shell: bash
       run: npx --yes nx release --yes
 
+    - name: Publish
+      if: inputs.publish_only == 'true'
+      shell: bash
+      run: npx --yes nx release publish
+
     - name: hack remove 'swc-angular-{version}' tag until this is fixed https://github.com/nrwl/nx/issues/22798
+      if: inputs.publish_only != 'true'
       shell: bash
       run: git tag -d 'swc-angular-{version}' || true
 
     - name: Push changes
+      if: inputs.publish_only != 'true'
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ inputs.git_bot_token }}

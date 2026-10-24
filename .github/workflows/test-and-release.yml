@@ -6,7 +6,12 @@ on:
       - main
   pull_request: { }
   # Releases are manual: run this workflow on main from the Actions tab.
-  workflow_dispatch: { }
+  workflow_dispatch:
+    inputs:
+      publish_only:
+        description: Only publish the versions already on main (retries a release whose npm publish failed)
+        type: boolean
+        default: false
 
 # Runs on main (merges and releases) queue instead of overlapping; PR runs stay independent.
 concurrency:
@@ -96,3 +101,4 @@ jobs:
         uses: ./.github/actions/release
         with:
           git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
+          publish_only: ${{ inputs.publish_only }}
