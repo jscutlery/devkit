@@ -19,12 +19,6 @@ allowBuilds:
 # ("expected a single document in the stream"). CI pins pnpm via `packageManager`.
 pmOnFail: ignore
 
-# TEMPORARY: nx 24.0.1 (#1105) is younger than pnpm's default 1-day minimumReleaseAge.
-# Remove once it is older than a day.
-minimumReleaseAgeExclude:
-  - nx
-  - '@nx/*'
-
 # Peers of the published packages that live in this repo. Without these, pnpm
 # auto-installs them from npm, so tests would run against the last release.
 overrides:
