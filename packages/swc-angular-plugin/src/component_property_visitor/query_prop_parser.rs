@@ -11,10 +11,7 @@ impl AngularPropParser for QueryPropParser {
     fn parse_prop(&self, class: &Ident, class_prop: &ClassProp) -> Option<Box<dyn AngularProp>> {
         let (query_type, angular_prop_info) = Self::parse_query_prop_info(class_prop)?;
         /* Locator is mandatory so the property is invalid if it's missing. */
-        let locator = match angular_prop_info.args.first() {
-            Some(locator) => locator.clone(),
-            None => return None,
-        };
+        let locator = angular_prop_info.args.first()?.clone();
 
         let options = angular_prop_info
             .args
