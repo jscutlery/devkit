@@ -31,7 +31,6 @@
       }
     },
     "test": {
-      "executor": "@nx/vitest:test",
       "dependsOn": ["build", "^build"],
       "options": {
         "config": "packages/swc-angular/vitest.config.mts"

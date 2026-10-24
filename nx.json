@@ -105,10 +105,6 @@
       "options": {
         "packageRoot": "dist/{projectRoot}"
       }
-    },
-    "@nx/vitest:test": {
-      "cache": true,
-      "inputs": ["default", "^production"]
     }
   },
   "namedInputs": {
@@ -198,6 +194,14 @@
         "tests/swc-angular-debug/**/*",
         "tests/swc-angular-wide/**/*"
       ]
+    },
+    {
+      "plugin": "@nx/vitest",
+      "options": {
+        "testMode": "watch",
+        "testTargetName": "test"
+      },
+      "include": ["packages/swc-angular/**/*"]
     }
   ]
 }
