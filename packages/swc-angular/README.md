@@ -61,7 +61,7 @@ _Cf. [Detailed Benchmark Data](#-no-cache)_
 Install this preset and its dependencies via npm:
 
 ```sh
-npm install -D @jscutlery/swc-angular @jscutlery/swc-angular-plugin @swc/core @swc/jest
+npm install -D @jscutlery/swc-angular @jscutlery/swc-angular-plugin @swc/core@~1.16.0 @swc/jest
 grep .swc .gitignore || echo .swc >> .gitignore
 ```
 
@@ -106,7 +106,7 @@ import 'reflect-metadata';
 Install this preset and its dependencies via npm:
 
 ```sh
-npm install -D @jscutlery/swc-angular @jscutlery/swc-angular-plugin @swc/core unplugin-swc
+npm install -D @jscutlery/swc-angular @jscutlery/swc-angular-plugin @swc/core@~1.16.0 unplugin-swc
 grep .swc .gitignore || echo .swc >> .gitignore
 ```
 

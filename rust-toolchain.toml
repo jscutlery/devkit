@@ -1,0 +1,8 @@
+# Pinned so a new stable Rust release cannot silently break the SWC plugin build
+# (e.g. Rust 1.99 broke wasm linking of swc_plugin_macro < 1.1.1).
+# CI picks this up through actions-rust-lang/setup-rust-toolchain.
+[toolchain]
+channel = "1.99.1"
+profile = "minimal"
+components = ["clippy", "rustfmt"]
+targets = ["wasm32-wasip1"]
