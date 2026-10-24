@@ -1,3 +1,13 @@
+## 0.23.1 (2026-10-24)
+
+### 🩹 Fixes
+
+- **swc-angular:** keep signal inputs with ctor parameter properties ([#1111](https://github.com/jscutlery/devkit/pull/1111), [#976](https://github.com/jscutlery/devkit/issues/976))
+
+### ❤️ Thank You
+
+- Edouard Bozon
+
 ## 0.23.0 (2026-10-24)
 
 ### 🚀 Features

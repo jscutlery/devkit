@@ -1,3 +1,13 @@
+## 0.8.17 (2026-10-24)
+
+### 🩹 Fixes
+
+- **cypress-harness:** publish CommonJS output again ([#1112](https://github.com/jscutlery/devkit/pull/1112), [#1004](https://github.com/jscutlery/devkit/issues/1004))
+
+### ❤️ Thank You
+
+- Edouard Bozon
+
 ## 0.8.16 (2026-10-24)
 
 This was a version bump only for cypress-harness to align it with other projects, there were no code changes.

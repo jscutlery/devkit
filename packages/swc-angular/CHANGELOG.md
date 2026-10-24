@@ -1,3 +1,7 @@
+## 0.23.1 (2026-10-24)
+
+This was a version bump only for swc-angular to align it with other projects, there were no code changes.
+
 ## 0.23.0 (2026-10-24)
 
 ### 🚀 Features
