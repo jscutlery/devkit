@@ -29,13 +29,6 @@
         ]
       }
     },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/operators"],
-      "options": {
-        "jestConfig": "packages/operators/jest.config.ts"
-      }
-    },
     "nx-release-publish": {
       "executor": "@nx/js:release-publish",
       "dependsOn": ["^nx-release-publish", "build"]

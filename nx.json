@@ -105,7 +105,23 @@
       "options": {
         "packageRoot": "dist/{projectRoot}"
       }
-    }
+    },
+    "test": [
+      {
+        "filter": {
+          "plugin": "@nx/jest/plugin"
+        },
+        "configurations": {
+          "ci": {
+            "ci": true,
+            "coverage": true
+          }
+        },
+        "options": {
+          "passWithNoTests": true
+        }
+      }
+    ]
   },
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
@@ -202,6 +218,20 @@
         "testTargetName": "test"
       },
       "include": ["packages/swc-angular/**/*"]
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      },
+      "include": [
+        "apps/sandbox/**/*",
+        "packages/cypress-harness/**/*",
+        "packages/microwave/**/*",
+        "packages/operators/**/*",
+        "packages/playwright-ct-angular/**/*",
+        "packages/rx-computed/**/*"
+      ]
     }
   ]
 }

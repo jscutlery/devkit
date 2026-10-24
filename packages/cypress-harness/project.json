@@ -6,13 +6,6 @@
   "tags": [],
   "generators": {},
   "targets": {
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/cypress-harness"],
-      "options": {
-        "jestConfig": "packages/cypress-harness/jest.config.ts"
-      }
-    },
     "build": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],

@@ -67,13 +67,6 @@
       "options": {
         "buildTarget": "sandbox:build"
       }
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/apps/sandbox"],
-      "options": {
-        "jestConfig": "apps/sandbox/jest.config.ts"
-      }
     }
   }
 }

@@ -22,13 +22,6 @@
         }
       }
     },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/microwave"],
-      "options": {
-        "jestConfig": "packages/microwave/jest.config.ts"
-      }
-    },
     "component-test-build": {
       "executor": "@angular-devkit/build-angular:browser-esbuild",
       "options": {
