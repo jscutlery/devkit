@@ -2,42 +2,22 @@
   "name": "swc-angular",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/swc-angular/src",
-  "implicitDependencies": ["swc-angular-plugin"],
   "projectType": "library",
   "tags": [],
+  "implicitDependencies": ["swc-angular-plugin"],
   "targets": {
     "build": {
-      "executor": "@nx/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/swc-angular",
-        "main": "packages/swc-angular/src/index.ts",
-        "tsConfig": "packages/swc-angular/tsconfig.lib.json",
-        "assets": [
-          {
-            "glob": "LICENSE",
-            "input": ".",
-            "output": "."
-          },
-          {
-            "glob": "*.md",
-            "input": "packages/swc-angular",
-            "output": "."
-          }
-        ],
-        "project": "packages/swc-angular/package.json",
-        "compiler": "swc",
-        "format": ["cjs", "esm"]
-      }
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": [
+        "production",
+        "^production",
+        {
+          "externalDependencies": ["rollup"]
+        }
+      ]
     },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
-    "test":{
-      "executor": "@nx/vite:test",
-      "options": {
-        "config": "packages/swc-angular/vitest.config.mts"
-      },
+    "test": {
       "dependsOn": ["build", "^build"]
     },
     "nx-release-publish": {

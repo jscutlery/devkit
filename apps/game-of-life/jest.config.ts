@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { swcAngularJestTransformer } from '@jscutlery/swc-angular';
 
-module.exports = {
+export default {
   displayName: 'game-of-life',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],

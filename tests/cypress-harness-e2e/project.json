@@ -3,20 +3,13 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "tests/cypress-harness-e2e/src",
   "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["sandbox"],
   "targets": {
     "e2e": {
-      "executor": "@nx/cypress:cypress",
       "options": {
-        "cypressConfig": "tests/cypress-harness-e2e/cypress.config.ts",
-        "devServerTarget": "sandbox:serve",
-        "testingType": "e2e"
+        "config-file": "./cypress.config.ts"
       }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["sandbox"]
+  }
 }

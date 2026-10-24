@@ -35,12 +35,6 @@
     "@schematics/angular:service": {
       "type": "service"
     },
-    "@nx/angular:scam": {
-      "type": "component"
-    },
-    "@nx/angular:scam-directive": {
-      "type": "directive"
-    },
     "@nx/angular:guard": {
       "typeSeparator": "."
     },
@@ -82,38 +76,38 @@
       "inputs": ["default", "^production"],
       "cache": true
     },
-    "@nx/jest:jest": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
-      "cache": true,
-      "options": {
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
-    },
-    "@nx/eslint:lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
-      "cache": true
-    },
-    "@nx/rollup:rollup": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
-    },
-    "@nx/vite:test": {
-      "cache": true,
-      "inputs": ["default", "^production"]
-    },
     "@nx/js:release-publish": {
       "dependsOn": ["build"],
       "options": {
         "packageRoot": "dist/{projectRoot}"
       }
-    }
+    },
+    "test": [
+      {
+        "filter": {
+          "plugin": "@nx/jest/plugin"
+        },
+        "configurations": {
+          "ci": {
+            "ci": true,
+            "coverage": true
+          }
+        },
+        "options": {
+          "passWithNoTests": true
+        }
+      }
+    ],
+    "component-test": [
+      {
+        "filter": {
+          "plugin": "@nx/cypress/plugin"
+        },
+        "options": {
+          "config-file": "./cypress.config.ts"
+        }
+      }
+    ]
   },
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
@@ -132,7 +126,7 @@
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/jest.config.[jt]s",
-      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/eslint.config.mjs",
       "!{projectRoot}/src/test-setup.[jt]s"
     ]
   },
@@ -150,12 +144,16 @@
           "rx-computed"
         ],
         "projectsRelationship": "independent",
-        "releaseTagPattern": "{projectName}-{version}"
+        "releaseTag": {
+          "pattern": "{projectName}-{version}"
+        }
       },
       "swc-angular": {
         "projects": ["swc-angular", "swc-angular-plugin"],
         "projectsRelationship": "fixed",
-        "releaseTagPattern": "swc-angular-{version}"
+        "releaseTag": {
+          "pattern": "swc-angular-{version}"
+        }
       }
     },
     "version": {
@@ -174,5 +172,78 @@
         "createRelease": "github"
       }
     }
-  }
+  },
+  "affected": {
+    "legacy": true
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      },
+      "include": [
+        "apps/game-of-life/**/*",
+        "apps/sandbox/**/*",
+        "packages/cypress-harness/**/*",
+        "packages/microwave/**/*",
+        "packages/operators/**/*",
+        "packages/playwright-ct-angular/**/*",
+        "packages/rx-computed/**/*",
+        "packages/swc-angular/**/*",
+        "tests/cypress-harness-e2e/**/*",
+        "tests/cypress-harness-wide/**/*",
+        "tests/swc-angular-debug/**/*",
+        "tests/swc-angular-wide/**/*"
+      ]
+    },
+    {
+      "plugin": "@nx/vitest",
+      "options": {
+        "testMode": "run",
+        "testTargetName": "test"
+      },
+      "include": ["packages/swc-angular/**/*"]
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      },
+      "include": [
+        "apps/sandbox/**/*",
+        "packages/cypress-harness/**/*",
+        "packages/microwave/**/*",
+        "packages/operators/**/*",
+        "packages/playwright-ct-angular/**/*",
+        "packages/rx-computed/**/*"
+      ]
+    },
+    {
+      "plugin": "@nx/cypress/plugin",
+      "options": {
+        "targetName": "component-test",
+        "ciTargetName": "e2e-ci",
+        "componentTestingTargetName": "component-test",
+        "openTargetName": "open-cypress"
+      },
+      "include": ["packages/microwave/**/*", "tests/cypress-harness-wide/**/*"]
+    },
+    {
+      "plugin": "@nx/cypress/plugin",
+      "options": {
+        "targetName": "e2e",
+        "ciTargetName": "e2e-ci",
+        "componentTestingTargetName": "component-test",
+        "openTargetName": "open-cypress"
+      },
+      "include": ["tests/cypress-harness-e2e/**/*"]
+    },
+    {
+      "plugin": "@nx/rollup/plugin",
+      "options": {
+        "buildTargetName": "build"
+      }
+    }
+  ]
 }

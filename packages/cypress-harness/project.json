@@ -6,27 +6,16 @@
   "tags": [],
   "generators": {},
   "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "packages/cypress-harness/jest.config.ts"
-      },
-      "outputs": ["{workspaceRoot}/coverage/packages/cypress-harness"]
-    },
     "build": {
       "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/cypress-harness",
         "tsConfig": "packages/cypress-harness/tsconfig.lib.json",
         "packageJson": "packages/cypress-harness/package.json",
         "main": "packages/cypress-harness/src/index.ts",
         "assets": ["LICENSE", "packages/cypress-harness/*.md"]
-      },
-      "outputs": ["{options.outputPath}"]
+      }
     },
     "nx-release-publish": {
       "executor": "@nx/js:release-publish",

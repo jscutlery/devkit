@@ -9,6 +9,7 @@
     "build": {
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/packages/microwave"],
+      "defaultConfiguration": "production",
       "options": {
         "project": "packages/microwave/ng-package.json"
       },
@@ -19,18 +20,7 @@
         "development": {
           "tsConfig": "packages/microwave/tsconfig.lib.json"
         }
-      },
-      "defaultConfiguration": "production"
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/microwave"],
-      "options": {
-        "jestConfig": "packages/microwave/jest.config.ts"
       }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint"
     },
     "component-test-build": {
       "executor": "@angular-devkit/build-angular:browser-esbuild",
@@ -40,15 +30,6 @@
         "main": "packages/microwave/does-not-exist/main.ts",
         "polyfills": "packages/microwave/polyfills.ts",
         "tsConfig": "packages/microwave/tsconfig.lib.json"
-      }
-    },
-    "component-test": {
-      "executor": "@nx/cypress:cypress",
-      "options": {
-        "cypressConfig": "packages/microwave/cypress.config.ts",
-        "testingType": "component",
-        "skipServe": true,
-        "devServerTarget": "microwave:component-test-build"
       }
     },
     "nx-release-publish": {

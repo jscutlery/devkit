@@ -6,75 +6,19 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/rollup:rollup",
-      "outputs": [
-        "{options.outputPath}"
-      ],
-      "options": {
-        "project": "packages/playwright-ct-angular/package.json",
-        "outputPath": "dist/packages/playwright-ct-angular",
-        "entryFile": "packages/playwright-ct-angular/src/index.ts",
-        "tsConfig": "packages/playwright-ct-angular/tsconfig.lib.json",
-        "main": "packages/playwright-ct-angular/src/index.ts",
-        "compiler": "tsc",
-        "format": [
-          "cjs",
-          "esm"
-        ],
-        "external": [
-          "@babel/core",
-          "playwright"
-        ],
-        "generateExportsField": true,
-        "additionalEntryPoints": [
-          "packages/playwright-ct-angular/src/hooks.ts",
-          "packages/playwright-ct-angular/src/transform-angular.ts"
-        ],
-        "assets": [
-          {
-            "glob": "cli.js",
-            "input": "packages/playwright-ct-angular/src",
-            "output": "."
-          },
-          {
-            "glob": "register-source.mjs",
-            "input": "packages/playwright-ct-angular/src",
-            "output": "."
-          },
-          {
-            "glob": "LICENSE",
-            "input": ".",
-            "output": "."
-          },
-          {
-            "glob": "README.md",
-            "input": "packages/playwright-ct-angular",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": [
+        "production",
+        "^production",
+        {
+          "externalDependencies": ["rollup"]
+        }
       ]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
-      "options": {
-        "jestConfig": "packages/playwright-ct-angular/jest.config.ts"
-      }
     },
     "nx-release-publish": {
       "executor": "@nx/js:release-publish",
-      "dependsOn": [
-        "^nx-release-publish",
-        "build"
-      ]
+      "dependsOn": ["^nx-release-publish", "build"]
     }
   }
 }

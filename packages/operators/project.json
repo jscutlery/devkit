@@ -6,39 +6,15 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "project": "packages/operators/package.json",
-        "outputPath": "dist/packages/operators",
-        "entryFile": "packages/operators/src/index.ts",
-        "tsConfig": "packages/operators/tsconfig.lib.json",
-        "main": "packages/operators/src/index.ts",
-        "format": ["cjs", "esm"],
-        "assets": [
-          {
-            "glob": "LICENSE",
-            "input": ".",
-            "output": "."
-          },
-          {
-            "glob": "*.md",
-            "input": "packages/operators",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/operators"],
-      "options": {
-        "jestConfig": "packages/operators/jest.config.ts"
-      }
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": [
+        "production",
+        "^production",
+        {
+          "externalDependencies": ["rollup"]
+        }
+      ]
     },
     "nx-release-publish": {
       "executor": "@nx/js:release-publish",
