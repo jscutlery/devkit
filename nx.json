@@ -95,11 +95,6 @@
         }
       }
     },
-    "@nx/rollup:rollup": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
-    },
     "@nx/js:release-publish": {
       "dependsOn": ["build"],
       "options": {
@@ -262,6 +257,12 @@
         "openTargetName": "open-cypress"
       },
       "include": ["tests/cypress-harness-e2e/**/*"]
+    },
+    {
+      "plugin": "@nx/rollup/plugin",
+      "options": {
+        "buildTargetName": "build"
+      }
     }
   ]
 }

@@ -7,28 +7,15 @@
   "implicitDependencies": ["swc-angular-plugin"],
   "targets": {
     "build": {
-      "executor": "@nx/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/swc-angular",
-        "main": "packages/swc-angular/src/index.ts",
-        "tsConfig": "packages/swc-angular/tsconfig.lib.json",
-        "assets": [
-          {
-            "glob": "LICENSE",
-            "input": ".",
-            "output": "."
-          },
-          {
-            "glob": "*.md",
-            "input": "packages/swc-angular",
-            "output": "."
-          }
-        ],
-        "project": "packages/swc-angular/package.json",
-        "compiler": "swc",
-        "format": ["cjs", "esm"]
-      }
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": [
+        "production",
+        "^production",
+        {
+          "externalDependencies": ["rollup"]
+        }
+      ]
     },
     "test": {
       "dependsOn": ["build", "^build"],
