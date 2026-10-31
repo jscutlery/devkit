@@ -158,11 +158,11 @@ importers:
         specifier: 24.0.3
         version: 24.0.3(@swc-node/register@1.12.1(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@swc/core@1.16.20(@swc/helpers@0.5.23))(@swc/types@0.1.28)(supports-color@8.1.1)(typescript@5.9.3))(@swc/core@1.16.20(@swc/helpers@0.5.23))
       '@playwright/experimental-ct-core':
-        specifier: 1.50.1
-        version: 1.50.1(@types/node@24.12.4)(less@4.9.0(supports-color@8.1.1))(lightningcss@1.33.0)(sass@1.97.3)(terser@5.46.0)
+        specifier: 1.62.1
+        version: 1.62.1(@types/node@24.12.4)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.0(supports-color@8.1.1))(sass@1.97.3)(terser@5.46.0)(tsx@4.21.0)(yaml@2.9.0)
       '@playwright/test':
-        specifier: 1.50.1
-        version: 1.50.1
+        specifier: 1.64.1
+        version: 1.64.1
       '@schematics/angular':
         specifier: 21.2.28
         version: 21.2.28(chokidar@5.0.0)
@@ -260,8 +260,8 @@ importers:
         specifier: 24.0.3
         version: 24.0.3(@swc-node/register@1.12.1(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@swc/core@1.16.20(@swc/helpers@0.5.23))(@swc/types@0.1.28)(supports-color@8.1.1)(typescript@5.9.3))(@swc/core@1.16.20(@swc/helpers@0.5.23))
       playwright:
-        specifier: 1.50.1
-        version: 1.50.1
+        specifier: 1.64.1
+        version: 1.64.1
       postcss:
         specifier: ^8.4.49
         version: 8.5.31
@@ -4550,18 +4550,18 @@ packages:
     resolution: {integrity: sha512-BNAvPmQSCXQxNP3tXSrj1pBEakQorKOrKXj+Vw6FMhiKWTaERZ5/o+0fl6bJjKZ1kUTMcEVP9YcxjY/3xO/Cgg==}
     engines: {node: '>=18'}
 
-  '@playwright/experimental-ct-core@1.50.1':
-    resolution: {integrity: sha512-t3gGk337prIGGkAQm7aoWuEQKtNB9Mh6F9GpptEntioSx3Fn2V4UOqi9gO4FwyhOmW3yp1JcxbnZcivOcfxhBg==}
-    engines: {node: '>=18'}
+  '@playwright/experimental-ct-core@1.62.1':
+    resolution: {integrity: sha512-GvaAlFMG6kZ+/00QyGOemjBkyDTk7OC1wGcVmO27i4Ek+x51ACjIBMyyyZrTGXHtQ1QvTFhaQrBhrXIrXEjn5g==}
+    engines: {node: '>=20'}
 
   '@playwright/test@1.47.1':
     resolution: {integrity: sha512-dbWpcNQZ5nj16m+A5UNScYx7HX5trIy7g4phrcitn+Nk83S32EBX/CLU4hiF4RGKX/yRc93AAqtfaXB7JWBd4Q==}
     engines: {node: '>=18'}
     hasBin: true
 
-  '@playwright/test@1.50.1':
-    resolution: {integrity: sha512-Jii3aBg+CEDpgnuDxEp/h7BimHcUTDlpEtce89xEumlJ5ef2hqepZ+PWp1DDpYC/VO9fmWVI1IlEaoI5fK9FXQ==}
-    engines: {node: '>=18'}
+  '@playwright/test@1.64.1':
+    resolution: {integrity: sha512-IaYGml/nSOiZWROfPtuIL7neuu9qDOZ3TNvNljUIrhDMxiGTgPjzj/g9p9RxpS2tSepPDRY+UwAaEeiKtUvIAg==}
+    engines: {node: '>=20'}
     hasBin: true
 
   '@polka/url@1.0.0-next.29':
@@ -9380,9 +9380,14 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright-core@1.50.1:
-    resolution: {integrity: sha512-ra9fsNWayuYumt+NiM069M6OkcRb1FZSK8bgi66AtpFoWkg2+y0bJSNmkFrWhMbEBbVKC/EruAHH3g0zmtwGmQ==}
-    engines: {node: '>=18'}
+  playwright-core@1.62.1:
+    resolution: {integrity: sha512-wPYSwEBJY9GHraISXqyqtx0na0LpO3XEX7jNDhntbex7tzUS7kLnZsOlFruFJB4Hi/rhDMjXGqHewDZ68nYZVw==}
+    engines: {node: '>=20'}
+    hasBin: true
+
+  playwright-core@1.64.1:
+    resolution: {integrity: sha512-BC4s8y6SEVA6Q1rSxZTto8hI1KUI3xXlHGZgvGqP4IqPdI/a6FX9H29IDNz7vKo9l21b6LfYosScPL6M3xxyDQ==}
+    engines: {node: '>=20'}
     hasBin: true
 
   playwright@1.47.1:
@@ -9390,9 +9395,14 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright@1.50.1:
-    resolution: {integrity: sha512-G8rwsOQJ63XG6BbKj2w5rHeavFjy5zynBA9zsJMMtBoe/Uf757oG12NXz6e6OirF7RCrTVAKFXbLmn1RbL7Qaw==}
-    engines: {node: '>=18'}
+  playwright@1.62.1:
+    resolution: {integrity: sha512-0M+L3LAD8/nm554LOla9Ayx0j0tmFZ0FBcoQ7F1VuVHpM/XpiC8RcDzBQB8W5+hA8L22THxELzeF+2WcUzvcLg==}
+    engines: {node: '>=20'}
+    hasBin: true
+
+  playwright@1.64.1:
+    resolution: {integrity: sha512-HCrVhHr5QQuwYoswEUGTb7gGp522yflbv/ST8nF4sFWGuLjQCt17Q/EubpGGSNKYn1tsTCPZxqHhHCfVURu7UA==}
+    engines: {node: '>=20'}
     hasBin: true
 
   pnp-webpack-plugin@1.7.0:
@@ -15859,28 +15869,32 @@ snapshots:
       - sugarss
       - terser
 
-  '@playwright/experimental-ct-core@1.50.1(@types/node@24.12.4)(less@4.9.0(supports-color@8.1.1))(lightningcss@1.33.0)(sass@1.97.3)(terser@5.46.0)':
+  '@playwright/experimental-ct-core@1.62.1(@types/node@24.12.4)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.0(supports-color@8.1.1))(sass@1.97.3)(terser@5.46.0)(tsx@4.21.0)(yaml@2.9.0)':
     dependencies:
-      playwright: 1.50.1
-      playwright-core: 1.50.1
-      vite: 5.4.21(@types/node@24.12.4)(less@4.9.0(supports-color@8.1.1))(lightningcss@1.33.0)(sass@1.97.3)(terser@5.46.0)
+      playwright: 1.62.1
+      playwright-core: 1.62.1
+      vite: 8.3.5(@types/node@24.12.4)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.0(supports-color@8.1.1))(sass@1.97.3)(terser@5.46.0)(tsx@4.21.0)(yaml@2.9.0)
     transitivePeerDependencies:
       - '@types/node'
+      - '@vitejs/devtools'
+      - esbuild
+      - jiti
       - less
-      - lightningcss
       - sass
       - sass-embedded
       - stylus
       - sugarss
       - terser
+      - tsx
+      - yaml
 
   '@playwright/test@1.47.1':
     dependencies:
       playwright: 1.47.1
 
-  '@playwright/test@1.50.1':
+  '@playwright/test@1.64.1':
     dependencies:
-      playwright: 1.50.1
+      playwright: 1.64.1
 
   '@polka/url@1.0.0-next.29': {}
 
@@ -21355,7 +21369,9 @@ snapshots:
 
   playwright-core@1.47.1: {}
 
-  playwright-core@1.50.1: {}
+  playwright-core@1.62.1: {}
+
+  playwright-core@1.64.1: {}
 
   playwright@1.47.1:
     dependencies:
@@ -21363,11 +21379,15 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.2
 
-  playwright@1.50.1:
+  playwright@1.62.1:
     dependencies:
-      playwright-core: 1.50.1
+      playwright-core: 1.62.1
     optionalDependencies:
       fsevents: 2.3.2
+
+  playwright@1.64.1:
+    dependencies:
+      playwright-core: 1.64.1
 
   pnp-webpack-plugin@1.7.0(typescript@5.9.3):
     dependencies:
@@ -23129,19 +23149,6 @@ snapshots:
       assert-plus: 1.0.0
       core-util-is: 1.0.2
       extsprintf: 1.4.1
-
-  vite@5.4.21(@types/node@24.12.4)(less@4.9.0(supports-color@8.1.1))(lightningcss@1.33.0)(sass@1.97.3)(terser@5.46.0):
-    dependencies:
-      esbuild: 0.21.5
-      postcss: 8.5.31
-      rollup: 4.65.0
-    optionalDependencies:
-      '@types/node': 24.12.4
-      fsevents: 2.3.3
-      less: 4.9.0(supports-color@8.1.1)
-      lightningcss: 1.33.0
-      sass: 1.97.3
-      terser: 5.46.0
 
   vite@5.4.21(@types/node@24.12.4)(less@4.9.0(supports-color@8.1.1))(lightningcss@1.33.0)(sass@1.99.0)(terser@5.51.2):
     dependencies:
