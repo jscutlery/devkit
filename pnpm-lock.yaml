@@ -65,8 +65,8 @@ importers:
         version: 0.16.3
     devDependencies:
       '@analogjs/vite-plugin-angular':
-        specifier: 2.7.5
-        version: 2.7.5(8e38f1a0173041ea76b18ba722e87636)
+        specifier: 2.9.2
+        version: 2.9.2(8e38f1a0173041ea76b18ba722e87636)
       '@angular-devkit/build-angular':
         specifier: 21.2.28
         version: 21.2.28(599673cbd9c572fcb8f9558036de13bc)
@@ -465,8 +465,8 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@analogjs/vite-plugin-angular@2.7.5':
-    resolution: {integrity: sha512-WpOXLn0gmjdqVeRURafH6OKeE3jRMbRZGPVXxvunVNUYuzvKPB5VQUq5CQGxBgmoB1HZUJSayjMmfKNc2iqUiA==}
+  '@analogjs/vite-plugin-angular@2.9.2':
+    resolution: {integrity: sha512-FuhfVLkEPPp7BX1vjHY92/wp/oCmi2LfwyEJBEeDVFqCnaNAE612bNcvgcnJX3uCKKExu60KG/tppFBNDgyP5Q==}
     peerDependencies:
       '@angular-devkit/build-angular': ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0
       '@angular/build': ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0
@@ -11462,7 +11462,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
 
-  '@analogjs/vite-plugin-angular@2.7.5(8e38f1a0173041ea76b18ba722e87636)':
+  '@analogjs/vite-plugin-angular@2.9.2(8e38f1a0173041ea76b18ba722e87636)':
     dependencies:
       magic-string: 0.30.21
       obug: 2.1.1
@@ -15601,7 +15601,7 @@ snapshots:
 
   '@oxc-parser/binding-wasm32-wasi@0.121.0(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)':
     dependencies:
-      '@napi-rs/wasm-runtime': 1.1.4(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)
+      '@napi-rs/wasm-runtime': 1.2.5(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
