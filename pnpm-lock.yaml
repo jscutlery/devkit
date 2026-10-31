@@ -239,8 +239,8 @@ importers:
         specifier: 30.5.2
         version: 30.5.2(supports-color@8.1.1)
       jest-preset-angular:
-        specifier: 16.1.5
-        version: 16.1.5(1e43b6e470c5d0bfb6797d1dc1052226)
+        specifier: 16.2.0
+        version: 16.2.0(1e43b6e470c5d0bfb6797d1dc1052226)
       jest-util:
         specifier: 30.5.1
         version: 30.5.1
@@ -8221,14 +8221,14 @@ packages:
     resolution: {integrity: sha512-KTHb37Fhj8xY8qPFvTFaFJHcdsumQp+ExsUlgoX232Agmc706gagBs53+CYvulV7MVQo9AgXOUxsqzzVBoJlrA==}
     engines: {node: ^18.14.0 || ^20.0.0 || ^22.0.0 || >=24.0.0}
 
-  jest-preset-angular@16.1.5:
-    resolution: {integrity: sha512-4YNjA8O02TAQisr3JozsyFGQ4Dkc3FQyGebjpRZfXhiMo32arYW1bXZ5KXCjSe4OoXZrFV5T5nrV7SXr4NmBuA==}
+  jest-preset-angular@16.2.0:
+    resolution: {integrity: sha512-8LW2Ljp6RKJu4B2PLloWX8na0ropo6yRFr89L+aiUGuvQ86PrzgkzHdZQ7lmjJJtZasVLDWY8pUvbNVmM1AEGw==}
     engines: {node: ^18.19.1 || ^20.11.1 || >=22.0.0}
     peerDependencies:
-      '@angular/compiler-cli': '>=19.0.0 <22.0.0'
-      '@angular/core': '>=19.0.0 <22.0.0'
-      '@angular/platform-browser': '>=19.0.0 <22.0.0'
-      '@angular/platform-browser-dynamic': '>=19.0.0 <22.0.0'
+      '@angular/compiler-cli': '>=19.0.0 <23.0.0'
+      '@angular/core': '>=19.0.0 <23.0.0'
+      '@angular/platform-browser': '>=19.0.0 <23.0.0'
+      '@angular/platform-browser-dynamic': '>=19.0.0 <23.0.0'
       jest: ^30.0.0
       jsdom: '>=26.0.0'
       typescript: '>=5.5'
@@ -19842,7 +19842,7 @@ snapshots:
       '@types/node': 24.12.4
       jest-util: 30.5.1
 
-  jest-preset-angular@16.1.5(1e43b6e470c5d0bfb6797d1dc1052226):
+  jest-preset-angular@16.2.0(1e43b6e470c5d0bfb6797d1dc1052226):
     dependencies:
       '@angular/compiler-cli': 21.1.4(@angular/compiler@21.1.4)(supports-color@8.1.1)(typescript@5.9.3)
       '@angular/core': 21.1.4(@angular/compiler@21.1.4)(rxjs@7.8.2)(zone.js@0.16.3)
