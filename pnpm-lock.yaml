@@ -65,8 +65,8 @@ importers:
         version: 0.16.3
     devDependencies:
       '@analogjs/vite-plugin-angular':
-        specifier: 2.9.6
-        version: 2.9.6(263015e2274915102535605088ebace5)
+        specifier: 2.9.7
+        version: 2.9.7(263015e2274915102535605088ebace5)
       '@angular-devkit/build-angular':
         specifier: 21.2.29
         version: 21.2.29(b11fe696279b1ed90efb539f7dc1d5fe)
@@ -465,8 +465,8 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@analogjs/vite-plugin-angular@2.9.6':
-    resolution: {integrity: sha512-mgFc3GdHWH1D4xpFn1N5R352Q/vwALkSt02s95pGRJw9lrt7MSH3w15+TDJjDxmsLCbe+/51usU6MMTVJz+79A==}
+  '@analogjs/vite-plugin-angular@2.9.7':
+    resolution: {integrity: sha512-ZieiH1to3YW985GdejZHsMsA1+WSmuUd8rHGu1CHtGHBiPw4yLn6YQpyNogq3AcF0DY8z6WnN2jmz7NACCEtFg==}
     peerDependencies:
       '@angular-devkit/build-angular': ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0
       '@angular/build': ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0
@@ -11299,7 +11299,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
 
-  '@analogjs/vite-plugin-angular@2.9.6(263015e2274915102535605088ebace5)':
+  '@analogjs/vite-plugin-angular@2.9.7(263015e2274915102535605088ebace5)':
     dependencies:
       magic-string: 0.30.21
       obug: 2.1.1
@@ -15315,6 +15315,13 @@ snapshots:
       '@tybys/wasm-util': 0.10.4
     optional: true
 
+  '@napi-rs/wasm-runtime@1.2.6(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
+    dependencies:
+      '@emnapi/core': 1.10.0
+      '@emnapi/runtime': 1.10.0
+      '@tybys/wasm-util': 0.10.4
+    optional: true
+
   '@napi-rs/wasm-runtime@1.2.6(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)':
     dependencies:
       '@emnapi/core': 1.11.2
@@ -16038,7 +16045,7 @@ snapshots:
 
   '@oxc-parser/binding-wasm32-wasi@0.121.0(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:
-      '@napi-rs/wasm-runtime': 1.2.5(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
+      '@napi-rs/wasm-runtime': 1.2.6(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
