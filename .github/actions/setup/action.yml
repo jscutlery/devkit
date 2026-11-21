@@ -23,7 +23,7 @@ runs:
   using: composite
   steps:
     - name: Checkout all commits
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         token: ${{ inputs.git_bot_token || github.token }}
         fetch-depth: 0
