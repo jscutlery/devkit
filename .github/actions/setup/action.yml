@@ -70,7 +70,7 @@ runs:
     # Restored before the install so Cypress' postinstall finds the binary and skips the download.
     - name: Cache Cypress binary
       if: inputs.cypress == 'true'
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       with:
         path: ~/.cache/Cypress
         key: cypress-${{ runner.os }}-${{ steps.versions.outputs.cypress }}
@@ -84,7 +84,7 @@ runs:
     - name: Cache Playwright browsers
       if: inputs.playwright == 'true'
       id: playwright-cache
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       with:
         path: ~/.cache/ms-playwright
         key: playwright-${{ runner.os }}-${{ steps.versions.outputs.playwright }}
